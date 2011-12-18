@@ -11,7 +11,7 @@ public class JavaCodeView extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      
+       
         LinearLayout lo = new LinearLayout(this); //宽度为100px，高为自适应最小的高度
         setContentView(lo);
         // setOrientation(VERTICAL); 设置布局为垂直
