@@ -1,3 +1,4 @@
+
 package fly.MoveViewGroup;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import android.widget.ImageView.ScaleType;
 
 public class MyViewGroup extends ViewGroup implements OnGestureListener {
 
-	private float mLastMotionY;// 最后点击的点
+	private float mLastMotionX;// 最后点击的点
 	private GestureDetector detector;
 	int move = 0;// 移动距离
 	int MAXMOVE = 850;// 最大允许的移动距离
@@ -69,7 +70,8 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 	public void computeScroll() {
 		if (mScroller.computeScrollOffset()) {
 			// 返回当前滚动X方向的偏移
-			scrollTo(0, mScroller.getCurrY());
+//			scrollTo(0, mScroller.getCurrY());
+			scrollTo(mScroller.getCurrX(),0);
 			postInvalidate();
 		}
 	}
@@ -78,17 +80,17 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
 		final int action = ev.getAction();
 
-		final float y = ev.getY();
+		final float x = ev.getX();
 		switch (ev.getAction())
 		{
 		case MotionEvent.ACTION_DOWN:
 
-			mLastMotionY = y;
+			mLastMotionX = x;
 			mTouchState = mScroller.isFinished() ? TOUCH_STATE_REST
 					: TOUCH_STATE_SCROLLING;
 			break;
 		case MotionEvent.ACTION_MOVE:
-			final int yDiff = (int) Math.abs(y - mLastMotionY);
+			final int yDiff = (int) Math.abs(x - mLastMotionX);
 			boolean yMoved = yDiff > mTouchSlop;
 			// 判断是否是移动
 			if (yMoved) {
@@ -107,67 +109,67 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 
 		// final int action = ev.getAction();
 
-		final float y = ev.getY();
+		final float x = ev.getX();
 		switch (ev.getAction())
 		{
 		case MotionEvent.ACTION_DOWN:
 			if (!mScroller.isFinished()) {
 				mScroller.forceFinished(true);
-				move = mScroller.getFinalY();
+				move = mScroller.getFinalX();
 			}
-			mLastMotionY = y;
+			mLastMotionX = x;
 			break;
 		case MotionEvent.ACTION_MOVE:
 			if (ev.getPointerCount() == 1) {
 				
 				// 随手指 拖动的代码
-				int deltaY = 0;
-				deltaY = (int) (mLastMotionY - y);
-				mLastMotionY = y;
+				int deltaX = 0;
+				deltaX = (int) (mLastMotionX - x);
+				mLastMotionX = x;
 				Log.d("move", "" + move);
-				if (deltaY < 0) {
+				if (deltaX < 0) {
 					// 下移
 					// 判断上移 是否滑过头
 					if (up_excess_move == 0) {
 						if (move > 0) {
-							int move_this = Math.max(-move, deltaY);
+							int move_this = Math.max(-move, deltaX);
 							move = move + move_this;
-							scrollBy(0, move_this);
+							scrollBy(move_this,0);
 						} else if (move == 0) {// 如果已经是最顶端 继续往下拉
 							Log.d("down_excess_move", "" + down_excess_move);
-							down_excess_move = down_excess_move - deltaY / 2;// 记录下多往下拉的值
-							scrollBy(0, deltaY / 2);
+							down_excess_move = down_excess_move - deltaX / 2;// 记录下多往下拉的值
+							scrollBy(deltaX / 2,0);
 						}
 					} else if (up_excess_move > 0)// 之前有上移过头
 					{					
-						if (up_excess_move >= (-deltaY)) {
-							up_excess_move = up_excess_move + deltaY;
-							scrollBy(0, deltaY);
+						if (up_excess_move >= (-deltaX)) {
+							up_excess_move = up_excess_move + deltaX;
+							scrollBy(deltaX,0);
 						} else {						
 							up_excess_move = 0;
-							scrollBy(0, -up_excess_move);				
+							scrollBy(-up_excess_move,0);				
 						}
 					}
-				} else if (deltaY > 0) {
+				} else if (deltaX > 0) {
 					// 上移
 					if (down_excess_move == 0) {
 						if (MAXMOVE - move > 0) {
-							int move_this = Math.min(MAXMOVE - move, deltaY);
+							int move_this = Math.min(MAXMOVE - move, deltaX);
 							move = move + move_this;
-							scrollBy(0, move_this);
+							scrollBy(move_this,0);
 						} else if (MAXMOVE - move == 0) {
 							if (up_excess_move <= 100) {
-								up_excess_move = up_excess_move + deltaY / 2;
-								scrollBy(0, deltaY / 2);
+								up_excess_move = up_excess_move + deltaX / 2;
+								scrollBy(deltaX / 2,0);
 							}
 						}
 					} else if (down_excess_move > 0) {
-						if (down_excess_move >= deltaY) {
-							down_excess_move = down_excess_move - deltaY;
-							scrollBy(0, deltaY);
+						if (down_excess_move >= deltaX) {
+							down_excess_move = down_excess_move - deltaX;
+							scrollBy(deltaX,0);
 						} else {
 							down_excess_move = 0;
-							scrollBy(0, down_excess_move);
+							scrollBy(down_excess_move,0);
 						}
 					}
 				}		
@@ -177,13 +179,13 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 			// 多滚是负数 记录到move里
 			if (up_excess_move > 0) {
 				// 多滚了 要弹回去
-				scrollBy(0, -up_excess_move);
+				scrollBy(-up_excess_move,0);
 				invalidate();
 				up_excess_move = 0;
 			}
 			if (down_excess_move > 0) {
 				// 多滚了 要弹回去
-				scrollBy(0, down_excess_move);
+				scrollBy(down_excess_move,0);
 				invalidate();
 				down_excess_move = 0;
 			}
@@ -201,9 +203,9 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 		Log.d("onFling", "onFling");
 		if (up_excess_move == 0 && down_excess_move == 0) {
 
-			int slow = -(int) velocityY * 3 / 4;
-			mScroller.fling(0, move, 0, slow, 0, 0, 0, MAXMOVE);
-			move = mScroller.getFinalY();
+			int slow = -(int) velocityX * 3 / 4;
+			mScroller.fling( move, 0, slow,0, 0, MAXMOVE, 0, 0);
+			move = mScroller.getFinalX();
 			computeScroll();
 		}
 		return false;
@@ -246,7 +248,7 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 				child
 						.layout(childLeft, childTop, childLeft + 80,
 								childTop + 80);
-				if (childLeft < 320) {
+				if (childLeft < 800) {
 					childLeft += 80;
 				} else {
 					childLeft = 10;
