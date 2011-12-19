@@ -15,7 +15,7 @@ public class FreeButton extends View {
 		paintText.setColor(Color.GREEN);
 		this.setWillNotDraw(false);
 		// TODO Auto-generated constructor stub
-	}
+	} 
 	
     /**
      * Implement this to do your drawing.
