@@ -5,8 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
-public class FreeLayout extends ViewGroup {
+public class FreeLayout extends RelativeLayout {
 	Paint paintText;
 	
 	public FreeLayout(Context context) {
@@ -31,11 +32,11 @@ public class FreeLayout extends ViewGroup {
     protected void onDraw(Canvas canvas) {
     	super.onDraw(canvas);
     	
-    	this.dispatchDraw(canvas);
+//    	this.dispatchDraw(canvas);
     
 //    	canvas.drawColor(Color.WHITE);
 //    	canvas.clipRect(120, 100, 240, 280);
-//    	canvas.drawText("I'm FreeLayout", 10, 10, paintText);
+   	    canvas.drawText("I'm FreeLayout", 10, 10, paintText);
     	
     }
 
