@@ -37,20 +37,23 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 		super(context);
 		mContext = context;
 		// TODO Auto-generated constructor stub
-		setBackgroundResource(R.drawable.pic);
+		setBackgroundResource(R.drawable.background);
+		  
 		mScroller = new Scroller(context);
 		detector = new GestureDetector(this);
-
+ 
 		final ViewConfiguration configuration = ViewConfiguration.get(context);
 		// 获得可以认为是滚动的距离
 		mTouchSlop = configuration.getScaledTouchSlop();
-
+ 
 		// 添加子View
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 100; i++) { 
 			final Button 	MButton = new Button(context);
+		   
+			MButton.setBackgroundResource(R.drawable.skyblue_button_rectangle_50_50); 
+			MButton.getBackground().setAlpha(180);
 			MButton.setText("" + (i + 1));
-			MButton.setBackgroundResource(R.drawable.icon);
-			MButton.getBackground().setAlpha(100);
+			MButton.setTextColor(Color.BLACK);
 			MButton.setOnClickListener(new OnClickListener() {
 				
 				public void onClick(View v) {
