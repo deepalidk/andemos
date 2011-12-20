@@ -20,17 +20,14 @@ import android.widget.ImageView.ScaleType;
 
 public class MyViewGroup extends ViewGroup implements OnGestureListener {
 
-	private float mLastMotionX;// 最后点击的点
+	private int mLastLeftEdge;// the screen left edge when finger down.
+	private float mLastMotionPosX; //record last posX since the finger move.
 	private GestureDetector detector;
-	int move = 0;// 移动距离
-	int MAXMOVE = 850;// 最大允许的移动距离
-	private Scroller mScroller;
-	int up_excess_move = 0;// 往上多移的距离
-	int down_excess_move = 0;// 往下多移的距离
 	private final static int TOUCH_STATE_REST = 0;
 	private final static int TOUCH_STATE_SCROLLING = 1;
+	private int mScreenWidth=480;
+	private int mMaxPagePosX=480;
 	private int mTouchSlop;
-	private int mTouchState = TOUCH_STATE_REST;
 	Context mContext;
 	
 
@@ -40,18 +37,17 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 		// TODO Auto-generated constructor stub
 		setBackgroundResource(R.drawable.background);
 		  
-		mScroller = new Scroller(context);
 		detector = new GestureDetector(this);
  
 		final ViewConfiguration configuration = ViewConfiguration.get(context);
 		// 获得可以认为是滚动的距离
-		mTouchSlop = configuration.getScaledTouchSlop();
+		mTouchSlop = 8;
  
 		// 添加子View
-		for (int i = 0; i < 100; i++) { 
+		for (int i = 0; i < 60; i++) { 
 			final Button 	MButton = new Button(context);
 		   
-			MButton.setBackgroundResource(R.drawable.skyblue_button_rectangle_50_50); 
+			MButton.setBackgroundResource(R.drawable.blue_btn_circle_50_50); 
 			MButton.getBackground().setAlpha(180);
 			MButton.setText("" + (i + 1));
 			MButton.setTextColor(Color.BLACK);
@@ -64,44 +60,34 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 			});
 			addView(MButton);
 		}
-	}
-
-	@Override
-	public void computeScroll() {
-		if (mScroller.computeScrollOffset()) {
-			// 返回当前滚动X方向的偏移
-//			scrollTo(0, mScroller.getCurrY());
-			scrollTo(mScroller.getCurrX(),0);
-			postInvalidate();
-		}
+		
+		
 	}
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
-		final int action = ev.getAction();
-
 		final float x = ev.getX();
+		int touchState=TOUCH_STATE_REST;
+		
 		switch (ev.getAction())
 		{
 		case MotionEvent.ACTION_DOWN:
-
-			mLastMotionX = x;
-			mTouchState = mScroller.isFinished() ? TOUCH_STATE_REST
-					: TOUCH_STATE_SCROLLING;
+			mLastLeftEdge=this.getScrollX();
+			mLastMotionPosX=x;
 			break;
 		case MotionEvent.ACTION_MOVE:
-			final int yDiff = (int) Math.abs(x - mLastMotionX);
+			final int yDiff = (int) Math.abs(mLastMotionPosX-x);
+			
 			boolean yMoved = yDiff > mTouchSlop;
 			// 判断是否是移动
 			if (yMoved) {
-				mTouchState = TOUCH_STATE_SCROLLING;
+				touchState = TOUCH_STATE_SCROLLING;
 			}
 			break;
 		case MotionEvent.ACTION_UP:
-			mTouchState = TOUCH_STATE_REST;
 			break;
 		}
-		return mTouchState != TOUCH_STATE_REST;
+		return touchState != TOUCH_STATE_REST;
 	}
 
 	@Override
@@ -113,101 +99,86 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 		switch (ev.getAction())
 		{
 		case MotionEvent.ACTION_DOWN:
-			if (!mScroller.isFinished()) {
-				mScroller.forceFinished(true);
-				move = mScroller.getFinalX();
-			}
-			mLastMotionX = x;
+			mLastLeftEdge=this.getScrollX();
+			mLastMotionPosX=x;
 			break;
 		case MotionEvent.ACTION_MOVE:
+		{
 			if (ev.getPointerCount() == 1) {
 				
 				// 随手指 拖动的代码
 				int deltaX = 0;
-				deltaX = (int) (mLastMotionX - x);
-				mLastMotionX = x;
-				Log.d("move", "" + move);
-				if (deltaX < 0) {
-					// 下移
-					// 判断上移 是否滑过头
-					if (up_excess_move == 0) {
-						if (move > 0) {
-							int move_this = Math.max(-move, deltaX);
-							move = move + move_this;
-							scrollBy(move_this,0);
-						} else if (move == 0) {// 如果已经是最顶端 继续往下拉
-							Log.d("down_excess_move", "" + down_excess_move);
-							down_excess_move = down_excess_move - deltaX / 2;// 记录下多往下拉的值
-							scrollBy(deltaX / 2,0);
-						}
-					} else if (up_excess_move > 0)// 之前有上移过头
-					{					
-						if (up_excess_move >= (-deltaX)) {
-							up_excess_move = up_excess_move + deltaX;
-							scrollBy(deltaX,0);
-						} else {						
-							up_excess_move = 0;
-							scrollBy(-up_excess_move,0);				
-						}
-					}
-				} else if (deltaX > 0) {
-					// 上移
-					if (down_excess_move == 0) {
-						if (MAXMOVE - move > 0) {
-							int move_this = Math.min(MAXMOVE - move, deltaX);
-							move = move + move_this;
-							scrollBy(move_this,0);
-						} else if (MAXMOVE - move == 0) {
-							if (up_excess_move <= 100) {
-								up_excess_move = up_excess_move + deltaX / 2;
-								scrollBy(deltaX / 2,0);
-							}
-						}
-					} else if (down_excess_move > 0) {
-						if (down_excess_move >= deltaX) {
-							down_excess_move = down_excess_move - deltaX;
-							scrollBy(deltaX,0);
-						} else {
-							down_excess_move = 0;
-							scrollBy(down_excess_move,0);
-						}
-					}
-				}		
-			} 
+				deltaX = (int) (x-mLastMotionPosX);
+				
+				Log.d("deltaX", "" + deltaX);
+				scrollBy(-deltaX,0);
+				
+				if((getScrollX()< -mScreenWidth/3))
+				{
+					scrollTo(-mScreenWidth/3,0);
+				}
+				
+				if((getScrollX()>(mMaxPagePosX +mScreenWidth/3)))
+				{
+					scrollTo(mMaxPagePosX +mScreenWidth/3,0);
+				}
+				
+				mLastMotionPosX=x;
+			}
+		}
 			break;
 		case MotionEvent.ACTION_UP:			
-			// 多滚是负数 记录到move里
-			if (up_excess_move > 0) {
-				// 多滚了 要弹回去
-				scrollBy(-up_excess_move,0);
-				invalidate();
-				up_excess_move = 0;
+			//Move to the threshold of page
+			int curX=this.getScrollX();
+			
+			if(curX<0)
+			{
+				this.scrollTo(0, 0);
 			}
-			if (down_excess_move > 0) {
-				// 多滚了 要弹回去
-				scrollBy(down_excess_move,0);
-				invalidate();
-				down_excess_move = 0;
+			else if(curX>mMaxPagePosX)
+			{
+				scrollTo(mMaxPagePosX,0);
 			}
-			mTouchState = TOUCH_STATE_REST;
+			else
+			{   
+				int scrollX=((curX%mScreenWidth)>240)?(curX-curX%mScreenWidth+mScreenWidth):(curX-curX%mScreenWidth);
+			   
+				scrollTo(scrollX,0);
+			}
+
 			break;
 		}
 		return this.detector.onTouchEvent(ev);
 	}
 
-	int Fling_move = 0;
-
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
+
 		 //随手指 快速拨动的代码
 		Log.d("onFling", "onFling");
-		if (up_excess_move == 0 && down_excess_move == 0) {
-
-			int slow = -(int) velocityX * 3 / 4;
-			mScroller.fling( move, 0, slow,0, 0, MAXMOVE, 0, 0);
-			move = mScroller.getFinalX();
-			computeScroll();
+		Log.d("VelocityY", ""+velocityX);
+        int targetX=0;
+ 
+        
+		if(velocityX<0) //r 2 l
+		{
+			targetX=mLastLeftEdge+mScreenWidth;
+			if(targetX>mMaxPagePosX)
+			{
+				targetX=mMaxPagePosX;
+			}
+			this.scrollTo(targetX,0);
 		}
+		else  // l 2 r
+		{
+			targetX=mLastLeftEdge-mScreenWidth;
+			if(targetX<0)
+			{
+				targetX=0;
+			}
+			this.scrollTo(targetX,0);
+		}
+		
 		return false;
 	}
 
@@ -237,6 +208,10 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		// TODO Auto-generated method stub
+		
+		mScreenWidth=r-l;
+		mMaxPagePosX=b-t;
+		
 		int childTop = 10;
 		int childLeft = 10;
 		final int count = getChildCount();

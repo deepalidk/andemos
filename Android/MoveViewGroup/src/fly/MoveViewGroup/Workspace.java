@@ -19,7 +19,7 @@ public class Workspace extends ViewGroup {
 		for (int i = 0; i < count; i++) {
 			final View child = getChildAt(i);
 			child.measure(r - l, b - t);
-			child.layout(0, 0, 480, 724);
+			child.layout(0, 0, r - l, b - t);
 		}
 	}
 
