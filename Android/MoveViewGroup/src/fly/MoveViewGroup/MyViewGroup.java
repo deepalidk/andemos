@@ -28,6 +28,7 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 	private int mScreenWidth=480;
 	private int mMaxPagePosX=480;
 	private int mTouchSlop;
+	private Scroller mScroller;
 	Context mContext;
 	
 
@@ -38,6 +39,7 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 		setBackgroundResource(R.drawable.background);
 		  
 		detector = new GestureDetector(this);
+		mScroller= new Scroller(getContext());
  
 		final ViewConfiguration configuration = ViewConfiguration.get(context);
 		// 获得可以认为是滚动的距离
@@ -64,6 +66,14 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 		
 	}
 
+	@Override
+	public void computeScroll() {
+		if (mScroller.computeScrollOffset()) { 
+            scrollTo(mScroller.getCurrX(), 0); 
+            postInvalidate(); 
+        } 
+	}
+	
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
 		final float x = ev.getX();
@@ -101,6 +111,13 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 		case MotionEvent.ACTION_DOWN:
 			mLastLeftEdge=this.getScrollX();
 			mLastMotionPosX=x;
+            /*
+             * If being flinged and user touches, stop the fling. isFinished
+             * will be false if being flinged.
+             */
+            if (!mScroller.isFinished()) {
+                mScroller.abortAnimation();
+            }
 			break;
 		case MotionEvent.ACTION_MOVE:
 		{
@@ -133,17 +150,17 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 			
 			if(curX<0)
 			{
-				this.scrollTo(0, 0);
+				this.snatchTo(0, 0);
 			}
 			else if(curX>mMaxPagePosX)
 			{
-				scrollTo(mMaxPagePosX,0);
+				snatchTo(mMaxPagePosX,0);
 			}
 			else
 			{   
-				int scrollX=((curX%mScreenWidth)>240)?(curX-curX%mScreenWidth+mScreenWidth):(curX-curX%mScreenWidth);
+				int scrollX=((curX%mScreenWidth)>(mScreenWidth/2))?(curX-curX%mScreenWidth+mScreenWidth):(curX-curX%mScreenWidth);
 			   
-				scrollTo(scrollX,0);
+				snatchTo(scrollX,0);
 			}
 
 			break;
@@ -167,7 +184,7 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 			{
 				targetX=mMaxPagePosX;
 			}
-			this.scrollTo(targetX,0);
+			this.snatchTo(targetX,0);
 		}
 		else  // l 2 r
 		{
@@ -176,7 +193,7 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 			{
 				targetX=0;
 			}
-			this.scrollTo(targetX,0);
+			this.snatchTo(targetX,0);
 		}
 		
 		return false;
@@ -220,8 +237,7 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 			if (child.getVisibility() != View.GONE) {
 				child.setVisibility(View.VISIBLE);
 				child.measure(r - l, b - t);
-				child
-						.layout(childLeft, childTop, childLeft + 80,
+				child.layout(childLeft, childTop, childLeft + 80,
 								childTop + 80);
 				if (childLeft < 800) {
 					childLeft += 80;
@@ -231,6 +247,16 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 				}
 			}
 		}
+	}
+	
+	protected void snatchTo(int x,int y)
+	{
+//		scrollTo(x,y);
+		int startX=getScrollX();
+		
+//		mScroller.startScroll(startX, getScrollY(), x-startX, getScrollY(), Math.abs(x-startX)*2);
+		
+		mScroller.startScroll(0, 0, 200, 0, 500);
 	}
 
 }
