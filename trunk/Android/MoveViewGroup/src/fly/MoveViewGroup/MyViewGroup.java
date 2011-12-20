@@ -241,7 +241,7 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 								childTop + 80);
 				if (childLeft < 800) {
 					childLeft += 80;
-				} else {
+				} else { 
 					childLeft = 10;
 					childTop += 80;
 				}
