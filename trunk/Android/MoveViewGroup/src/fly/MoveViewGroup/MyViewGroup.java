@@ -4,7 +4,10 @@ package fly.MoveViewGroup;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.GestureDetector.OnGestureListener;
+import android.webkit.WebSettings.TextSize;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Scroller;
@@ -19,7 +23,8 @@ import android.widget.Toast;
 import android.widget.ImageView.ScaleType;
 
 public class MyViewGroup extends ViewGroup implements OnGestureListener {
-
+	private static boolean D=true;
+    private static String TAG="ViewGroup";
 	private int mLastLeftEdge;// the screen left edge when finger down.
 	private float mLastMotionPosX; //record last posX since the finger move.
 	private GestureDetector detector;
@@ -31,7 +36,7 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 	private Scroller mScroller;
 	Context mContext;
 	
-
+ 
 	public MyViewGroup(Context context) {
 		super(context);
 		mContext = context;
@@ -46,11 +51,11 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 		mTouchSlop = 8;
  
 		// 添加子View
-		for (int i = 0; i < 60; i++) { 
-			final Button 	MButton = new Button(context);
+		for (int i = 0; i < 1; i++) { 
+			final MyButton 	MButton = new MyButton(context);
 		   
 			MButton.setBackgroundResource(R.drawable.blue_btn_circle_50_50); 
-			MButton.getBackground().setAlpha(180);
+			MButton.getBackground().setAlpha(255);
 			MButton.setText("" + (i + 1));
 			MButton.setTextColor(Color.BLACK);
 			MButton.setOnClickListener(new OnClickListener() {
@@ -61,23 +66,28 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 				}
 			});
 			addView(MButton);
-		}
-		
-		
+		}	
 	}
 
 	@Override
 	public void computeScroll() {
 		if (mScroller.computeScrollOffset()) { 
-            scrollTo(mScroller.getCurrX(), 0); 
+			if(D)Log.d(TAG, "computeScroll "+mScroller.getCurrX()+" "+mScroller.getCurrY());
+            scrollTo(mScroller.getCurrX(), mScroller.getCurrY()); 
             postInvalidate(); 
         } 
+		else
+		{
+			if(D)Log.d(TAG, "computeScroll(FALSE) "+mScroller.getCurrX()+" "+mScroller.getCurrY());
+		}
 	}
 	
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
 		final float x = ev.getX();
 		int touchState=TOUCH_STATE_REST;
+		
+		if(D)Log.d(TAG, "onInterceptTouchEvent ev.getAction=" + ev.getAction());
 		
 		switch (ev.getAction())
 		{
@@ -96,14 +106,42 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 			break;
 		case MotionEvent.ACTION_UP:
 			break;
-		}
+		} 
 		return touchState != TOUCH_STATE_REST;
 	}
 
+    /**
+     * Implement this to do your drawing.
+     *
+     * @param canvas the canvas on which the background will be drawn
+     */
+    protected void onDraw(Canvas canvas) {
+    	super.onDraw(canvas);
+    	
+    	Paint paintText=new Paint();
+//    	paintText.setDither(false);
+    	paintText.setColor(Color.BLUE);
+    	paintText.setAntiAlias(true);
+    	paintText.setShadowLayer(10, 30, 30, Color.WHITE);
+//    	paintText.getShader().
+    	
+    	paintText.setAlpha(0);
+        canvas.drawRect(getScrollX()+30, 30,getScrollX()+ 100, 100, paintText);
+    	
+        RectF rc=new RectF();
+        rc.set(150, 150,300, 300);
+        paintText.setARGB(0, 255, 255, 255);
+        
+        canvas.drawRoundRect(rc, 30, 30, paintText);
+//   	    canvas.drawText("I'm FreeLayout", getScrollX()+30, 30, paintText);   
+    	
+    }
+    
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
-
-		// final int action = ev.getAction();
+		
+		if(D)Log.d(TAG, "onTouchEvent ev.getAction=" + ev.getAction());
+		
 
 		final float x = ev.getX();
 		switch (ev.getAction())
@@ -127,17 +165,17 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 				int deltaX = 0;
 				deltaX = (int) (x-mLastMotionPosX);
 				
-				Log.d("deltaX", "" + deltaX);
+				if(D)Log.d(TAG, "deltaX=" + deltaX);
 				scrollBy(-deltaX,0);
 				
 				if((getScrollX()< -mScreenWidth/3))
 				{
-					scrollTo(-mScreenWidth/3,0);
+					scrollBy(deltaX,0);
 				}
 				
 				if((getScrollX()>(mMaxPagePosX +mScreenWidth/3)))
 				{
-					scrollTo(mMaxPagePosX +mScreenWidth/3,0);
+					scrollBy(deltaX,0);
 				}
 				
 				mLastMotionPosX=x;
@@ -150,7 +188,7 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 			
 			if(curX<0)
 			{
-				this.snatchTo(0, 0);
+				snatchTo(0, 0);
 			}
 			else if(curX>mMaxPagePosX)
 			{
@@ -172,8 +210,9 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 			float velocityY) {
 
 		 //随手指 快速拨动的代码
-		Log.d("onFling", "onFling");
-		Log.d("VelocityY", ""+velocityX);
+		if(D)Log.d(TAG, "onFling");
+		if(D)Log.d(TAG, "VelocityY"+velocityX);
+
         int targetX=0;
  
         
@@ -224,8 +263,7 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 		mScreenWidth=r-l;
 		mMaxPagePosX=b-t;
 		
@@ -251,12 +289,18 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 	
 	protected void snatchTo(int x,int y)
 	{
-//		scrollTo(x,y);
+
+		if(D)Log.d(TAG, "SnatchTo x="+x+" y="+y+" startX="+getScrollX());
+
 		int startX=getScrollX();
 		
-//		mScroller.startScroll(startX, getScrollY(), x-startX, getScrollY(), Math.abs(x-startX)*2);
-		
-		mScroller.startScroll(0, 0, 200, 0, 500);
+		if(!mScroller.isFinished())
+		{
+			mScroller.abortAnimation();
+		}
+		mScroller.startScroll(startX, getScrollY(), x-startX, getScrollY(), Math.abs(x-startX)*2);
+		invalidate();
+
 	}
 
 }
