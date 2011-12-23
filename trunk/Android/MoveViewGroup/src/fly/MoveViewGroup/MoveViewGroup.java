@@ -10,7 +10,6 @@ public class MoveViewGroup extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(new Workspace(this));
-
+		setContentView(R.layout.main);
 	}
 }

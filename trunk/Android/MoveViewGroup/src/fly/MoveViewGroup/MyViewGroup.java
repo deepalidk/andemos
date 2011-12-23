@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -22,12 +23,11 @@ import android.widget.Scroller;
 import android.widget.Toast;
 import android.widget.ImageView.ScaleType;
 
-public class MyViewGroup extends ViewGroup implements OnGestureListener {
+public class MyViewGroup extends ViewGroup{
 	private static boolean D=true;
     private static String TAG="ViewGroup";
 	private int mLastLeftEdge;// the screen left edge when finger down.
 	private float mLastMotionPosX; //record last posX since the finger move.
-	private GestureDetector detector;
 	private final static int TOUCH_STATE_REST = 0;
 	private final static int TOUCH_STATE_SCROLLING = 1;
 	private int mScreenWidth=480;
@@ -39,35 +39,45 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
  
 	public MyViewGroup(Context context) {
 		super(context);
+        	
+		initView(context);
+	}
+	
+    public MyViewGroup(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        
+        initView(context);
+        
+    }
+    
+    private void initView(Context context)
+    {
+    	
 		mContext = context;
-		// TODO Auto-generated constructor stub
-		setBackgroundResource(R.drawable.background);
-		  
-		detector = new GestureDetector(this);
 		mScroller= new Scroller(getContext());
- 
+		 
 		final ViewConfiguration configuration = ViewConfiguration.get(context);
 		// 获得可以认为是滚动的距离
 		mTouchSlop = 8;
- 
-		// 添加子View
-		for (int i = 0; i < 1; i++) { 
-			final MyButton 	MButton = new MyButton(context);
-		   
-			MButton.setBackgroundResource(R.drawable.blue_btn_circle_50_50); 
-			MButton.getBackground().setAlpha(255);
-			MButton.setText("" + (i + 1));
-			MButton.setTextColor(Color.BLACK);
-			MButton.setOnClickListener(new OnClickListener() {
-				
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Toast.makeText(mContext, MButton.getText(), Toast.LENGTH_SHORT).show(); 
-				}
-			});
-			addView(MButton);
-		}	
-	}
+	 	
+//		// 添加子View
+//		for (int i = 0; i < 1; i++) { 
+//			final MyButton 	MButton = new MyButton(context);
+//		   
+//			MButton.setBackgroundResource(R.drawable.blue_btn_circle_50_50); 
+//			MButton.getBackground().setAlpha(255);
+//			MButton.setText("" + (i + 1));
+//			MButton.setTextColor(Color.BLACK);
+//			MButton.setOnClickListener(new OnClickListener() {
+//				
+//				public void onClick(View v) {
+//					// TODO Auto-generated method stub
+//					Toast.makeText(mContext, MButton.getText(), Toast.LENGTH_SHORT).show(); 
+//				}
+//			});
+//			addView(MButton);
+//		}
+    }
 
 	@Override
 	public void computeScroll() {
@@ -142,7 +152,6 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 		
 		if(D)Log.d(TAG, "onTouchEvent ev.getAction=" + ev.getAction());
 		
-
 		final float x = ev.getX();
 		switch (ev.getAction())
 		{
@@ -159,8 +168,6 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 			break;
 		case MotionEvent.ACTION_MOVE:
 		{
-			if (ev.getPointerCount() == 1) {
-				
 				// 随手指 拖动的代码
 				int deltaX = 0;
 				deltaX = (int) (x-mLastMotionPosX);
@@ -179,7 +186,6 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 				}
 				
 				mLastMotionPosX=x;
-			}
 		}
 			break;
 		case MotionEvent.ACTION_UP:			
@@ -203,7 +209,7 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 
 			break;
 		}
-		return this.detector.onTouchEvent(ev);
+		return true;
 	}
 
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
@@ -238,58 +244,55 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 		return false;
 	}
 
-	public boolean onDown(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		return false;
-	}
-
-	public void onShowPress(MotionEvent e) {
-		// // TODO Auto-generated method stub
-	}
-
-	public boolean onSingleTapUp(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void onLongPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-	}
-
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		// TODO Auto-generated method stub	
-		mScreenWidth=r-l;
-		mMaxPagePosX=b-t;
-		
-		int childTop = 10;
-		int childLeft = 10;
+//		mScreenWidth=r-l;
+//		mMaxPagePosX=b-t;
+//		
+//		if(D)Log.d(TAG,"onLayout");
+//		
+//
 		final int count = getChildCount();
 		for (int i = 0; i < count; i++) {
 			final View child = getChildAt(i);
 			if (child.getVisibility() != View.GONE) {
 				child.setVisibility(View.VISIBLE);
 				child.measure(r - l, b - t);
-				child.layout(childLeft, childTop, childLeft + 80,
-								childTop + 80);
-				if (childLeft < 800) {
-					childLeft += 80;
-				} else { 
-					childLeft = 10;
-					childTop += 80;
-				}
+				child.layout(child.getLeft()+this.getScrollX(), child.getTop()+this.getScrollY(),
+						child.getRight()+this.getScrollX(),child.getBottom() +this.getScrollY());
 			}
 		}
 	}
 	
+	   /**
+     * This is called in response to an internal scroll in this view (i.e., the
+     * view scrolled its own contents). This is typically as a result of
+     * {@link #scrollBy(int, int)} or {@link #scrollTo(int, int)} having been
+     * called.
+     *
+     * @param l Current horizontal scroll origin.
+     * @param t Current vertical scroll origin.
+     * @param oldl Previous horizontal scroll origin.
+     * @param oldt Previous vertical scroll origin.
+     */
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+           super.onScrollChanged(l,t,oldl,oldt);
+           
+           int dx=l-oldl;
+           int dy=t-oldt;
+           
+           final View child = getChildAt(0);
+				child.layout(child.getLeft()+dx, child.getTop()+dy,
+						child.getRight()+dx,child.getBottom() +dy);
+           
+           
+           
+           
+    }
+	
 	protected void snatchTo(int x,int y)
 	{
-
 		if(D)Log.d(TAG, "SnatchTo x="+x+" y="+y+" startX="+getScrollX());
 
 		int startX=getScrollX();
@@ -300,7 +303,6 @@ public class MyViewGroup extends ViewGroup implements OnGestureListener {
 		}
 		mScroller.startScroll(startX, getScrollY(), x-startX, getScrollY(), Math.abs(x-startX)*2);
 		invalidate();
-
 	}
 
 }

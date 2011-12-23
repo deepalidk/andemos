@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+			  xmlns:flyview="http://schemas.android.com/apk/res/fly.MoveViewGroup"
+	android:orientation="vertical" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" >
+	<fly.MoveViewGroup.Workspace 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent">
+		<fly.MoveViewGroup.MyViewGroup 
+			android:layout_width="fill_parent" 
+			android:layout_height="fill_parent"
+			android:clipChildren="false"
+			android:background="@drawable/background">
+			<fly.MoveViewGroup.MyButton 
+				android:layout_height="wrap_content" 
+				android:layout_width="wrap_content"
+				flyview:left="10dp"
+				flyview:top="10dp"
+				flyview:right="100dp"
+				flyview:bottom="100dp"
+				flyview:fix_position="true"
+				android:text="1"
+
+				/>
+		</fly.MoveViewGroup.MyViewGroup>
+	</fly.MoveViewGroup.Workspace>
 </LinearLayout>
