@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Button;
 
 public class MyButton extends TextView {
 	private static boolean D=true;
@@ -19,7 +20,7 @@ public class MyButton extends TextView {
     
     private boolean mIsFixPosition=false;
     
-    
+     
     
 	public MyButton(Context context) {
 		super(context);
@@ -28,6 +29,8 @@ public class MyButton extends TextView {
 	
     public MyButton(Context context, AttributeSet attrs) {
         super(context, attrs);
+        
+        this.setClickable(true);
         
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MyButton);
 
@@ -75,7 +78,7 @@ public class MyButton extends TextView {
      * @param canvas the canvas on which the background will be drawn
      */
     protected void onDraw(Canvas canvas) {
- 
+    	if(D)Log.d(TAG, "ondraw");
     	Paint paintText=new Paint();
 //    	paintText.setDither(false);
     	paintText.setAntiAlias(true);
@@ -88,10 +91,13 @@ public class MyButton extends TextView {
     	
 //        canvas.drawRect(100, 300,110, 310, paintText);
         
-    	if(D)Log.d(TAG, " this.sx="+ this.getScrollX()+" this.sy="+this.getScrollY());
+    	if(D)Log.d(TAG, "this.l="+ this.getLeft()+" this.t="+this.getTop()+" this.r="+getRight()+" this.b="+getBottom());
         RectF rc=new RectF();
-        rc.set(getLeft(), getTop(),getRight(),getBottom());
+        rc.set(0, 0,getRight()-getLeft(),getBottom()-getTop());
+        if(isPressed())
+        {
         canvas.drawRoundRect(rc, 5, 5, paintText);
+        }
                
         super.onDraw(canvas);
     }

@@ -20,10 +20,11 @@ import android.webkit.WebSettings.TextSize;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Scroller;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView.ScaleType;
 
-public class MyViewGroup extends ViewGroup{
+public class MyViewGroup extends ViewGroup implements View.OnClickListener{
 	private static boolean D=true;
     private static String TAG="ViewGroup";
 	private int mLastLeftEdge;// the screen left edge when finger down.
@@ -278,10 +279,10 @@ public class MyViewGroup extends ViewGroup{
      */
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
            super.onScrollChanged(l,t,oldl,oldt);
-           
+           if(D)Log.d(TAG, "onScrollChanged");
            int dx=l-oldl;
            int dy=t-oldt;
-           
+            
            final View child = getChildAt(0);
 				child.layout(child.getLeft()+dx, child.getTop()+dy,
 						child.getRight()+dx,child.getBottom() +dy);
@@ -303,6 +304,14 @@ public class MyViewGroup extends ViewGroup{
 		}
 		mScroller.startScroll(startX, getScrollY(), x-startX, getScrollY(), Math.abs(x-startX)*2);
 		invalidate();
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		TextView tv=(TextView)v;
+		Toast.makeText(mContext, tv.getText(), Toast.LENGTH_SHORT).show(); 
+		
 	}
 
 }
