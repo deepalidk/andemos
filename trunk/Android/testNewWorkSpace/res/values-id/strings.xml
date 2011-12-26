@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Samsung Remote</string>
+    <string name="tv_remote">TV Remote</string>
+    <string name="string_settings_TS_LR">Sensitivitas Sentuh Kiri/Kanan</string>
+    <string name="string_settings_TS_UD">Sensitivitas Sentuh Atas/Bawah</string>
+    <string name="string_settings_GRS">Kecepatan Gerakan Remote</string>
+    <string name="string_settings_SS">Sphere Sensitivity</string>
+    <string name="string_settings_TV_Region">Pengaturan Kawasan</string>
+    <string name="string_about_application_1">Aplikasi ini merupakan remote control Wi-Fi Samsung Internet@TV untuk 2010.</string>
+    <string name="string_about_application_2">Jika Phone dan TV tersambung ke jalur akses yang sama, Phone akan terhubung dengan TV secara otomatis dan Anda dapat menggunakan Phone seperti remote biasa.</string>
+    <string name="string_Smart_Hub">SMART HUB</string>
+    <string name="string_Tools">TOOLS</string>
+    <string name="string_Info">INFO</string>
+    <string name="string_Menu">MENU</string>
+    <string name="string_Demo_Play">TV Remote DEMO PLAY</string>
+    <string name="string_Demo_Play_Title">DEMO PLAY</string>
+    <string name="string_Demo_Play_Description">Anda dapat mencoba Samsung TV Remote terlebih dulu.</string>
+    <string name="devices_not_found">Smartphone dan perangkat harus tersambung ke jalur akses yang sama. Periksa pengaturan jaringan.</string>
+    <string name="demo_notification">Konfigurasi tombol remote control mungkin berbeda menurut area atau model.</string>
+    <string name="do_not_show_message">Jangan tampilkan pesan di lain waktu.</string>
+    <string name="string_Channel_list">Channel list</string>
+    <string name="string_Search">Search</string>
+    <string name="string_Internet">Internet@TV</string>
+    <string name="string_Guide">Guide</string>
+    <string name="string_threeD">3D</string>
+    <string name="string_E_Manual">E-Manual</string>
+    <string name="string_P_Size">P.SIZE</string>
+    <string name="string_D">D</string>
+    <string name="string_Subt">SUBT.</string>
+    <string name="string_Devices">Devices</string>
+    <string name="string_TV_Remote">TV Remote</string>
+    <string name="string_Gesture_Remote">Gesture Remote</string>
+    <string name="string_Keyboard">Keyboard</string>
+    <string name="string_Game_Remote">Game Remote</string>
+    <string name="string_Manual">Manual</string>
+    <string name="string_Settings">Settings</string>
+    <string name="string_Return">RETURN</string>
+    <string name="string_Exit">EXIT</string>
+    <string name="string_Enter">ENTER</string>
+    <string name="string_supported_models_1">Semua TV SAMSUNG mendukung Internet@TV 2010</string>
+    <string name="string_supported_models_2">LCD 650 SERIES atau yang Lebih Baru LED 6500 SERIES atau yang Lebih Baru PDP 6500 SERIES atau yang Lebih Baru</string>
+    <string name="string_TTX">TTX</string>
+    <string name="string_TTX_MIX">TTX/MIX</string>
+    <string name="string_Cancel">CANCEL</string>
+    <string name="string_Reveal">REVEAL</string>
+    <string name="string_Hold">HOLD</string>
+    <string name="string_Double">"DOUBLE
+SIZE"</string>
+    <string name="string_Size">SIZE</string>
+    <string name="string_Sub">"SUB
+PAGE"</string>
+    <string name="string_Page">PAGE</string>
+    <string name="string_Index">INDEX</string>
+    <string name="string_Flof_List">FLOF LIST</string>
+    <string name="string_Store">STORE</string>
+    <string name="string_Page_Down">"PAGE
+DOWN"</string>
+    <string name="string_Down">DOWN</string>
+    <string name="string_Page_Up">PAGE UP</string>
+    <string name="string_Message_Disconnect">"Disconnect
+
+ Network Connection Failure"</string>
+    <string name="string_Message_Retry">Coba lagi</string>
+    <string name="string_Message_Cancel">Batal</string>
+    <string name="string_Message_Connecting">Menyambung...</string>
+    <string name="string_Message_Select_Allow">Untuk menggunakan aplikasi ini, Anda harus memilih \"Bolehkan\" di Layar Perangkat.</string>
+    <string name="please_try_again">Coba lagi.</string>
+    <string name="it_takes_30_seconds">Diperlukan waktu 20-30 detik.</string>
+    <string name="check_bluetooth_settings">"Periksa pengaturan Bluetooth Selular.
+
+Bluetooth Selular harus diaktifkan dan dipasangkan dengan perangkat."</string>
+    <string name="string_About_Application">About Application</string>
+    <string name="string_Supported_Models">Supported Models</string>
+    <string name="string_Brief_Description">Brief Description</string>
+    <string name="string_Brief_TvRemote_1">Tersedia operasi remote control dasar.</string>
+    <string name="string_Brief_TvRemote_2">Dengan gerakan menarik seperti atas/bawah/kiri/kanan, Arah atau CH/VOL dapat disesuaikan, apapun latar belakangnya.</string>
+    <string name="string_Brief_Gesture_Remote_title">Gesture Remote</string>
+    <string name="string_Brief_Gesture_Remote_text">CH/VOL dapat disesuaikan dengan menyentuh layar dan memiringkan perangkat.</string>
+    <string name="string_Brief_KeyBoard">Jika harus mengetik seperti bila menggunakan Internet@TV, Anda dapat memasukkan huruf yang telah siap menggunakan pengontrol ini.</string>
+    <string name="string_Brief_GameRemote">Pengontrol ini memberikan Anda UI yang nyaman untuk menjalankan permainan di Internet@TV.</string>
+    <string name="string_Channel">CHANNEL</string>
+    <string name="string_Numbers">NUMBERS</string>
+    <string name="string_Playback">PLAYBACK</string>
+    <string name="string_Hotkey">HOTKEY</string>
+    <string name="string_Message_Wi_Fi_con_lost">Wi-Fi connection lost...</string>
+    <string name="string_Device_Disconnected">Device disconnected</string>
+    <string name="string_Not_Allowed_to_Connect">Not allowed to connect...</string>
+    <string name="string_Ok">OK</string>
+    <string name="string_Gesture_Help">Phone을 상/하, 좌/우로 기울임으로 써 channel up/down, volume +/- 를 할 수 있다.</string>
+    <string name="string_BD_Remote">BD Remote</string>
+    <string name="string_Keypad">Keypad</string>
+    <string name="string_NAVI">NAVI</string>
+    <string name="string_123">123</string>
+    <string name="string_Authentication_Failed">Otentikasi Gagal</string>
+    <string name="string_Simultaneous_access_is_limited">Akses secara bersamaan dibatasi hingga 4 perangkat selular</string>
+    <string name="string_Authentication_Failed_Incorrect_TV">Tidak menyelesaikan pengaturan menu TV dengan benar</string>
+    <string name="string_To_use_device_allow_it">Untuk menggunakan perangkat ini, bolehkan perangkat di menu TV.</string>
+    <string name="string_Touch_Here">Sentuh di Sini</string>
+    <string name="string_By_tilting_device">Dengan memiringkan perangkat, Anda dapat mengontrol saluran dan volume suara</string>
+    <string name="string_Auto_Discovery">Auto Discovery</string>
+    <string name="please_wait">Tunggu.</string>
+    <string name="no_device">Tidak ada perangkat.</string>
+    <string name="available_within_bluetooth">Ada dalam jangkauan Bluetooth.</string>
+    <string name="callibrate_horizontally_based">Kalibrasikan secara horizontal berdasarkan posisi saat ini.</string>
+    <string name="do_not_move">Jangan pindahkan perangkat.</string>
+    <string name="power_on">Daya hidup</string>
+    <string name="TV_Bluetooth_must_be_turned_on">Bluetooth TV harus diaktifkan.</string>
+</resources>

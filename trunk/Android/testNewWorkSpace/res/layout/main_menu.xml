@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:id="@id/main_menu" android:paddingTop="78.0px" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_x="0.0px" android:layout_y="0.0px">
+        <RelativeLayout android:orientation="horizontal" android:id="@id/main_menu_top_button_holder" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <com.samsung.remoteTV.view.controls.TextAndButtonView android:gravity="center_horizontal" android:id="@id/main_menu_top_1_holder" android:visibility="invisible" android:layout_width="160.0px" android:layout_height="wrap_content" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" />
+            <com.samsung.remoteTV.view.controls.TextAndButtonView android:gravity="center_horizontal" android:id="@id/main_menu_top_2_holder" android:visibility="invisible" android:layout_width="160.0px" android:layout_height="wrap_content" android:layout_toRightOf="@id/main_menu_top_1_holder" />
+            <com.samsung.remoteTV.view.controls.TextAndButtonView android:gravity="center_horizontal" android:id="@id/main_menu_top_3_holder" android:visibility="invisible" android:layout_width="160.0px" android:layout_height="wrap_content" android:layout_toRightOf="@id/main_menu_top_2_holder" />
+        </RelativeLayout>
+        <RelativeLayout android:orientation="horizontal" android:id="@id/main_menu_bottom_button_holder" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <com.samsung.remoteTV.view.controls.TextAndButtonView android:gravity="center_horizontal" android:id="@id/main_menu_bottom_1_holder" android:visibility="invisible" android:layout_width="160.0px" android:layout_height="wrap_content" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" />
+            <com.samsung.remoteTV.view.controls.TextAndButtonView android:gravity="center_horizontal" android:id="@id/main_menu_bottom_2_holder" android:visibility="invisible" android:layout_width="160.0px" android:layout_height="wrap_content" android:layout_toRightOf="@id/main_menu_bottom_1_holder" />
+            <com.samsung.remoteTV.view.controls.TextAndButtonView android:gravity="center_horizontal" android:id="@id/main_menu_bottom_3_holder" android:visibility="invisible" android:layout_width="160.0px" android:layout_height="wrap_content" android:layout_toRightOf="@id/main_menu_bottom_2_holder" />
+        </RelativeLayout>
+    </LinearLayout>
+    <AbsoluteLayout android:orientation="horizontal" android:background="@drawable/soft_bg_02" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_x="0.0px" android:layout_y="670.0px" />
+    <Button android:textColor="#ffffffff" android:id="@id/Auto_discovery_button" android:paddingTop="60.0px" android:layout_width="277.0px" android:layout_height="131.0px" android:layout_x="-18.0px" android:layout_y="652.0px" />
+    <Button android:textColor="#ffffffff" android:id="@id/Settings_button" android:paddingTop="60.0px" android:layout_width="277.0px" android:layout_height="131.0px" android:layout_x="221.0px" android:layout_y="652.0px" />
+</AbsoluteLayout>

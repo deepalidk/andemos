@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transition
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/marble_right_s_nor" android:left="22.0px" android:top="20.0px" android:right="24.0px" android:bottom="20.0px" />
+    <item android:drawable="@drawable/marble_right_sel" />
+</transition>

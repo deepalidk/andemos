@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/manual_remote_1" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="top" android:paddingLeft="40.0px" android:paddingTop="20.0px" android:layout_width="fill_parent" android:layout_height="332.0px">
+        <ImageView android:id="@id/manual_remote_1_image_1" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <TextView android:textSize="20.0px" android:gravity="left" android:id="@id/manual_remote_1_text_1" android:paddingLeft="30.0px" android:layout_width="220.0px" android:layout_height="wrap_content" android:lineSpacingMultiplier="1.0" />
+    </LinearLayout>
+    <LinearLayout android:gravity="top" android:paddingLeft="40.0px" android:paddingTop="20.0px" android:layout_width="fill_parent" android:layout_height="332.0px">
+        <ImageView android:id="@id/manual_remote_1_image_2" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <TextView android:textSize="20.0px" android:gravity="top|left|center" android:id="@id/manual_remote_1_text_2" android:paddingLeft="30.0px" android:layout_width="220.0px" android:layout_height="wrap_content" android:lineSpacingMultiplier="1.0" />
+    </LinearLayout>
+    <LinearLayout android:gravity="top" android:paddingLeft="40.0px" android:paddingTop="20.0px" android:layout_width="fill_parent" android:layout_height="332.0px">
+        <ImageView android:id="@id/manual_remote_2_image_1" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <TextView android:textSize="20.0px" android:gravity="top|left|center" android:id="@id/manual_remote_2_text_1" android:paddingLeft="30.0px" android:layout_width="220.0px" android:layout_height="wrap_content" android:lineSpacingMultiplier="1.0" />
+    </LinearLayout>
+    <LinearLayout android:gravity="top" android:paddingLeft="40.0px" android:paddingTop="20.0px" android:layout_width="fill_parent" android:layout_height="332.0px">
+        <ImageView android:id="@id/manual_remote_2_image_2" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <TextView android:textSize="20.0px" android:gravity="top|left|center" android:id="@id/manual_remote_2_text_2" android:paddingLeft="30.0px" android:layout_width="220.0px" android:layout_height="wrap_content" android:lineSpacingMultiplier="1.0" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@id/full_mode" android:paddingTop="72.0px" android:layout_width="fill_parent" android:layout_height="625.0px" android:layout_x="0.0px" android:layout_y="0.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <AbsoluteLayout android:background="@drawable/main_bg" android:layout_width="fill_parent" android:layout_height="625.0px" android:layout_x="0.0px" android:layout_y="0.0px" />
+    <com.samsung.remoteTV.view.controls.DiscreteScrollView android:scrollbarSize="200.0px" android:scrollbarThumbVertical="@drawable/scroll_bar" android:scrollbarTrackVertical="@drawable/scroll_bg" android:id="@id/scroll_full_mode" android:layout_width="fill_parent" android:layout_height="600.0px" android:layout_x="0.0px" android:layout_y="0.0px">
+        <LinearLayout android:orientation="vertical" android:id="@id/parent_full_mode" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:id="@id/empty_region" android:layout_width="fill_parent" android:layout_height="300.0px" />
+        </LinearLayout>
+    </com.samsung.remoteTV.view.controls.DiscreteScrollView>
+</AbsoluteLayout>

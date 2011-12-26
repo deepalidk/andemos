@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:orientation="horizontal" android:id="@id/game_pad" android:paddingTop="82.0px" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:fadingBtn="http://schemas.android.com/apk/res/com.samsung.remoteTV">
+    <LinearLayout android:id="@id/game_pad_move_holder" android:background="@drawable/dot_bg_02" android:layout_width="416.0px" android:layout_height="375.0px" android:layout_x="0.0px" android:layout_y="-15.0px">
+        <com.samsung.remoteTV.doteAnimation.Panel android:id="@id/game_pad_panel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout>
+    <ImageView android:id="@id/game_move_up_animation" android:visibility="invisible" android:layout_width="250.0px" android:layout_height="500.0px" android:layout_x="79.0px" android:layout_y="-16.0px" />
+    <ImageView android:id="@id/game_move_down_animation" android:visibility="invisible" android:layout_width="250.0px" android:layout_height="500.0px" android:layout_x="79.0px" android:layout_y="-131.0px" />
+    <ImageView android:id="@id/game_move_left_animation" android:visibility="invisible" android:layout_width="500.0px" android:layout_height="250.0px" android:layout_x="0.0px" android:layout_y="43.0px" />
+    <ImageView android:id="@id/game_move_right_animation" android:visibility="invisible" android:layout_width="500.0px" android:layout_height="250.0px" android:layout_x="-92.0px" android:layout_y="43.0px" />
+    <RelativeLayout android:layout_width="400.0px" android:layout_height="fill_parent" android:layout_x="0.0px" android:layout_y="0.0px">
+        <RelativeLayout android:id="@id/numbers_holder" android:background="@drawable/panel_num_02" android:visibility="gone" android:layout_width="400.0px" android:layout_height="159.0px" android:layout_marginLeft="-400.0px" android:layout_alignParentLeft="true" android:layout_alignParentTop="true">
+            <AbsoluteLayout android:layout_width="400.0px" android:layout_height="159.0px" android:layout_marginLeft="-3.0px" android:layout_alignParentLeft="true">
+                <Button android:id="@id/button_hide_123" android:background="@drawable/button_hide_action" android:visibility="visible" android:layout_width="97.0px" android:layout_height="177.0px" android:layout_x="-20.0px" android:layout_y="-16.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_1" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="39.0px" android:layout_y="-16.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_2" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="94.0px" android:layout_y="-16.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_3" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="149.0px" android:layout_y="-16.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_4" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="204.0px" android:layout_y="-16.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_5" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="259.0px" android:layout_y="-16.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_minus" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="314.0px" android:layout_y="-16.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_6" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="39.0px" android:layout_y="52.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_7" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="94.0px" android:layout_y="52.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_8" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="149.0px" android:layout_y="52.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_9" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="204.0px" android:layout_y="52.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_0" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="259.0px" android:layout_y="52.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+                <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/number_PRE_CH" android:visibility="invisible" android:layout_width="97.0px" android:layout_height="109.0px" android:layout_x="314.0px" android:layout_y="52.0px" android:layout_centerInParent="true" fadingBtn:buttonWidth="65.0px" fadingBtn:buttonHeight="72.0px" />
+            </AbsoluteLayout>
+        </RelativeLayout>
+        <RelativeLayout android:id="@id/gesture_holder" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_below="@id/numbers_holder">
+            <Button android:id="@id/mecha_up" android:visibility="invisible" android:layout_width="125.0px" android:layout_height="105.0px" android:layout_marginLeft="142.0px" android:layout_marginTop="-20.0px" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" />
+            <Button android:id="@id/mecha_down" android:visibility="invisible" android:layout_width="125.0px" android:layout_height="105.0px" android:layout_marginLeft="142.0px" android:layout_marginBottom="-5.0px" android:layout_alignParentLeft="true" android:layout_alignParentBottom="true" />
+            <Button android:id="@id/mecha_left" android:visibility="invisible" android:layout_width="125.0px" android:layout_height="105.0px" android:layout_marginLeft="0.0px" android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
+            <Button android:id="@id/mecha_right" android:visibility="invisible" android:layout_width="125.0px" android:layout_height="105.0px" android:layout_marginRight="-10.0px" android:layout_alignParentRight="true" android:layout_centerVertical="true" />
+        </RelativeLayout>
+        <Button android:id="@id/button_show_123" android:background="@drawable/btn_num" android:layout_width="46.0px" android:layout_height="184.0px" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" />
+        <CheckBox android:id="@id/ch_full_simple" android:paddingLeft="6.0px" android:layout_width="120.0px" android:layout_height="100.0px" android:button="@drawable/tc_title_action_checked" android:layout_alignParentLeft="true" android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="400.0px" android:layout_height="fill_parent" android:layout_x="400.0px" android:layout_y="0.0px">
+        <LinearLayout android:orientation="horizontal" android:id="@id/abcd_holder" android:layout_width="400.0px" android:layout_height="wrap_content" android:layout_marginLeft="12.0px" android:layout_alignParentLeft="true" android:layout_alignParentTop="true">
+            <Button android:id="@id/a" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="4.0px" />
+            <Button android:id="@id/b" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="4.0px" />
+            <Button android:id="@id/c" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="4.0px" />
+            <Button android:id="@id/d" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="4.0px" />
+        </LinearLayout>
+        <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:id="@id/return_exit_holder" android:layout_width="wrap_content" android:layout_height="fill_parent" android:weightSum="1.0" android:layout_below="@id/abcd_holder">
+            <Button android:textColor="#ffffffff" android:id="@id/game_pad_button_return" android:visibility="invisible" android:layout_width="162.0px" android:layout_height="138.0px" />
+            <Button android:textColor="#ffffffff" android:id="@id/game_pad_button_exit" android:visibility="invisible" android:layout_width="162.0px" android:layout_height="138.0px" />
+        </LinearLayout>
+        <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_toRightOf="@id/return_exit_holder" android:layout_below="@id/abcd_holder">
+            <Button android:id="@id/enter" android:visibility="invisible" android:layout_width="259.0px" android:layout_height="249.0px" android:layout_centerInParent="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <ImageView android:id="@id/sklo" android:background="#33333333" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_x="0.0px" android:layout_y="0.0px" />
+</AbsoluteLayout>

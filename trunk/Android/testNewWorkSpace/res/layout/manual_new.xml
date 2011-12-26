@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/manual" android:paddingTop="80.0px" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/manual_main_menu" />
+    <include layout="@layout/manual_game_control" />
+    <LinearLayout android:orientation="vertical" android:id="@id/manual_remote" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_alignParentTop="true" android:layout_centerHorizontal="true">
+        <com.samsung.remoteTV.view.controls.DiscreteScrollView android:id="@id/manual_scrollView" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <include layout="@layout/manual_remote_01" />
+        </com.samsung.remoteTV.view.controls.DiscreteScrollView>
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:id="@id/manual_bluetooth_holder" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_alignParentTop="true" android:layout_centerHorizontal="true">
+        <include layout="@layout/manual_bluetooth" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:id="@id/manual_allshare_holder" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_alignParentTop="true" android:layout_centerHorizontal="true">
+        <include layout="@layout/manual_allshare" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:id="@id/manual_settings_holder" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_alignParentTop="true" android:layout_centerHorizontal="true">
+        <include layout="@layout/manual_settings" />
+    </LinearLayout>
+</RelativeLayout>

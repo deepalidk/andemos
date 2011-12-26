@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.samsung.remoteTV.view.controls.MyRelativeLayout android:id="@id/keyboard" android:paddingTop="74.0px" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="top" android:id="@id/keyboard_edit_text_holder" android:padding="20.0px" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentTop="true">
+        <EditText android:textSize="7.0pt" android:textColor="#ff787878" android:id="@id/keyboard_edit_text" android:layout_width="wrap_content" android:layout_height="53.0px" android:hint="type here" android:imeOptions="normal|actionUnspecified" />
+    </LinearLayout>
+    <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@id/holder_buttonn" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:weightSum="1.0" android:layout_alignParentBottom="true">
+        <include layout="@layout/keyboard_addition_elements" />
+    </LinearLayout>
+</com.samsung.remoteTV.view.controls.MyRelativeLayout>

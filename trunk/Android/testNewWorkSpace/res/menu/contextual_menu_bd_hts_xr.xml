@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@id/menu_power_off_bd_hts_xr" android:title="Power Off" />
+    <item android:icon="@drawable/icon_choice_eject" android:id="@id/menu_tray_eject_bd_hts_xr" />
+    <item android:id="@id/menu_function_bd_hts_xr" android:title="FUNCTION" />
+    <item android:id="@id/menu_auto_discovery_bd_hts_xr" android:title="Auto Discovery" />
+    <item android:id="@id/menu_home_bd_hts_xr" android:title="HOME" />
+    <item android:id="@id/menu_more_bd_hts_xr" android:title="More">
+        <menu
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:id="@id/menu_search_bd_hts_xr" android:title="Search" />
+            <item android:id="@id/menu_multi_media_bd_hts_xr" android:title="Multi Media" />
+            <item android:id="@id/menu_keyboard_bd_hts_xr" android:title="Keyboard" />
+        </menu>
+    </item>
+</menu>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Samsung Remote</string>
+    <string name="tv_remote">TV Remote</string>
+    <string name="string_settings_TS_LR">Ευαισθησία αφής Αριστερά/Δεξιά</string>
+    <string name="string_settings_TS_UD">Ευαισθησία αφής Πάνω/Κάτω</string>
+    <string name="string_settings_GRS">Ταχύτητα τηλεχειριστηρίου κίνησης</string>
+    <string name="string_settings_SS">Sphere Sensitivity</string>
+    <string name="string_settings_TV_Region">Ορισμός περιοχής</string>
+    <string name="string_about_application_1">Αυτή η εφαρμογή είναι ένα τηλεχειριστήριο Wi-Fi του Samsung Internet@TV για το 2010.</string>
+    <string name="string_about_application_2">Αν το Phone και η TV σας είναι συνδεδεμένα στο ίδιο σημείο πρόσβασης, τότε το Phone συνδέεται αυτόματα με την TV και μπορείτε να το χρησιμοποιήσετε ως γενικό τηλεχειριστήριο.</string>
+    <string name="string_Smart_Hub">SMART HUB</string>
+    <string name="string_Tools">TOOLS</string>
+    <string name="string_Info">INFO</string>
+    <string name="string_Menu">MENU</string>
+    <string name="string_Demo_Play">TV Remote DEMO PLAY</string>
+    <string name="string_Demo_Play_Title">DEMO PLAY</string>
+    <string name="string_Demo_Play_Description">Μπορείτε να βιώσετε εκ των προτέρων την εμπειρία Samsung TV Remote.</string>
+    <string name="devices_not_found">Το smart phone και η συσκευή θα πρέπει να είναι συνδεδεμένα στο ίδιο σημείο πρόσβασης. Ελέγξτε τις ρυθμίσεις του δικτύου.</string>
+    <string name="demo_notification">Η διαμόρφωση του κουμπιού τηλεχειριστηρίου ενδέχεται να διαφέρει ανάλογα με την περιοχή ή το μοντέλο.</string>
+    <string name="do_not_show_message">Να μην εμφανιστεί το μήνυμα την επόμενη φορά.</string>
+    <string name="string_Channel_list">Channel list</string>
+    <string name="string_Search">Search</string>
+    <string name="string_Internet">Internet@TV</string>
+    <string name="string_Guide">Guide</string>
+    <string name="string_threeD">3D</string>
+    <string name="string_E_Manual">E-Manual</string>
+    <string name="string_P_Size">P.SIZE</string>
+    <string name="string_D">D</string>
+    <string name="string_Subt">SUBT.</string>
+    <string name="string_Devices">Devices</string>
+    <string name="string_TV_Remote">TV Remote</string>
+    <string name="string_Gesture_Remote">Gesture Remote</string>
+    <string name="string_Keyboard">Keyboard</string>
+    <string name="string_Game_Remote">Game Remote</string>
+    <string name="string_Manual">Manual</string>
+    <string name="string_Settings">Settings</string>
+    <string name="string_Return">RETURN</string>
+    <string name="string_Exit">EXIT</string>
+    <string name="string_Enter">ENTER</string>
+    <string name="string_supported_models_1">ΜΟΝΤΕΛΑ SAMSUNG TV που είναι συμβατά με Internet@TV 2010</string>
+    <string name="string_supported_models_2">ΣΕΙΡΑ LCD 650 και νεότερες ΣΕΙΡΑ LED 6500 και νεότερες ΣΕΙΡΑ PDP 6500 και νεότερες</string>
+    <string name="string_TTX">TTX</string>
+    <string name="string_TTX_MIX">TTX/MIX</string>
+    <string name="string_Cancel">CANCEL</string>
+    <string name="string_Reveal">REVEAL</string>
+    <string name="string_Hold">HOLD</string>
+    <string name="string_Double">"DOUBLE
+SIZE"</string>
+    <string name="string_Size">SIZE</string>
+    <string name="string_Sub">"SUB
+PAGE"</string>
+    <string name="string_Page">PAGE</string>
+    <string name="string_Index">INDEX</string>
+    <string name="string_Flof_List">FLOF LIST</string>
+    <string name="string_Store">STORE</string>
+    <string name="string_Page_Down">"PAGE
+DOWN"</string>
+    <string name="string_Down">DOWN</string>
+    <string name="string_Page_Up">PAGE UP</string>
+    <string name="string_Message_Disconnect">"Disconnect
+
+ Network Connection Failure"</string>
+    <string name="string_Message_Retry">Επανάληψη</string>
+    <string name="string_Message_Cancel">Ακύρωση</string>
+    <string name="string_Message_Connecting">Σύνδεση...</string>
+    <string name="string_Message_Select_Allow">Για να χρησιμοποιήσετε αυτήν την εφαρμογή, θα πρέπει να επιλέξετε \"Να επιτρέπεται\" από την οθόνη της συσκευής.</string>
+    <string name="please_try_again">Δοκιμάστε ξανά.</string>
+    <string name="it_takes_30_seconds">Χρειάζονται 20-30 δευτ.</string>
+    <string name="check_bluetooth_settings">"Ελέγξτε τις ρυθμίσεις του Mobile Bluetooth.
+
+Το Mobile Bluetooth θα πρέπει να είναι ενεργό και να έχει δημιουργηθεί ζεύγος με τη συσκευή."</string>
+    <string name="string_About_Application">About Application</string>
+    <string name="string_Supported_Models">Supported Models</string>
+    <string name="string_Brief_Description">Brief Description</string>
+    <string name="string_Brief_TvRemote_1">Έχετε στη διάθεσή σας τις βασικές λειτουργίες του τηλεχειριστηρίου.</string>
+    <string name="string_Brief_TvRemote_2">Σύροντας προς τα επάνω/κάτω/αριστερά/δεξιά, μπορείτε να ελέγξετε την κατεύθυνση της κίνησης, να επιλέξετε κανάλι ή να ρυθμίσετε την ένταση του ήχου, ανάλογα με την περίπτωση.</string>
+    <string name="string_Brief_Gesture_Remote_title">Gesture Remote</string>
+    <string name="string_Brief_Gesture_Remote_text">Μπορείτε να επιλέξετε κανάλι και να ρυθμίσετε την ένταση του ήχου αγγίζοντας την οθόνη και δίνοντας κλίση στη συσκευή.</string>
+    <string name="string_Brief_KeyBoard">Εάν πρέπει να πληκτρολογήσετε, όπως όταν χρησιμοποιείτε το Internet@TV, μπορείτε να εισαγάγετε χαρακτήρες χρησιμοποιώντας αυτό το χειριστήριο.</string>
+    <string name="string_Brief_GameRemote">Αυτό το χειριστήριο προσφέρει ένα εύχρηστο UI για τα παιχνίδια στο Internet@TV.</string>
+    <string name="string_Channel">CHANNEL</string>
+    <string name="string_Numbers">NUMBERS</string>
+    <string name="string_Playback">PLAYBACK</string>
+    <string name="string_Hotkey">HOTKEY</string>
+    <string name="string_Message_Wi_Fi_con_lost">Wi-Fi connection lost...</string>
+    <string name="string_Device_Disconnected">Device disconnected</string>
+    <string name="string_Not_Allowed_to_Connect">Not allowed to connect...</string>
+    <string name="string_Ok">OK</string>
+    <string name="string_Gesture_Help">Phone을 상/하, 좌/우로 기울임으로 써 channel up/down, volume +/- 를 할 수 있다.</string>
+    <string name="string_BD_Remote">BD Remote</string>
+    <string name="string_Keypad">Keypad</string>
+    <string name="string_NAVI">NAVI</string>
+    <string name="string_123">123</string>
+    <string name="string_Authentication_Failed">Ο έλεγχος ταυτότητας απέτυχε</string>
+    <string name="string_Simultaneous_access_is_limited">Η ταυτόχρονη πρόσβαση των κινητών συσκευών περιορίζεται σε 4</string>
+    <string name="string_Authentication_Failed_Incorrect_TV">Δεν ολοκληρώθηκαν οι κατάλληλες ρυθμίσεις του μενού τηλεόρασης</string>
+    <string name="string_To_use_device_allow_it">Για να χρησιμοποιήσετε αυτή τη συσκευή, επιτρέψτε τη συσκ. στο μενού τηλεόρασης.</string>
+    <string name="string_Touch_Here">Ακουμπήστε εδώ</string>
+    <string name="string_By_tilting_device">Δίνοντας κλίση στη συσκ., μπορείτε να ελέγχετε το κανάλι και την ένταση του ήχου</string>
+    <string name="string_Auto_Discovery">Auto Discovery</string>
+    <string name="please_wait">Περιμένετε…</string>
+    <string name="no_device">Χωρίς συσκευή.</string>
+    <string name="available_within_bluetooth">Διαθέσιμο εντός της κάλυψης Bluetooth.</string>
+    <string name="callibrate_horizontally_based">Οριζόντια βαθμονόμηση βάσει της τρέχουσας θέσης.</string>
+    <string name="do_not_move">Μην μετακινήσετε τη συσκευή.</string>
+    <string name="power_on">Ενεργοποίηση</string>
+    <string name="TV_Bluetooth_must_be_turned_on">Το Bluetooth της τηλεόρασης θα πρέπει να είναι ενεργό.</string>
+</resources>

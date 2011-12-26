@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@id/browser" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.samsung.remoteTV.view.controls.TraceLayout android:orientation="vertical" android:id="@id/trace" android:background="#00000000" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_x="0.0px" android:layout_y="82.0px" android:eventsInterceptionEnabled="true">
+        <AbsoluteLayout android:id="@id/browser_control" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_x="0.0px" android:layout_y="0.0px"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <com.samsung.remoteTV.view.controls.TextAndButtonView android:gravity="center_horizontal" android:id="@id/browser_tab_toolbar_1_holder" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="13.0px" android:layout_y="2.0px" />
+            <Button android:background="@drawable/tc_bg_line" android:layout_width="6.0px" android:layout_height="74.0px" android:layout_x="117.0px" android:layout_y="16.0px" />
+            <com.samsung.remoteTV.view.controls.TextAndButtonView android:gravity="center_horizontal" android:id="@id/browser_tab_toolbar_2_holder" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="134.0px" android:layout_y="2.0px" />
+            <Button android:background="@drawable/tc_bg_line" android:layout_width="6.0px" android:layout_height="74.0px" android:layout_x="237.0px" android:layout_y="16.0px" />
+            <com.samsung.remoteTV.view.controls.TextAndButtonView android:gravity="center_horizontal" android:id="@id/browser_tab_toolbar_3_holder" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="250.0px" android:layout_y="2.0px" />
+            <Button android:background="@drawable/tc_bg_line" android:layout_width="6.0px" android:layout_height="74.0px" android:layout_x="357.0px" android:layout_y="16.0px" />
+            <com.samsung.remoteTV.view.controls.TextAndButtonView android:gravity="center_horizontal" android:id="@id/browser_tab_toolbar_4_holder" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="370.0px" android:layout_y="2.0px" />
+            <ImageView android:layout_width="450.0px" android:layout_height="566.0px" android:src="@drawable/glass_bg_01" android:layout_x="22.0px" android:layout_y="65.0px" />
+            <AbsoluteLayout android:background="@drawable/popup_menu_bg" android:layout_width="480.0px" android:layout_height="231.0px" android:layout_x="0.0px" android:layout_y="450.0px">
+                <ImageView android:id="@id/back_button_highlight" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/popup_menu_bg_back" android:layout_x="0.0px" android:layout_y="0.0px" />
+                <ImageView android:id="@id/zoom_button_highlight" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/popup_menu_bg_zoom" android:layout_x="0.0px" android:layout_y="0.0px" />
+                <ImageView android:id="@id/pointer_button_highlight" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/popup_menu_bg_pointer" android:layout_x="0.0px" android:layout_y="0.0px" />
+                <ImageView android:id="@id/pip_button_highlight" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/popup_menu_bg_pip" android:layout_x="0.0px" android:layout_y="0.0px" />
+                <ImageView android:id="@id/scroll_up_button_highlight" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/popup_menu_bg_scroll_up" android:layout_x="0.0px" android:layout_y="0.0px" />
+                <ImageView android:id="@id/scroll_down_button_highlight" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/popup_menu_bg_scroll_down" android:layout_x="0.0px" android:layout_y="0.0px" />
+                <TextView android:textColor="#ff000000" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="Back" android:layout_x="23.0px" android:layout_y="64.0px" />
+                <TextView android:textColor="#ffffffff" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="Back" android:layout_x="23.0px" android:layout_y="65.0px" />
+                <Button android:id="@id/back_button" android:background="#00000000" android:layout_width="170.0px" android:layout_height="115.0px" android:layout_x="0.0px" android:layout_y="20.0px" />
+                <TextView android:textColor="#ff000000" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="Zoom" android:layout_x="173.0px" android:layout_y="64.0px" />
+                <TextView android:textColor="#ffffffff" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="Zoom" android:layout_x="173.0px" android:layout_y="65.0px" />
+                <Button android:id="@id/zoom_button" android:background="#00000000" android:layout_width="160.0px" android:layout_height="115.0px" android:layout_x="160.0px" android:layout_y="20.0px" />
+                <TextView android:textColor="#ff000000" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="up" android:layout_x="323.0px" android:layout_y="80.0px" />
+                <TextView android:textColor="#ffffffff" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="up" android:layout_x="323.0px" android:layout_y="81.0px" />
+                <TextView android:textColor="#ff000000" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="Scroll" android:layout_x="323.0px" android:layout_y="46.0px" />
+                <TextView android:textColor="#ffffffff" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="Scroll" android:layout_x="323.0px" android:layout_y="47.0px" />
+                <Button android:id="@id/scroll_up_button" android:background="#00000000" android:layout_width="160.0px" android:layout_height="115.0px" android:layout_x="310.0px" android:layout_y="20.0px" />
+                <TextView android:textColor="#ffffffff" android:gravity="center" android:id="@id/pointer_text" android:layout_width="140.0px" android:layout_height="28.0px" android:text="Pointer" android:layout_x="23.0px" android:layout_y="166.0px" />
+                <Button android:id="@id/pointer_button" android:background="#00000000" android:layout_width="170.0px" android:layout_height="115.0px" android:layout_x="0.0px" android:layout_y="125.0px" />
+                <TextView android:textColor="#ff000000" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="PIP" android:layout_x="173.0px" android:layout_y="165.0px" />
+                <TextView android:textColor="#ffffffff" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="PIP" android:layout_x="173.0px" android:layout_y="166.0px" />
+                <Button android:id="@id/pip_button" android:background="#00000000" android:layout_width="160.0px" android:layout_height="115.0px" android:layout_x="160.0px" android:layout_y="125.0px" />
+                <TextView android:textColor="#ff000000" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="Scroll" android:layout_x="323.0px" android:layout_y="150.0px" />
+                <TextView android:textColor="#ffffffff" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="Scroll" android:layout_x="323.0px" android:layout_y="150.0px" />
+                <TextView android:textColor="#ff000000" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="down" android:layout_x="323.0px" android:layout_y="183.0px" />
+                <TextView android:textColor="#ffffffff" android:gravity="center" android:layout_width="135.0px" android:layout_height="28.0px" android:text="down" android:layout_x="323.0px" android:layout_y="184.0px" />
+                <Button android:id="@id/scroll_down_button" android:background="#00000000" android:layout_width="160.0px" android:layout_height="115.0px" android:layout_x="315.0px" android:layout_y="125.0px" />
+            </AbsoluteLayout>
+            <Button android:id="@id/up_arrow" android:background="@drawable/marble_up_s_action" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="150.0px" android:layout_y="48.0px" />
+            <Button android:id="@id/down_arrow" android:background="@drawable/marble_down_s_action" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="150.0px" android:layout_y="343.0px" />
+            <Button android:id="@id/left_arrow" android:background="@drawable/marble_left_s_action" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="15.0px" android:layout_y="188.0px" />
+            <Button android:id="@id/right_arrow" android:background="@drawable/marble_right_s_action" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="325.0px" android:layout_y="188.0px" />
+        </AbsoluteLayout>
+    </com.samsung.remoteTV.view.controls.TraceLayout>
+    <LinearLayout android:id="@id/anim_holder" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_x="0.0px" android:layout_y="115.0px" />
+</AbsoluteLayout>

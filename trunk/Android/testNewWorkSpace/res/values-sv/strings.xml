@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Samsung Remote</string>
+    <string name="tv_remote">TV Remote</string>
+    <string name="string_settings_TS_LR">Tryck på Känslighet för vänster/höger</string>
+    <string name="string_settings_TS_UD">Tryck på Känslighet upp/ned</string>
+    <string name="string_settings_GRS">Hastighet för fjärrörelse</string>
+    <string name="string_settings_SS">Sphere Sensitivity</string>
+    <string name="string_settings_TV_Region">Inställningsregion</string>
+    <string name="string_about_application_1">Programmet är Wi-Fi fjärrkontroll för Samsung Internet@TV för 2010.</string>
+    <string name="string_about_application_2">Om både din Phone och TV anslöts till samma åtkomstpunkt länkas din Phone till TV:n automatiskt och du kan använda din Phone som en vanlig fjärrkontroll.</string>
+    <string name="string_Smart_Hub">SMART HUB</string>
+    <string name="string_Tools">TOOLS</string>
+    <string name="string_Info">INFO</string>
+    <string name="string_Menu">MENU</string>
+    <string name="string_Demo_Play">TV Remote DEMO PLAY</string>
+    <string name="string_Demo_Play_Title">DEMO PLAY</string>
+    <string name="string_Demo_Play_Description">Du kan på förhand uppleva en Samsung TV Remote.</string>
+    <string name="devices_not_found">Både din smartphone och enheten ska vara anslutna till samma åtkomstpunkt. Kontrollera nätverksinställningarna.</string>
+    <string name="demo_notification">Knappen för att konfigurera fjärrkontrollen kan skilja sig åt beroende på område och modell.</string>
+    <string name="do_not_show_message">Visa inte meddelandet igen.</string>
+    <string name="string_Channel_list">Channel list</string>
+    <string name="string_Search">Search</string>
+    <string name="string_Internet">Internet@TV</string>
+    <string name="string_Guide">Guide</string>
+    <string name="string_threeD">3D</string>
+    <string name="string_E_Manual">E-Manual</string>
+    <string name="string_P_Size">P.SIZE</string>
+    <string name="string_D">D</string>
+    <string name="string_Subt">SUBT.</string>
+    <string name="string_Devices">Devices</string>
+    <string name="string_TV_Remote">TV Remote</string>
+    <string name="string_Gesture_Remote">Gesture Remote</string>
+    <string name="string_Keyboard">Keyboard</string>
+    <string name="string_Game_Remote">Game Remote</string>
+    <string name="string_Manual">Manual</string>
+    <string name="string_Settings">Settings</string>
+    <string name="string_Return">RETURN</string>
+    <string name="string_Exit">EXIT</string>
+    <string name="string_Enter">ENTER</string>
+    <string name="string_supported_models_1">Alla SAMSUNG-TV-apparater med Internet@TV 2010</string>
+    <string name="string_supported_models_2">LCD 650 SERIES och högre LED 6500 SERIES och högre PDP 6500 SERIES och högre</string>
+    <string name="string_TTX">TTX</string>
+    <string name="string_TTX_MIX">TTX/MIX</string>
+    <string name="string_Cancel">CANCEL</string>
+    <string name="string_Reveal">REVEAL</string>
+    <string name="string_Hold">HOLD</string>
+    <string name="string_Double">"DOUBLE
+SIZE"</string>
+    <string name="string_Size">SIZE</string>
+    <string name="string_Sub">"SUB
+PAGE"</string>
+    <string name="string_Page">PAGE</string>
+    <string name="string_Index">INDEX</string>
+    <string name="string_Flof_List">FLOF LIST</string>
+    <string name="string_Store">STORE</string>
+    <string name="string_Page_Down">"PAGE
+DOWN"</string>
+    <string name="string_Down">DOWN</string>
+    <string name="string_Page_Up">PAGE UP</string>
+    <string name="string_Message_Disconnect">"Disconnect
+
+ Network Connection Failure"</string>
+    <string name="string_Message_Retry">Försök igen</string>
+    <string name="string_Message_Cancel">Avbryt</string>
+    <string name="string_Message_Connecting">Ansluter...</string>
+    <string name="string_Message_Select_Allow">Om du vill använda programmet väljer du \"Tillåt\" på enhetsskärmen.</string>
+    <string name="please_try_again">Försök igen.</string>
+    <string name="it_takes_30_seconds">Det tar 20–30 sekunder.</string>
+    <string name="check_bluetooth_settings">"Kontrollera inställningarna för mobil Bluetooth.
+
+Mobilt Bluetooth ska vara påslagen och hopparad med enheten."</string>
+    <string name="string_About_Application">About Application</string>
+    <string name="string_Supported_Models">Supported Models</string>
+    <string name="string_Brief_Description">Brief Description</string>
+    <string name="string_Brief_TvRemote_1">Grundläggande fjärrkontrollåtgärder är tillgängliga.</string>
+    <string name="string_Brief_TvRemote_2">Med dragrörelser som upp/ned/vänster/höger kan Riktning eller KAN/VOL justeras oavsett bakgrund.</string>
+    <string name="string_Brief_Gesture_Remote_title">Gesture Remote</string>
+    <string name="string_Brief_Gesture_Remote_text">KAN/VOL kan justeras genom att vidröra skärmen och luta enheten.</string>
+    <string name="string_Brief_KeyBoard">Om du vill skriva, t.ex. när du använder Internet@TV, kan du enkelt mata in bokstäver med hjälp av kontrollen.</string>
+    <string name="string_Brief_GameRemote">Kontrollen ger ett bra UI för spel med Internet@TV.</string>
+    <string name="string_Channel">CHANNEL</string>
+    <string name="string_Numbers">NUMBERS</string>
+    <string name="string_Playback">PLAYBACK</string>
+    <string name="string_Hotkey">HOTKEY</string>
+    <string name="string_Message_Wi_Fi_con_lost">Wi-Fi connection lost...</string>
+    <string name="string_Device_Disconnected">Device disconnected</string>
+    <string name="string_Not_Allowed_to_Connect">Not allowed to connect...</string>
+    <string name="string_Ok">OK</string>
+    <string name="string_Gesture_Help">Phone을 상/하, 좌/우로 기울임으로 써 channel up/down, volume +/- 를 할 수 있다.</string>
+    <string name="string_BD_Remote">BD Remote</string>
+    <string name="string_Keypad">Keypad</string>
+    <string name="string_NAVI">NAVI</string>
+    <string name="string_123">123</string>
+    <string name="string_Authentication_Failed">Verifiering misslyckades</string>
+    <string name="string_Simultaneous_access_is_limited">Samtidig tillgång till mobilenheter begränsas till upp till 4</string>
+    <string name="string_Authentication_Failed_Incorrect_TV">Rätt TV-menyinställningar har inte genomförts</string>
+    <string name="string_To_use_device_allow_it">Aktivera den här enheten på TV-menyn om du vill använda den.</string>
+    <string name="string_Touch_Here">Tryck här</string>
+    <string name="string_By_tilting_device">Du kan styra kanaler och volym genom att luta enheten</string>
+    <string name="string_Auto_Discovery">Auto Discovery</string>
+    <string name="please_wait">Vänta</string>
+    <string name="no_device">Ingen enhet.</string>
+    <string name="available_within_bluetooth">Tillgängligt inom täckningen för Bluetooth.</string>
+    <string name="callibrate_horizontally_based">Kalibrera horisontellt utifrån aktuell position.</string>
+    <string name="do_not_move">Flytta inte enheten.</string>
+    <string name="power_on">Ström på</string>
+    <string name="TV_Bluetooth_must_be_turned_on">Bluetooth för TV måste vara på.</string>
+</resources>

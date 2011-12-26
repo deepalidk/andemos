@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="string_array_regions">
+        <item>United States</item>
+        <item>한국</item>
+        <item>Europe</item>
+        <item>Italia</item>
+        <item>Brazil</item>
+        <item>Asia</item>
+        <item>South America</item>
+        <item>중국</item>
+        <item>대만</item>
+    </string-array>
+    <string-array name="string_array_manual_list_TV">
+        <item>1. О приложении</item>
+        <item>2. Supported Models</item>
+        <item>3. Краткое описание</item>
+        <item>\u0009\u0009 TV Remote</item>
+        <item>\u0009\u0009 Gesture Remote</item>
+        <item>\u0009\u0009 Keyboard</item>
+        <item>\u0009\u0009 Game Remote</item>
+    </string-array>
+    <string-array name="string_array_manual_list_BD">
+        <item>1. О приложении</item>
+        <item>2. Supported Models</item>
+        <item>3. Краткое описание</item>
+        <item>\u0009\u0009 TV Remote</item>
+        <item>\u0009\u0009 Keyboard</item>
+    </string-array>
+</resources>

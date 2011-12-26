@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@drawable/mousepad" android:layout_width="fill_parent" android:layout_height="fill_parent" android:minWidth="480.0px" android:minHeight="600.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageButton android:id="@id/btn_up" android:background="@drawable/mecha_up_nor" android:visibility="gone" android:layout_width="144.0px" android:layout_height="125.0px" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" />
+    <ImageButton android:id="@id/btn_left" android:background="@drawable/mecha_left_nor" android:visibility="gone" android:layout_width="125.0px" android:layout_height="144.0px" android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
+    <ImageButton android:id="@id/btn_right" android:background="@drawable/mecha_right_nor" android:visibility="gone" android:layout_width="125.0px" android:layout_height="144.0px" android:layout_alignParentRight="true" android:layout_centerVertical="true" />
+    <ImageButton android:id="@id/btn_down" android:background="@drawable/mecha_down_nor" android:visibility="gone" android:layout_width="144.0px" android:layout_height="125.0px" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+    <ImageButton android:id="@id/btn_return" android:background="@drawable/tc_icon_return_nor" android:visibility="gone" android:layout_width="92.0px" android:layout_height="92.0px" android:layout_alignParentLeft="true" android:layout_alignParentBottom="true" />
+    <ImageButton android:id="@id/btn_exit" android:background="@drawable/tc_icon_exit_nor" android:visibility="gone" android:layout_width="92.0px" android:layout_height="78.0px" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" />
+</RelativeLayout>

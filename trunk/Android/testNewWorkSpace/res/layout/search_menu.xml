@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/text_button_holder" android:layout_width="fill_parent" android:layout_height="680.0px" android:layout_marginTop="7.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button android:textSize="19.0px" android:typeface="normal" android:textColor="@color/WHITE" android:id="@id/history" android:tag="menu_search_button" android:background="@drawable/tc_title_action" android:layout_width="98.0px" android:layout_height="65.0px" android:text="History" android:layout_alignParentTop="true" android:layout_alignParentRight="true" />
+    <EditText android:id="@id/search_edit" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_toLeftOf="@id/history" />
+    <ListView android:id="@id/search_result" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_below="@id/search_edit" />
+</RelativeLayout>

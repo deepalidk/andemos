@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@id/channel_tab" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_x="0.0px" android:layout_y="0.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:background="@drawable/dot_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_x="0.0px" android:layout_y="65.0px" />
+    <LinearLayout android:id="@id/ch_vol_move_holder" android:visibility="visible" android:layout_width="480.0px" android:layout_height="600.0px" android:layout_x="0.0px" android:layout_y="72.0px">
+        <com.samsung.remoteTV.doteAnimation.Panel android:id="@id/ch_vol_panel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout>
+    <ImageView android:id="@id/chvol_touch_up_animation" android:visibility="visible" android:layout_width="270.0px" android:layout_height="270.0px" android:layout_x="105.0px" android:layout_y="38.0px" />
+    <ImageView android:id="@id/chvol_touch_down_animation" android:visibility="visible" android:layout_width="270.0px" android:layout_height="270.0px" android:layout_x="105.0px" android:layout_y="398.0px" />
+    <ImageView android:id="@id/chvol_touch_minus_animation" android:visibility="visible" android:layout_width="270.0px" android:layout_height="270.0px" android:layout_x="-75.0px" android:layout_y="218.0px" />
+    <ImageView android:id="@id/chvol_touch_plus_animation" android:visibility="visible" android:layout_width="270.0px" android:layout_height="270.0px" android:layout_x="285.0px" android:layout_y="218.0px" />
+    <ImageView android:id="@id/chvol_move_up_animation" android:visibility="invisible" android:layout_width="240.0px" android:layout_height="380.0px" android:layout_x="120.0px" android:layout_y="133.0px" />
+    <ImageView android:id="@id/chvol_move_down_animation" android:visibility="invisible" android:layout_width="240.0px" android:layout_height="380.0px" android:layout_x="120.0px" android:layout_y="193.0px" />
+    <ImageView android:id="@id/chvol_move_left_animation" android:visibility="invisible" android:layout_width="340.0px" android:layout_height="140.0px" android:layout_x="0.0px" android:layout_y="273.0px" />
+    <ImageView android:id="@id/chvol_move_right_animation" android:visibility="invisible" android:layout_width="360.0px" android:layout_height="200.0px" android:layout_x="137.0px" android:layout_y="253.0px" />
+    <ImageView android:id="@id/cue_vertical_animation" android:visibility="invisible" android:layout_width="77.0px" android:layout_height="619.0px" android:layout_x="202.0px" android:layout_y="55.0px" />
+    <ImageView android:id="@id/cue_horizontal_animation" android:visibility="invisible" android:layout_width="480.0px" android:layout_height="77.0px" android:layout_x="0.0px" android:layout_y="318.0px" />
+    <Button android:id="@id/channel_tab_bottom_1_holder" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="366.0px" android:layout_y="97.0px" />
+    <Button android:id="@id/tv_chvol_spinner_up_btn" android:visibility="invisible" android:layout_width="120.0px" android:layout_height="120.0px" android:layout_x="180.0px" android:layout_y="105.0px" />
+    <Button android:id="@id/tv_chvol_spinner_minus_btn" android:visibility="invisible" android:layout_width="120.0px" android:layout_height="120.0px" android:layout_x="1.0px" android:layout_y="293.0px" />
+    <Button android:id="@id/tv_chvol_spinner_plus_btn" android:visibility="invisible" android:layout_width="120.0px" android:layout_height="120.0px" android:layout_x="360.0px" android:layout_y="293.0px" />
+    <Button android:id="@id/tv_chvol_spinner_down_btn" android:visibility="invisible" android:layout_width="120.0px" android:layout_height="120.0px" android:layout_x="180.0px" android:layout_y="484.0px" />
+</AbsoluteLayout>

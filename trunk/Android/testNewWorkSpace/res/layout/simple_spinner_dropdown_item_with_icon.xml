@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:id="@id/icon_holder" android:paddingTop="5.0px" android:layout_width="94.0px" android:layout_height="94.0px"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <ImageView android:id="@id/icon1" android:paddingTop="5.0px" android:layout_width="94.0px" android:layout_height="94.0px"
+          xmlns:android="http://schemas.android.com/apk/res/android" />
+    </LinearLayout>
+    <CheckedTextView android:ellipsize="marquee" android:id="@id/text1" android:layout_width="fill_parent" android:layout_height="?android:listPreferredItemHeight" android:singleLine="true" style="?android:attr/spinnerDropDownItemStyle"
+      xmlns:android="http://schemas.android.com/apk/res/android" />
+</LinearLayout>
