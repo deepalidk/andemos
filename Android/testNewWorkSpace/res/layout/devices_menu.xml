@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@id/discoveryMenu" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_x="0.0px" android:layout_y="0.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <AbsoluteLayout android:background="#ff202020" android:layout_width="fill_parent" android:layout_height="115.0px" android:layout_x="0.0px" android:layout_y="0.0px">
+        <Button android:textColor="#ffffffff" android:gravity="center" android:id="@id/demoPlayButton" android:background="@drawable/button_demo_play" android:layout_width="164.0px" android:layout_height="111.0px" android:text="@string/string_Demo_Play" android:shadowColor="@color/BLACK" android:layout_x="7.0px" android:layout_y="5.0px" style="@style/Shadow" />
+        <TextView android:textSize="22.0px" android:textColor="#ff8c8c8c" android:layout_width="300.0px" android:layout_height="55.0px" android:text="@string/string_Demo_Play_Description" android:shadowColor="@color/BLACK" android:layout_x="176.0px" android:layout_y="30.0px" style="@style/Shadow" />
+    </AbsoluteLayout>
+    <AbsoluteLayout android:background="@drawable/title_bg_02" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_x="0.0px" android:layout_y="115.0px" />
+    <TextView android:textSize="34.0px" android:textColor="#ffffffff" android:layout_width="308.0px" android:layout_height="40.0px" android:text="@string/string_Auto_Discovery" android:shadowColor="@color/BLACK" android:layout_x="15.0px" android:layout_y="123.0px" style="@style/Shadow" />
+    <Button android:id="@id/refreshButton" android:background="@drawable/refresh_button" android:layout_width="138.0px" android:layout_height="84.0px" android:layout_x="348.0px" android:layout_y="108.0px" />
+    <RelativeLayout android:id="@id/rel" android:layout_width="fill_parent" android:layout_height="570.0px" android:layout_x="0.0px" android:layout_y="195.0px">
+        <AbsoluteLayout android:id="@id/bluetoothInfo" android:background="@drawable/info_popup_bg" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="138.0px" android:layout_x="0.0px" android:layout_alignParentBottom="true">
+            <ImageView android:background="@drawable/icon_info" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="14.0px" android:layout_y="12.0px" />
+            <TextView android:textSize="28.0px" android:textColor="#ff0a1e43" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bluetooth Power On" android:layout_x="61.0px" android:layout_y="11.0px" />
+            <ImageView android:background="@drawable/check_on" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="20.0px" android:layout_y="62.0px" />
+            <TextView android:textSize="20.0px" android:textColor="#ff282828" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TV Bluetooth must be turned on" android:layout_x="61.0px" android:layout_y="64.0px" />
+            <ImageView android:background="@drawable/check_on" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="20.0px" android:layout_y="92.0px" />
+            <TextView android:textSize="20.0px" android:textColor="#ff282828" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Available within Bluetooth coverage" android:layout_x="61.0px" android:layout_y="94.0px" />
+        </AbsoluteLayout>
+        <AbsoluteLayout android:id="@id/devicesListView" android:layout_width="480.0px" android:layout_height="fill_parent" android:layout_above="@id/bluetoothInfo">
+            <ListView android:id="@id/ListView01" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_x="20.0px" android:layout_y="0.0px" />
+        </AbsoluteLayout>
+    </RelativeLayout>
+    <TextView android:textSize="24.0px" android:gravity="center" android:id="@id/devices_not_found_View" android:visibility="gone" android:layout_width="440.0px" android:layout_height="160.0px" android:text="@string/devices_not_found" android:layout_x="20.0px" android:layout_y="250.0px" android:lineSpacingMultiplier="1.5" />
+</AbsoluteLayout>

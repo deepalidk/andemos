@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/btn_05_sel" />
+    <item>
+        <bitmap android:gravity="center" android:src="@drawable/icon_rewind_re_02_sel" />
+    </item>
+</layer-list>

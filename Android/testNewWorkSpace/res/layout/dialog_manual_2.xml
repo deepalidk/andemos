@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="vertical" android:background="#ffffffff" android:layout_width="wrap_content" android:layout_height="500.0px" android:minWidth="400.0px" android:minHeight="500.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="25.0px" android:gravity="left|center" android:id="@id/dialog_message" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="420.0px" android:maxWidth="420.0px" />
+    <Button android:textColor="#ffffffff" android:id="@id/dialog_button" android:background="#ff444444" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="80.0px" />
+</LinearLayout>

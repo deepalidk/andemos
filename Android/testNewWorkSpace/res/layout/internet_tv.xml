@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@id/internetTV" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="20.0px" android:textColor="@color/WHITE" android:gravity="left|center" android:id="@id/categoryHolder" android:paddingLeft="20.0px" android:layout_width="fill_parent" android:layout_height="48.0px" android:layout_x="0.0px" android:layout_y="70.0px" android:layout_alignParentTop="true" />
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="644.0px" android:layout_x="0.0px" android:layout_y="118.0px">
+        <LinearLayout android:gravity="center_horizontal" android:id="@id/topMenuHolder" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentTop="true" />
+        <LinearLayout android:id="@id/bottomMenuHolder" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" />
+        <LinearLayout android:id="@id/menuControlsHolder" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_above="@id/bottomMenuHolder" />
+        <LinearLayout android:orientation="vertical" android:id="@id/widgetsHolder" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_above="@id/menuControlsHolder" android:layout_below="@id/topMenuHolder" />
+        <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:id="@id/messageHolder" android:background="@drawable/message_background" android:padding="20.0px" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="400.0px" android:layout_centerInParent="true" />
+        <LinearLayout android:id="@id/progressHolder" android:background="#00ffffff" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_alignParentRight="true">
+            <ProgressBar android:visibility="invisible" android:layout_width="30.0dip" android:layout_height="30.0dip" style="?android:attr/progressBarStyleSmall" />
+        </LinearLayout>
+    </RelativeLayout>
+</AbsoluteLayout>

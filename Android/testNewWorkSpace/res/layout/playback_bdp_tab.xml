@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@id/playback_tab" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_x="0.0px" android:layout_y="0.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:fadingBtn="http://schemas.android.com/apk/res/com.samsung.remoteTV">
+    <AbsoluteLayout android:id="@id/playback_toolbar" android:background="@drawable/keypad_bg_1" android:layout_width="480.0px" android:layout_height="600.0px" android:layout_x="0.0px" android:layout_y="60.0px">
+        <RelativeLayout android:padding="10.0px" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_centerInParent="true">
+                <RelativeLayout android:layout_width="fill_parent" android:layout_height="200.0px">
+                    <RelativeLayout android:layout_width="wrap_content" android:layout_height="200.0px" android:layout_alignParentLeft="true" android:layout_alignParentTop="true">
+                        <Button android:textColor="#ffffffff" android:id="@id/playback_tab_playback_0_1_holder" android:padding="2.0px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" />
+                        <Button android:textColor="#ffffffff" android:id="@id/playback_tab_playback_0_4_holder" android:padding="2.0px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" />
+                    </RelativeLayout>
+                    <RelativeLayout android:layout_width="wrap_content" android:layout_height="200.0px" android:layout_alignParentTop="true" android:layout_centerHorizontal="true">
+                        <Button android:textColor="#ffffffff" android:id="@id/playback_tab_playback_0_2_holder" android:padding="2.0px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" />
+                        <Button android:textColor="#ffffffff" android:id="@id/playback_tab_playback_0_5_holder" android:padding="2.0px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" />
+                    </RelativeLayout>
+                    <RelativeLayout android:layout_width="wrap_content" android:layout_height="200.0px" android:layout_alignParentTop="true" android:layout_alignParentRight="true">
+                        <Button android:textColor="#ffffffff" android:id="@id/playback_tab_playback_0_3_holder" android:padding="2.0px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" />
+                        <Button android:textColor="#ffffffff" android:id="@id/playback_tab_playback_0_6_holder" android:padding="2.0px" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" />
+                    </RelativeLayout>
+                </RelativeLayout>
+                <RelativeLayout android:layout_width="fill_parent" android:layout_height="150.0px">
+                    <TableLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:stretchColumns="0,1,2,3" android:layout_centerVertical="true">
+                        <TableRow>
+                            <FrameLayout android:layout_gravity="left" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                                <Button android:id="@id/playback_tab_playback_1_1_holder" android:layout_width="100.0px" android:layout_height="wrap_content" />
+                            </FrameLayout>
+                            <FrameLayout android:layout_gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                                <Button android:id="@id/playback_tab_playback_1_2_holder" android:layout_width="100.0px" android:layout_height="wrap_content" />
+                            </FrameLayout>
+                            <FrameLayout android:layout_gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                                <Button android:id="@id/playback_tab_playback_1_3_holder" android:layout_width="100.0px" android:layout_height="wrap_content" />
+                            </FrameLayout>
+                            <FrameLayout android:layout_gravity="right" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                                <Button android:id="@id/playback_tab_playback_1_4_holder" android:layout_width="100.0px" android:layout_height="wrap_content" />
+                            </FrameLayout>
+                        </TableRow>
+                    </TableLayout>
+                </RelativeLayout>
+                <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+                    <Button android:id="@id/playback_tab_playback_2_1_holder" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentLeft="true" />
+                    <Button android:id="@id/playback_tab_playback_2_2_holder" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true" />
+                    <Button android:id="@id/playback_tab_playback_2_3_holder" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true" />
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </AbsoluteLayout>
+</AbsoluteLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/btn_04_nor" />
+    <item android:top="10.0px">
+        <bitmap android:gravity="top" android:src="@drawable/icon_return_02_nor" />
+    </item>
+    <item android:top="90.0px">
+        <bitmap android:gravity="top" android:src="@drawable/return_text" />
+    </item>
+</layer-list>

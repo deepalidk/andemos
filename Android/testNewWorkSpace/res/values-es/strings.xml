@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Samsung Remote</string>
+    <string name="tv_remote">TV Remote</string>
+    <string name="string_settings_TS_LR">Sensibilidad táctil Izquierda/Derecha</string>
+    <string name="string_settings_TS_UD">Sensibilidad táctil Arriba/Abajo</string>
+    <string name="string_settings_GRS">Velocidad remota</string>
+    <string name="string_settings_SS">Sphere Sensitivity</string>
+    <string name="string_settings_TV_Region">Configuración regional</string>
+    <string name="string_about_application_1">Esta aplicación es el mando a distancia Wi-Fi de Samsung Internet@TV for 2010.</string>
+    <string name="string_about_application_2">Si el Phone y la TV están conectados al mismo punto de acceso, el Phone se conecta automáticamente con el televisor y el primero puede utilizarse como mando a distancia general.</string>
+    <string name="string_Smart_Hub">SMART HUB</string>
+    <string name="string_Tools">TOOLS</string>
+    <string name="string_Info">INFO</string>
+    <string name="string_Menu">MENU</string>
+    <string name="string_Demo_Play">TV Remote DEMO PLAY</string>
+    <string name="string_Demo_Play_Title">DEMO PLAY</string>
+    <string name="string_Demo_Play_Description">Puede probar antes Samsung TV Remote.</string>
+    <string name="devices_not_found">Su teléfono inteligente y el dispositivo deben estar conectados al mismo punto de acceso.. Compruebe su configuración de red.</string>
+    <string name="demo_notification">La configuración del botón del mando a distancia puede ser diferente según el área o el modelo.</string>
+    <string name="do_not_show_message">No mostrar mensaje la próxima vez.</string>
+    <string name="string_Channel_list">Channel list</string>
+    <string name="string_Search">Search</string>
+    <string name="string_Internet">Internet@TV</string>
+    <string name="string_Guide">Guide</string>
+    <string name="string_threeD">3D</string>
+    <string name="string_E_Manual">E-Manual</string>
+    <string name="string_P_Size">P.SIZE</string>
+    <string name="string_D">D</string>
+    <string name="string_Subt">SUBT.</string>
+    <string name="string_Devices">Devices</string>
+    <string name="string_TV_Remote">TV Remote</string>
+    <string name="string_Gesture_Remote">Gesture Remote</string>
+    <string name="string_Keyboard">Keyboard</string>
+    <string name="string_Game_Remote">Game Remote</string>
+    <string name="string_Manual">Manual</string>
+    <string name="string_Settings">Settings</string>
+    <string name="string_Return">RETURN</string>
+    <string name="string_Exit">EXIT</string>
+    <string name="string_Enter">ENTER</string>
+    <string name="string_supported_models_1">Todas las TV SAMSUNG con Internet@TV</string>
+    <string name="string_supported_models_2">superior a LCD 650 y LED/PDP 6500</string>
+    <string name="string_TTX">TTX</string>
+    <string name="string_TTX_MIX">TTX/MIX</string>
+    <string name="string_Cancel">CANCEL</string>
+    <string name="string_Reveal">REVEAL</string>
+    <string name="string_Hold">HOLD</string>
+    <string name="string_Double">"DOUBLE
+SIZE"</string>
+    <string name="string_Size">SIZE</string>
+    <string name="string_Sub">"SUB
+PAGE"</string>
+    <string name="string_Page">PAGE</string>
+    <string name="string_Index">INDEX</string>
+    <string name="string_Flof_List">FLOF LIST</string>
+    <string name="string_Store">STORE</string>
+    <string name="string_Page_Down">"PAGE
+DOWN"</string>
+    <string name="string_Down">DOWN</string>
+    <string name="string_Page_Up">PAGE UP</string>
+    <string name="string_Message_Disconnect">"Disconnect
+
+ Network Connection Failure"</string>
+    <string name="string_Message_Retry">Vuelva a intentarlo.</string>
+    <string name="string_Message_Cancel">Cancelar</string>
+    <string name="string_Message_Connecting">Conectando</string>
+    <string name="string_Message_Select_Allow">Para usar esta aplicación, debe seleccionar Permitir en la pantalla del dispositivo.</string>
+    <string name="please_try_again">Vuelva a intentarlo.</string>
+    <string name="it_takes_30_seconds">Tarda de 20 a 30 segundos.</string>
+    <string name="check_bluetooth_settings">"Compruebe los ajustes del Bluetooth móvil.
+
+Se debe encender el Bluetooth móvil y sincronizarlo con el dispositivo."</string>
+    <string name="string_About_Application">About Application</string>
+    <string name="string_Supported_Models">Supported Models</string>
+    <string name="string_Brief_Description">Brief Description</string>
+    <string name="string_Brief_TvRemote_1">Operaciones básicas de mando a distancia disponibles.</string>
+    <string name="string_Brief_TvRemote_2">Arrastrando arriba/abajo/izquierda/derecha, se puede ajustar la Dirección o el CH/VOL sea cual sea el fondo.</string>
+    <string name="string_Brief_Gesture_Remote_title">Gesture Remote</string>
+    <string name="string_Brief_Gesture_Remote_text">CH/VOL se puede ajustar tocando la pantalla e inclinando el dispositivo.</string>
+    <string name="string_Brief_KeyBoard">Si tiene que escribir como cuando utiliza Internet@TV, puede introducir fácilmente letras con este mando.</string>
+    <string name="string_Brief_GameRemote">Este mando constituye una cómoda UI de usuario para juegos en Internet@TV.</string>
+    <string name="string_Channel">CHANNEL</string>
+    <string name="string_Numbers">NUMBERS</string>
+    <string name="string_Playback">PLAYBACK</string>
+    <string name="string_Hotkey">HOTKEY</string>
+    <string name="string_Message_Wi_Fi_con_lost">Wi-Fi connection lost...</string>
+    <string name="string_Device_Disconnected">Device disconnected</string>
+    <string name="string_Not_Allowed_to_Connect">Not allowed to connect...</string>
+    <string name="string_Ok">OK</string>
+    <string name="string_Gesture_Help">Phone을 상/하, 좌/우로 기울임으로 써 channel up/down, volume +/- 를 할 수 있다.</string>
+    <string name="string_BD_Remote">BD Remote</string>
+    <string name="string_Keypad">Keypad</string>
+    <string name="string_NAVI">NAVI</string>
+    <string name="string_123">123</string>
+    <string name="string_Authentication_Failed">Error de autenticación</string>
+    <string name="string_Simultaneous_access_is_limited">Acceso simultáneo de dispositivos móviles limitado a 4</string>
+    <string name="string_Authentication_Failed_Incorrect_TV">No se ha completado correctamente la configuración del menú de TV</string>
+    <string name="string_To_use_device_allow_it">Para usar este dispositivo, autorícelo en menú de TV.</string>
+    <string name="string_Touch_Here">Tocar aquí</string>
+    <string name="string_By_tilting_device">Inclinando el dispositivo, puede controlarse canal y volumen</string>
+    <string name="string_Auto_Discovery">Auto Discovery</string>
+    <string name="please_wait">Espere por favor</string>
+    <string name="no_device">No hay ningún dispositivo.</string>
+    <string name="available_within_bluetooth">Disponible dentro de la cobertura del Bluetooth.</string>
+    <string name="callibrate_horizontally_based">Calibrar horizontalmente en función de la posición actual.</string>
+    <string name="do_not_move">No mover dispositivo.</string>
+    <string name="power_on">Encendido</string>
+    <string name="TV_Bluetooth_must_be_turned_on">Se debe encender el Bluetooth del televisor.</string>
+</resources>

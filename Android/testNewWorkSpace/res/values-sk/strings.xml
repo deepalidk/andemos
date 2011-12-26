@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Samsung Remote</string>
+    <string name="tv_remote">TV Remote</string>
+    <string name="string_settings_TS_LR">Citlivosť dotyku vľavo/vpravo</string>
+    <string name="string_settings_TS_UD">Citlivosť dotyku hore/dole</string>
+    <string name="string_settings_GRS">Rýchlosť diaľkového ovládania gestom</string>
+    <string name="string_settings_SS">Sphere Sensitivity</string>
+    <string name="string_settings_TV_Region">Región nastavenia</string>
+    <string name="string_about_application_1">Táto aplikácia je Wi-Fi diaľkový ovládač Samsung Internet@TV pre 2010.</string>
+    <string name="string_about_application_2">Ak bolo zariadenie Phone aj TV pripojené k rovnakému prístupovému bodu, zariadenie Phone sa s TV spojí automaticky a môžete používať zariadenie Phone ako bežný diaľkový ovládač.</string>
+    <string name="string_Smart_Hub">SMART HUB</string>
+    <string name="string_Tools">TOOLS</string>
+    <string name="string_Info">INFO</string>
+    <string name="string_Menu">MENU</string>
+    <string name="string_Demo_Play">TV Remote DEMO PLAY</string>
+    <string name="string_Demo_Play_Title">DEMO PLAY</string>
+    <string name="string_Demo_Play_Description">Môžete si vopred vyskúšať Samsung TV Remote.</string>
+    <string name="devices_not_found">Váš telefón smart phone aj zariadenie by mali byť pripojené k tomu istému prístupovému bodu. Skontrolujte nastavenie siete.</string>
+    <string name="demo_notification">Konfigurácia tlačidiel diaľkového ovládača môže byť odlišná v závislosti od oblasti alebo modelu.</string>
+    <string name="do_not_show_message">Nabudúce nezobrazovať túto správu.</string>
+    <string name="string_Channel_list">Channel list</string>
+    <string name="string_Search">Search</string>
+    <string name="string_Internet">Internet@TV</string>
+    <string name="string_Guide">Guide</string>
+    <string name="string_threeD">3D</string>
+    <string name="string_E_Manual">E-Manual</string>
+    <string name="string_P_Size">P.SIZE</string>
+    <string name="string_D">D</string>
+    <string name="string_Subt">SUBT.</string>
+    <string name="string_Devices">Devices</string>
+    <string name="string_TV_Remote">TV Remote</string>
+    <string name="string_Gesture_Remote">Gesture Remote</string>
+    <string name="string_Keyboard">Keyboard</string>
+    <string name="string_Game_Remote">Game Remote</string>
+    <string name="string_Manual">Manual</string>
+    <string name="string_Settings">Settings</string>
+    <string name="string_Return">RETURN</string>
+    <string name="string_Exit">EXIT</string>
+    <string name="string_Enter">ENTER</string>
+    <string name="string_supported_models_1">Všetky TV SAMSUNG podporujúce Internet@TV od roku 2010</string>
+    <string name="string_supported_models_2">LCD 650 SERIES a vyššie LED 6500 SERIES a vyššie PDP 6500 SERIES a vyššie</string>
+    <string name="string_TTX">TTX</string>
+    <string name="string_TTX_MIX">TTX/MIX</string>
+    <string name="string_Cancel">CANCEL</string>
+    <string name="string_Reveal">REVEAL</string>
+    <string name="string_Hold">HOLD</string>
+    <string name="string_Double">"DOUBLE
+SIZE"</string>
+    <string name="string_Size">SIZE</string>
+    <string name="string_Sub">"SUB
+PAGE"</string>
+    <string name="string_Page">PAGE</string>
+    <string name="string_Index">INDEX</string>
+    <string name="string_Flof_List">FLOF LIST</string>
+    <string name="string_Store">STORE</string>
+    <string name="string_Page_Down">"PAGE
+DOWN"</string>
+    <string name="string_Down">DOWN</string>
+    <string name="string_Page_Up">PAGE UP</string>
+    <string name="string_Message_Disconnect">"Disconnect
+
+ Network Connection Failure"</string>
+    <string name="string_Message_Retry">Skúste znova.</string>
+    <string name="string_Message_Cancel">Zrušiť</string>
+    <string name="string_Message_Connecting">Pripájanie...</string>
+    <string name="string_Message_Select_Allow">Ak chcete používať túto aplikáciu, mali by ste zvoliť možnosť \"Povoliť\" na obrazovke zariadenia.</string>
+    <string name="please_try_again">Skúste znova.</string>
+    <string name="it_takes_30_seconds">Trvá to 20 – 30 sekúnd.</string>
+    <string name="check_bluetooth_settings">"Skontrolujte nastavenia mobilného Bluetooth.
+
+Mobilné Bluetooth by malo byť zapnuté a spárované so zariadením."</string>
+    <string name="string_About_Application">About Application</string>
+    <string name="string_Supported_Models">Supported Models</string>
+    <string name="string_Brief_Description">Brief Description</string>
+    <string name="string_Brief_TvRemote_1">K dispozícii sú bežné funkcie diaľkového ovládača.</string>
+    <string name="string_Brief_TvRemote_2">Gestom potiahnutia, napr. hore/dole/doľava/doprava, sa dá nastaviť smer alebo kanál/hlasitosť pri akomkoľvek pozadí.</string>
+    <string name="string_Brief_Gesture_Remote_title">Gesture Remote</string>
+    <string name="string_Brief_Gesture_Remote_text">Kanál/hlasitosť sa dá nastaviť dotykom na obrazovke a naklonením zariadenia.</string>
+    <string name="string_Brief_KeyBoard">Ak potrebujete niečo napísať pri používaní Internet@TV, pomocou tohto ovládača môžete pohodlne zadávať písmená.</string>
+    <string name="string_Brief_GameRemote">Tento ovládač vám poskytuje pohodlné UI pre hry na Internet@TV.</string>
+    <string name="string_Channel">CHANNEL</string>
+    <string name="string_Numbers">NUMBERS</string>
+    <string name="string_Playback">PLAYBACK</string>
+    <string name="string_Hotkey">HOTKEY</string>
+    <string name="string_Message_Wi_Fi_con_lost">Wi-Fi connection lost...</string>
+    <string name="string_Device_Disconnected">Device disconnected</string>
+    <string name="string_Not_Allowed_to_Connect">Not allowed to connect...</string>
+    <string name="string_Ok">OK</string>
+    <string name="string_Gesture_Help">Phone을 상/하, 좌/우로 기울임으로 써 channel up/down, volume +/- 를 할 수 있다.</string>
+    <string name="string_BD_Remote">BD Remote</string>
+    <string name="string_Keypad">Keypad</string>
+    <string name="string_NAVI">NAVI</string>
+    <string name="string_123">123</string>
+    <string name="string_Authentication_Failed">Autentifikácia zlyhala</string>
+    <string name="string_Simultaneous_access_is_limited">Simultánny prístup mobilných zariadení je obmedzený na 4</string>
+    <string name="string_Authentication_Failed_Incorrect_TV">Nebolo správne ukončené nastavenie TV ponuky</string>
+    <string name="string_To_use_device_allow_it">Ak chcete používať toto zariadenie, aktivujte ho v TV ponuke.</string>
+    <string name="string_Touch_Here">Dotknite sa tu</string>
+    <string name="string_By_tilting_device">Naklonením zariadenia môžete ovládať kanál a hlasitosť</string>
+    <string name="string_Auto_Discovery">Auto Discovery</string>
+    <string name="please_wait">Čakajte, prosím.</string>
+    <string name="no_device">Žiadne zariadenie.</string>
+    <string name="available_within_bluetooth">Dostupné s pokrytím Bluetooth.</string>
+    <string name="callibrate_horizontally_based">Kalibrujte horizontálne na základe aktuálnej polohy.</string>
+    <string name="do_not_move">Nehýbte zariadením.</string>
+    <string name="power_on">Napájanie zapnuté</string>
+    <string name="TV_Bluetooth_must_be_turned_on">TV Bluetooth musí byť zapnuté.</string>
+</resources>

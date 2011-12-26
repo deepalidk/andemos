@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="300.0px" android:minHeight="200.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="25.0px" android:ellipsize="none" android:gravity="left|center" android:id="@id/bluetooth_dialog_message" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxWidth="350.0px" android:singleLine="false" />
+    <Button android:id="@id/bluetooth_ok_button" android:background="#ff666666" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="70.0px" />
+</LinearLayout>

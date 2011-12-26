@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:gravity="center" android:id="@id/three_buttons_2_element" android:paddingLeft="@dimen/dim_20px" android:paddingRight="@dimen/dim_20px" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button android:textColor="@drawable/full_text_color_switch" android:gravity="center" android:id="@id/three_buttons_2_1_holder" android:padding="2.0px" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="1.0px" android:layout_y="20.0px" />
+    <Button android:textColor="@drawable/full_text_color_switch" android:gravity="center" android:id="@id/three_buttons_2_2_holder" android:padding="2.0px" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="152.0px" android:layout_y="20.0px" />
+    <Button android:textColor="@drawable/full_text_color_switch" android:gravity="center" android:id="@id/three_buttons_2_3_holder" android:padding="2.0px" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="303.0px" android:layout_y="20.0px" />
+</RelativeLayout>

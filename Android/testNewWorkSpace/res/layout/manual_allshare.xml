@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@id/manual_allshare" android:layout_width="fill_parent" android:layout_height="700.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="22.0px" android:layout_width="200.0px" android:layout_height="300.0px" android:text="@string/string_manual_allshare" android:layout_x="262.0px" android:layout_y="26.0px" />
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/image_tigger" android:layout_x="37.0px" android:layout_y="26.0px" />
+</AbsoluteLayout>

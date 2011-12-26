@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list android:id="@id/touch_animation" android:oneshot="true"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_01" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_02" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_03" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_04" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_05" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_06" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_07" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_08" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_09" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_10" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_11" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_12" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_13" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_14" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_15" />
+    <item android:duration="30" android:drawable="@drawable/dot_touch_02_02_01" />
+</animation-list>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:background="@drawable/dialog_background" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5.0px" android:layout_marginRight="5.0px" android:layout_marginBottom="5.0px"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout android:gravity="center" android:id="@id/firstLine" android:paddingTop="16.0px" android:paddingBottom="5.0px" android:layout_width="fill_parent" android:layout_height="wrap_content" android:weightSum="0.9">
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.4">
+                <Button android:id="@id/btn_vol_minus" android:background="@drawable/play_touch_feedback_action" android:paddingTop="9.0px" android:paddingRight="7.0px" android:layout_width="110.0px" android:layout_height="60.0px" android:drawableRight="@drawable/marble_vol_down_s_2_nor" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.1">
+                <Button android:id="@id/btn_vol_mute" android:background="@drawable/play_touch_feedback_action" android:paddingTop="10.0px" android:layout_width="110.0px" android:layout_height="60.0px" android:drawableTop="@drawable/tc_icon_mute_2_nor" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.4">
+                <Button android:id="@id/btn_vol_plus" android:background="@drawable/play_touch_feedback_action" android:paddingLeft="7.0px" android:paddingTop="9.0px" android:layout_width="110.0px" android:layout_height="60.0px" android:drawableLeft="@drawable/marble_vol_up_s_2_nor" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:id="@id/secondLine" android:paddingTop="5.0px" android:paddingBottom="5.0px" android:layout_width="fill_parent" android:layout_height="wrap_content" android:weightSum="1.0">
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.25">
+                <Button android:id="@id/btn_skip_back" android:background="@drawable/play_touch_feedback_action" android:paddingTop="7.0px" android:paddingRight="2.0px" android:layout_width="110.0px" android:layout_height="60.0px" android:drawableTop="@drawable/mt_rewind_re_small" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.25">
+                <Button android:id="@id/btn_rewind" android:background="@drawable/play_touch_feedback_action" android:paddingTop="7.0px" android:paddingRight="5.0px" android:layout_width="110.0px" android:layout_height="60.0px" android:drawableTop="@drawable/mt_rewind_small" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.25">
+                <Button android:id="@id/btn_fast_forward" android:background="@drawable/play_touch_feedback_action" android:paddingLeft="3.0px" android:paddingTop="7.0px" android:layout_width="110.0px" android:layout_height="60.0px" android:drawableTop="@drawable/mt_forward_small" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.25">
+                <Button android:id="@id/btn_skip_forward" android:background="@drawable/play_touch_feedback_action" android:paddingLeft="2.0px" android:paddingTop="7.0px" android:layout_width="110.0px" android:layout_height="60.0px" android:drawableTop="@drawable/mt_forward_re_small" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:id="@id/thirdLine" android:paddingTop="5.0px" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="16.0px" android:weightSum="0.9">
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.3">
+                <Button android:id="@id/btn_stop" android:background="@drawable/play_touch_feedback_action" android:paddingTop="9.0px" android:layout_width="110.0px" android:layout_height="60.0px" android:drawableTop="@drawable/mt_stop_small" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.3">
+                <Button android:id="@id/btn_play" android:background="@drawable/play_touch_feedback_action" android:paddingTop="9.0px" android:layout_width="110.0px" android:layout_height="60.0px" android:drawableTop="@drawable/mt_play_small" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="0.3">
+                <Button android:id="@id/btn_pause" android:background="@drawable/play_touch_feedback_action" android:paddingTop="9.0px" android:layout_width="110.0px" android:layout_height="60.0px" android:drawableTop="@drawable/mt_pause_small" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

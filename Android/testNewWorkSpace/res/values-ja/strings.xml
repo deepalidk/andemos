@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Samsung Remote</string>
+    <string name="tv_remote">TV Remote</string>
+    <string name="string_settings_TS_LR">タッチ感度 (左/右)</string>
+    <string name="string_settings_TS_UD">タッチ感度 (上/下)</string>
+    <string name="string_settings_GRS">ジェスチャ リモコン反応速度</string>
+    <string name="string_settings_SS">Sphere Sensitivity</string>
+    <string name="string_settings_TV_Region">設定領域</string>
+    <string name="string_about_application_1">このアプリケーションは、2010 年における Samsung Internet@TV の Wi-Fi リモート コントロールです。</string>
+    <string name="string_about_application_2">Phone と TV が両方とも同じアクセス ポイントに接続されていると、Phone は自動的に TV とリンクされ、一般的なリモートと同様に Phone を使用できます。</string>
+    <string name="string_Smart_Hub">SMART HUB</string>
+    <string name="string_Tools">TOOLS</string>
+    <string name="string_Info">INFO</string>
+    <string name="string_Menu">MENU</string>
+    <string name="string_Demo_Play">TV Remote DEMO PLAY</string>
+    <string name="string_Demo_Play_Title">DEMO PLAY</string>
+    <string name="string_Demo_Play_Description">事前に Samsung TV Remote を体験できます。</string>
+    <string name="devices_not_found">スマート フォンとデバイスは同じアクセス ポイントに接続する必要があります。 ネットワーク設定を確認してください。</string>
+    <string name="demo_notification">リモート コントロール ボタンの設定は地域やモデルによって異なる場合があります。</string>
+    <string name="do_not_show_message">次回からメッセージを表示しません。</string>
+    <string name="string_Channel_list">Channel list</string>
+    <string name="string_Search">Search</string>
+    <string name="string_Internet">Internet@TV</string>
+    <string name="string_Guide">Guide</string>
+    <string name="string_threeD">3D</string>
+    <string name="string_E_Manual">E-Manual</string>
+    <string name="string_P_Size">P.SIZE</string>
+    <string name="string_D">D</string>
+    <string name="string_Subt">SUBT.</string>
+    <string name="string_Devices">Devices</string>
+    <string name="string_TV_Remote">TV Remote</string>
+    <string name="string_Gesture_Remote">Gesture Remote</string>
+    <string name="string_Keyboard">Keyboard</string>
+    <string name="string_Game_Remote">Game Remote</string>
+    <string name="string_Manual">Manual</string>
+    <string name="string_Settings">Settings</string>
+    <string name="string_Return">RETURN</string>
+    <string name="string_Exit">EXIT</string>
+    <string name="string_Enter">ENTER</string>
+    <string name="string_supported_models_1">Internet@TV 2010 対応 SAMSUNG TV</string>
+    <string name="string_supported_models_2">LCD 650 シリーズ以降 LED 6500 シリーズ以降 PDP 6500 シリーズ以降</string>
+    <string name="string_TTX">TTX</string>
+    <string name="string_TTX_MIX">TTX/MIX</string>
+    <string name="string_Cancel">CANCEL</string>
+    <string name="string_Reveal">REVEAL</string>
+    <string name="string_Hold">HOLD</string>
+    <string name="string_Double">"DOUBLE
+SIZE"</string>
+    <string name="string_Size">SIZE</string>
+    <string name="string_Sub">"SUB
+PAGE"</string>
+    <string name="string_Page">PAGE</string>
+    <string name="string_Index">INDEX</string>
+    <string name="string_Flof_List">FLOF LIST</string>
+    <string name="string_Store">STORE</string>
+    <string name="string_Page_Down">"PAGE
+DOWN"</string>
+    <string name="string_Down">DOWN</string>
+    <string name="string_Page_Up">PAGE UP</string>
+    <string name="string_Message_Disconnect">"Disconnect
+
+ Network Connection Failure"</string>
+    <string name="string_Message_Retry">再試行</string>
+    <string name="string_Message_Cancel">Cancel</string>
+    <string name="string_Message_Connecting">接続しています</string>
+    <string name="string_Message_Select_Allow">このアプリケーションを使用するには、デバイス画面で [許可] を選択する必要があります。</string>
+    <string name="please_try_again">再試行してください。</string>
+    <string name="it_takes_30_seconds">20 ～ 30 秒間お待ちください。</string>
+    <string name="check_bluetooth_settings">"モバイル Bluetooth 設定を確認してください。
+
+モバイル Bluetooth をオンにして、デバイスとのペアリングを行ってください。"</string>
+    <string name="string_About_Application">About Application</string>
+    <string name="string_Supported_Models">Supported Models</string>
+    <string name="string_Brief_Description">Brief Description</string>
+    <string name="string_Brief_TvRemote_1">リモート コントロールの基本操作をご利用いただけます。</string>
+    <string name="string_Brief_TvRemote_2">上/下/左/右のような身振りをするだけで、背景にかかわらず方向やチャンネル/音量を調整できます。</string>
+    <string name="string_Brief_Gesture_Remote_title">Gesture Remote</string>
+    <string name="string_Brief_Gesture_Remote_text">チャンネル/音量は、画面をタッチし、またデバイスを傾けて調整できます。</string>
+    <string name="string_Brief_KeyBoard">Internet@TV を使用するときなど、入力が必要な場合は、このコントローラを使って簡単に文字を入力できます。</string>
+    <string name="string_Brief_GameRemote">このコントローラは、Internet@TV のゲームでも使いやすい UI を提供します。</string>
+    <string name="string_Channel">CHANNEL</string>
+    <string name="string_Numbers">NUMBERS</string>
+    <string name="string_Playback">PLAYBACK</string>
+    <string name="string_Hotkey">HOTKEY</string>
+    <string name="string_Message_Wi_Fi_con_lost">Wi-Fi connection lost...</string>
+    <string name="string_Device_Disconnected">Device disconnected</string>
+    <string name="string_Not_Allowed_to_Connect">Not allowed to connect...</string>
+    <string name="string_Ok">OK</string>
+    <string name="string_Gesture_Help">Phone을 상/하, 좌/우로 기울임으로 써 channel up/down, volume +/- 를 할 수 있다.</string>
+    <string name="string_BD_Remote">BD Remote</string>
+    <string name="string_Keypad">Keypad</string>
+    <string name="string_NAVI">NAVI</string>
+    <string name="string_123">123</string>
+    <string name="string_Authentication_Failed">Authentication Failed</string>
+    <string name="string_Simultaneous_access_is_limited">モバイル デバイスの同時アクセスは最大 4 台に制限されています</string>
+    <string name="string_Authentication_Failed_Incorrect_TV">適切な TV メニューの設定が完了していません</string>
+    <string name="string_To_use_device_allow_it">デバイスを使用するには、TV メニューでこのデバイスを許可してください。</string>
+    <string name="string_Touch_Here">ここに触れてください</string>
+    <string name="string_By_tilting_device">デバイスを傾けると、チャンネルと音量を調節できます</string>
+    <string name="string_Auto_Discovery">Auto Discovery</string>
+    <string name="please_wait">Подождите</string>
+    <string name="no_device">デバイスがありません。</string>
+    <string name="available_within_bluetooth">Bluetooth 使用可能範囲内で使用できます。</string>
+    <string name="callibrate_horizontally_based">現在の位置に基づいて水平キャリブレーションを実行してください。</string>
+    <string name="do_not_move">デバイスを動かさないでください。</string>
+    <string name="power_on">電源オン</string>
+    <string name="TV_Bluetooth_must_be_turned_on">TV の Bluetooth をオンにしてください。</string>
+</resources>

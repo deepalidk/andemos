@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@id/color_buttons_element" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_x="0.0px" android:layout_y="0.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button android:id="@id/full_c_bottom_line_1" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="0.0px" android:layout_y="0.0px" />
+    <Button android:id="@id/full_c_bottom_line_2" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="112.0px" android:layout_y="0.0px" />
+    <Button android:id="@id/full_c_bottom_line_3" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="224.0px" android:layout_y="0.0px" />
+    <Button android:id="@id/full_c_bottom_line_4" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="336.0px" android:layout_y="0.0px" />
+</AbsoluteLayout>

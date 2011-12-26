@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="btnWidth" format="dimension" />
+    <attr name="btnHeight" format="dimension" />
+    <attr name="topText" format="string" />
+    <attr name="topTextColorOff" format="color" />
+    <attr name="topTextColorOn" format="color" />
+    <attr name="topTextSize" format="dimension" />
+    <attr name="additionalBckgr" format="integer" />
+    <attr name="buttonWidth" format="dimension" />
+    <attr name="buttonHeight" format="dimension" />
+    <attr name="additionalBckground" format="integer" />
+    <attr name="topTxtSize" format="dimension" />
+    <attr name="bottomTxtSize" format="dimension" />
+    <attr name="TextOnTop" format="string" />
+    <attr name="TextOnBottom" format="string" />
+</resources>

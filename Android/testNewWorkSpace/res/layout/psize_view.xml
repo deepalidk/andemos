@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@id/numberstab_psizeview" android:background="#ff000000" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="800.0px" android:layout_x="0.0px" android:layout_y="0.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:fadingBtn="http://schemas.android.com/apk/res/com.samsung.remoteTV">
+    <Button android:background="@drawable/black_bg" android:layout_width="480.0px" android:layout_height="762.0px" android:layout_x="0.0px" android:layout_y="0.0px" />
+    <AbsoluteLayout android:id="@id/numberstab_psizeview_title" android:background="@drawable/tc_title_bg_2" android:layout_width="fill_parent" android:layout_height="82.0px" android:layout_x="0.0px" android:layout_y="0.0px"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView android:textSize="36.0px" android:textColor="#ffffffff" android:gravity="center" android:id="@id/PSizeTitle" android:layout_width="260.0px" android:layout_height="38.0px" android:text="@string/string_P_Size" android:layout_x="110.0px" android:layout_y="13.0px" />
+        <Button android:id="@id/btn_Close_PSize" android:background="@drawable/tc_title_tv_close_action" android:layout_width="110.0px" android:layout_height="82.0px" android:layout_x="370.0px" android:layout_y="-5.0px" />
+    </AbsoluteLayout>
+    <AbsoluteLayout android:background="@drawable/keypad_bg_1" android:layout_width="448.0px" android:layout_height="558.0px" android:layout_x="17.0px" android:layout_y="168.0px" />
+    <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/psize_btn_up" android:visibility="invisible" android:layout_width="160.0px" android:layout_height="160.0px" android:layout_x="160.0px" android:layout_y="156.0px" fadingBtn:buttonWidth="68.0px" fadingBtn:buttonHeight="48.0px" />
+    <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/psize_btn_down" android:visibility="invisible" android:layout_width="160.0px" android:layout_height="160.0px" android:layout_x="160.0px" android:layout_y="583.0px" fadingBtn:buttonWidth="68.0px" fadingBtn:buttonHeight="48.0px" />
+    <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/psize_btn_left" android:visibility="invisible" android:layout_width="160.0px" android:layout_height="160.0px" android:layout_x="-5.0px" android:layout_y="366.0px" fadingBtn:buttonWidth="48.0px" fadingBtn:buttonHeight="68.0px" />
+    <com.samsung.remoteTV.view.controls.FadingButton android:id="@id/psize_btn_right" android:visibility="invisible" android:layout_width="160.0px" android:layout_height="160.0px" android:layout_x="325.0px" android:layout_y="366.0px" fadingBtn:buttonWidth="48.0px" fadingBtn:buttonHeight="68.0px" />
+    <Button android:textSize="26.0px" android:textColor="#ffffffff" android:id="@id/psize_btn_psize" android:visibility="invisible" android:layout_width="163.0px" android:layout_height="78.0px" android:text="@string/string_P_Size" android:layout_x="158.0px" android:layout_y="406.0px" />
+</AbsoluteLayout>

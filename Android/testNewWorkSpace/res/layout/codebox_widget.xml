@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="7.0pt" android:gravity="center" android:id="@id/txtCodeTitle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" android:layout_alignParentTop="true" />
+    <TextView android:textSize="6.0pt" android:gravity="center" android:id="@id/txtItems" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" android:layout_below="@id/txtCodeTitle" />
+    <LinearLayout android:id="@id/code_holder" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/txtItems" android:layout_centerHorizontal="true">
+        <EditText android:textSize="10.0pt" android:gravity="center" android:id="@id/digit_1" android:visibility="gone" android:layout_width="65.0px" android:layout_height="65.0px" android:maxLength="1" android:inputType="textVisiblePassword" />
+        <EditText android:textSize="10.0pt" android:gravity="center" android:id="@id/digit_2" android:visibility="gone" android:layout_width="65.0px" android:layout_height="65.0px" android:maxLength="1" android:inputType="textVisiblePassword" />
+        <EditText android:textSize="10.0pt" android:gravity="center" android:id="@id/digit_3" android:visibility="gone" android:layout_width="65.0px" android:layout_height="65.0px" android:maxLength="1" android:inputType="textVisiblePassword" />
+        <EditText android:textSize="10.0pt" android:gravity="center" android:id="@id/digit_4" android:visibility="gone" android:layout_width="65.0px" android:layout_height="65.0px" android:maxLength="1" android:inputType="textVisiblePassword" />
+        <EditText android:textSize="10.0pt" android:gravity="center" android:id="@id/digit_5" android:visibility="gone" android:layout_width="65.0px" android:layout_height="65.0px" android:maxLength="1" android:inputType="textVisiblePassword" />
+        <EditText android:textSize="10.0pt" android:gravity="center" android:id="@id/digit_6" android:visibility="gone" android:layout_width="65.0px" android:layout_height="65.0px" android:maxLength="1" android:inputType="textVisiblePassword" />
+        <EditText android:textSize="10.0pt" android:gravity="center" android:id="@id/digit_7" android:visibility="gone" android:layout_width="65.0px" android:layout_height="65.0px" android:maxLength="1" android:inputType="textVisiblePassword" />
+    </LinearLayout>
+</RelativeLayout>

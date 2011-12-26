@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@id/full_b_bd_hts" android:layout_width="fill_parent" android:layout_height="600.0px" android:layout_x="0.0px" android:layout_y="0.0px"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <AbsoluteLayout android:layout_width="fill_parent" android:layout_height="600.0px" android:layout_x="0.0px" android:layout_y="0.0px">
+        <AbsoluteLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_x="0.0px" android:layout_y="116.0px">
+            <include layout="@layout/playback_rewind" />
+        </AbsoluteLayout>
+        <AbsoluteLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_x="0.0px" android:layout_y="213.0px">
+            <include layout="@layout/playback_3_buttons" />
+        </AbsoluteLayout>
+        <AbsoluteLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_x="0.0px" android:layout_y="-150.0px">
+            <Button android:textSize="24.0px" android:textColor="@drawable/full_text_color_switch" android:gravity="center" android:id="@id/control_full_b_1" android:padding="2.0px" android:visibility="invisible" android:layout_width="143.0px" android:layout_height="93.0px" android:lines="2" android:shadowColor="@color/BLACK" android:layout_x="33.0px" android:layout_y="495.0px" style="@style/Shadow" />
+            <Button android:textSize="24.0px" android:textColor="@drawable/full_text_color_switch" android:gravity="center" android:id="@id/control_full_b_2" android:padding="2.0px" android:visibility="invisible" android:layout_width="143.0px" android:layout_height="93.0px" android:lines="2" android:shadowColor="@color/BLACK" android:layout_x="169.0px" android:layout_y="495.0px" style="@style/Shadow" />
+            <Button android:textSize="24.0px" android:textColor="@drawable/full_text_color_switch" android:gravity="center" android:id="@id/control_full_b_3" android:padding="2.0px" android:visibility="invisible" android:layout_width="143.0px" android:layout_height="93.0px" android:lines="2" android:shadowColor="@color/BLACK" android:layout_x="306.0px" android:layout_y="495.0px" style="@style/Shadow" />
+        </AbsoluteLayout>
+    </AbsoluteLayout>
+</AbsoluteLayout>

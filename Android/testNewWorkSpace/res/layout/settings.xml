@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/settings" android:paddingTop="80.0px" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:id="@id/settings_holder" android:paddingLeft="20.0px" android:paddingRight="20.0px" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TextView android:id="@id/settings_text_1" android:paddingLeft="8.0px" android:paddingBottom="8.0px" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <RelativeLayout android:id="@id/setting_layout_1" android:paddingLeft="5.0px" android:paddingTop="5.0px" android:paddingRight="5.0px" android:paddingBottom="5.0px" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:id="@id/seek_text_1_1" android:paddingLeft="9.0px" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" />
+            <SeekBar android:id="@id/settings_seek_1" android:paddingLeft="9.0px" android:paddingRight="9.0px" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:max="9" android:layout_below="@id/seek_text_1_1" android:layout_centerHorizontal="true" />
+            <TextView android:id="@id/seek_text_1_5" android:paddingRight="9.0px" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_above="@id/settings_seek_1" android:layout_alignParentTop="true" android:layout_alignParentRight="true" />
+            <TextView android:id="@id/progress_settings_text_1" android:paddingRight="9.0px" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_above="@id/settings_seek_1" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <TextView android:id="@id/settings_text_2" android:paddingLeft="8.0px" android:paddingTop="20.0px" android:paddingBottom="8.0px" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <RelativeLayout android:id="@id/setting_layout_2" android:paddingLeft="5.0px" android:paddingTop="5.0px" android:paddingRight="5.0px" android:paddingBottom="5.0px" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:id="@id/seek_text_2_1" android:paddingLeft="9.0px" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" />
+            <SeekBar android:id="@id/settings_seek_2" android:paddingLeft="9.0px" android:paddingRight="9.0px" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="wrap_content" android:max="9" android:layout_below="@id/seek_text_2_1" android:layout_centerHorizontal="true" />
+            <TextView android:id="@id/seek_text_2_5" android:paddingRight="9.0px" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_above="@id/settings_seek_2" android:layout_alignParentTop="true" android:layout_alignParentRight="true" />
+            <TextView android:id="@id/progress_settings_text_2" android:paddingRight="9.0px" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_above="@id/settings_seek_2" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <TextView android:id="@id/settings_text_TV_Region" android:paddingLeft="8.0px" android:paddingTop="20.0px" android:paddingBottom="8.0px" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <Spinner android:id="@id/settings_spinner" android:paddingLeft="20.0px" android:paddingTop="20.0px" android:paddingRight="20.0px" android:paddingBottom="20.0px" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        <RelativeLayout android:orientation="vertical" android:id="@id/setting_layout_5" android:paddingRight="5.0px" android:paddingBottom="5.0px" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:id="@id/settings_text_Tv_Remote_CoreLib_Ver" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="8.0px" android:layout_marginTop="10.0px" android:layout_marginBottom="8.0px" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
