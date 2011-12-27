@@ -2,13 +2,18 @@ package fly.MoveViewGroup;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 //import android.view.View.AttachInfo;
+import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
@@ -19,6 +24,16 @@ public class MyButton extends TextView {
     private static String TAG="MyButton";
     
     private boolean mIsFixPosition=false;
+    
+    
+    private final RectF mRect = new RectF();
+    private Paint mPaintBackground;
+    private Paint mPaintText;
+    private Paint mPaintIcon;
+
+    private boolean mBackgroundSizeChanged;
+    private Drawable mBackground;
+
     
      
     
@@ -33,7 +48,7 @@ public class MyButton extends TextView {
         this.setClickable(true);
         
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MyButton);
-
+ 
         int left = 0;
         int top = 0;
         int right = 0;
@@ -61,10 +76,23 @@ public class MyButton extends TextView {
             }
         }
         
-        this.setFrame(left, top, right, bottom);
         
-        a.recycle();
-                    
+        Drawable bg=getBackground();
+        
+        this.setFrame(left, top, bg.getIntrinsicWidth()+left, bg.getIntrinsicHeight()+top);
+           
+
+        mPaintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintBackground.setColor(Color.WHITE);
+        mPaintBackground.setAlpha(100);
+        
+        mPaintIcon=new Paint();
+        
+        	
+        mPaintText=new Paint(Paint.ANTI_ALIAS_FLAG);
+    	mPaintText.setColor(Color.WHITE);
+        
+        a.recycle();                 
     }
 
     public boolean getIsFixPostion()
@@ -78,27 +106,34 @@ public class MyButton extends TextView {
      * @param canvas the canvas on which the background will be drawn
      */
     protected void onDraw(Canvas canvas) {
-    	if(D)Log.d(TAG, "ondraw");
-    	Paint paintText=new Paint();
-//    	paintText.setDither(false);
-    	paintText.setAntiAlias(true);
-    	paintText.setColor(Color.WHITE);
-//    	paintText.setShadowLayer(10, 30, 30, Color.WHITE);
-//    	paintText.setShadowLayer(5, 10, 10, Color.WHITE);
-    	
-    	paintText.setAlpha(100);
-//        canvas.drawRect(getScrollX(), getScrollY(),getScrollX()+ 30, getScrollY()+30, paintText); 	
-    	
-//        canvas.drawRect(100, 300,110, 310, paintText);
-        
+    	if(D)Log.d(TAG, "ondraw");   
     	if(D)Log.d(TAG, "this.l="+ this.getLeft()+" this.t="+this.getTop()+" this.r="+getRight()+" this.b="+getBottom());
-        RectF rc=new RectF();
-        rc.set(0, 0,getRight()-getLeft(),getBottom()-getTop());
-        if(isPressed())
-        {
-        canvas.drawRoundRect(rc, 5, 5, paintText);
-        }
-               
+//        RectF rc=new RectF();
+//        rc.set(0, 0,getRight()-getLeft(),getBottom()-getTop());
+//        if(isPressed())
+//        {
+//        canvas.drawRoundRect(rc, 5, 5, mPaintBackground);
+//        }
+//        
+//        
+//        Drawable background = null;
+////        if (mBackground != null) {
+//////            final int scrollX = getScrollX();
+//////            final int scrollY = getScrollY();
+////
+//////            if (mBackgroundSizeChanged) {
+//////                background.setBounds(0, 0,  getRight() - getLeft()-8, getBottom() - getTop()-8);
+//////                mBackgroundSizeChanged = false;
+//////            }
+////        	background=zoomDrawable(mBackground,getRight() - getLeft()-8, getBottom() - getTop()-8);
+////            canvas.save();
+////            canvas.translate(4, 4);
+////        	background.draw(canvas);
+////        	canvas.restore();
+////        }
+//        
+//        canvas.drawText(getText().toString(), (getRight() - getLeft())/2, (getBottom() - getTop())/2, mPaintText);
+//               
         super.onDraw(canvas);
     }
     
@@ -111,5 +146,31 @@ public class MyButton extends TextView {
 //		    this.layout(0+this.getParent(), 0, 100, 100);
 //            scrollTo(this.getLeft(), this.getTop()); 
 	}
+	
+    Bitmap drawableToBitmap(Drawable drawable) // drawable 转换成bitmap
+    {
+              int width = drawable.getIntrinsicWidth();   // 取drawable的长宽
+              int height = drawable.getIntrinsicHeight();
+              Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888:Bitmap.Config.RGB_565;         //取drawable的颜色格式
+              Bitmap bitmap = Bitmap.createBitmap(width, height, config);     // 建立对应bitmap
+              Canvas canvas = new Canvas(bitmap);         // 建立对应bitmap的画布
+              drawable.setBounds(0, 0, width, height);
+              drawable.draw(canvas);      // 把drawable内容画到画布中
+              return bitmap;
+    }
+
+    Drawable zoomDrawable(Drawable drawable, int w, int h)
+    {
+              int width = drawable.getIntrinsicWidth();
+              int height= drawable.getIntrinsicHeight();
+              Bitmap oldbmp = drawableToBitmap(drawable); // drawable转换成bitmap
+              Matrix matrix = new Matrix();   // 创建操作图片用的Matrix对象
+              float scaleWidth = ((float)w / width);   // 计算缩放比例
+              float scaleHeight = ((float)h / height);
+              matrix.postScale(scaleWidth, scaleHeight);         // 设置缩放比例
+              Bitmap newbmp = Bitmap.createBitmap(oldbmp, 0, 0, width, height, matrix, true);       // 建立新的bitmap，其内容是对原bitmap的缩放后的图
+              return new BitmapDrawable(newbmp);       // 把bitmap转换成drawable并返回
+    }
+
 	
 }

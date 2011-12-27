@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:bottom="12.0px">
+        <bitmap android:gravity="bottom" android:src="@drawable/dot_navi_left_sel" />
+    </item>
+</layer-list>

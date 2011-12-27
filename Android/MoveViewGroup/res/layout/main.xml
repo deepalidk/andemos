@@ -10,20 +10,52 @@
 		<fly.MoveViewGroup.MyViewGroup 
 			android:layout_width="fill_parent" 
 			android:layout_height="fill_parent"
-
-			android:background="@drawable/background">
+			android:background="@drawable/main_bg">
 			<fly.MoveViewGroup.MyButton 
-				android:layout_height="90px" 
-				android:layout_width="90px"
-				flyview:left="10px"
-				flyview:top="10px"
-				flyview:right="100px"
-				flyview:bottom="100px"
+				android:layout_height="wrap_content" 
+				android:layout_width="wrap_content"
+				flyview:left="10dp"
+				flyview:top="10dp"
 				flyview:fix_position="true"
-				android:text="1"
+				android:tag="1" 
 				android:onClick="onClick"
                 android:gravity="center"
+                android:background="@drawable/another_playback_pause_action"
 				/>
+			<fly.MoveViewGroup.MyButton 
+				android:layout_height="wrap_content" 
+				android:layout_width="wrap_content"
+				flyview:left="100dp"
+				flyview:top="10dp"
+				flyview:fix_position="true"
+				android:tag="1" 
+				android:onClick="onClick"
+                android:gravity="center"
+                android:background="@drawable/btn_04_exit_action"
+				/>
+			<fly.MoveViewGroup.MyButton 
+				android:layout_height="wrap_content" 
+				android:layout_width="wrap_content"
+				flyview:left="10dp"
+				flyview:top="100dp"
+				flyview:fix_position="true"
+				android:tag="1" 
+				android:onClick="onClick"
+                android:gravity="center"
+                android:background="@drawable/btn_04_return_action"
+				/>
+						<fly.MoveViewGroup.MyButton 
+				android:layout_height="wrap_content" 
+				android:layout_width="wrap_content"
+				flyview:left="10dp"
+				flyview:top="200dp"
+				flyview:fix_position="true"
+				android:tag="1" 
+				android:onClick="onClick"
+                android:gravity="center"
+                android:background="@drawable/num_01_01_00_action"
+				/>
+
 		</fly.MoveViewGroup.MyViewGroup>
 	</fly.MoveViewGroup.Workspace>
 </LinearLayout>
