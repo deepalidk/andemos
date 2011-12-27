@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transition
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/dot_navi_empty" />
+    <item android:drawable="@drawable/dot_navi_up_sel" />
+</transition>

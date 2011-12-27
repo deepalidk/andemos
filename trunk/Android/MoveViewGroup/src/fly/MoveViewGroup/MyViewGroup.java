@@ -19,6 +19,7 @@ import android.view.GestureDetector.OnGestureListener;
 import android.webkit.WebSettings.TextSize;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -129,21 +130,21 @@ public class MyViewGroup extends ViewGroup implements View.OnClickListener{
     protected void onDraw(Canvas canvas) {
     	super.onDraw(canvas);
     	
-    	Paint paintText=new Paint();
-//    	paintText.setDither(false);
-    	paintText.setColor(Color.BLUE);
-    	paintText.setAntiAlias(true);
-    	paintText.setShadowLayer(10, 30, 30, Color.WHITE);
-//    	paintText.getShader().
-    	
-    	paintText.setAlpha(0);
-        canvas.drawRect(getScrollX()+30, 30,getScrollX()+ 100, 100, paintText);
-    	
-        RectF rc=new RectF();
-        rc.set(150, 150,300, 300);
-        paintText.setARGB(0, 255, 255, 255);
-        
-        canvas.drawRoundRect(rc, 30, 30, paintText);
+//    	Paint paintText=new Paint();
+////    	paintText.setDither(false);
+//    	paintText.setColor(Color.BLUE);
+//    	paintText.setAntiAlias(true);
+//    	paintText.setShadowLayer(10, 30, 30, Color.WHITE);
+////    	paintText.getShader().
+//    	
+//    	paintText.setAlpha(0);
+//        canvas.drawRect(getScrollX()+30, 30,getScrollX()+ 100, 100, paintText);
+//    	
+//        RectF rc=new RectF();
+//        rc.set(150, 150,300, 300);
+//        paintText.setARGB(0, 255, 255, 255);
+//        
+//        canvas.drawRoundRect(rc, 30, 30, paintText);
 //   	    canvas.drawText("I'm FreeLayout", getScrollX()+30, 30, paintText);   
     	
     }
@@ -254,16 +255,21 @@ public class MyViewGroup extends ViewGroup implements View.OnClickListener{
 //		if(D)Log.d(TAG,"onLayout");
 //		
 //
+//		super.onLayout(changed, l, t, r, b);
+		
+//		if(false)
+//		{
 		final int count = getChildCount();
 		for (int i = 0; i < count; i++) {
 			final View child = getChildAt(i);
 			if (child.getVisibility() != View.GONE) {
 				child.setVisibility(View.VISIBLE);
-				child.measure(r - l, b - t);
+				child.measure(child.getRight()-child.getLeft(), child.getBottom()-child.getTop());
 				child.layout(child.getLeft()+this.getScrollX(), child.getTop()+this.getScrollY(),
 						child.getRight()+this.getScrollX(),child.getBottom() +this.getScrollY());
 			}
 		}
+//		}
 	}
 	
 	   /**
@@ -281,11 +287,13 @@ public class MyViewGroup extends ViewGroup implements View.OnClickListener{
            super.onScrollChanged(l,t,oldl,oldt);
            if(D)Log.d(TAG, "onScrollChanged");
            int dx=l-oldl;
-           int dy=t-oldt;
+//           int dy=t-oldt;
             
            final View child = getChildAt(0);
-				child.layout(child.getLeft()+dx, child.getTop()+dy,
-						child.getRight()+dx,child.getBottom() +dy);
+//				child.layout(child.getLeft()+dx, child.getTop(),
+//						child.getRight()+dx,child.getBottom());
+//				child.layout(child.getLeft()+this.getScrollX(), child.getTop()+this.getScrollY(),
+//						child.getRight()+this.getScrollX(),child.getBottom() +this.getScrollY());
            
            
            
