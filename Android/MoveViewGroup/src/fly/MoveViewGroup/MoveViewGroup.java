@@ -14,7 +14,7 @@ public class MoveViewGroup extends Activity implements View.OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 	}
-	
+	 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub

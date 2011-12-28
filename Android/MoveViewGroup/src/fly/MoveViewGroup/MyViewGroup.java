@@ -19,13 +19,13 @@ import android.view.GestureDetector.OnGestureListener;
 import android.webkit.WebSettings.TextSize;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.AbsoluteLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView.ScaleType;
 
-public class MyViewGroup extends ViewGroup implements View.OnClickListener{
+public class MyViewGroup extends AbsoluteLayout {
 	private static boolean D=true;
     private static String TAG="ViewGroup";
 	private int mLastLeftEdge;// the screen left edge when finger down.
@@ -246,31 +246,6 @@ public class MyViewGroup extends ViewGroup implements View.OnClickListener{
 		return false;
 	}
 
-	@Override
-	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		// TODO Auto-generated method stub	
-//		mScreenWidth=r-l;
-//		mMaxPagePosX=b-t;
-//		
-//		if(D)Log.d(TAG,"onLayout");
-//		
-//
-//		super.onLayout(changed, l, t, r, b);
-		
-//		if(false)
-//		{
-		final int count = getChildCount();
-		for (int i = 0; i < count; i++) {
-			final View child = getChildAt(i);
-			if (child.getVisibility() != View.GONE) {
-				child.setVisibility(View.VISIBLE);
-				child.measure(child.getRight()-child.getLeft(), child.getBottom()-child.getTop());
-				child.layout(child.getLeft()+this.getScrollX(), child.getTop()+this.getScrollY(),
-						child.getRight()+this.getScrollX(),child.getBottom() +this.getScrollY());
-			}
-		}
-//		}
-	}
 	
 	   /**
      * This is called in response to an internal scroll in this view (i.e., the
@@ -286,18 +261,26 @@ public class MyViewGroup extends ViewGroup implements View.OnClickListener{
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
            super.onScrollChanged(l,t,oldl,oldt);
            if(D)Log.d(TAG, "onScrollChanged");
-           int dx=l-oldl;
-//           int dy=t-oldt;
-            
-           final View child = getChildAt(0);
-//				child.layout(child.getLeft()+dx, child.getTop(),
-//						child.getRight()+dx,child.getBottom());
-//				child.layout(child.getLeft()+this.getScrollX(), child.getTop()+this.getScrollY(),
-//						child.getRight()+this.getScrollX(),child.getBottom() +this.getScrollY());
+   
+//           int count = getChildCount();
+//
+//           for (int i = 0; i < count; i++) {
+//               View child = getChildAt(i);
+//               if (child.getVisibility() != GONE) {
+//
+//                   AbsoluteLayout.LayoutParams lp =
+//                           (AbsoluteLayout.LayoutParams) child.getLayoutParams();
+//
+//                   int childLeft = this.getPaddingLeft() + lp.x;
+//                   int childTop = this.getPaddingTop() + lp.y;
+//                   child.layout(childLeft, childTop,
+//                           childLeft + child.getMeasuredWidth(),
+//                           childTop + child.getMeasuredHeight());
+//               }
+//           }
            
            
-           
-           
+      
     }
 	
 	protected void snatchTo(int x,int y)
@@ -314,12 +297,5 @@ public class MyViewGroup extends ViewGroup implements View.OnClickListener{
 		invalidate();
 	}
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		TextView tv=(TextView)v;
-		Toast.makeText(mContext, tv.getText(), Toast.LENGTH_SHORT).show(); 
-		
-	}
 
 }

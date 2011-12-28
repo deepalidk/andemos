@@ -16,6 +16,9 @@ import android.graphics.drawable.Drawable;
 import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.ViewDebug;
+import android.view.ViewParent;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -76,25 +79,42 @@ public class MyButton extends TextView {
             }
         }
         
-        
         Drawable bg=getBackground();
+       
         
-        this.setFrame(left, top, bg.getIntrinsicWidth()+left, bg.getIntrinsicHeight()+top);
-           
-
-        mPaintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintBackground.setColor(Color.WHITE);
-        mPaintBackground.setAlpha(100);
+        if(D)Log.d(TAG, "MyButton.bg.with="+bg.getIntrinsicWidth()+"myButton.bg.height="+bg.getIntrinsicHeight());
         
-        mPaintIcon=new Paint();
         
-        	
-        mPaintText=new Paint(Paint.ANTI_ALIAS_FLAG);
-    	mPaintText.setColor(Color.WHITE);
+        
+//        Drawable bg=getBackground();
+//        
+//        this.setFrame(left, top, bg.getIntrinsicWidth()+left, bg.getIntrinsicHeight()+top);
+//           
+//
+//        mPaintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
+//        mPaintBackground.setColor(Color.WHITE);
+//        mPaintBackground.setAlpha(100);
+//        
+//        mPaintIcon=new Paint();
+//        
+//        	
+//        mPaintText=new Paint(Paint.ANTI_ALIAS_FLAG);
+//    	mPaintText.setColor(Color.WHITE);
         
         a.recycle();                 
     }
 
+    @Override
+	public boolean onTouchEvent(MotionEvent ev) {
+		
+        if(D)Log.d(TAG, "onTouchEvent pd.left="+this.getPaddingLeft()+"pd.top="+this.getPaddingTop()+"pd.right="+getPaddingRight()+"pd.bottom="+this.getPaddingBottom());
+        
+   
+//    	this.invalidate(this.getLeft()-100,this.getTop()-100, this.getRight()+100,this.getBottom()+100);
+		
+		return super.onTouchEvent(ev);
+	}
+    
     public boolean getIsFixPostion()
     {
     	return mIsFixPosition;
@@ -134,7 +154,18 @@ public class MyButton extends TextView {
 //        
 //        canvas.drawText(getText().toString(), (getRight() - getLeft())/2, (getBottom() - getTop())/2, mPaintText);
 //               
-        super.onDraw(canvas);
+        super.onDraw(canvas); 	  
+    }
+    
+   
+    /**
+     * Invalidate the whole view. If the view is visible, {@link #onDraw} will
+     * be called at some point in the future. This must be called from a
+     * UI thread. To call from a non-UI thread, call {@link #postInvalidate()}.
+     */
+    public void invalidate() {   
+    	        final int padding=40;
+                super.invalidate(-padding, -padding, getRight() - getLeft()+padding, getBottom() - getTop()+padding);
     }
     
 	@Override
@@ -171,6 +202,4 @@ public class MyButton extends TextView {
               Bitmap newbmp = Bitmap.createBitmap(oldbmp, 0, 0, width, height, matrix, true);       // 建立新的bitmap，其内容是对原bitmap的缩放后的图
               return new BitmapDrawable(newbmp);       // 把bitmap转换成drawable并返回
     }
-
-	
 }
