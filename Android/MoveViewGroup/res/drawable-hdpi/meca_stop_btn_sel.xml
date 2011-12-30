@@ -3,9 +3,9 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
 <!--     <item android:drawable="@drawable/num_01_press_05" /> -->
     <item>
-        <bitmap android:gravity="center" android:src="@drawable/num_01_press_05" />
+        <bitmap android:gravity="center" android:src="@drawable/meca_press_05" />
     </item>
     <item>
-        <bitmap android:gravity="center" android:src="@drawable/num_01_01_04_sel" />
+        <bitmap android:gravity="center" android:src="@drawable/icon_stop_sel" />
     </item>
 </layer-list>

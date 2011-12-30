@@ -2,6 +2,6 @@
 <layer-list
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <bitmap android:gravity="center" android:src="@drawable/icon_enter_sel" />
+        <bitmap android:gravity="center" android:src="@drawable/icon_rewind_nor" />
     </item>
 </layer-list>

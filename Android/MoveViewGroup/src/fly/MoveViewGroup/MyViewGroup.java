@@ -32,8 +32,8 @@ public class MyViewGroup extends AbsoluteLayout {
 	private float mLastMotionPosX; //record last posX since the finger move.
 	private final static int TOUCH_STATE_REST = 0;
 	private final static int TOUCH_STATE_SCROLLING = 1;
-	private int mScreenWidth=480;
-	private int mMaxPagePosX=480;
+	private int mScreenWidth=600;
+	private int mMaxPagePosX=600;
 	private int mTouchSlop;
 	private Scroller mScroller;
 	Context mContext;
