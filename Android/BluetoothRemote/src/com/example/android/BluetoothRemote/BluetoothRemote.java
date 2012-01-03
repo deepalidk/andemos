@@ -44,6 +44,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -112,10 +113,10 @@ public class BluetoothRemote extends Activity {
         if(D) Log.e(TAG, "+++ ON CREATE +++");
 
         // Set up the window layout
-        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
-
+//        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
+        
         // Set up the custom title
         mTitle = (TextView) findViewById(R.id.title_left_text);
         mTitle.setText(R.string.app_name);
@@ -175,25 +176,25 @@ public class BluetoothRemote extends Activity {
     private void setupChat() {
         Log.d(TAG, "setupChat()");
 
-        // Initialize the array adapter for the conversation thread
-        mConversationArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
-        mConversationView = (ListView) findViewById(R.id.in);
-        mConversationView.setAdapter(mConversationArrayAdapter);
-
-        // Initialize the compose field with a listener for the return key
-        mOutEditText = (EditText) findViewById(R.id.edit_text_out);
-        mOutEditText.setOnEditorActionListener(mWriteListener);
-
-        // Initialize the send button with a listener that for click events
-        mSendButton = (Button) findViewById(R.id.button_send);
-        mSendButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                // Send a message using content of the edit text widget
-                TextView view = (TextView) findViewById(R.id.edit_text_out);
-                String message = view.getText().toString();
-                sendMessage(message);
-            }
-        });
+//        // Initialize the array adapter for the conversation thread
+//        mConversationArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
+//        mConversationView = (ListView) findViewById(R.id.in);
+//        mConversationView.setAdapter(mConversationArrayAdapter);
+//
+//        // Initialize the compose field with a listener for the return key
+//        mOutEditText = (EditText) findViewById(R.id.edit_text_out);
+//        mOutEditText.setOnEditorActionListener(mWriteListener);
+//
+//        // Initialize the send button with a listener that for click events
+//        mSendButton = (Button) findViewById(R.id.button_send);
+//        mSendButton.setOnClickListener(new OnClickListener() {
+//            public void onClick(View v) {
+//                // Send a message using content of the edit text widget
+//                TextView view = (TextView) findViewById(R.id.edit_text_out);
+//                String message = view.getText().toString();
+//                sendMessage(message);
+//            }
+//        });
 
         // Initialize the BluetoothRemoteService to perform bluetooth connections
         mChatService = new BluetoothRemoteService(this, mHandler);
