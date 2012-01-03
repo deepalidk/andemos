@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <Button android:textColor="@drawable/full_text_color_switch" android:gravity="center" android:id="@id/full_a_four_btn_1" android:padding="2.0px" android:visibility="invisible" android:layout_width="131.0px" android:layout_height="83.0px" android:shadowColor="@color/BLACK" android:layout_x="2.0px" android:layout_y="0.0px" style="@style/Shadow" />
-    <Button android:textColor="@drawable/full_text_color_switch" android:gravity="center" android:id="@id/full_a_four_btn_2" android:padding="2.0px" android:visibility="invisible" android:layout_width="131.0px" android:layout_height="83.0px" android:shadowColor="@color/BLACK" android:layout_x="117.0px" android:layout_y="0.0px" style="@style/Shadow" />
-    <Button android:textColor="@drawable/full_text_color_switch" android:gravity="center" android:id="@id/full_a_four_btn_3" android:padding="2.0px" android:visibility="invisible" android:layout_width="131.0px" android:layout_height="83.0px" android:layout_x="233.0px" android:layout_y="0.0px" />
-    <CheckBox android:textColor="@drawable/full_text_color_switch" android:gravity="center" android:id="@id/full_a_four_btn_3_shift" android:padding="2.0px" android:visibility="invisible" android:layout_width="131.0px" android:layout_height="83.0px" android:shadowColor="@color/BLACK" android:layout_x="233.0px" android:layout_y="0.0px" style="@style/Shadow" />
-    <Button android:textColor="@drawable/full_text_color_switch" android:gravity="center" android:id="@id/full_a_four_btn_4" android:padding="2.0px" android:visibility="invisible" android:layout_width="131.0px" android:layout_height="83.0px" android:shadowColor="@color/BLACK" android:layout_x="348.0px" android:layout_y="0.0px" style="@style/Shadow" />
-</AbsoluteLayout>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout android:id="@id/playback_3_buttons" android:layout_width="wrap_content" android:layout_height="243.0px"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <Button android:textColor="#ffffffff" android:gravity="center" android:id="@id/playback_info" android:visibility="invisible" android:layout_width="133.0px" android:layout_height="83.0px" android:layout_x="117.0px" android:layout_y="0.0px" />
-    <Button android:gravity="center" android:id="@id/playback_pause" android:visibility="invisible" android:layout_width="131.0px" android:layout_height="83.0px" android:layout_x="233.0px" android:layout_y="0.0px" />
-    <Button android:gravity="center" android:id="@id/playback_stop" android:visibility="invisible" android:layout_width="133.0px" android:layout_height="123.0px" android:layout_x="117.0px" android:layout_y="90.0px" />
-    <Button android:gravity="center" android:id="@id/playback_play" android:visibility="invisible" android:layout_width="133.0px" android:layout_height="123.0px" android:layout_x="233.0px" android:layout_y="90.0px" />
-</AbsoluteLayout>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout android:id="@id/prog_tab" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_x="0.0px" android:layout_y="0.0px"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:orientation="vertical" android:background="@drawable/dot_bg" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_x="0.0px" android:layout_y="65.0px" />
-    <Button android:id="@id/prog_tab_bottom_1_holder" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_x="400.0px" android:layout_y="550.0px" />
-</AbsoluteLayout>

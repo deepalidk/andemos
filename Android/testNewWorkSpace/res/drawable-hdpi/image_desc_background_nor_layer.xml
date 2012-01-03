@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layer-list
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/image_desc_shape_nor" />
-    <item>
-        <bitmap android:gravity="fill_horizontal|bottom|center" android:src="@drawable/gray_line" />
-    </item>
-</layer-list>

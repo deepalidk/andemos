@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="600.0px" android:layout_height="400.0px"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:textSize="12.0pt" android:gravity="center_horizontal" android:layout_width="600.0px" android:layout_height="180.0px" android:text="Calibrate horizontally based\non the current position" />
-    <Button android:textSize="12.0pt" android:gravity="center_horizontal" android:id="@id/calibrate_button" android:layout_width="600.0px" android:layout_height="80.0px" android:text="Calibrate" />
-</LinearLayout>

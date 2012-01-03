@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:padding="10.0dip" android:layout_width="600.0px" android:layout_height="400.0px"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <ProgressBar android:id="@id/calibrate_progressbar" android:layout_width="600.0px" android:layout_height="60.0px" android:max="800" style="?android:attr/progressBarStyleHorizontal" />
-    <TextView android:textSize="12.0pt" android:gravity="center_horizontal" android:layout_width="600.0px" android:layout_height="80.0px" android:text="Calibrating..." />
-    <TextView android:textSize="8.0pt" android:gravity="center_horizontal" android:layout_width="600.0px" android:layout_height="80.0px" android:text="Do not move device.\nPlease wait..." />
-</LinearLayout>

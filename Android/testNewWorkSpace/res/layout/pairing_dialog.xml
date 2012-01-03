@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="300.0px" android:minHeight="200.0px"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:textSize="25.0px" android:ellipsize="none" android:gravity="left|center" android:id="@id/bluetooth_dialog_message" android:paddingLeft="15.0px" android:paddingRight="15.0px" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="20.0px" android:maxWidth="350.0px" android:singleLine="false" />
-    <LinearLayout android:orientation="horizontal" android:layout_width="350.0px" android:layout_height="wrap_content" android:weightSum="1.0">
-        <Button android:id="@id/bluetooth_dialog_button1" android:background="#ff66bb66" android:visibility="visible" android:layout_width="175.0px" android:layout_height="75.0px" android:layout_weight="0.5" />
-        <Button android:id="@id/bluetooth_dialog_button2" android:background="#ff666666" android:visibility="visible" android:layout_width="175.0px" android:layout_height="75.0px" android:layout_weight="0.5" />
-    </LinearLayout>
-</LinearLayout>
