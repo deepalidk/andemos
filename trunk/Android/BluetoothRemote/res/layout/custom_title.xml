@@ -14,12 +14,17 @@
      limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:id="@+id/title"
+    android:layout_width="600px"
+    android:layout_height="45px"
     android:gravity="center_vertical"
+    android:background="@drawable/tc_title_bg_2_e"
   >
   <TextView android:id="@+id/title_left_text"
+      android:layout_centerVertical="true"
       android:layout_alignParentLeft="true"
+      android:paddingLeft="5dp"
+      android:paddingTop="5dp"
       android:ellipsize="end"
       android:singleLine="true"
       style="?android:attr/windowTitleStyle"
@@ -28,7 +33,10 @@
       android:layout_weight="1"
     />
     <TextView android:id="@+id/title_right_text"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:layout_width="wrap_content"

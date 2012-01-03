@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyButton">   
+        <attr name="left" format="dimension" />   
+        <attr name="top" format="dimension" />   
+        <attr name="right" format="dimension" />   
+        <attr name="bottom" format="dimension" />   
+    
+        <attr name="fix_position" format="boolean" />   
+
+    </declare-styleable>   
+</resources>

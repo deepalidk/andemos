@@ -1,606 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:orientation="vertical"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	xmlns:android="http://schemas.android.com/apk/res/android">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="vertical" android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<Button android:id="@+id/buttonMute" android:text="MUTE"
-					android:layout_marginTop="12dp" android:layout_marginLeft="12dp"
-					android:layout_width="75dp" android:layout_height="75dp"
-					android:background="@color/btn_background" android:tag="6"
-					android:onClick="onBtnClick" />
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:text="2" android:layout_centerInParent="true"
-						android:visibility="invisible" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="12" android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<Button android:id="@+id/buttonPower" android:text="POWER"
-					android:layout_marginTop="12dp" android:layout_marginRight="12dp"
-					android:layout_width="75dp" android:layout_height="75dp"
-					android:layout_marginLeft="6dp" android:background="@color/btn_background"
-					android:tag="1" android:onClick="onBtnClick" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<Button android:id="@+id/button1" android:text="1"
-					android:layout_marginLeft="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:background="@color/btn_background" android:tag="e"
-					android:onClick="onBtnClick" />
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/button2" android:text="2"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="f" android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<Button android:id="@+id/button3" android:text="3"
-					android:layout_marginRight="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:layout_marginLeft="6dp" android:background="@color/btn_background"
-					android:tag="10" android:onClick="onBtnClick" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<Button android:id="@+id/button4" android:text="4"
-					android:layout_marginLeft="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:background="@color/btn_background" android:tag="11"
-					android:onClick="onBtnClick" />
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/button5" android:text="5"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="12" android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<Button android:id="@+id/button6" android:text="6"
-					android:layout_marginRight="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:layout_marginLeft="6dp" android:background="@color/btn_background"
-					android:tag="13" android:onClick="onBtnClick" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<Button android:id="@+id/button7" android:text="7"
-					android:layout_marginLeft="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:background="@color/btn_background" android:tag="14"
-					android:onClick="onBtnClick" />
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/button8" android:text="8"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="15" android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<Button android:id="@+id/button9" android:text="9"
-					android:layout_marginRight="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:layout_marginLeft="6dp" android:background="@color/btn_background"
-					android:tag="16" android:onClick="onBtnClick" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<Button android:id="@+id/buttonNumber" android:text="-/--"
-					android:layout_marginLeft="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:background="@color/btn_background" android:tag="18"
-					android:onClick="onBtnClick" />
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/button0" android:text="0"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="d" android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<Button android:id="@+id/buttonMode" android:text="TV/VCR"
-					android:layout_marginRight="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:layout_marginLeft="6dp" android:background="@color/btn_background"
-					android:tag="19" android:onClick="onBtnClick" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/buttonSubChan" android:text="CH-"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="2" android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/buttonAddChan" android:text="CH+"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="3" android:onClick="onBtnClick" />
-				</RelativeLayout>
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/buttonSubVol" android:text="VOL-"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="4" android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/buttonAddVol" android:text="VOL+"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="5" android:onClick="onBtnClick" />
-				</RelativeLayout>
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<Button android:layout_marginLeft="12dp" android:visibility="invisible"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" />
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/buttonUp" android:text="↑"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="2b" android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<Button android:layout_marginRight="12dp"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:visibility="invisible" android:layout_height="75dp"
-					android:layout_marginLeft="6dp" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<Button android:id="@+id/buttonLeft" android:text="←"
-					android:layout_marginLeft="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:background="@color/btn_background" android:tag="2a"
-					android:onClick="onBtnClick" />
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/buttonDown" android:text="OK"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="2d" android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<Button android:id="@+id/buttonRight" android:text="→"
-					android:layout_marginRight="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:layout_marginLeft="6dp" android:background="@color/btn_background"
-					android:tag="2c" android:onClick="onBtnClick" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<Button android:layout_marginLeft="12dp" android:visibility="invisible"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" />
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/buttonDown" android:text="↓"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="2e" android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<Button android:layout_marginRight="12dp"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:visibility="invisible" android:layout_height="75dp"
-					android:layout_marginLeft="6dp" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_marginLeft="12dp"
-					android:layout_width="fill_parent" android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<TextView android:text="" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<Button android:id="@+id/buttonGuide" android:text="GUIDE"
-					android:layout_marginLeft="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:background="@color/btn_background" android:tag="1e"
-					android:onClick="onBtnClick" />
-				<Button android:id="@+id/buttonMenu" android:text="MENU"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" android:layout_marginLeft="6dp"
-					android:background="@color/btn_background" android:tag="17"
-					android:onClick="onBtnClick" />
-				<Button android:id="@+id/buttonInfo" android:text="INFO"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" android:layout_marginLeft="6dp"
-					android:background="@color/btn_background" android:tag="21"
-					android:onClick="onBtnClick" />
-				<Button android:id="@+id/buttonQUIT" android:text="QUIT"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" android:layout_marginLeft="6dp"
-					android:background="@color/btn_background" android:tag="29"
-					android:onClick="onBtnClick" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<TextView android:text="" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<TextView android:text="" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<Button android:id="@+id/buttonRepeat"
-					android:layout_marginLeft="12dp" android:text="REP."
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" android:background="@color/btn_background"
-					android:tag="1b" android:onClick="onBtnClick" />
-				<Button android:id="@+id/buttonPip" android:text="PIP"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" android:layout_marginLeft="6dp"
-					android:background="@color/btn_background" android:tag="1f"
-					android:onClick="onBtnClick" />
-				<Button android:id="@+id/buttonToggle" android:text="TOG."
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" android:layout_marginLeft="6dp"
-					android:background="@color/btn_background" android:tag="20"
-					android:onClick="onBtnClick" />
-				<Button android:id="@+id/buttonEnter" android:text="ENTER"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" android:layout_marginLeft="6dp"
-					android:background="@color/btn_background" android:tag="18"
-					android:onClick="onBtnClick" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<TextView android:text="" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<TextView android:text="" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<Button android:id="@+id/buttonSubtitle" android:text="CC"
-					android:layout_marginLeft="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:background="@color/btn_background" android:tag="22"
-					android:onClick="onBtnClick" />
-				<Button android:id="@+id/buttonSubChap" android:text="CHAP-"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" android:layout_marginLeft="6dp"
-					android:background="@color/btn_background" android:tag="1c"
-					android:onClick="onBtnClick" />
-				<Button android:id="@+id/buttonAddChap" android:text="CHAP+"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" android:layout_marginLeft="6dp"
-					android:background="@color/btn_background" android:tag="1d"
-					android:onClick="onBtnClick" />
-				<Button android:id="@+id/buttonSleep" android:text="SLEEP"
-					android:layout_width="75dp" android:layout_marginTop="6dp"
-					android:layout_height="75dp" android:layout_marginLeft="6dp"
-					android:background="@color/btn_background" android:tag="26"
-					android:onClick="onBtnClick" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<TextView android:text="" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<Button android:id="@+id/buttonScanBack" android:text="◀◀"
-					android:layout_marginLeft="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:background="@color/btn_background" android:tag="7"
-					android:onClick="onBtnClick" />
-				<RelativeLayout android:id="@+id/buttonPlay"
-					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:orientation="horizontal" android:layout_weight="1">
-					<Button android:text="▶" android:layout_centerInParent="true"
-						android:layout_width="75dp" android:layout_marginTop="6dp"
-						android:layout_height="75dp" android:layout_marginLeft="6dp"
-						android:background="@color/btn_background" android:tag="8"
-						android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<Button android:id="@+id/buttonScanNext" android:text="▶▶"
-					android:layout_marginRight="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:layout_marginLeft="6dp" android:background="@color/btn_background"
-					android:tag="9" android:onClick="onBtnClick" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="2">
-				<Button android:id="@+id/buttonRec" android:text="●"
-					android:layout_marginLeft="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:background="@color/btn_background" android:tag="c"
-					android:onClick="onBtnClick" />
-				<RelativeLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:orientation="horizontal"
-					android:layout_weight="1">
-					<Button android:id="@+id/buttonStop" android:text="■"
-						android:layout_centerInParent="true" android:layout_width="75dp"
-						android:layout_marginTop="6dp" android:layout_height="75dp"
-						android:layout_marginLeft="6dp" android:background="@color/btn_background"
-						android:tag="a" android:onClick="onBtnClick" />
-				</RelativeLayout>
-				<Button android:id="@+id/buttonPause" android:text="▎▎"
-					android:layout_marginRight="12dp" android:layout_width="75dp"
-					android:layout_marginTop="6dp" android:layout_height="75dp"
-					android:layout_marginLeft="6dp" android:background="@color/btn_background"
-					android:tag="b" android:onClick="onBtnClick" />
-			</LinearLayout>
-			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:orientation="horizontal" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_weight="1">
-				<TextView android:text="" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" />
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="vertical" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:visibility="gone">
-			<ListView android:id="@+id/in" android:layout_width="fill_parent"
-				android:layout_height="fill_parent" android:stackFromBottom="true"
-				android:transcriptMode="alwaysScroll" android:layout_weight="1" />
-			<LinearLayout android:orientation="horizontal"
-				android:layout_width="fill_parent" android:layout_height="wrap_content">
-				<EditText android:id="@+id/edit_text_out"
-					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:layout_weight="1" android:layout_gravity="bottom" />
-				<Button android:id="@+id/button_send" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:text="@string/send" />
-			</LinearLayout>
-		</LinearLayout>
-	</LinearLayout>
-</ScrollView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:flyview="http://schemas.android.com/apk/res/com.example.android.BluetoothRemote"
+	android:orientation="vertical" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<include layout="@layout/custom_title"/>
+	<fly.MoveViewGroup.Workspace  
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent">
+		<fly.MoveViewGroup.MyViewGroup 
+			android:layout_width="fill_parent" 
+			android:layout_height="fill_parent"
+			android:clipChildren="false"
+			android:background="@drawable/main_bg">
+			<fly.MoveViewGroup.MyButton android:layout_x="60px" android:layout_y="30px" android:layout_width="88px"	android:layout_height="50px" flyview:fix_position="false" android:tag="6" android:onClick="onClick" android:gravity="center" android:background="@drawable/tc_btn_mute_action"/>
+		  	<fly.MoveViewGroup.MyButton android:layout_x="450px" android:layout_y="30px" android:layout_width="88px"	android:layout_height="50px" flyview:fix_position="false" android:tag="1" android:onClick="onClick" android:gravity="center" android:background="@drawable/tc_btn_power_action"/>
+			
+		  	<AbsoluteLayout android:id="@+id/num_holder" android:visibility="visible" android:clipChildren="false" android:clipToPadding="false" android:background="@drawable/panel_num" android:layout_width="480.0px" android:layout_height="491.0px" android:layout_x="60.0px" android:layout_y="110.0px">  
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="11px"   android:layout_y="6px" android:layout_width="151px" android:layout_height="112px"   flyview:fix_position="true" android:tag="14" android:onClick="onClick" android:background="@drawable/num_01_01_01_action"	/>
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="162px"  android:layout_y="6px" android:layout_width="151px" android:layout_height="112px"   flyview:fix_position="true" android:tag="15" android:onClick="onClick" android:background="@drawable/num_01_01_02_action"/> 
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="313px"  android:layout_y="6px" android:layout_width="151px"  android:layout_height="112px"   flyview:fix_position="true" android:tag="16" android:onClick="onClick" android:background="@drawable/num_01_01_03_action"	/>
+     			
+     			
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="11px"   android:layout_y="121px" android:layout_width="151px" android:layout_height="112px"   flyview:fix_position="true" android:tag="17" android:onClick="onClick" android:background="@drawable/num_01_01_04_action"	/>
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="162px"  android:layout_y="121px" android:layout_width="151px" android:layout_height="112px"   flyview:fix_position="true" android:tag="18" android:onClick="onClick" android:background="@drawable/num_01_01_05_action"/> 
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="313px"  android:layout_y="121px" android:layout_width="151px"  android:layout_height="112px"   flyview:fix_position="true" android:tag="19" android:onClick="onClick" android:background="@drawable/num_01_01_06_action"	/>
+     			
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="11px"   android:layout_y="233px" android:layout_width="151px" android:layout_height="112px"   flyview:fix_position="true" android:tag="20" android:onClick="onClick" android:background="@drawable/num_01_01_07_action"	/>
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="162px"  android:layout_y="233px" android:layout_width="151px" android:layout_height="112px"   flyview:fix_position="true" android:tag="21" android:onClick="onClick" android:background="@drawable/num_01_01_08_action"/> 
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="313px"  android:layout_y="233px" android:layout_width="151px"  android:layout_height="112px"   flyview:fix_position="true" android:tag="22" android:onClick="onClick" android:background="@drawable/num_01_01_09_action"	/>
+     			
 
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="11px"   android:layout_y="348px" android:layout_width="151px" android:layout_height="112px"   flyview:fix_position="true" android:tag="31" android:onClick="onClick" android:background="@drawable/num_01_01_ttx_mix_action"	/>
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="162px"  android:layout_y="348px" android:layout_width="151px" android:layout_height="112px"   flyview:fix_position="true" android:tag="13" android:onClick="onClick" android:background="@drawable/num_01_01_00_action"/> 
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="313px"  android:layout_y="348px" android:layout_width="151px"  android:layout_height="112px"   flyview:fix_position="true" android:tag="27" android:onClick="onClick" android:background="@drawable/num_01_01_pre_ch_action"	/>
+            </AbsoluteLayout>
 
+			<RelativeLayout android:layout_x="60.0px" android:layout_y="611.0px" android:layout_width="480.0px" android:layout_height="279.0px"
+			  xmlns:android="http://schemas.android.com/apk/res/android">
+			    <RelativeLayout android:layout_width="480.0px" android:layout_height="279.0px" />
+			    <RelativeLayout android:id="@id/chvolcontrol_volume_background" android:background="@drawable/btn_ch_bg" android:layout_width="127.0px" android:layout_height="279.0px" android:layout_marginLeft="40.0px" android:layout_alignParentLeft="true" android:layout_centerVertical="true">
+			        <Button android:id="@id/chvolcontrol_plus_btn" android:background="@drawable/control_full_b_plus_action" android:layout_width="117.0px" android:layout_height="122.0px" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:tag="5"/>
+			        <ImageView android:id="@id/chvolcontrol_vol" android:background="@drawable/icon_vol" android:layout_width="43.0px" android:layout_height="15.0px" android:layout_marginTop="5.0px" android:layout_below="@id/chvolcontrol_plus_btn" android:layout_centerHorizontal="true" />
+			        <Button android:id="@id/chvolcontrol_minus_btn" android:background="@drawable/control_full_b_minus_action" android:layout_width="117.0px" android:layout_height="122.0px" android:layout_marginBottom="12.0px" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"  android:tag="4"/>
+			    </RelativeLayout>
+			    <LinearLayout android:gravity="center" android:visibility="gone" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+			        <ImageButton android:id="@id/chvolcontrol_mute" android:background="@drawable/btn_01_mute_action" android:layout_width="133.0px" android:layout_height="123.0px" />
+			        <TextView android:textSize="24.0px" android:textColor="#ffb4b4b4" android:gravity="center" android:id="@id/chvolcontrol_mute_text" android:layout_width="fill_parent" android:layout_height="26.0px" android:text="Mute" />
+			    </LinearLayout> 
+			    <RelativeLayout android:id="@id/chvolcontrol_channel_background" android:background="@drawable/btn_ch_bg" android:layout_width="127.0px" android:layout_height="279.0px" android:layout_marginRight="40.0px" android:layout_alignParentRight="true" android:layout_centerVertical="true">
+			        <Button  android:tag="2" android:id="@id/chvolcontrol_up_btn" android:background="@drawable/control_full_b_up_action" android:layout_width="117.0px" android:layout_height="122.0px" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" />
+			        <ImageView android:id="@id/chvolcontrol_channel" android:background="@drawable/icon_ch" android:layout_width="43.0px" android:layout_height="15.0px" android:layout_marginTop="5.0px" android:layout_below="@id/chvolcontrol_up_btn" android:layout_centerHorizontal="true" />
+			        <Button android:tag="3" android:id="@id/chvolcontrol_down_btn" android:background="@drawable/control_full_b_down_action" android:layout_width="117.0px" android:layout_height="122.0px" android:layout_marginBottom="12.0px" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+			    </RelativeLayout>
+			</RelativeLayout>   
+			 
+		    <AbsoluteLayout android:id="@+id/dot_holder" android:tag="fixed" android:visibility="visible" android:clipChildren="false" android:clipToPadding="false" android:layout_width="64.0px" android:layout_height="32.0px" android:layout_x="268.0px" android:layout_y="888.0px">  
+     			<Button android:id="@+id/btn_dot1" android:enabled="false" android:visibility="visible" android:layout_x="0px"   android:layout_y="0px" android:layout_width="32px" android:layout_height="32px"   flyview:fix_position="true" android:tag="1" android:background="@drawable/btn_dot_action"	/>
+     			<Button android:id="@+id/dot_dot2" android:enabled="true" android:visibility="visible" android:layout_x="32px"  android:layout_y="0px" android:layout_width="32px" android:layout_height="32px"   flyview:fix_position="true" android:tag="1" android:background="@drawable/btn_dot_action"/> 
+            </AbsoluteLayout> 
+			
+			<AbsoluteLayout android:id="@+id/navi_holder" android:visibility="visible" android:clipChildren="false" android:clipToPadding="false"  android:layout_width="511.0px" android:layout_height="480.0px" android:layout_x="645.0px" android:layout_y="30.0px">  
+				<AbsoluteLayout android:id="@+id/navi_holder" android:visibility="visible" android:clipChildren="false" android:clipToPadding="false" android:background="@drawable/panel_navi" android:layout_width="421.0px" android:layout_height="453.0px" android:layout_x="45.0px" android:layout_y="10.0px">  
+	     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="9px"   android:layout_y="157px" android:layout_width="120px" android:layout_height="152px"   flyview:fix_position="true" android:tag="42" android:onClick="onClick" android:background="@drawable/navi_left_action"/>
+	     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="134px"   android:layout_y="34px" android:layout_width="152px" android:layout_height="120px"   flyview:fix_position="true" android:tag="43" android:onClick="onClick" android:background="@drawable/navi_up_action"	/>
+	     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="292px"   android:layout_y="157px" android:layout_width="120px" android:layout_height="152px"   flyview:fix_position="true" android:tag="44" android:onClick="onClick" android:background="@drawable/navi_right_action"	/>
+	     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="134px"   android:layout_y="313px" android:layout_width="152px" android:layout_height="120px"   flyview:fix_position="true" android:tag="46" android:onClick="onClick" android:background="@drawable/navi_down_action"	/>
+	     					
+					<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="134px"   android:layout_y="157px" android:layout_width="152px" android:layout_height="152px"   flyview:fix_position="true" android:tag="45" android:onClick="onClick" android:background="@drawable/btn_center_action"	/>
+		     	</AbsoluteLayout>
+		     	  <fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="-10px"  android:layout_y="0px" android:layout_width="160px" android:layout_height="160px" android:textSize="24.0px" android:textColor="#ffb4b4b4" android:gravity="top|center_horizontal" android:text="MENU"  flyview:fix_position="true" android:tag="23" android:onClick="onClick" android:background="@drawable/tc_icon_menu_nor_action"/>   
+	     	      <fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="330px"  android:layout_y="0px" android:layout_width="160px" android:layout_height="160px" android:textSize="24.0px" android:textColor="#ffb4b4b4" android:gravity="top|center_horizontal" android:text="INFO"  flyview:fix_position="true" android:tag="33" android:onClick="onClick" android:background="@drawable/tc_icon_info_nor_action"/> 
+	     	      <fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="0px"  android:layout_y="322px" android:layout_width="160px" android:layout_height="160px" android:textSize="24.0px" android:textColor="#ffb4b4b4" android:gravity="bottom|center_horizontal" android:text="RETURN"  flyview:fix_position="true" android:tag="41" android:onClick="onClick" android:background="@drawable/tc_icon_return_nor_action"/> 
+	     	      <fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="330px"  android:layout_y="322px" android:layout_width="160px" android:layout_height="160px" android:textSize="24.0px" android:textColor="#ffb4b4b4" android:gravity="bottom|center_horizontal" android:text="EXIT"  flyview:fix_position="true" android:tag="41" android:onClick="onClick" android:background="@drawable/tc_icon_exit_nor_action"/> 
+	     	</AbsoluteLayout>
+			
+			<AbsoluteLayout android:id="@+id/meca_holder" android:visibility="visible" android:clipChildren="false" android:clipToPadding="false" android:background="@drawable/panel_meca" android:layout_width="480.0px" android:layout_height="247.0px" android:layout_x="660.0px" android:layout_y="563.0px">  
+	    		<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="11px"   android:layout_y="6px" android:layout_width="115px" android:layout_height="105px"   flyview:fix_position="true" android:tag="7" android:onClick="onClick" android:background="@drawable/meca_rewind_re_action"	/>
+	    		<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="126px"  android:layout_y="6px" android:layout_width="115px" android:layout_height="105px"   flyview:fix_position="true" android:tag="7" android:onClick="onClick" android:background="@drawable/meca_rewind_action"/> 
+	    		<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="241px"  android:layout_y="6px" android:layout_width="115px"  android:layout_height="105px"   flyview:fix_position="true" android:tag="9" android:onClick="onClick" android:background="@drawable/meca_forward_re_action"	/>   			
+				<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="356px"  android:layout_y="6px" android:layout_width="115px"  android:layout_height="105px"   flyview:fix_position="true" android:tag="9" android:onClick="onClick" android:background="@drawable/meca_forward_action"	/>  
+	    			
+				<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="11px"   android:layout_y="111px" android:layout_width="115px" android:layout_height="105px"   flyview:fix_position="true" android:tag="12" android:onClick="onClick" android:background="@drawable/meca_recording_action"	/>
+	    		<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="126px"  android:layout_y="111px" android:layout_width="115px" android:layout_height="105px"   flyview:fix_position="true" android:tag="10" android:onClick="onClick" android:background="@drawable/meca_stop_action"/> 
+	    		<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="241px"  android:layout_y="111px" android:layout_width="115px"  android:layout_height="105px"   flyview:fix_position="true" android:tag="8" android:onClick="onClick" android:background="@drawable/meca_play_action"	/>   			
+				<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="356px"  android:layout_y="111px" android:layout_width="115px"  android:layout_height="105px"   flyview:fix_position="true" android:tag="11" android:onClick="onClick" android:background="@drawable/meca_pause_action"	/>  
+			</AbsoluteLayout>
+		</fly.MoveViewGroup.MyViewGroup >
+	</fly.MoveViewGroup.Workspace>
+</LinearLayout>
