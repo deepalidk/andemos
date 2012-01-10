@@ -16,7 +16,7 @@ public class IrApi implements IOnRead {
 
 	// Debugging
 	private static final String TAG = "Irapi";
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	/**
 	 * IO Control handle
@@ -46,7 +46,7 @@ public class IrApi implements IOnRead {
 	/**
 	 * time to Retransimit(ms)
 	 */
-	private int mmRetransimitTime = 500;
+	private int mmRetransimitTime = 100;
 
 	/**
 	 * time to Retransimit(ms)

@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Button;
 
 public class MyButton extends TextView {
-	private static boolean D=true;
+	private static boolean D = false;
     private static String TAG="MyButton";
     
     private boolean mIsFixPosition=false;
@@ -39,10 +39,7 @@ public class MyButton extends TextView {
 
     private boolean mBackgroundSizeChanged;
     private Drawable mBackground;
-
-    
-     
-    
+ 
 	public MyButton(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -86,24 +83,7 @@ public class MyButton extends TextView {
        
         
         if(D)Log.d(TAG, "MyButton.bg.with="+bg.getIntrinsicWidth()+"myButton.bg.height="+bg.getIntrinsicHeight());
-        
-        
-        
-//        Drawable bg=getBackground();
-//        
-//        this.setFrame(left, top, bg.getIntrinsicWidth()+left, bg.getIntrinsicHeight()+top);
-//           
-//
-//        mPaintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
-//        mPaintBackground.setColor(Color.WHITE);
-//        mPaintBackground.setAlpha(100);
-//        
-//        mPaintIcon=new Paint();
-//        
-//        	
-//        mPaintText=new Paint(Paint.ANTI_ALIAS_FLAG);
-//    	mPaintText.setColor(Color.WHITE);
-        
+                
         a.recycle();                 
     }
 
