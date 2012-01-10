@@ -38,7 +38,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ConfigRemote extends Activity {
 	// Debugging
 	private static final String TAG = "ConfigRemote";
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	// Return Intent extra
 	public static String REMOTE_CODENUMBER = "remote_code_number";

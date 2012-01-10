@@ -29,7 +29,7 @@ import android.widget.Toast;
 import android.widget.ImageView.ScaleType;
 
 public class MyViewGroup extends AbsoluteLayout implements View.OnClickListener {
-	private static boolean D = true;
+	private static boolean D = false;
 	private static String TAG = "ViewGroup";
 	
 	 /**
@@ -113,6 +113,9 @@ public class MyViewGroup extends AbsoluteLayout implements View.OnClickListener 
     		 }
     		}
         	
+    		mScreenWidth=r-l;
+    		mMaxPagePosX=mScreenWidth;
+    		
     		bFirstInit=false;
     	}
       }
