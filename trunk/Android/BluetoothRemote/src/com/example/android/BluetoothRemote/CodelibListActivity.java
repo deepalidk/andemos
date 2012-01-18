@@ -65,17 +65,20 @@ public class CodelibListActivity extends Activity implements OnClickListener {
 	private ArrayAdapter<String> mCodelibArrayAdapter;
 
 	List<File> mFiles;
-	
+
 	// File
 	private File mFile;
-	private String mPath="/sdcard/remotec";   
+	private String mPath = "/sdcard/remotec";
 	private String key_search;
-	
+
 	/**
 	 * Ir API object
 	 */
 	private IrApi mmIrController;
 	private ListView codelibListView;
+
+	private int mSelectedIndex;
+	private Button updateButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +91,10 @@ public class CodelibListActivity extends Activity implements OnClickListener {
 		// Set result CANCELED incase the user backs out
 		setResult(Activity.RESULT_CANCELED);
 
-		mmIrController=IrApi.getHandle();
-		
+		mmIrController = IrApi.getHandle();
+
 		// Initialize the button to perform device discovery
-		Button updateButton = (Button) findViewById(R.id.button_update);
+		updateButton = (Button) findViewById(R.id.button_update);
 		updateButton.setOnClickListener(this);
 
 		// Initialize array adapters. One for already paired devices and
@@ -99,39 +102,44 @@ public class CodelibListActivity extends Activity implements OnClickListener {
 		mCodelibArrayAdapter = new ArrayAdapter<String>(this,
 				R.layout.device_name);
 
+		mSelectedIndex = -1;
+
+		if (mSelectedIndex == -1) {
+			updateButton.setEnabled(false);
+		}
+
 		// Find and set up the ListView for paired devices
 		codelibListView = (ListView) findViewById(R.id.codelib_list);
 		codelibListView.setAdapter(mCodelibArrayAdapter);
 		codelibListView.setOnItemClickListener(mDeviceClickListener);
 		codelibListView.setFocusableInTouchMode(true);
-		
+
 		// Register for broadcasts when a device is discovered
 		// IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 		// this.registerReceiver(mReceiver, filter);
 
 		// Get a set of currently paired devices
-		 mFiles = new ArrayList<File>();
+		mFiles = new ArrayList<File>();
 
-		 mFile=new File(mPath);
-		 if(mFile.exists())
-		 {
-		  searchFile(mFile,".rtdb",mFiles);
-		 }
-		
+		mFile = new File(mPath);
+		if (mFile.exists()) {
+			searchFile(mFile, ".rtdb", mFiles);
+		}
 
 		// If there are code library files, add each one to the ArrayAdapter
-		 if (mFiles.size() > 0) {
-		 findViewById(R.id.title_codelib_files).setVisibility(View.VISIBLE);
-		 for (File f : mFiles) {
-		 mCodelibArrayAdapter.add(f.getName().substring(0, f.getName().length()-5));
-		 } 
-		 }
-		 else {
-			 findViewById(R.id.title_codelib_files).setVisibility(View.INVISIBLE);
-		String noDevices = getResources().getText(R.string.none_codelib_file)
-				.toString();
-		mCodelibArrayAdapter.add(noDevices);
-		 }
+		if (mFiles.size() > 0) {
+			findViewById(R.id.title_codelib_files).setVisibility(View.VISIBLE);
+			for (File f : mFiles) {
+				mCodelibArrayAdapter.add(f.getName().substring(0,
+						f.getName().length() - 5));
+			}
+		} else {
+			findViewById(R.id.title_codelib_files)
+					.setVisibility(View.INVISIBLE);
+			String noDevices = getResources().getText(
+					R.string.none_codelib_file).toString();
+			mCodelibArrayAdapter.add(noDevices);
+		}
 	}
 
 	protected void searchFile(File dir, String suffix, List<File> result) {
@@ -169,39 +177,38 @@ public class CodelibListActivity extends Activity implements OnClickListener {
 	}
 
 	/**
-
-	*ReadFile
-
-	*
-
-	* @param fileName
-
-	* @return
-
-	* @throws Exception
-
-	*/
+	 * 
+	 * ReadFile
+	 * 
+	 * 
+	 * 
+	 * @param fileName
+	 * 
+	 * @return
+	 * 
+	 * @throws Exception
+	 */
 
 	public byte[] readFileAll(File file) throws Exception {
 
-	FileInputStream fileInputStream = new FileInputStream(file);
+		FileInputStream fileInputStream = new FileInputStream(file);
 
+		ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
 
-	ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
 
-	byte[] buffer = new byte[1024];
+		int len = 0;
 
-	int len = 0;
+		while ((len = fileInputStream.read(buffer)) > 0) {
 
-	while ((len = fileInputStream.read(buffer)) > 0) {
+			byteArray.write(buffer, 0, len);
 
-	byteArray.write(buffer, 0, len);
+		}
+		;
 
-	};
-
-	return byteArray.toByteArray();
+		return byteArray.toByteArray();
 	}
-	
+
 	/**
 	 * Start remote update
 	 */
@@ -212,41 +219,47 @@ public class CodelibListActivity extends Activity implements OnClickListener {
 		// Indicate scanning in the title
 		setProgressBarIndeterminateVisibility(true);
 		setTitle(R.string.updating);
-		
-		int index=codelibListView.getSelectedItemPosition();
-		
-		File f=mFiles.get(0);
-		
-		try {
-			byte[] byteArray=readFileAll(f);
-			
-			if(D) Log.d(TAG,"Byte Array Len:"+ byteArray.length);
-			
-		    boolean result=	mmIrController.StoreLibrary2E2prom((byte)1, byteArray);
-		    
-			if(D) Log.d(TAG,"result:"+ result);
-			
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		if (mSelectedIndex < mFiles.size()) {
+
+			File f = mFiles.get(mSelectedIndex);
+
+			if (f != null && f.exists()) {
+				try {
+					byte[] byteArray = readFileAll(f);
+
+					if (D)
+						Log.d(TAG, "Byte Array Len:" + byteArray.length);
+
+					boolean result = mmIrController.StoreLibrary2E2prom(
+							(byte) 1, byteArray);
+
+					if (D)
+						Log.d(TAG, "result:" + result);
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 
-		
 		setProgressBarIndeterminateVisibility(false);
 		setTitle(R.string.select_codelib);
-		
 
 	}
-	
+
 	// The on-click listener for all devices in the ListViews
 	private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
-		
 
-			codelibListView.setSelection(arg2);
-			
-			
+			if(mFiles.size()>0)
+			{
+//			 codelibListView.setSelection(arg2);
+			 v.setSelected(true);
+			 mSelectedIndex = arg2;
+			 updateButton.setEnabled(mSelectedIndex != -1);
+			}
 		}
 	};
 

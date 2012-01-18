@@ -44,4 +44,5 @@
     <string name="connect">Connect a device</string>
     <string name="Config">Config Remote</string>
     <string name="Update">Update Remote</string>
+    <string name="use_supplement_library_">Use Supplement Library.</string>
 </resources>
