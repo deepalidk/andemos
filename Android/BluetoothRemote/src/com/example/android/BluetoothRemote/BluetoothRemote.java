@@ -51,7 +51,7 @@ import android.widget.Toast;
 /**
  * This is the main Activity that displays the current chat session.
  */ 
-/**
+/** 
  * @author walker
  * 
  */
@@ -59,7 +59,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	// Debugging 
 	private static final String TAG = "BluetoothRemote";
 	private static final boolean D = false;
-	private static final boolean emulatorTag=false;
+	private static final boolean emulatorTag=true;
 
 	// Message types sent from the BluetoothRemoteService Handler
 	public static final int MESSAGE_STATE_CHANGE = 1;
@@ -102,6 +102,8 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	// private Code number;
 	private int mCodeNum;
 
+	private boolean mIsSupplementLib;
+	
 	/**
 	 * Ir API object
 	 */
@@ -135,7 +137,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		soundId = soundPool.load(this, R.raw.water, 1);
 
 		mCodeNum = 125;
-
+		mIsSupplementLib=false;
 		// If the adapter is null, then Bluetooth is not supported
 		if(!emulatorTag)
 		{
@@ -411,6 +413,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			if (resultCode == Activity.RESULT_OK) {
 				mCodeNum = data
 						.getIntExtra(ConfigRemote.REMOTE_CODENUMBER, 125);
+				mIsSupplementLib=data.getBooleanExtra(ConfigRemote.REMOTE_ISSUPPLEMENTLIB, false);
 				setConnectedTitle();
 			}
 			break;
@@ -430,7 +433,14 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	private void setConnectedTitle() {
 		mTitle.setText(R.string.title_connected_to);
 		mTitle.append(mConnectedDeviceName);
-		mTitle.append(" IRCode:" + mCodeNum);
+		if(this.mIsSupplementLib)
+		{
+			mTitle.append(" SupplementLib");
+		}
+		else
+		{
+			mTitle.append(" IRCode:" + mCodeNum);
+		}
 	}
 
 	@Override
@@ -439,7 +449,8 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		inflater.inflate(R.menu.option_menu, menu);
 		mMenuConfig = (MenuItem) menu.findItem(R.id.Config);
 		if (mMenuConfig != null) {
-			mMenuConfig.setEnabled(false);
+//			mMenuConfig.setEnabled(false);
+			mMenuConfig.setEnabled(true);
 		}
 		return true;
 	}
@@ -456,6 +467,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			Intent remoteConfig = new Intent(this, ConfigRemote.class);
 			Bundle bdl = new Bundle(); // 申请Bundle变量
 			bdl.putInt(ConfigRemote.REMOTE_CODENUMBER, mCodeNum); // 加到传入变量中
+			bdl.putBoolean(ConfigRemote.REMOTE_ISSUPPLEMENTLIB, this.mIsSupplementLib);
 			remoteConfig.putExtras(bdl); // 传参
 			startActivityForResult(remoteConfig, REQUEST_CONFIG_REMOTE);
 

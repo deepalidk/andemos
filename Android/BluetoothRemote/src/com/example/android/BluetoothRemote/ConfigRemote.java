@@ -28,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -42,11 +43,16 @@ public class ConfigRemote extends Activity {
 
 	// Return Intent extra
 	public static String REMOTE_CODENUMBER = "remote_code_number";
+	public static String REMOTE_ISSUPPLEMENTLIB = "remote_is_supplement_lib";
+	
 
 	// Member fields
     private EditText mEditText;
     private Button mOkButton;
     private Button mCancelButton;
+    private CheckBox mCbxSupplementLib;
+    
+    private boolean mIsSupplementLib;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +72,21 @@ public class ConfigRemote extends Activity {
         mCancelButton = (Button) findViewById(R.id.cancel);
         mCancelButton.setOnClickListener(mOnCancelClickListner);
         
+        mCbxSupplementLib = (CheckBox) findViewById(R.id.cbxSupplementLib);
+        mCbxSupplementLib.setOnClickListener(mOnCbxSupplementLibClickListener);
+        
         mEditText=(EditText) findViewById(R.id.codenumedit);
         Bundle bdl = getIntent().getExtras();   //获取传过来的参数
         mEditText.setText(""+bdl.getInt(REMOTE_CODENUMBER));
+        
+        mIsSupplementLib=bdl.getBoolean(REMOTE_ISSUPPLEMENTLIB);
+        
+
+    	mEditText.setEnabled(
+    			!mIsSupplementLib);
+    	mCbxSupplementLib.setChecked(mIsSupplementLib);
+
+    
 	}
 
 	@Override
@@ -83,6 +101,7 @@ public class ConfigRemote extends Activity {
         	if(D)Log.d(TAG, msg);
         	Intent intent = new Intent();     //申请Bundle变量
         	intent.putExtra(REMOTE_CODENUMBER, Integer.parseInt(mEditText.getText().toString()));     //加到传入变量中
+        	intent.putExtra(REMOTE_ISSUPPLEMENTLIB, mIsSupplementLib);
         	setResult(Activity.RESULT_OK,intent);
         	finish();
         }
@@ -96,4 +115,16 @@ public class ConfigRemote extends Activity {
         	finish();
         }
 	};
+	
+	private OnClickListener  mOnCbxSupplementLibClickListener=new OnClickListener() {
+        public void onClick(View v) {
+            // Send a message using content of the edit text widget
+        	String msg=String.format("ButtonId=%d",View.NO_ID );
+        	if(D)Log.d(TAG, msg);
+        	mIsSupplementLib=mCbxSupplementLib.isChecked();
+        	mEditText.setEnabled(!mIsSupplementLib);
+//        	finish();
+        }
+	};
+	
 }
