@@ -27,15 +27,21 @@
 
     <!--  DeviceListActivity -->
     <string name="scanning">scanning for devices...</string>
+    <string name="updating">updateing remote...</string>
     <string name="select_device">select a device to connect</string>
+    <string name="select_codelib">select a code library</string>
     <string name="config_remote">set the remote IR code number</string>
     <string name="none_paired">No devices have been paired</string>
     <string name="none_found">No devices found</string>
+    <string name="none_codelib_file">No code library files</string>
     <string name="title_paired_devices">Paired Devices</string>
     <string name="title_other_devices">Other Available Devices</string>
+    <string name="codelib_files">Code Libraries</string>
     <string name="button_scan">Scan for devices</string>
+    <string name="button_update">Update to extender</string>
 
     <!-- Options Menu -->
     <string name="connect">Connect a device</string>
     <string name="Config">Config Remote</string>
+    <string name="Update">Update Remote</string>
 </resources>

@@ -56,10 +56,10 @@ import android.widget.Toast;
  * 
  */
 public class BluetoothRemote extends Activity implements View.OnClickListener  {
-	// Debugging
+	// Debugging 
 	private static final String TAG = "BluetoothRemote";
 	private static final boolean D = false;
-	private static final boolean emulatorTag=true;
+	private static final boolean emulatorTag=false;
 
 	// Message types sent from the BluetoothRemoteService Handler
 	public static final int MESSAGE_STATE_CHANGE = 1;
@@ -76,6 +76,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
 	private static final int REQUEST_CONFIG_REMOTE = 3;
+	private static final int REQUEST_UPDATE_REMOTE = 4;
 
 	// Layout Views
 	private TextView mTitle;
@@ -124,7 +125,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 
 		mTitle = (TextView) findViewById(R.id.title_right_text);
 
-		mmIrController = new IrApi();
+		mmIrController = IrApi.getHandle();
 
 		// Get local Bluetooth adapter
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -413,6 +414,13 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 				setConnectedTitle();
 			}
 			break;
+			
+		case REQUEST_UPDATE_REMOTE:
+			if(resultCode==Activity.RESULT_OK)
+			{
+				
+			}
+			break;
 		}
 	}
 
@@ -452,6 +460,12 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			startActivityForResult(remoteConfig, REQUEST_CONFIG_REMOTE);
 
 			return true;
+		case R.id.Update:
+			
+			Intent updateIntent = new Intent(this, CodelibListActivity.class);
+			startActivityForResult(updateIntent, REQUEST_UPDATE_REMOTE);
+			
+			return true;
 		} 
 		return false;
 	}
@@ -460,14 +474,22 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		// Kabloey
-		soundPool.play(soundId, 14, 14, 1, 0, 1f);// ±¸×¢3
+//		soundPool.play(soundId, 3, 3, 1, 0, 1f);// ±¸×¢3
 		byte keyId = Byte.parseByte(v.getTag().toString(), 10);
 
 		if (mmIrController != null) {
 			if (mChatService.getState() ==BluetoothRemoteService.STATE_CONNECTED) {
+//				boolean result = mmIrController.transmitPreprogramedCode(
+//						(byte) 0x81, (byte) (mCodeNum % 10), mCodeNum / 10,
+//						keyId);
+				
+				for(int i=1;i<100;i++)
+				{
+				
 				boolean result = mmIrController.transmitPreprogramedCode(
-						(byte) 0x81, (byte) (mCodeNum % 10), mCodeNum / 10,
-						keyId);
+						(byte) 0x82, (byte) 1, 1,
+						(byte)i);
+				}
 			}
 		}
 	}
