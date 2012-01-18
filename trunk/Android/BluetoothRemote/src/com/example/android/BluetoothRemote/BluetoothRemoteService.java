@@ -45,7 +45,7 @@ import android.util.Log;
 public class BluetoothRemoteService extends IIo {
 	// Debugging
 	private static final String TAG = "BluetoothRemoteService";
-	private static final boolean D = false;
+	private static final boolean D = true;
 
 	// Name for the SDP record when creating server socket
 	private static final String NAME = "BluetoothRemote";
@@ -469,7 +469,15 @@ public class BluetoothRemoteService extends IIo {
 				try {
 					// Read from the InputStream
 					bytes = mmInStream.read(buffer);
+					
 					if(D)Log.d(TAG, String.format("read bytes=%d",bytes));
+					
+					for(int i=0;i<bytes;i++)
+					{
+						if(D)Log.d(TAG, String.format("bytes "+ i +" =%x",buffer[i]));
+					}
+					
+
 //					byte[] temp = new byte[bytes];
 //					System.arraycopy(buffer, 0, temp, 0, bytes);
 

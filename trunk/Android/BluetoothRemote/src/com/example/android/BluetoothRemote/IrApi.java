@@ -16,7 +16,7 @@ public class IrApi implements IOnRead {
 
 	// Debugging
 	private static final String TAG = "Irapi";
-	private static final boolean D = false;
+	private static final boolean D = true;
 
 	/**
 	 * IO Control handle
@@ -53,7 +53,14 @@ public class IrApi implements IOnRead {
 	 */
 	private int mmRetransimitCount = 2;
 
-	public IrApi() {
+	public static IrApi getHandle()
+	{
+		return mmIrApi;
+	}
+	
+	private static IrApi mmIrApi=new IrApi();
+	
+	private IrApi() {
 		mmIIo = null;
 		mmParseState = EParseState.cmd;
 		mmFrames = new LinkedList<Frame>();
@@ -89,9 +96,6 @@ public class IrApi implements IOnRead {
 		Time t3;
 		t1.setToNow(); // 取得系统时间。
 		
-         
-
-
 		do {	
 			mmIIo.write(TXbuf);
 
@@ -102,19 +106,56 @@ public class IrApi implements IOnRead {
 			synchronized (mmFrames) {
 				mmFrames.wait(mmRetransimitTime);
 				if (mmFrames.size() > 0) {
-					t2.setToNow();
-					long t=t2.toMillis(true)-t1.toMillis(true);
+					if(mmFrames.getLast().getPayloadBuffer()[0]==EFrameStatus.Succeed
+							.getValue())
+					{
+						t2.setToNow();
+						long t=t2.toMillis(true)-t1.toMillis(true);
+						
+						String msg=String.format("%d", t);
+						
+						if(D)
+							Log.d("TimeElapsed",msg);
+						
+						return true;
+					}
+					else
+					{
+						return false;
+					}
 					
-					String msg=String.format("%d", t);
-					
-					if(D)
-						Log.d("TimeElapsed",msg);
-					return true;
 				}
 			}
 		} while (reTransmit-- > 0);
 
 		return false;
+	}
+	
+	/**
+	 * transmit data with RT300
+	 * 
+	 * @param TXbuf
+	 *            data to send to RT300
+	 * @return Ack status
+	 * @throws InterruptedException
+	 */
+	private byte transmit_data_ex(byte[] TXbuf) throws InterruptedException {
+
+		
+		if(mmIIo==null)return (byte) EFrameStatus.ErrorGeneral.getValue();
+		
+
+					
+			mmIIo.write(TXbuf);
+			
+			synchronized (mmFrames) {
+				mmFrames.wait(3000);
+				if (mmFrames.size() > 0) {
+				return	mmFrames.getLast().getPayloadBuffer()[0];		
+				}
+			}
+
+		return (byte) EFrameStatus.ErrorGeneral.getValue();
 	}
 
 	/***** IR API *******************/
@@ -213,7 +254,7 @@ public class IrApi implements IOnRead {
 		try {
 			frame.addPayload(type);
 			frame.addPayload(devId);
-			frame.addPayload((byte) (codeNum >>> 8));
+			frame.addPayload((byte) (codeNum >> 8));
 			frame.addPayload((byte) (codeNum & 0xFF));
 			frame.addPayload(keyId);
 
@@ -227,7 +268,85 @@ public class IrApi implements IOnRead {
 
 		return result;
 	}
+	
+	/**
+	 * STORE SUPPLEMENTRARY LIBRARY TO E2PROM
+	 * 
+	 * @param location
+	 *        the location of library.
+	 * 
+	 * @param data
+	 *        the data to be write.
+	 *
+	 * @return
+	 */
+	public boolean StoreLibrary2E2prom(byte location,byte[] data) {
+		if (D)
+			Log.d(TAG, "StoreLibrary2E2prom");
+		
+		boolean result = false;
+		
+		if(data.length!=592)
+		{
+			return result;
+		}
+	
+		try { 
+				//transform the first 4 packages.
+			int curStart=0;
+			int curLength=121;
+			byte status=0;
+	
+			  Frame frame;
+			 int i=0;
+			for(i=0;i<4;i++)
+			{
+				frame= new Frame(123);
+			   frame.setCmdID((byte) 0x07);
+			   frame.addPayload(location);
+			   frame.addPayload((byte)i);
+			   frame.addPayload(data,curStart,curLength);
+			
+			   status = transmit_data_ex(frame.getPacketBuffer());
+				
+				if(status!=0x31)
+				{
+					break;
+				}
+				
+				if(D)Log.d(TAG," " + status);
+				
+				curStart+=121;
+			}
+			
+			
+			if(status!=0x31)
+			{
+				return result;
+			}
+			
+			frame = new Frame(110);
+			frame.setCmdID((byte) 0x07);
+			frame.addPayload(location);
+			frame.addPayload((byte)4);
+			frame.addPayload(data,484,108);
+			
+			if(D)Log.d(TAG," " + status);
+			
+			status = transmit_data_ex(frame.getPacketBuffer());
+				
+			result=(status==0x30);
+		
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			if (D)
+				Log.d(TAG, "transmitPreprogramedCode, exception");
+			e.printStackTrace();
+		}
 
+		return result;
+	}
+	
 	/***** end of ir api *******************/
 
 	/**
@@ -264,13 +383,13 @@ public class IrApi implements IOnRead {
 		} else if (mmParseState == EParseState.checkSum) {
 
 			if (buffer == mmFrame.calcAckChecksum()) {
-				if (mmFrame.getPayloadBuffer()[0] == EFrameStatus.Succeed
-						.getValue()) {
+//				if (mmFrame.getPayloadBuffer()[0] == EFrameStatus.Succeed
+//						.getValue()) {
 					synchronized (mmFrames) {
 						mmFrames.add(mmFrame);
 						mmFrames.notify();
 					}
-				}
+//				}
 			}
 			mmParseState = EParseState.cmd;
 
@@ -370,6 +489,23 @@ public class IrApi implements IOnRead {
 			System.arraycopy(buffer, 0, mmPayloadBuffer, mmPayloadIdx,
 					buffer.length);
 			mmPayloadIdx += buffer.length;
+		}
+		
+		/**
+		 * add data to frame
+		 * 
+		 * @param buffer
+		 *            the data to be added.
+		 */
+		public void addPayload(byte[] buffer,int start,int length) {
+			System.arraycopy(buffer, start, mmPayloadBuffer, mmPayloadIdx,
+					length);
+			mmPayloadIdx += length;
+		}
+		
+		public void clearPayload()
+		{
+			mmPayloadIdx=0;
 		}
 
 		/**
