@@ -16,7 +16,7 @@ public class IrApi implements IOnRead {
 
 	// Debugging
 	private static final String TAG = "Irapi";
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	/**
 	 * IO Control handle

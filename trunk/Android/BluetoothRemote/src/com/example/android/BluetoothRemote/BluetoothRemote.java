@@ -50,17 +50,17 @@ import android.widget.Toast;
 
 /**
  * This is the main Activity that displays the current chat session.
- */ 
-/** 
+ */  
+/**  
  * @author walker
  * 
- */
+ */ 
 public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	// Debugging 
 	private static final String TAG = "BluetoothRemote";
 	private static final boolean D = false;
-	private static final boolean emulatorTag=true;
-
+	private static final boolean emulatorTag=false;
+ 
 	// Message types sent from the BluetoothRemoteService Handler
 	public static final int MESSAGE_STATE_CHANGE = 1;
 	public static final int MESSAGE_READ = 2;
@@ -84,6 +84,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	private EditText mOutEditText;
 	private Button mSendButton;
 	private MenuItem mMenuConfig;
+	private MenuItem mMenuUpdate;
 	// Name of the connected device
 	private String mConnectedDeviceName = null;
 	// Array adapter for the conversation thread
@@ -120,7 +121,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		// Set up the window layout
 		// getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
 		// R.layout.custom_title);
-
+ 
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
 		mTitle.setText(R.string.app_name);
@@ -326,6 +327,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 					// {
 					setConnectedTitle();
 					mMenuConfig.setEnabled(true);
+					mMenuUpdate.setEnabled(true);
 //					mConversationArrayAdapter.clear();
 					// }
 					// else
@@ -341,11 +343,18 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 					if (mMenuConfig != null) {
 						mMenuConfig.setEnabled(false);
 					}
+					if (mMenuUpdate != null) {
+						mMenuUpdate.setEnabled(false);
+					}
 					break;
 				case BluetoothRemoteService.STATE_NONE:
-					mTitle.setText(R.string.title_not_connected);
+     				mTitle.setText(R.string.title_not_connected);
+
 					if (mMenuConfig != null) {
 						mMenuConfig.setEnabled(false);
+					}
+					if (mMenuUpdate != null) {
+						mMenuUpdate.setEnabled(false);
 					}
 					break;
 				}
@@ -449,9 +458,16 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		inflater.inflate(R.menu.option_menu, menu);
 		mMenuConfig = (MenuItem) menu.findItem(R.id.Config);
 		if (mMenuConfig != null) {
-//			mMenuConfig.setEnabled(false);
-			mMenuConfig.setEnabled(true);
+			mMenuConfig.setEnabled(false);
 		}
+		
+		mMenuUpdate = (MenuItem) menu.findItem(R.id.Update);
+		
+		if(mMenuUpdate!=null)
+		{
+			mMenuUpdate.setEnabled(false);
+		}
+		
 		return true;
 	}
 
@@ -486,21 +502,23 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		// Kabloey
-//		soundPool.play(soundId, 3, 3, 1, 0, 1f);// ±¸×¢3
+		soundPool.play(soundId, 10, 10, 1, 0, 1f);// ±¸×¢3
 		byte keyId = Byte.parseByte(v.getTag().toString(), 10);
 
 		if (mmIrController != null) {
 			if (mChatService.getState() ==BluetoothRemoteService.STATE_CONNECTED) {
-//				boolean result = mmIrController.transmitPreprogramedCode(
-//						(byte) 0x81, (byte) (mCodeNum % 10), mCodeNum / 10,
-//						keyId);
 				
-				for(int i=1;i<100;i++)
+				if(!this.mIsSupplementLib)
 				{
-				
-				boolean result = mmIrController.transmitPreprogramedCode(
-						(byte) 0x82, (byte) 1, 1,
-						(byte)i);
+					boolean result = mmIrController.transmitPreprogramedCode(
+					(byte) 0x81, (byte) (mCodeNum % 10), mCodeNum / 10,
+					keyId);
+				}
+				else
+				{
+					boolean result = mmIrController.transmitPreprogramedCode(
+							 (byte) 0x82, (byte) 0x1, 0,
+							 (byte)keyId);
 				}
 			}
 		}
