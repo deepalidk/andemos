@@ -45,6 +45,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 /**
@@ -56,10 +57,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class CodelibListActivity extends Activity implements OnClickListener {
 	// Debugging
 	private static final String TAG = "CodelibListActivity";
-	private static final boolean D = true;
-
-	// // Return Intent extra
-	// public static String EXTRA_DEVICE_ADDRESS = "device_address";
+	private static final boolean D = false;
 
 	// Member fields
 	private ArrayAdapter<String> mCodelibArrayAdapter;
@@ -100,8 +98,8 @@ public class CodelibListActivity extends Activity implements OnClickListener {
 		// Initialize array adapters. One for already paired devices and
 		// one for newly discovered devices
 		mCodelibArrayAdapter = new ArrayAdapter<String>(this,
-				R.layout.device_name);
-
+				R.drawable.listview_layout); 
+ 
 		mSelectedIndex = -1;
 
 		if (mSelectedIndex == -1) {
@@ -122,9 +120,13 @@ public class CodelibListActivity extends Activity implements OnClickListener {
 		mFiles = new ArrayList<File>();
 
 		mFile = new File(mPath);
-		if (mFile.exists()) {
-			searchFile(mFile, ".rtdb", mFiles);
+		
+		if(!mFile.exists())
+		{
+			mFile.mkdir();
 		}
+		
+		searchFile(mFile, ".rtdb", mFiles);
 
 		// If there are code library files, add each one to the ArrayAdapter
 		if (mFiles.size() > 0) {
@@ -212,10 +214,11 @@ public class CodelibListActivity extends Activity implements OnClickListener {
 	/**
 	 * Start remote update
 	 */
-	private void doUpdate() {
+	private boolean doUpdate() {
 		if (D)
 			Log.d(TAG, "doUpdate()");
 
+		boolean result=false;
 		// Indicate scanning in the title
 		setProgressBarIndeterminateVisibility(true);
 		setTitle(R.string.updating);
@@ -231,11 +234,22 @@ public class CodelibListActivity extends Activity implements OnClickListener {
 					if (D)
 						Log.d(TAG, "Byte Array Len:" + byteArray.length);
 
-					boolean result = mmIrController.StoreLibrary2E2prom(
-							(byte) 1, byteArray);
+					result = mmIrController.StoreLibrary2E2prom(
+							(byte) 0, byteArray);
 
 					if (D)
 						Log.d(TAG, "result:" + result);
+				
+					if(result)
+					{
+						Toast.makeText(this, "Code Library Updated Successfully!",
+								Toast.LENGTH_LONG).show();
+					}
+					else
+					{
+						Toast.makeText(this, "Failed, Please Try Again!",
+								Toast.LENGTH_LONG).show();
+					}
 
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -246,6 +260,8 @@ public class CodelibListActivity extends Activity implements OnClickListener {
 
 		setProgressBarIndeterminateVisibility(false);
 		setTitle(R.string.select_codelib);
+		
+		return result;
 
 	}
 
@@ -275,8 +291,14 @@ public class CodelibListActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		v.setClickable(false);
-		doUpdate();
+		boolean result=doUpdate();
 		v.setClickable(true);
+		
+		if(result)
+		{
+			setResult(Activity.RESULT_OK);
+			this.finish();
+		}
 	}
 
 }
