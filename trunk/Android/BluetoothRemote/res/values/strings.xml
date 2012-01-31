@@ -45,4 +45,6 @@
     <string name="Config">Config Remote</string>
     <string name="Update">Update Remote</string>
     <string name="use_supplement_library_">Use Supplement Library.</string>
+    <string name="build_in_library">Build-in Library</string>
+    <string name="local_library_files">Local Library Files</string>
 </resources>

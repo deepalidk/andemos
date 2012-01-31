@@ -59,7 +59,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	// Debugging 
 	private static final String TAG = "BluetoothRemote";
 	private static final boolean D = false;
-	private static final boolean emulatorTag=false;
+	private static final boolean emulatorTag=true;
  
 	// Message types sent from the BluetoothRemoteService Handler
 	public static final int MESSAGE_STATE_CHANGE = 1;
@@ -326,36 +326,17 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 					// if(result)
 					// {
 					setConnectedTitle();
-					mMenuConfig.setEnabled(true);
-					mMenuUpdate.setEnabled(true);
-//					mConversationArrayAdapter.clear();
-					// }
-					// else
-					// {
-					// mChatService.stop();
-					// mMenuConfig.setEnabled(false);
-					// mTitle.setText(R.string.title_not_connected);
-					// }
+					setMenuEnability(true);
 					break;
 				}
 				case BluetoothRemoteService.STATE_CONNECTING:
 					mTitle.setText(R.string.title_connecting);
-					if (mMenuConfig != null) {
-						mMenuConfig.setEnabled(false);
-					}
-					if (mMenuUpdate != null) {
-						mMenuUpdate.setEnabled(false);
-					}
+					setMenuEnability(false);
 					break;
 				case BluetoothRemoteService.STATE_NONE:
      				mTitle.setText(R.string.title_not_connected);
 
-					if (mMenuConfig != null) {
-						mMenuConfig.setEnabled(false);
-					}
-					if (mMenuUpdate != null) {
-						mMenuUpdate.setEnabled(false);
-					}
+					setMenuEnability(false);
 					break;
 				}
 				break;
@@ -387,6 +368,27 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			}
 		}
 	};
+
+	private void setMenuEnability(boolean enable) {
+			if(!emulatorTag)
+			{
+				if (mMenuConfig != null) {
+					mMenuConfig.setEnabled(enable);
+				}
+				if (mMenuUpdate != null) {
+					mMenuUpdate.setEnabled(enable);
+				}
+			}
+			else
+			{
+				if (mMenuConfig != null) {
+					mMenuConfig.setEnabled(true);
+				}
+				if (mMenuUpdate != null) {
+					mMenuUpdate.setEnabled(true);
+				}
+			}
+		}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (D)
@@ -457,17 +459,9 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.option_menu, menu);
 		mMenuConfig = (MenuItem) menu.findItem(R.id.Config);
-		if (mMenuConfig != null) {
-			mMenuConfig.setEnabled(false);
-		}
-		
 		mMenuUpdate = (MenuItem) menu.findItem(R.id.Update);
-		
-		if(mMenuUpdate!=null)
-		{
-			mMenuUpdate.setEnabled(false);
-		}
-		
+
+		setMenuEnability(false);	
 		return true;
 	}
 
