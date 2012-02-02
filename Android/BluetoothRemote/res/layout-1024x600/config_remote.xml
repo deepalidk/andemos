@@ -14,6 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/build_in_library"
+            android:checked="true"
             android:textColor="#ffffff" />
 
         <RadioButton
@@ -38,6 +39,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/line1"
+        android:visibility="gone"
         android:text="Input IR Code Number(0-65535):" />
 
     <EditText
@@ -50,6 +52,7 @@
         android:hint="125"
         android:inputType="numberDecimal"
         android:maxLength="5"
+        android:visibility="gone"
         android:singleLine="true" />
 
     <CheckBox
@@ -57,13 +60,28 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/codenumedit"
+        android:visibility="gone"
         android:text="@string/use_supplement_library_" />
+    
+     <TextView
+        android:id="@+id/tvwCodeLib"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cbxSupplementLib"
+        android:text="Code Library:" />
+    
+    <ListView android:id="@+id/lvwCodeList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:stackFromBottom="true"
+        android:layout_below="@id/tvwCodeLib"
+    />
     <View
         android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#ffffff" 
-        android:layout_below="@id/cbxSupplementLib"
+        android:layout_below="@id/lvwCodeList"
         />
     <Button
         android:id="@+id/ok"

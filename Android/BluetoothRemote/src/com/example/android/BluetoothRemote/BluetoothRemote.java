@@ -59,7 +59,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	// Debugging 
 	private static final String TAG = "BluetoothRemote";
 	private static final boolean D = false;
-	private static final boolean emulatorTag=true;
+	private static final boolean emulatorTag=false;
  
 	// Message types sent from the BluetoothRemoteService Handler
 	public static final int MESSAGE_STATE_CHANGE = 1;
@@ -138,7 +138,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		soundId = soundPool.load(this, R.raw.water, 1);
 
 		mCodeNum = 125;
-		mIsSupplementLib=false;
+		mIsSupplementLib=true;
 		// If the adapter is null, then Bluetooth is not supported
 		if(!emulatorTag)
 		{

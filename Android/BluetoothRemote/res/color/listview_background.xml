@@ -2,25 +2,25 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:state_pressed="true">
 		<shape>
-			<gradient android:startColor="#FAFCFD" android:endColor="#30B8F0"
+			<gradient android:startColor="#FFFFFF" android:endColor="#FFFFFF"
 				android:angle="270" />
 		</shape>
 	</item>
 	<item android:state_selected="true">
 		<shape>
-			<gradient android:startColor="#FAFCFD" android:endColor="#30B8F0"
+			<gradient android:startColor="#FFFFFF" android:endColor="#FFFFFF"
 				android:angle="270" />
 		</shape>
 	</item>
 	<item android:state_focused="true">
 		<shape>
-			<gradient android:startColor="#FAFCFD" android:endColor="#30B8F0"
+			<gradient android:startColor="#FFFFFF" android:endColor="#FFFFFF"
 				android:angle="270" />>  
 		</shape>
 	</item>
 	<item>
 		<shape>
-			<gradient android:startColor="#CFCFCF" android:endColor="#CFCFCF"
+			<gradient android:startColor="#898989" android:endColor="#898989"
 				android:angle="270" />
 		</shape>
 	</item>
