@@ -30,7 +30,7 @@
     <string name="updating">updateing remote...</string>
     <string name="select_device">select a device to connect</string>
     <string name="select_codelib">select a code library</string>
-    <string name="config_remote">set the remote IR code number</string>
+    <string name="config_remote">Select Code Library</string>
     <string name="none_paired">No devices have been paired</string>
     <string name="none_found">No devices found</string>
     <string name="none_codelib_file">No code library files</string>
@@ -46,5 +46,5 @@
     <string name="Update">Update Remote</string>
     <string name="use_supplement_library_">Use Supplement Library.</string>
     <string name="build_in_library">Build-in Library</string>
-    <string name="local_library_files">Local Library Files</string>
+    <string name="local_library_files">External Library</string>
 </resources>
