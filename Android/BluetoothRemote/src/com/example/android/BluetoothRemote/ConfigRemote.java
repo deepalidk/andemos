@@ -52,7 +52,7 @@ public class ConfigRemote extends Activity {
 	// Debugging
 	private static final String TAG = "ConfigRemote";
 	private static final boolean D = false;
-
+ 
 	// Return Intent extra
 	public static String REMOTE_CODENUMBER = "remote_code_number";
 	public static String REMOTE_ISSUPPLEMENTLIB = "remote_is_supplement_lib";
@@ -243,6 +243,8 @@ public class ConfigRemote extends Activity {
 	private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
 
+			if(!mRDBBuildIn.isChecked())
+			{
 			if(mFiles.size()>0)
 			{
 //			 codelibListView.setSelection(arg2);
@@ -250,6 +252,15 @@ public class ConfigRemote extends Activity {
 			 mSelectedIndex = arg2;
 			 mOkButton.setEnabled(mSelectedIndex != -1);
 			}
+			}
+			else
+			{
+//				 codelibListView.setSelection(arg2);
+				 v.setSelected(true);
+				 mSelectedIndex = arg2;
+				 mOkButton.setEnabled(mSelectedIndex != -1);
+			}
+
 		}
 	};
 	

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RadioGroup
+        android:id="@+id/rgpCodeType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/rbnBuildIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/build_in_library"
+            android:checked="true"
+            android:textColor="#ffffff" />
+
+        <RadioButton
+            android:id="@+id/rbnLibFiles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/local_library_files"
+            android:textColor="#ffffff" />
+    </RadioGroup>
+
+    <!-- 在两个RadioGroup之间画条横线 -->
+
+    <View 
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ffffff" 
+        android:layout_below="@id/rgpCodeType"/>
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line1"
+        android:visibility="gone"
+        android:text="Input IR Code Number(0-65535):" />
+
+    <EditText
+        android:id="@+id/codenumedit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label"
+        android:background="@android:drawable/editbox_background"
+        android:digits="0123456789"
+        android:hint="125"
+        android:inputType="numberDecimal"
+        android:maxLength="5"
+        android:visibility="gone"
+        android:singleLine="true" />
+
+    <CheckBox
+        android:id="@+id/cbxSupplementLib"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/codenumedit"
+        android:visibility="gone"
+        android:text="@string/use_supplement_library_" />
+    
+     <TextView
+        android:id="@+id/tvwCodeLib"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cbxSupplementLib"
+        android:text="Code Library:" />
+    
+    <ListView android:id="@+id/lvwCodeList"
+        android:layout_width="fill_parent"
+        android:layout_height="430sp"
+        android:stackFromBottom="false"  
+        android:layout_below="@id/tvwCodeLib"
+    />
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ffffff" 
+        android:layout_below="@id/lvwCodeList"
+        />
+    <Button
+        android:id="@+id/ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/line2"
+        android:layout_marginLeft="10px"
+        android:text="OK" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/ok"
+        android:layout_toLeftOf="@id/ok"
+        android:text="Cancel" />
+
+</RelativeLayout>
