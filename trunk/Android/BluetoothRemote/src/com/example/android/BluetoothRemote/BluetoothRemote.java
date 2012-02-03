@@ -159,6 +159,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		}
 		
 		saveas(R.raw.remote,mPath,"remote.db");	
+		saveas(R.raw.rt300_maxdigital_dvd,mPath,"RT300_Supplementary_DVD_RT300_MaxDigital_MD700RM.rtdb");	
 	}
 
 	@Override
@@ -456,7 +457,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		mTitle.append(mConnectedDeviceName);
 		if(this.mIsSupplementLib)
 		{
-			mTitle.append(" SupplementLib");
+			mTitle.append(" External Library");
 		}
 		else
 		{
@@ -521,7 +522,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 				else
 				{
 					boolean result = mmIrController.transmitPreprogramedCode(
-							 (byte) 0x82, (byte) 0x1, 0,
+							 (byte) 0x82, (byte) 0x5, 0,
 							 (byte)keyId);
 				}
 			}
