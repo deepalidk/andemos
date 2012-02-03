@@ -51,7 +51,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ConfigRemote extends Activity {
 	// Debugging
 	private static final String TAG = "ConfigRemote";
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	// Return Intent extra
 	public static String REMOTE_CODENUMBER = "remote_code_number";
@@ -87,8 +87,32 @@ public class ConfigRemote extends Activity {
 
 	private int mSelectedIndex;
     
-	private int buildInIrCode[]={51,201,951,1091};
-	private String buildLibNames[]={"Panasonic-0051","Panasonic-0201","Panasonic-0951","Panasonic-1091"};
+	private int buildInIrCode[]={51,201,951,1091
+			,1491,1571,1651,1831
+			,1881,1961,2151,2711
+			,2801,1,101,251
+			,261,331,351,531
+			,571,771,781,1191
+			,2071,2141,2721,1
+			,341,0461,681,691
+			,1221,1291,1441,2031
+			,2201,2261,2731,1071
+			,1641,1731,1901,2161
+			,2741,1741,2901
+			};
+	private String buildLibNames[]={"Panasonic-0051","Panasonic-0201","Panasonic-0951","Panasonic-1091"
+			,"Panasonic-1491","Panasonic-1571","Panasonic-1651","Panasonic-1831"
+			,"Panasonic-1881","Panasonic-1961","Panasonic-2151","Panasonic-2711"
+			,"Panasonic-2801","Samsung-0001","Samsung-0101","Samsung-0251"
+			,"Samsung-0261","Samsung-0331","Samsung-0351","Samsung-0531"
+			,"Samsung-0571","Samsung-0771","Samsung-0781","Samsung-1191"
+			,"Samsung-2071","Samsung-2141","Samsung-2721","Sharp-0001"
+			,"Sharp-0341","Sharp-0461","Sharp-0681","Sharp-0691"
+			,"Sharp-1221","Sharp-1291","Sharp-1441","Sharp-2031"
+			,"Sharp-2201","Sharp-2261","Sharp-2731","Sony-1071"
+			,"Sony-1641","Sony-1731","Sony-1901","Sony-2161"
+			,"Sony-2741","Vizio-1741","Vizio-2901"		
+			};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,11 +158,7 @@ public class ConfigRemote extends Activity {
 		mCodelibArrayAdapter = new ArrayAdapter<String>(this,
 				R.drawable.listview_layout); 
  
-		mSelectedIndex = -1;
-
-		if (mSelectedIndex == -1) {
-			mOkButton.setEnabled(false);
-		}
+		resetSelection();
 
 		// Find and set up the ListView for paired devices
 		codelibListView = (ListView) findViewById(R.id.lvwCodeList);
@@ -170,7 +190,17 @@ public class ConfigRemote extends Activity {
     	{
     		updateExternalCodeLibrary();
     	}
+		
+		codelibListView.scrollTo(0, 0);
     
+	}
+
+	private void resetSelection() {
+		mSelectedIndex = -1;
+
+		if (mSelectedIndex == -1) {
+			mOkButton.setEnabled(false);
+		}
 	}
 	
 	protected void updateExternalCodeLibrary()
@@ -395,6 +425,7 @@ public class ConfigRemote extends Activity {
         		mIsSupplementLib=true;
         	}
         	
+        	resetSelection();  	
 		}
 	};
 	
@@ -417,5 +448,7 @@ public class ConfigRemote extends Activity {
 //        	finish();
         }
 	};
+	
+	
 	
 }

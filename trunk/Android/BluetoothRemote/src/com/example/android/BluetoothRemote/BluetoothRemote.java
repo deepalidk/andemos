@@ -16,6 +16,12 @@
 
 package com.example.android.BluetoothRemote;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import com.example.android.BluetoothRemote.R;
 import com.example.android.BluetoothRemote.R.id;
 import com.example.android.BluetoothRemote.R.layout;
@@ -59,7 +65,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	// Debugging 
 	private static final String TAG = "BluetoothRemote";
 	private static final boolean D = false;
-	private static final boolean emulatorTag=false;
+	private static final boolean emulatorTag = false;
  
 	// Message types sent from the BluetoothRemoteService Handler
 	public static final int MESSAGE_STATE_CHANGE = 1;
@@ -105,6 +111,8 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 
 	private boolean mIsSupplementLib;
 	
+	private String mPath = "/sdcard/remotec/";
+	
 	/**
 	 * Ir API object
 	 */
@@ -149,6 +157,8 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 				return;
 			}
 		}
+		
+		saveas(R.raw.remote,mPath,"remote.db");	
 	}
 
 	@Override
@@ -517,4 +527,44 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			}
 		}
 	}
+	
+	public boolean saveas(int ressound,String path, String filename){   
+		 byte[] buffer=null;   
+		 int size=0;   
+		 
+		 boolean exists = (new File(path)).exists();   
+		 if (!exists){new File(path).mkdirs();}  
+		 
+		 exists=(new File(path+filename)).exists();
+		 if (exists){return true;}  
+		 
+		 InputStream fIn = getBaseContext().getResources().openRawResource(ressound);   
+	 
+		 try {   
+		  size = fIn.available();   
+		  buffer = new byte[size];   
+		  fIn.read(buffer);   
+		  fIn.close();   
+		 } catch (IOException e) {   
+		  // TODO Auto-generated catch block   
+		  return false;   
+		 }   
+		  
+		 FileOutputStream save;   
+		 try {   
+		  save = new FileOutputStream(path+filename);   
+		  save.write(buffer);   
+		  save.flush();   
+		  save.close();   
+		 } catch (FileNotFoundException e) {   
+		  // TODO Auto-generated catch block   
+		  return false;   
+		 } catch (IOException e) {   
+		  // TODO Auto-generated catch block   
+		  return false;   
+		 }       
+		    
+		 return true;   
+		}  
+
 }
