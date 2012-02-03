@@ -72,8 +72,8 @@
     
     <ListView android:id="@+id/lvwCodeList"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:stackFromBottom="true"
+        android:layout_height="430sp"
+        android:stackFromBottom="false"
         android:layout_below="@id/tvwCodeLib"
     />
     <View
