@@ -13,7 +13,7 @@
             android:id="@+id/rbnBuildIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/build_in_library"
+            android:text="Library"
             android:checked="true"
             android:textColor="#ffffff" />
 
@@ -21,7 +21,7 @@
             android:id="@+id/rbnLibFiles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/local_library_files"
+            android:text="External Files"
             android:textColor="#ffffff" />
     </RadioGroup>
 
@@ -72,7 +72,7 @@
     
     <ListView android:id="@+id/lvwCodeList"
         android:layout_width="fill_parent"
-        android:layout_height="430sp"
+        android:layout_height="323sp"
         android:stackFromBottom="false"
         android:layout_below="@id/tvwCodeLib"
     />

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:flyview="http://schemas.android.com/apk/res/com.example.android.BluetoothRemote"
+	android:orientation="vertical" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<include layout="@layout/custom_title"/>
+	<fly.MoveViewGroup.Workspace  
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent">
+		<fly.MoveViewGroup.MyViewGroup 
+			android:layout_width="fill_parent" 
+			android:layout_height="fill_parent"
+			android:clipChildren="false"
+			android:background="@drawable/main_bg">
+			<fly.MoveViewGroup.MyButton android:layout_x="108px" android:layout_y="14px" android:layout_width="88px"	android:layout_height="50px" flyview:fix_position="false" android:tag="6" android:onClick="onClick" android:gravity="center" android:background="@drawable/tc_btn_mute_action"/>
+		  	<fly.MoveViewGroup.MyButton android:layout_x="404px" android:layout_y="14px" android:layout_width="88px"	android:layout_height="50px" flyview:fix_position="false" android:tag="1" android:onClick="onClick" android:gravity="center" android:background="@drawable/tc_btn_power_action"/>
+			
+		  	<AbsoluteLayout android:id="@+id/num_holder" android:visibility="visible" android:clipChildren="false" android:clipToPadding="false" android:background="@drawable/panel_num" android:layout_width="384.0px" android:layout_height="393.0px" android:layout_x="108px" android:layout_y="78.0px">  
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="11px"   android:layout_y="6px" android:layout_width="121px" android:layout_height="90px"   flyview:fix_position="true" android:tag="14" android:onClick="onClick" android:background="@drawable/num_01_01_01_action"	/>
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="132px"  android:layout_y="6px" android:layout_width="121px" android:layout_height="90px"   flyview:fix_position="true" android:tag="15" android:onClick="onClick" android:background="@drawable/num_01_01_02_action"/> 
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="252px"  android:layout_y="6px" android:layout_width="121px"  android:layout_height="90px"   flyview:fix_position="true" android:tag="16" android:onClick="onClick" android:background="@drawable/num_01_01_03_action"	/>
+     				
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="11px"   android:layout_y="97px" android:layout_width="121px" android:layout_height="90px"   flyview:fix_position="true" android:tag="17" android:onClick="onClick" android:background="@drawable/num_01_01_04_action"	/>
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="132px"  android:layout_y="97px" android:layout_width="121px" android:layout_height="90px"   flyview:fix_position="true" android:tag="18" android:onClick="onClick" android:background="@drawable/num_01_01_05_action"/> 
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="252px"  android:layout_y="97px" android:layout_width="121px"  android:layout_height="90px"   flyview:fix_position="true" android:tag="19" android:onClick="onClick" android:background="@drawable/num_01_01_06_action"	/>
+     			
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="11px"   android:layout_y="188px" android:layout_width="121px" android:layout_height="90px"   flyview:fix_position="true" android:tag="20" android:onClick="onClick" android:background="@drawable/num_01_01_07_action"	/>
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="132px"  android:layout_y="188px" android:layout_width="121px" android:layout_height="90px"   flyview:fix_position="true" android:tag="21" android:onClick="onClick" android:background="@drawable/num_01_01_08_action"/> 
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="252px"  android:layout_y="188px" android:layout_width="121px"  android:layout_height="90px"   flyview:fix_position="true" android:tag="22" android:onClick="onClick" android:background="@drawable/num_01_01_09_action"	/>
+     			
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="11px"   android:layout_y="280px" android:layout_width="121px" android:layout_height="90px"   flyview:fix_position="true" android:tag="31" android:onClick="onClick" android:background="@drawable/num_01_01_ttx_mix_action"	/>
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="132px"  android:layout_y="280px" android:layout_width="121px" android:layout_height="90px"   flyview:fix_position="true" android:tag="13" android:onClick="onClick" android:background="@drawable/num_01_01_00_action"/> 
+     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="252px"  android:layout_y="280px" android:layout_width="121px"  android:layout_height="90px"   flyview:fix_position="true" android:tag="27" android:onClick="onClick" android:background="@drawable/num_01_01_pre_ch_action"	/>
+            </AbsoluteLayout>
+
+			<RelativeLayout android:layout_x="108.0px" android:layout_y="469.0px" android:layout_width="384.0px" android:layout_height="223.0px"
+			  xmlns:android="http://schemas.android.com/apk/res/android">
+			    <RelativeLayout android:layout_width="384.0px" android:layout_height="223.0px" />
+			    <RelativeLayout android:id="@id/chvolcontrol_volume_background" android:background="@drawable/btn_ch_bg" android:layout_width="102.0px" android:layout_height="223.0px" android:layout_marginLeft="32.0px" android:layout_alignParentLeft="true" android:layout_centerVertical="true">
+			        <Button android:onClick="onClick" android:id="@id/chvolcontrol_plus_btn" android:background="@drawable/control_full_b_plus_action" android:layout_width="94.0px" android:layout_height="98.0px" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:tag="5"/>
+			        <ImageView android:id="@id/chvolcontrol_vol" android:background="@drawable/icon_vol" android:layout_width="34.0px" android:layout_height="12.0px" android:layout_marginTop="4.0px" android:layout_below="@id/chvolcontrol_plus_btn" android:layout_centerHorizontal="true" />
+			        <Button android:onClick="onClick" android:id="@id/chvolcontrol_minus_btn" android:background="@drawable/control_full_b_minus_action" android:layout_width="94.0px" android:layout_height="98.0px" android:layout_marginBottom="10.0px" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"  android:tag="4"/>
+			    </RelativeLayout>
+			    <LinearLayout android:gravity="center" android:visibility="gone" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+			        <ImageButton android:id="@id/chvolcontrol_mute" android:background="@drawable/btn_01_mute_action" android:layout_width="106.0px" android:layout_height="98.0px" />
+			        <TextView android:textSize="24.0px" android:textColor="#ffb4b4b4" android:gravity="center" android:id="@id/chvolcontrol_mute_text" android:layout_width="fill_parent" android:layout_height="26.0px" android:text="Mute" />
+			    </LinearLayout> 
+			    <RelativeLayout android:id="@id/chvolcontrol_channel_background" android:background="@drawable/btn_ch_bg" android:layout_width="102.0px" android:layout_height="223.0px" android:layout_marginRight="32.0px" android:layout_alignParentRight="true" android:layout_centerVertical="true">
+			        <Button android:onClick="onClick"  android:tag="3" android:id="@id/chvolcontrol_up_btn" android:background="@drawable/control_full_b_up_action" android:layout_width="94.0px" android:layout_height="98.0px" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" />
+			        <ImageView android:id="@id/chvolcontrol_channel" android:background="@drawable/icon_ch" android:layout_width="34.0px" android:layout_height="12.0px" android:layout_marginTop="4.0px" android:layout_below="@id/chvolcontrol_up_btn" android:layout_centerHorizontal="true" />
+			        <Button android:onClick="onClick" android:tag="2" android:id="@id/chvolcontrol_down_btn" android:background="@drawable/control_full_b_down_action" android:layout_width="94.0px" android:layout_height="98.0px" android:layout_marginBottom="10.0px" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+			    </RelativeLayout>
+			</RelativeLayout>   
+			 
+		    <AbsoluteLayout android:id="@+id/dot_holder" android:tag="fixed" android:visibility="visible" android:clipChildren="false" android:clipToPadding="false" android:layout_width="64.0px" android:layout_height="32.0px" android:layout_x="274.0px" android:layout_y="690.0px">  
+     			<Button android:id="@+id/btn_dot1" android:enabled="false" android:visibility="visible" android:layout_x="0px"   android:layout_y="0px" android:layout_width="32px" android:layout_height="32px"   flyview:fix_position="true" android:tag="1" android:background="@drawable/btn_dot_action"	/>
+     			<Button android:id="@+id/dot_dot2" android:enabled="true" android:visibility="visible" android:layout_x="32px"  android:layout_y="0px" android:layout_width="32px" android:layout_height="32px"   flyview:fix_position="true" android:tag="1" android:background="@drawable/btn_dot_action"/> 
+            </AbsoluteLayout> 
+			
+			<AbsoluteLayout android:id="@+id/navi_holder" android:visibility="visible" android:clipChildren="false" android:clipToPadding="false"  android:layout_width="409.0px" android:layout_height="384.0px" android:layout_x="696.0px" android:layout_y="24.0px">  
+				<AbsoluteLayout android:id="@+id/navi_holder" android:visibility="visible" android:clipChildren="false" android:clipToPadding="false" android:background="@drawable/panel_navi" android:layout_width="337.0px" android:layout_height="362.0px" android:layout_x="36.0px" android:layout_y="8.0px">  
+	     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="7px"   android:layout_y="126px" android:layout_width="96px" android:layout_height="122px"   flyview:fix_position="true" android:tag="42" android:onClick="onClick" android:background="@drawable/navi_left_action"/>
+	     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="107px"   android:layout_y="27px" android:layout_width="122px" android:layout_height="96px"   flyview:fix_position="true" android:tag="43" android:onClick="onClick" android:background="@drawable/navi_up_action"	/>
+	     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="234px"   android:layout_y="126px" android:layout_width="96px" android:layout_height="122px"   flyview:fix_position="true" android:tag="44" android:onClick="onClick" android:background="@drawable/navi_right_action"	/>
+	     			<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="107px"   android:layout_y="250px" android:layout_width="122px" android:layout_height="96px"   flyview:fix_position="true" android:tag="46" android:onClick="onClick" android:background="@drawable/navi_down_action"	/>
+	     					
+					<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="107px"   android:layout_y="126px" android:layout_width="122px" android:layout_height="122px"   flyview:fix_position="true" android:tag="45" android:onClick="onClick" android:background="@drawable/btn_center_action"	/>
+		     	</AbsoluteLayout>
+		     	  <fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="-8px"  android:layout_y="0px" android:layout_width="128px" android:layout_height="128px" android:textSize="24.0px" android:textColor="#ffb4b4b4" android:gravity="top|center_horizontal" android:text="MENU"  flyview:fix_position="true" android:tag="23" android:onClick="onClick" android:background="@drawable/tc_icon_menu_nor_action"/>   
+	     	      <fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="264px"  android:layout_y="0px" android:layout_width="128px" android:layout_height="128px" android:textSize="24.0px" android:textColor="#ffb4b4b4" android:gravity="top|center_horizontal" android:text="INFO"  flyview:fix_position="true" android:tag="33" android:onClick="onClick" android:background="@drawable/tc_icon_info_nor_action"/> 
+	     	      <fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="0px"  android:layout_y="258px" android:layout_width="128px" android:layout_height="128px" android:textSize="24.0px" android:textColor="#ffb4b4b4" android:gravity="bottom|center_horizontal" android:text="RETURN"  flyview:fix_position="true" android:tag="41" android:onClick="onClick" android:background="@drawable/tc_icon_return_nor_action"/> 
+	     	      <fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="264px"  android:layout_y="258px" android:layout_width="128px" android:layout_height="128px" android:textSize="24.0px" android:textColor="#ffb4b4b4" android:gravity="bottom|center_horizontal" android:text="EXIT"  flyview:fix_position="true" android:tag="41" android:onClick="onClick" android:background="@drawable/tc_icon_exit_nor_action"/> 
+	     	</AbsoluteLayout>
+			
+			<AbsoluteLayout android:id="@+id/meca_holder" android:visibility="visible" android:clipChildren="false" android:clipToPadding="false" android:background="@drawable/panel_meca" android:layout_width="384.0px" android:layout_height="198.0px" android:layout_x="708.0px" android:layout_y="450.0px">  
+	    		<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="9px"   android:layout_y="5px" android:layout_width="92px" android:layout_height="84px"   flyview:fix_position="true" android:tag="28" android:onClick="onClick" android:background="@drawable/meca_rewind_re_action"	/>
+	    		<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="101px"  android:layout_y="5px" android:layout_width="92px" android:layout_height="84px"   flyview:fix_position="true" android:tag="7" android:onClick="onClick" android:background="@drawable/meca_rewind_action"/> 
+	    		<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="193px"  android:layout_y="5px" android:layout_width="92px"  android:layout_height="84px"   flyview:fix_position="true" android:tag="29" android:onClick="onClick" android:background="@drawable/meca_forward_re_action"	/>   			
+				<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="285px"  android:layout_y="5px" android:layout_width="92px"  android:layout_height="84px"   flyview:fix_position="true" android:tag="9" android:onClick="onClick" android:background="@drawable/meca_forward_action"	/>  
+	    			
+				<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="9px"   android:layout_y="89px" android:layout_width="92px" android:layout_height="84px"   flyview:fix_position="true" android:tag="12" android:onClick="onClick" android:background="@drawable/meca_recording_action"	/>
+	    		<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="101px"  android:layout_y="89px" android:layout_width="92px" android:layout_height="84px"   flyview:fix_position="true" android:tag="10" android:onClick="onClick" android:background="@drawable/meca_stop_action"/> 
+	    		<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="193px"  android:layout_y="89px" android:layout_width="92px"  android:layout_height="84px"   flyview:fix_position="true" android:tag="8" android:onClick="onClick" android:background="@drawable/meca_play_action"	/>   			
+				<fly.MoveViewGroup.MyButton android:visibility="visible" android:layout_x="285px"  android:layout_y="89px" android:layout_width="92px"  android:layout_height="84px"   flyview:fix_position="true" android:tag="11" android:onClick="onClick" android:background="@drawable/meca_pause_action"	/>  
+			</AbsoluteLayout>
+		</fly.MoveViewGroup.MyViewGroup >
+	</fly.MoveViewGroup.Workspace>
+</LinearLayout>
