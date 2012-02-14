@@ -37,6 +37,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -113,6 +114,8 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	
 	private String mPath = "/sdcard/remotec/";
 	
+	private DisplayMetrics mDisplayMetrics;
+	
 	/**
 	 * Ir API object
 	 */
@@ -129,7 +132,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		// Set up the window layout
 		// getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
 		// R.layout.custom_title);
- 
+  
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
 		mTitle.setText(R.string.app_name);
@@ -145,6 +148,10 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);
 		soundId = soundPool.load(this, R.raw.water, 1);
 
+	     // 获取屏幕的宽、高
+		mDisplayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
+		
 		mCodeNum = 125;
 		mIsSupplementLib=true;
 		// If the adapter is null, then Bluetooth is not supported
@@ -453,8 +460,17 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	 * set the title when succeeded connected to remote;
 	 */
 	private void setConnectedTitle() {
-		mTitle.setText(R.string.title_connected_to);
-		mTitle.append(mConnectedDeviceName);
+			
+		if(mDisplayMetrics.widthPixels>=600)
+		{			
+			mTitle.setText(R.string.title_connected_to);
+			mTitle.append(mConnectedDeviceName);
+		}
+		else
+		{
+			mTitle.setText("");
+		}
+		
 		if(this.mIsSupplementLib)
 		{
 			mTitle.append(" External Library");
@@ -507,7 +523,8 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		// Kabloey
-		soundPool.play(soundId, 10, 10, 1, 0, 1f);// 备注3
+		if(emulatorTag)return;
+//		soundPool.play(soundId, 4, 4, 1, 0, 1f);// 备注3
 		byte keyId = Byte.parseByte(v.getTag().toString(), 10);
 
 		if (mmIrController != null) {

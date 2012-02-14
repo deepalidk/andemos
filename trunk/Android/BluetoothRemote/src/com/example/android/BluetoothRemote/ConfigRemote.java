@@ -98,7 +98,8 @@ public class ConfigRemote extends Activity {
 			,1221,1291,1441,2031
 			,2201,2261,2731,1071
 			,1641,1731,1901,2161
-			,2741,1741,2901
+			,2741,0501,1981,1741
+			,2901
 			};
 	private String buildLibNames[]={"Panasonic-0051","Panasonic-0201","Panasonic-0951","Panasonic-1091"
 			,"Panasonic-1491","Panasonic-1571","Panasonic-1651","Panasonic-1831"
@@ -111,7 +112,8 @@ public class ConfigRemote extends Activity {
 			,"Sharp-1221","Sharp-1291","Sharp-1441","Sharp-2031"
 			,"Sharp-2201","Sharp-2261","Sharp-2731","Sony-1071"
 			,"Sony-1641","Sony-1731","Sony-1901","Sony-2161"
-			,"Sony-2741","Vizio-1741","Vizio-2901"		
+			,"Sony-2741","Viewsonic-0501","Viewsonic-1981","Vizio-1741"
+			,"Vizio-2901"		
 			};
 	
 	@Override
