@@ -62,19 +62,45 @@
         android:layout_below="@id/codenumedit"
         android:visibility="gone"
         android:text="@string/use_supplement_library_" />
-    
-     <TextView
+    <TableLayout android:id="@+id/layoutSearchBar" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        android:layout_below="@id/cbxSupplementLib">
+        <TableRow>
+        <TextView
         android:id="@+id/tvwCodeLib"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:text="Filter:" 
+        />
+        <EditText
+        android:id="@+id/ettFilter"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cbxSupplementLib"
-        android:text="Code Library:" />
-    
+        android:background="@android:drawable/editbox_background"
+        android:singleLine="true" 
+        android:layout_marginRight="5dp"/>
+        <TextView
+        android:id="@+id/tvwRecordsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:focusable="false"
+        android:text="Total:" 
+        />
+        </TableRow>
+    </TableLayout> 
     <ListView android:id="@+id/lvwCodeList"
         android:layout_width="fill_parent"
         android:layout_height="430sp"
         android:stackFromBottom="false"  
-        android:layout_below="@id/tvwCodeLib"
+        android:layout_below="@id/layoutSearchBar"
     />
     <View
         android:id="@+id/line2"
@@ -99,5 +125,4 @@
         android:layout_alignTop="@id/ok"
         android:layout_toLeftOf="@id/ok"
         android:text="Cancel" />
-
 </RelativeLayout>

@@ -32,6 +32,8 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -65,7 +67,7 @@ import android.widget.Toast;
 public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	// Debugging 
 	private static final String TAG = "BluetoothRemote";
-	private static final boolean D = false;
+	private static final boolean D = true;
 	private static final boolean emulatorTag = false;
  
 	// Message types sent from the BluetoothRemoteService Handler
@@ -109,10 +111,9 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 
 	// private Code number;
 	private int mCodeNum;
+	private int mDevType;
 
 	private boolean mIsSupplementLib;
-	
-	private String mPath = "/sdcard/remotec/";
 	
 	private DisplayMetrics mDisplayMetrics;
 	
@@ -165,9 +166,12 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			}
 		}
 		
-		saveas(R.raw.remote,mPath,"remote.db");	
-		saveas(R.raw.rt300_maxdigital_dvd,mPath,"RT300_Supplementary_DVD_RT300_MaxDigital_MD700RM.rtdb");	
+		saveas(R.raw.remote,Config.CR_PATH,Config.CR_DBNAME);	
+		saveas(R.raw.rt300_maxdigital_dvd,Config.CR_PATH,"MaxDigital-DVD-MD700RM.rtdb");	
+	    
+		ConfigRemote.Init(this);
 	}
+	
 
 	@Override
 	public void onStart() {
@@ -388,16 +392,16 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	};
 
 	private void setMenuEnability(boolean enable) {
-			if(!emulatorTag)
-			{
-				if (mMenuConfig != null) {
-					mMenuConfig.setEnabled(enable);
-				}
-				if (mMenuUpdate != null) {
-					mMenuUpdate.setEnabled(enable);
-				}
-			}
-			else
+//			if(!emulatorTag)
+//			{
+//				if (mMenuConfig != null) {
+//					mMenuConfig.setEnabled(enable);
+//				}
+//				if (mMenuUpdate != null) {
+//					mMenuUpdate.setEnabled(enable);
+//				}
+//			}
+//			else
 			{
 				if (mMenuConfig != null) {
 					mMenuConfig.setEnabled(true);
@@ -442,6 +446,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			if (resultCode == Activity.RESULT_OK) {
 				mCodeNum = data
 						.getIntExtra(ConfigRemote.REMOTE_CODENUMBER, 125);
+				mDevType =data.getIntExtra(ConfigRemote.REMOTE_TYPE, 1);
 				mIsSupplementLib=data.getBooleanExtra(ConfigRemote.REMOTE_ISSUPPLEMENTLIB, false);
 				setConnectedTitle();
 			}
@@ -539,7 +544,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 				else
 				{
 					boolean result = mmIrController.transmitPreprogramedCode(
-							 (byte) 0x82, (byte) 0x5, 0,
+							 (byte) 0x82, (byte) mDevType, 0,
 							 (byte)keyId);
 				}
 			}
