@@ -3,7 +3,7 @@
  *
  */
 
-package com.example.android.BluetoothRemote;
+package remotec.BluetoothRemote.activities;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -11,10 +11,10 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.android.BluetoothRemote.R;
-import com.example.android.BluetoothRemote.R.id;
-import com.example.android.BluetoothRemote.R.layout;
-import com.example.android.BluetoothRemote.R.string;
+import remotec.BluetoothRemote.activities.R;
+import remotec.BluetoothRemote.activities.R.id;
+import remotec.BluetoothRemote.activities.R.layout;
+import remotec.BluetoothRemote.activities.R.string;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

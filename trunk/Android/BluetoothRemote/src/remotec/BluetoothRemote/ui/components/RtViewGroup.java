@@ -1,9 +1,9 @@
-package fly.MoveViewGroup;
+package remotec.BluetoothRemote.ui.components;
 
 
 import java.util.List;
 
-import com.example.android.BluetoothRemote.R;
+import remotec.BluetoothRemote.activities.R;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView.ScaleType;
 
-public class MyViewGroup extends AbsoluteLayout implements View.OnClickListener {
+public class RtViewGroup extends AbsoluteLayout implements View.OnClickListener {
 	private static boolean D = false;
 	private static String TAG = "ViewGroup";
 	
@@ -69,13 +69,13 @@ public class MyViewGroup extends AbsoluteLayout implements View.OnClickListener 
 		flipping
 	};
 
-	public MyViewGroup(Context context) {
+	public RtViewGroup(Context context) {
 		super(context);
 
 		initView(context);
 	}
 
-	public MyViewGroup(Context context, AttributeSet attrs) {
+	public RtViewGroup(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
 		initView(context);

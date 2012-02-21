@@ -1,4 +1,4 @@
-package com.example.android.BluetoothRemote;
+package remotec.BluetoothRemote.activities;
 
 import android.widget.*;
 import android.content.Context;

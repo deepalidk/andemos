@@ -15,7 +15,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       android:versionCode="1"
-      android:versionName="1.0" package="com.example.android.BluetoothRemote">
+      android:versionName="1.0" package="remotec.BluetoothRemote.activities">
     <uses-sdk minSdkVersion="6" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -39,10 +39,6 @@
         		  android:label="@string/config_remote"
 				  android:theme="@android:style/Theme.Dialog" 
 				  android:configChanges="orientation|keyboardHidden" />
-        <activity android:name=".CodelibListActivity"
-                  android:label="@string/select_codelib"
-                  android:theme="@android:style/Theme.Dialog"
-                  android:configChanges="orientation|keyboardHidden" />
     </application>
     <supports-screens
         android:smallScreens="true"
