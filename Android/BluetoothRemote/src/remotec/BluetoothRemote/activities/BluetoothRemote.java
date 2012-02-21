@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.BluetoothRemote;
+package remotec.BluetoothRemote.activities;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,11 +22,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.example.android.BluetoothRemote.R;
-import com.example.android.BluetoothRemote.R.id;
-import com.example.android.BluetoothRemote.R.layout;
-import com.example.android.BluetoothRemote.R.menu;
-import com.example.android.BluetoothRemote.R.string;
+import remotec.BluetoothRemote.activities.R;
+import remotec.BluetoothRemote.activities.R.id;
+import remotec.BluetoothRemote.activities.R.layout;
+import remotec.BluetoothRemote.activities.R.menu;
+import remotec.BluetoothRemote.activities.R.string;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -484,12 +484,6 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			remoteConfig.putExtras(bdl); // ´«²Î
 			startActivityForResult(remoteConfig, REQUEST_CONFIG_REMOTE);
 
-			return true;
-		case R.id.Update:
-			
-			Intent updateIntent = new Intent(this, CodelibListActivity.class);
-			startActivityForResult(updateIntent, REQUEST_UPDATE_REMOTE);
-			
 			return true;
 		} 
 		return false;

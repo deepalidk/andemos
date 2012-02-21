@@ -1,18 +1,18 @@
-package fly.MoveViewGroup;
+package remotec.BluetoothRemote.ui.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
  
-public class Workspace extends ViewGroup {
+public class RtWorkspace extends ViewGroup {
    
-	public Workspace(Context context) {
+	public RtWorkspace(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
 
-    public Workspace(Context context, AttributeSet attrs) {
+    public RtWorkspace(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
     	

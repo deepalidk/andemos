@@ -1,4 +1,4 @@
-package com.example.android.BluetoothRemote;
+package remotec.BluetoothRemote.activities;
 
 import java.io.File;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.BluetoothRemote;
+package remotec.BluetoothRemote.activities;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +24,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import com.example.android.BluetoothRemote.BTIO.IIo;
+import remotec.BluetoothRemote.BTIO.IIo;
+
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

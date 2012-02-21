@@ -1,12 +1,13 @@
-package com.example.android.BluetoothRemote;
+package remotec.BluetoothRemote.activities;
 
 import java.util.LinkedList;
+
+import remotec.BluetoothRemote.BTIO.IIo;
+import remotec.BluetoothRemote.BTIO.IOnRead;
 
 import android.text.format.Time;
 import android.util.Log;
 
-import com.example.android.BluetoothRemote.BTIO.IIo;
-import com.example.android.BluetoothRemote.BTIO.IOnRead;
 
 /**
  * @author walker

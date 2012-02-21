@@ -1,7 +1,7 @@
-package fly.MoveViewGroup;
+package remotec.BluetoothRemote.ui.components;
 
 
-import com.example.android.BluetoothRemote.R;
+import remotec.BluetoothRemote.activities.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -25,7 +25,7 @@ import android.view.ViewParent;
 import android.widget.TextView;
 import android.widget.Button;
 
-public class MyButton extends TextView {
+public class RtButton extends TextView {
 	private static boolean D = false;
     private static String TAG="MyButton";
     
@@ -36,16 +36,16 @@ public class MyButton extends TextView {
     private Paint mPaintBackground;
     private Paint mPaintText;
     private Paint mPaintIcon;
-
+ 
     private boolean mBackgroundSizeChanged;
     private Drawable mBackground;
  
-	public MyButton(Context context) {
+	public RtButton(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
 	
-    public MyButton(Context context, AttributeSet attrs) {
+    public RtButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         
         this.setClickable(true);
@@ -61,7 +61,7 @@ public class MyButton extends TextView {
         for (int i = 0; i < N; i++) {
             int attr = a.getIndex(i);
             switch (attr) {
-                case com.example.android.BluetoothRemote.R.styleable.MyButton_fix_position:
+                case remotec.BluetoothRemote.activities.R.styleable.MyButton_fix_position:
                     mIsFixPosition = a.getBoolean(attr,true);
                     break;
                 case R.styleable.MyButton_left:
@@ -80,8 +80,7 @@ public class MyButton extends TextView {
         }
         
         Drawable bg=getBackground();
-       
-        
+            
         if(D)Log.d(TAG, "MyButton.bg.with="+bg.getIntrinsicWidth()+"myButton.bg.height="+bg.getIntrinsicHeight());
                 
         a.recycle();                 

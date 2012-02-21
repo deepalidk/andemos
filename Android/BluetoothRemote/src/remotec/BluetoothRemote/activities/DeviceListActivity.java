@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.example.android.BluetoothRemote;
+package remotec.BluetoothRemote.activities;
 
 import java.util.Set;
 
-import com.example.android.BluetoothRemote.R;
-import com.example.android.BluetoothRemote.R.id;
-import com.example.android.BluetoothRemote.R.layout;
-import com.example.android.BluetoothRemote.R.string;
+import remotec.BluetoothRemote.activities.R;
+import remotec.BluetoothRemote.activities.R.id;
+import remotec.BluetoothRemote.activities.R.layout;
+import remotec.BluetoothRemote.activities.R.string;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

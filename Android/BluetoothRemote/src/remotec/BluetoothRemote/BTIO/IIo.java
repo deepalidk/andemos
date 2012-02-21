@@ -1,8 +1,8 @@
-package com.example.android.BluetoothRemote.BTIO;
+package remotec.BluetoothRemote.BTIO;
 
+import remotec.BluetoothRemote.activities.BluetoothRemote;
 import android.util.Log;
 
-import com.example.android.BluetoothRemote.BluetoothRemote;
 
 
 /**
