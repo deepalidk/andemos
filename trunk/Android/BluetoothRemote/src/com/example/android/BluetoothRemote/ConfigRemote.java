@@ -358,10 +358,10 @@ public class ConfigRemote extends Activity {
 			int index = 0;
 
 			try {
-				index = Integer.parseInt(text.split(".")[0]);
+				index = Integer.parseInt(text.split("\\.")[0]);
 				index--;
 			} catch (Exception e) {
-
+              return false;
 			}
 
 			File f = mFiles.get(index);
@@ -439,7 +439,6 @@ public class ConfigRemote extends Activity {
 				Intent intent = new Intent(); // …Í«ÎBundle±‰¡ø
 
 				try {
-
 					String text = ((TextView) mLastSelected).getText()
 							.toString().split("-")[2];
 					int codeNum = Integer.parseInt(text);
@@ -487,7 +486,7 @@ public class ConfigRemote extends Activity {
 			
 		    for(int i=1;i<this.TypeName.length;i++)
 		    {
-		    	if(typeName.toLowerCase()==this.TypeName[i])
+		    	if(typeName.toLowerCase().endsWith(this.TypeName[i].toLowerCase()))
 		    	{
 		    		result=i;
 		    		break;
