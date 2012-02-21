@@ -67,7 +67,7 @@ import android.widget.Toast;
 public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	// Debugging 
 	private static final String TAG = "BluetoothRemote";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	private static final boolean emulatorTag = false;
  
 	// Message types sent from the BluetoothRemoteService Handler
@@ -125,19 +125,17 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+      
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
-		if (D)
+		if (D) 
 			Log.e(TAG, "+++ ON CREATE +++");
 
-		// Set up the window layout
-		// getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-		// R.layout.custom_title);
   
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
 		mTitle.setText(R.string.app_name);
-
+				
 		mTitle = (TextView) findViewById(R.id.title_right_text);
 
 		mmIrController = IrApi.getHandle();
@@ -154,6 +152,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
         getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
 		
 		mCodeNum = 125;
+		mDevType = 1;
 		mIsSupplementLib=true;
 		// If the adapter is null, then Bluetooth is not supported
 		if(!emulatorTag)
@@ -168,11 +167,13 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		
 		saveas(R.raw.remote,Config.CR_PATH,Config.CR_DBNAME);	
 		saveas(R.raw.rt300_maxdigital_dvd,Config.CR_PATH,"MaxDigital-DVD-MD700RM.rtdb");	
-	    
+	    saveas(R.raw.sansui_tv_sty0250,Config.CR_PATH,"SANSUI-TV-STY0250.rtdb");
+	    saveas(R.raw.sansui_dvd_ht4002,Config.CR_PATH,"SANSUI-DVD-HT4002.rtdb");
+	    saveas(R.raw.sansui_dvd_htib1002,Config.CR_PATH,"SANSUI-DVD-HTIB1002.rtdb");
+		
 		ConfigRemote.Init(this);
 	}
 	
-
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -217,27 +218,6 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 
 	private void setupChat() {
 		Log.d(TAG, "setupChat()");
-
-		// // Initialize the array adapter for the conversation thread
-		// mConversationArrayAdapter = new ArrayAdapter<String>(this,
-		// R.layout.message);
-		// mConversationView = (ListView) findViewById(R.id.in);
-		// mConversationView.setAdapter(mConversationArrayAdapter);
-		//
-		// // Initialize the compose field with a listener for the return key
-		// mOutEditText = (EditText) findViewById(R.id.edit_text_out);
-		// mOutEditText.setOnEditorActionListener(mWriteListener);
-		//
-		// // Initialize the send button with a listener that for click events
-		// mSendButton = (Button) findViewById(R.id.button_send);
-		// mSendButton.setOnClickListener(new OnClickListener() {
-		// public void onClick(View v) {
-		// // Send a message using content of the edit text widget
-		// TextView view = (TextView) findViewById(R.id.edit_text_out);
-		// String message = view.getText().toString();
-		// sendMessage(message);
-		// }
-		// });
 
 		// Initialize the BluetoothRemoteService to perform bluetooth
 		// connections
@@ -306,13 +286,6 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 				if (D)
 					Log.i(TAG, "ir.IrGetVersion: False");
 			}
-
-			// byte[] send = message.getBytes();
-			// mChatService.write(send);
-			//
-			// // Reset out string buffer to zero and clear the edit text field
-			// mOutStringBuffer.setLength(0);
-			// mOutEditText.setText(mOutStringBuffer);
 		}
 	}
 
@@ -345,8 +318,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 				switch (msg.arg1) {
 				case BluetoothRemoteService.STATE_CONNECTED: {
 					boolean result = mmIrController.init(mChatService);
-					// if(result)
-					// {
+
 					setConnectedTitle();
 					setMenuEnability(true);
 					break;
@@ -357,7 +329,6 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 					break;
 				case BluetoothRemoteService.STATE_NONE:
      				mTitle.setText(R.string.title_not_connected);
-
 					setMenuEnability(false);
 					break;
 				}
@@ -386,22 +357,22 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 				Toast.makeText(getApplicationContext(),
 						msg.getData().getString(TOAST), Toast.LENGTH_SHORT)
 						.show();
-				break;
+				break; 
 			}
 		}
 	};
 
 	private void setMenuEnability(boolean enable) {
-//			if(!emulatorTag)
-//			{
-//				if (mMenuConfig != null) {
-//					mMenuConfig.setEnabled(enable);
-//				}
-//				if (mMenuUpdate != null) {
-//					mMenuUpdate.setEnabled(enable);
-//				}
-//			}
-//			else
+			if(!emulatorTag)
+			{
+				if (mMenuConfig != null) {
+					mMenuConfig.setEnabled(enable);
+				}
+				if (mMenuUpdate != null) {
+					mMenuUpdate.setEnabled(enable);
+				}
+			}
+			else
 			{
 				if (mMenuConfig != null) {
 					mMenuConfig.setEnabled(true);
@@ -533,8 +504,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		byte keyId = Byte.parseByte(v.getTag().toString(), 10);
 
 		if (mmIrController != null) {
-			if (mChatService.getState() ==BluetoothRemoteService.STATE_CONNECTED) {
-				
+			if (mChatService.getState() ==BluetoothRemoteService.STATE_CONNECTED) {			
 				if(!this.mIsSupplementLib)
 				{
 					boolean result = mmIrController.transmitPreprogramedCode(
@@ -558,7 +528,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		 boolean exists = (new File(path)).exists();   
 		 if (!exists){new File(path).mkdirs();}  
 		 
-		 exists=(new File(path+filename)).exists();
+		 exists=(new File(path+"/"+filename)).exists();
 		 if (exists){return true;}  
 		 
 		 InputStream fIn = getBaseContext().getResources().openRawResource(ressound);   
@@ -575,7 +545,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		  
 		 FileOutputStream save;   
 		 try {   
-		  save = new FileOutputStream(path+filename);   
+		  save = new FileOutputStream(path+"/"+filename);   
 		  save.write(buffer);   
 		  save.flush();   
 		  save.close();   
