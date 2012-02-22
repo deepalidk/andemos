@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package remotec.BluetoothRemote.activities;
+package remotec.BluetoothRemote.BTIO;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import remotec.BluetoothRemote.BTIO.IIo;
+import remotec.BluetoothRemote.activities.BluetoothRemote;
 
 
 import android.bluetooth.BluetoothAdapter;
@@ -209,8 +209,16 @@ public class BluetoothRemoteService extends IIo {
 
 		// Send the name of the connected device back to the UI Activity
 		Message msg = mHandler
-				.obtainMessage(BluetoothRemote.MESSAGE_DEVICE_NAME);
+				.obtainMessage(BluetoothRemote.MESSAGE_DEVICE_ADDRESS);
 		Bundle bundle = new Bundle();
+		bundle.putString(BluetoothRemote.DEVICE_ADDRESS, device.getAddress());
+		msg.setData(bundle);
+		mHandler.sendMessage(msg);
+		
+		// Send the name of the connected device back to the UI Activity
+		msg = mHandler
+				.obtainMessage(BluetoothRemote.MESSAGE_DEVICE_NAME);
+		bundle = new Bundle();
 		bundle.putString(BluetoothRemote.DEVICE_NAME, device.getName());
 		msg.setData(bundle);
 		mHandler.sendMessage(msg);

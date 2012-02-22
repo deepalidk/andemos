@@ -1,9 +1,7 @@
-package remotec.BluetoothRemote.activities;
+package remotec.BluetoothRemote.BTIO;
 
 import java.util.LinkedList;
 
-import remotec.BluetoothRemote.BTIO.IIo;
-import remotec.BluetoothRemote.BTIO.IOnRead;
 
 import android.text.format.Time;
 import android.util.Log;

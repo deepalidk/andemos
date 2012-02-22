@@ -22,11 +22,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import remotec.BluetoothRemote.BTIO.BluetoothRemoteService;
+import remotec.BluetoothRemote.BTIO.IrApi;
 import remotec.BluetoothRemote.activities.R;
 import remotec.BluetoothRemote.activities.R.id;
 import remotec.BluetoothRemote.activities.R.layout;
 import remotec.BluetoothRemote.activities.R.menu;
 import remotec.BluetoothRemote.activities.R.string;
+import remotec.BluetoothRemote.data.BtDevice;
+import remotec.BluetoothRemote.data.Config;
+import remotec.BluetoothRemote.data.DbManager;
+import remotec.com.FileManager;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -76,9 +82,12 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	public static final int MESSAGE_WRITE = 3;
 	public static final int MESSAGE_DEVICE_NAME = 4;
 	public static final int MESSAGE_TOAST = 5;
+	public static final int MESSAGE_DEVICE_ADDRESS = 6;
 
 	// Key names received from the BluetoothRemoteService Handler
 	public static final String DEVICE_NAME = "device_name";
+	// Key names received from the BluetoothRemoteService Handler
+	public static final String DEVICE_ADDRESS = "device_address";
 	public static final String TOAST = "toast";
 
 	// Intent request codes
@@ -94,12 +103,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	private Button mSendButton;
 	private MenuItem mMenuConfig;
 	private MenuItem mMenuUpdate;
-	// Name of the connected device
-	private String mConnectedDeviceName = null;
-	// Array adapter for the conversation thread
-//	private ArrayAdapter<String> mConversationArrayAdapter;
-	// String buffer for outgoing messages
-	private StringBuffer mOutStringBuffer;
+
 	// Local Bluetooth adapter
 	private BluetoothAdapter mBluetoothAdapter = null;
 	// Member object for the chat services
@@ -108,14 +112,11 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	// button press sound
 	private SoundPool soundPool;
 	private int soundId;
-
-	// private Code number;
-	private int mCodeNum;
-	private int mDevType;
-
-	private boolean mIsSupplementLib;
 	
 	private DisplayMetrics mDisplayMetrics;
+	
+	//the infomation of Device.
+	private BtDevice mDevice;
 	
 	/**
 	 * Ir API object
@@ -151,9 +152,6 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		mDisplayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
 		
-		mCodeNum = 125;
-		mDevType = 1;
-		mIsSupplementLib=true;
 		// If the adapter is null, then Bluetooth is not supported
 		if(!emulatorTag)
 		{
@@ -165,13 +163,15 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			}
 		}
 		
-		saveas(R.raw.remote,Config.CR_PATH,Config.CR_DBNAME);	
-		saveas(R.raw.rt300_maxdigital_dvd,Config.CR_PATH,"MaxDigital-DVD-MD700RM.rtdb");	
-	    saveas(R.raw.sansui_tv_sty0250,Config.CR_PATH,"SANSUI-TV-STY0250.rtdb");
-	    saveas(R.raw.sansui_dvd_ht4002,Config.CR_PATH,"SANSUI-DVD-HT4002.rtdb");
-	    saveas(R.raw.sansui_dvd_htib1002,Config.CR_PATH,"SANSUI-DVD-HTIB1002.rtdb");
+		FileManager.saveAs(this.getBaseContext(),R.raw.remote,Config.CR_PATH,Config.CR_DBNAME);	
+		FileManager.saveAs(this.getBaseContext(),R.raw.rt300_maxdigital_dvd,Config.CR_PATH,"MaxDigital-DVD-MD700RM.rtdb");	
+		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_tv_sty0250,Config.CR_PATH,"SANSUI-TV-STY0250.rtdb");
+		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_dvd_ht4002,Config.CR_PATH,"SANSUI-DVD-HT4002.rtdb");
+		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_dvd_htib1002,Config.CR_PATH,"SANSUI-DVD-HTIB1002.rtdb");
 		
-		ConfigRemote.Init(this);
+		ConfigRemote.Init(this,DbManager.Handle());
+		
+		mDevice=new BtDevice();
 	}
 	
 	@Override
@@ -191,7 +191,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 				// Otherwise, setup the chat session
 			} else {
 				if (mChatService == null)
-					setupChat();
+					setupBluetooth();
 			}
 		}
 	}
@@ -216,15 +216,13 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		}
 	}
 
-	private void setupChat() {
+	private void setupBluetooth() {
 		Log.d(TAG, "setupChat()");
 
 		// Initialize the BluetoothRemoteService to perform bluetooth
 		// connections
 		mChatService = new BluetoothRemoteService(this, mHandler);
 
-		// Initialize the buffer for outgoing messages
-		mOutStringBuffer = new StringBuffer("");
 	}
 
 	@Override
@@ -346,12 +344,20 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 //				mConversationArrayAdapter.add(mConnectedDeviceName + ":  "
 //						+ readMessage);
 				break;
+			case MESSAGE_DEVICE_ADDRESS:
+				// save the connected device's name
+				String devAddr = msg.getData().getString(DEVICE_ADDRESS);
+				mDevice.loadData(DbManager.Handle(), devAddr);
+
+				break;
 			case MESSAGE_DEVICE_NAME:
 				// save the connected device's name
-				mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
+				String devName = msg.getData().getString(DEVICE_NAME);
 				Toast.makeText(getApplicationContext(),
-						"Connected to " + mConnectedDeviceName,
+						"Connected to " + devName,
 						Toast.LENGTH_SHORT).show();
+				mDevice.setName(devName);
+				mDevice.saveData(DbManager.Handle());
 				break;
 			case MESSAGE_TOAST:
 				Toast.makeText(getApplicationContext(),
@@ -404,7 +410,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			// When the request to enable Bluetooth returns
 			if (resultCode == Activity.RESULT_OK) {
 				// Bluetooth is now enabled, so set up a chat session
-				setupChat();
+				setupBluetooth();
 			} else {
 				// User did not enable Bluetooth or an error occured
 				Log.d(TAG, "BT not enabled");
@@ -415,10 +421,17 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			break;
 		case REQUEST_CONFIG_REMOTE:
 			if (resultCode == Activity.RESULT_OK) {
-				mCodeNum = data
+				int codeNum = data
 						.getIntExtra(ConfigRemote.REMOTE_CODENUMBER, 125);
-				mDevType =data.getIntExtra(ConfigRemote.REMOTE_TYPE, 1);
-				mIsSupplementLib=data.getBooleanExtra(ConfigRemote.REMOTE_ISSUPPLEMENTLIB, false);
+				int devType =data.getIntExtra(ConfigRemote.REMOTE_TYPE, 1);
+				int transmitType=data.getIntExtra(ConfigRemote.REMOTE_TRANSMIT_TYPE, 0x81);
+				
+				mDevice.setIRCode(codeNum);
+				mDevice.setDeviceType(devType);
+				mDevice.setTransmitType(transmitType);
+				//save change to db
+				mDevice.saveData(DbManager.Handle());
+				
 				setConnectedTitle();
 			}
 			break;
@@ -440,20 +453,20 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		if(mDisplayMetrics.widthPixels>=600)
 		{			
 			mTitle.setText(R.string.title_connected_to);
-			mTitle.append(mConnectedDeviceName);
+			mTitle.append(mDevice.getName());
 		}
 		else
 		{
 			mTitle.setText("");
 		}
 		
-		if(this.mIsSupplementLib)
+		if(this.mDevice.getTransmitType()==0x82)
 		{
 			mTitle.append(" External Library");
 		}
 		else
 		{
-			mTitle.append(" IRCode:" + mCodeNum);
+			mTitle.append(" IRCode:" + this.mDevice.getIRCode());
 		}
 	}
 
@@ -479,8 +492,8 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		case R.id.Config:
 			Intent remoteConfig = new Intent(this, ConfigRemote.class);
 			Bundle bdl = new Bundle(); // 申请Bundle变量
-			bdl.putInt(ConfigRemote.REMOTE_CODENUMBER, mCodeNum); // 加到传入变量中
-			bdl.putBoolean(ConfigRemote.REMOTE_ISSUPPLEMENTLIB, this.mIsSupplementLib);
+			bdl.putInt(ConfigRemote.REMOTE_CODENUMBER, mDevice.getIRCode()); // 加到传入变量中
+			bdl.putInt(ConfigRemote.REMOTE_TRANSMIT_TYPE, mDevice.getTransmitType());
 			remoteConfig.putExtras(bdl); // 传参
 			startActivityForResult(remoteConfig, REQUEST_CONFIG_REMOTE);
 
@@ -499,59 +512,20 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 
 		if (mmIrController != null) {
 			if (mChatService.getState() ==BluetoothRemoteService.STATE_CONNECTED) {			
-				if(!this.mIsSupplementLib)
+				if(mDevice.getTransmitType()==0x81)
 				{
 					boolean result = mmIrController.transmitPreprogramedCode(
-					(byte) 0x81, (byte) (mCodeNum % 10), mCodeNum / 10,
+					(byte) 0x81, (byte) (mDevice.getIRCode() % 10), mDevice.getIRCode() / 10,
 					keyId);
 				}
 				else
 				{
 					boolean result = mmIrController.transmitPreprogramedCode(
-							 (byte) 0x82, (byte) mDevType, 0,
+							 (byte) 0x82, (byte) mDevice.getDeviceType(), 0,
 							 (byte)keyId);
 				}
 			}
 		}
 	}
 	
-	public boolean saveas(int ressound,String path, String filename){   
-		 byte[] buffer=null;   
-		 int size=0;   
-		 
-		 boolean exists = (new File(path)).exists();   
-		 if (!exists){new File(path).mkdirs();}  
-		 
-		 exists=(new File(path+"/"+filename)).exists();
-		 if (exists){return true;}  
-		 
-		 InputStream fIn = getBaseContext().getResources().openRawResource(ressound);   
-	 
-		 try {   
-		  size = fIn.available();   
-		  buffer = new byte[size];   
-		  fIn.read(buffer);   
-		  fIn.close();   
-		 } catch (IOException e) {   
-		  // TODO Auto-generated catch block   
-		  return false;   
-		 }   
-		  
-		 FileOutputStream save;   
-		 try {   
-		  save = new FileOutputStream(path+"/"+filename);   
-		  save.write(buffer);   
-		  save.flush();   
-		  save.close();   
-		 } catch (FileNotFoundException e) {   
-		  // TODO Auto-generated catch block   
-		  return false;   
-		 } catch (IOException e) {   
-		  // TODO Auto-generated catch block   
-		  return false;   
-		 }       
-		    
-		 return true;   
-		}  
-
 }

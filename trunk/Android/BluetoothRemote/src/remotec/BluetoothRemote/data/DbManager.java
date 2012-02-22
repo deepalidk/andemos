@@ -1,6 +1,7 @@
-package remotec.BluetoothRemote.activities;
+package remotec.BluetoothRemote.data;
 
 import java.io.File;
+
 
 import android.database.sqlite.SQLiteDatabase;
 
