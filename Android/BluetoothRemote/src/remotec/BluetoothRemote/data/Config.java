@@ -1,4 +1,4 @@
-package remotec.BluetoothRemote.activities;
+package remotec.BluetoothRemote.data;
 
 public class Config {
     //»ñÈ¡SDcardÂ·¾¶

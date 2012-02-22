@@ -11,10 +11,13 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import remotec.BluetoothRemote.BTIO.IrApi;
 import remotec.BluetoothRemote.activities.R;
 import remotec.BluetoothRemote.activities.R.id;
 import remotec.BluetoothRemote.activities.R.layout;
 import remotec.BluetoothRemote.activities.R.string;
+import remotec.BluetoothRemote.data.DbManager;
+import remotec.BluetoothRemote.ui.components.RtArrayAdapter;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -58,7 +61,7 @@ public class ConfigRemote extends Activity {
 
 	// Return Intent extra
 	public static String REMOTE_CODENUMBER = "remote_code_number";
-	public static String REMOTE_ISSUPPLEMENTLIB = "remote_is_supplement_lib";
+	public static String REMOTE_TRANSMIT_TYPE = "remote_transmit_type";
 	public static String REMOTE_TYPE="remote_device_type";
 
 	// Member fields
@@ -98,7 +101,7 @@ public class ConfigRemote extends Activity {
 
 	private static RtArrayAdapter<String> mInternalLib;
 
-	public static void Init(Context context) {
+	public static void Init(Context context,SQLiteDatabase db) {
 		if (mInternalLib == null) {
 			// If there are code library files, add each one to the ArrayAdapter
 			String id;
@@ -110,8 +113,6 @@ public class ConfigRemote extends Activity {
 			mInternalLib = new RtArrayAdapter<String>(context,
 					R.drawable.listview_layout);
 
-			// 定义SQLiteDatabase对象,用于处理数据库的操作
-			SQLiteDatabase db = DbManager.Handle();
 			// 定义Cursor游标,用于管理数据，比如获得数据库的每一行数据
 			Cursor cursor = null;
 
@@ -171,7 +172,7 @@ public class ConfigRemote extends Activity {
 		mEttFilter = (EditText) findViewById(R.id.ettFilter);
 		mEttFilter.addTextChangedListener(mTextWatcher);
 
-		mIsSupplementLib = bdl.getBoolean(REMOTE_ISSUPPLEMENTLIB);
+		mIsSupplementLib = bdl.getBoolean(REMOTE_TRANSMIT_TYPE);
 
 		mEditText.setEnabled(!mIsSupplementLib);
 		mCbxSupplementLib.setChecked(mIsSupplementLib);
@@ -445,7 +446,7 @@ public class ConfigRemote extends Activity {
 
 					intent.putExtra(REMOTE_CODENUMBER, codeNum); // 加到传入变量中
 					intent.putExtra(REMOTE_TYPE,codeNum%10);
-					intent.putExtra(REMOTE_ISSUPPLEMENTLIB, false);
+					intent.putExtra(REMOTE_TRANSMIT_TYPE, 0x81);
 					setResult(Activity.RESULT_OK, intent);
 					finish();
 
@@ -463,7 +464,7 @@ public class ConfigRemote extends Activity {
 					Intent intent = new Intent(); // 申请Bundle变量			
 					intent.putExtra(REMOTE_CODENUMBER, 1); // 加到传入变量中
 					intent.putExtra(REMOTE_TYPE,getExternalLibType());
-					intent.putExtra(REMOTE_ISSUPPLEMENTLIB, true);
+					intent.putExtra(REMOTE_TRANSMIT_TYPE, 0x82);
 					setResult(Activity.RESULT_OK, intent);
 					finish();
 				}
