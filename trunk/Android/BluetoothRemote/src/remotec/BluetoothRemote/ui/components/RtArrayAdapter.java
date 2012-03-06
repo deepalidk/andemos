@@ -427,7 +427,7 @@ public class RtArrayAdapter<T> extends BaseAdapter implements Filterable {
                     final String valueText = value.toString().toLowerCase();
 
                     // First match against the whole, non-splitted value
-                    if (valueText.contains(prefixString)) {
+                    if (valueText.startsWith(prefixString,valueText.indexOf(".")+1)) {
                         newValues.add(value);
                     }
                 }

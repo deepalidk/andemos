@@ -33,41 +33,11 @@
         android:layout_height="1dp"
         android:background="#ffffff" 
         android:layout_below="@id/rgpCodeType"/>
-
-    <TextView
-        android:id="@+id/label"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/line1"
-        android:visibility="gone"
-        android:text="Input IR Code Number(0-65535):" />
-
-    <EditText
-        android:id="@+id/codenumedit"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/label"
-        android:background="@android:drawable/editbox_background"
-        android:digits="0123456789"
-        android:hint="125"
-        android:inputType="numberDecimal"
-        android:maxLength="5"
-        android:visibility="gone"
-        android:singleLine="true" />
-
-    <CheckBox
-        android:id="@+id/cbxSupplementLib"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/codenumedit"
-        android:visibility="gone"
-        android:text="@string/use_supplement_library_" />
-    
    <TableLayout android:id="@+id/layoutSearchBar" 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
         android:stretchColumns="1"
-        android:layout_below="@id/cbxSupplementLib">
+        android:layout_below="@id/line1">
         <TableRow>
         <TextView
         android:id="@+id/tvwCodeLib"
@@ -102,7 +72,7 @@
         android:layout_width="fill_parent"
         android:layout_height="323sp"
         android:stackFromBottom="false"
-        android:layout_below="@id/tvwCodeLib"
+        android:layout_below="@id/layoutSearchBar"
     />
     <View
         android:id="@+id/line2"

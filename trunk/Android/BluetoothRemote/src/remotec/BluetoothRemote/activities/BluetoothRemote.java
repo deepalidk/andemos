@@ -507,7 +507,7 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 		// TODO Auto-generated method stub
 		// Kabloey
 		if(emulatorTag)return;
-//		soundPool.play(soundId, 4, 4, 1, 0, 1f);// ±¸×¢3
+		soundPool.play(soundId, 4, 4, 1, 0, 1f);// ±¸×¢3
 		byte keyId = Byte.parseByte(v.getTag().toString(), 10);
 
 		if (mmIrController != null) {
