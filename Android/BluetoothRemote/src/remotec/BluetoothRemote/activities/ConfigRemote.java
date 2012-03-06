@@ -65,14 +65,14 @@ public class ConfigRemote extends Activity {
 	public static String REMOTE_TYPE="remote_device_type";
 
 	// Member fields
-	private EditText mEditText;
+//	private EditText mEditText;
 	private EditText mEttFilter;
 	private Button mOkButton;
 	private Button mCancelButton;
 	private RadioButton mRDBBuildIn;
 	private RadioButton mRDBExtern;
 	private RadioGroup mRadioGroup;
-	private CheckBox mCbxSupplementLib;
+//	private CheckBox mCbxSupplementLib;
 
 	private boolean mIsSupplementLib;
 
@@ -160,12 +160,13 @@ public class ConfigRemote extends Activity {
 		mRDBBuildIn
 				.setOnCheckedChangeListener(mRdbBuildInOnCheckedChangeListner);
 
-		mCbxSupplementLib = (CheckBox) findViewById(R.id.cbxSupplementLib);
-		mCbxSupplementLib.setOnClickListener(mOnCbxSupplementLibClickListener);
+//		mCbxSupplementLib = (CheckBox) findViewById(R.id.cbxSupplementLib);
+//		mCbxSupplementLib.setOnClickListener(mOnCbxSupplementLibClickListener);
 
-		mEditText = (EditText) findViewById(R.id.codenumedit);
+
 		Bundle bdl = getIntent().getExtras(); // 获取传过来的参数
-		mEditText.setText("" + bdl.getInt(REMOTE_CODENUMBER));
+//		mEditText = (EditText) findViewById(R.id.codenumedit);
+//		mEditText.setText("" + bdl.getInt(REMOTE_CODENUMBER));
 		
 		mTvwRecordsCount=(TextView)findViewById(R.id.tvwRecordsCount);
 
@@ -174,8 +175,8 @@ public class ConfigRemote extends Activity {
 
 		mIsSupplementLib = bdl.getBoolean(REMOTE_TRANSMIT_TYPE);
 
-		mEditText.setEnabled(!mIsSupplementLib);
-		mCbxSupplementLib.setChecked(mIsSupplementLib);
+//		mEditText.setEnabled(!mIsSupplementLib);
+//		mCbxSupplementLib.setChecked(mIsSupplementLib);
 
 		// Initialize array adapters. One for already paired devices and
 		// one for newly discovered devices
@@ -530,15 +531,14 @@ public class ConfigRemote extends Activity {
 		}
 	};
 
-	private OnClickListener mOnCbxSupplementLibClickListener = new OnClickListener() {
-		public void onClick(View v) {
-			// Send a message using content of the edit text widget
-			String msg = String.format("ButtonId=%d", View.NO_ID);
-			if (D)
-				Log.d(TAG, msg);
-			mIsSupplementLib = mCbxSupplementLib.isChecked();
-			mEditText.setEnabled(!mIsSupplementLib);
-		}
-	};
-
+//	private OnClickListener mOnCbxSupplementLibClickListener = new OnClickListener() {
+//		public void onClick(View v) {
+//			// Send a message using content of the edit text widget
+//			String msg = String.format("ButtonId=%d", View.NO_ID);
+//			if (D)
+//				Log.d(TAG, msg);
+//			mIsSupplementLib = mCbxSupplementLib.isChecked();
+//			mEditText.setEnabled(!mIsSupplementLib);
+//		}
+//	};
 }
