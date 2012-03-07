@@ -163,15 +163,60 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 			}
 		}
 		
-		FileManager.saveAs(this.getBaseContext(),R.raw.remote,Config.CR_PATH,Config.CR_DBNAME);	
-		FileManager.saveAs(this.getBaseContext(),R.raw.rt300_maxdigital_dvd,Config.CR_PATH,"MaxDigital-DVD-MD700RM.rtdb");	
-		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_tv_sty0250,Config.CR_PATH,"SANSUI-TV-STY0250.rtdb");
-		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_dvd_ht4002,Config.CR_PATH,"SANSUI-DVD-HT4002.rtdb");
-		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_dvd_htib1002,Config.CR_PATH,"SANSUI-DVD-HTIB1002.rtdb");
+		doUpdate();
 		
 		ConfigRemote.Init(this,DbManager.Handle());
 		
 		mDevice=new BtDevice();
+	}
+
+	private void doUpdate() {
+		FileManager.saveAs(this.getBaseContext(),R.raw.remote,Config.CR_PATH,Config.CR_DBNAME);	
+		FileManager.saveAs(this.getBaseContext(),R.raw.remote,Config.CR_PATH,Config.CR_DBNAME_TEMP);			
+		FileManager.saveAs(this.getBaseContext(),R.raw.rt300_maxdigital_dvd,Config.CR_PATH,"MaxDigital-DVD-MD700RM.rtdb");	
+		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_tv_sty0250,Config.CR_PATH,"SANSUI-TV-STY0250.rtdb");
+		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_dvd_ht4002,Config.CR_PATH,"SANSUI-DVD-HT4002.rtdb");
+		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_dvd_htib1002,Config.CR_PATH,"SANSUI-DVD-HTIB1002.rtdb");
+	     
+		doDbUpdate();
+	}
+	
+	/*
+	 * compare the db version of remote.db and remote_temp.db.
+	 * 
+	 * use the latest db and copy the device info to latest db. 
+	 * cover current db file with the latest one.
+	 */
+	private void doDbUpdate()
+	{
+        //file current db file;
+        File dbFileCur = new File(Config.CR_DBPATH); 
+        File dbFileTemp=new File(Config.CR_DBPATH_TEMP);
+        
+        //open current db
+        SQLiteDatabase databaseCur = SQLiteDatabase.openOrCreateDatabase( 
+        		dbFileCur, null); 
+        SQLiteDatabase databaseTemp = SQLiteDatabase.openOrCreateDatabase( 
+        		dbFileTemp, null); 
+        
+        String curDbVer=DbManager.getConfig(databaseCur, "global", "db_version", "");
+        String tempDbVer=DbManager.getConfig(databaseTemp, "global", "db_version", "");
+        
+        databaseCur.close();
+        databaseTemp.close();
+       
+        //compare and cover
+        if(!curDbVer.equals(tempDbVer))
+        {
+        	dbFileCur.delete();
+        	dbFileTemp.renameTo(dbFileCur);
+        }
+        else
+        {
+        	dbFileTemp.delete();
+        }
+        
+        return; 
 	}
 	
 	@Override
