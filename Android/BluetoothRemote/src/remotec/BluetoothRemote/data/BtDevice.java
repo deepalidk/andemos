@@ -108,7 +108,7 @@ public class BtDevice {
 		else
 		{
 			mName="No Device";
-			mIRCode=251;  //philips
+			mIRCode=2741;  //sony 2741
 			mDeviceType=1; //tv
 			mTransmitType=0x81; //	
 			mAddr=addr;
