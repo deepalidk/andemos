@@ -1,0 +1,217 @@
+/*
+ * Copyright 2012 @ Copyright Remotec Technology Ltd., All rights reserved.
+ *     
+ * Description: Loads data from xml file and save data into xml file.
+ * 
+ *      Author: Walker
+ */
+package com.remotec.universalremote.persistence;
+
+import android.util.Xml;
+
+import com.remotec.universalremote.data.Device;
+import com.remotec.universalremote.data.Extender;
+import com.remotec.universalremote.data.Key;
+import com.remotec.universalremote.data.RemoteUi;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+/*
+ * Loads data from xml file and save data into xml file.
+ */
+public class XmlManager {
+
+	/*
+	 * Loads data from xml file.
+	 */
+	public boolean loadData(RemoteUi uiData, String filePath) {
+		boolean result = false;
+
+		try {
+
+			File xmlFile = new File(filePath);
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document dom = builder.parse(xmlFile);
+
+			Element root = dom.getDocumentElement();
+
+			loadData(uiData, root);
+
+			result = true;
+
+		} catch (FileNotFoundException e) {
+			result = false;
+		} catch (ParserConfigurationException e) {
+			result = false;
+		} catch (SAXException e) {
+			result = false;
+		} catch (IOException e) {
+			result = false;
+		}
+
+		return result;
+
+	}
+
+	/*
+	 * Saves data to xml file.
+	 */
+	public boolean saveData(RemoteUi uiData, String filePath) {
+
+		boolean result = false;
+		File xmlFile = new File(filePath);
+		File tempFile = new File(filePath + "tmp");
+		FileOutputStream outStream;
+
+		try {
+			outStream = new FileOutputStream(tempFile);
+
+			OutputStreamWriter outStreamWriter = new OutputStreamWriter(
+					outStream, "UTF-8");
+			BufferedWriter writer = new BufferedWriter(outStreamWriter);
+			XmlSerializer serializer = Xml.newSerializer();
+
+			serializer.setOutput(writer);
+
+			serializer.startDocument("UTF-8", true);
+
+			saveData(uiData, serializer);
+
+			serializer.endDocument();
+
+			writer.flush();
+			writer.close();
+			tempFile.renameTo(xmlFile);
+
+			result = true;
+		} catch (FileNotFoundException e) {
+			result = false;
+		} catch (UnsupportedEncodingException e) {
+			result = false;
+		} catch (IllegalArgumentException e) {
+			result = false;
+		} catch (IllegalStateException e) {
+			result = false;
+		} catch (IOException e) {
+			result = false;
+		} catch (Exception e) {
+			result = false;
+		}
+
+		return result;
+	}
+
+	/*
+	 * Loads data to RemoteUi object from an xml element
+	 */
+	private void loadData(RemoteUi uiData, Element elem) {
+
+		uiData.setVersion(elem.getAttribute("version"));
+
+		NodeList items = elem.getChildNodes();
+		Node child = null;
+		for (int i = 0; i < items.getLength(); i++) {
+			child = items.item(i);
+			if (child.getNodeType() == Node.ELEMENT_NODE) {
+				Extender ext = new Extender();
+				loadData(ext, (Element) items.item(i));
+				uiData.getChildren().add(ext);
+			}
+		}
+	}
+
+	/*
+	 * Loads data to Extender object from an xml element
+	 */
+	private void loadData(Extender uiData, Element elem) {
+
+		uiData.setName(elem.getAttribute("name"));
+		uiData.setAddress(elem.getAttribute("address"));
+
+	}
+
+	/*
+	 * Loads data to device object from an xml element
+	 */
+	private void loadData(Device uiData, Element elem) {
+		// TODO: Remove this code when implements load uiData section.
+	}
+
+	/*
+	 * Loads data to key object from an xml element
+	 */
+	private void loadData(Key uiData, Element elem) {
+		// TODO: Remove this code when implements load uiData section.
+	}
+
+	/*
+	 * Saves data to an xml element.
+	 */
+	private void saveData(RemoteUi uiData, XmlSerializer serializer)
+			throws IllegalArgumentException, IllegalStateException, IOException {
+		serializer.startTag("", "RemoteUi");
+		serializer.attribute("","version", uiData.getVersion());
+
+		List<Extender> children = uiData.getChildren();
+
+		for (Extender ext : children) {
+			saveData(ext, serializer);
+		}
+
+		serializer.endTag("", "RemoteUi");
+	}
+
+	/*
+	 * Saves data to an xml element.
+	 */
+	private void saveData(Extender ext, XmlSerializer serializer)
+			throws IllegalArgumentException, IllegalStateException, IOException {
+		serializer.startTag("", "Extender");
+		serializer.attribute("","name", ext.getName());
+		serializer.attribute("","address", ext.getAddress());
+
+		List<Device> children = ext.getChildren();
+
+		for (Device dev : children) {
+			// saveData(ext,serializer);
+		}
+
+		serializer.endTag("", "Extender");
+	}
+
+	/*
+	 * Saves data to an xml element.
+	 */
+	private void saveData(Device uiData, Element elem) {
+		// TODO: Remove this code when implements save uiData section.
+	}
+
+	/*
+	 * Saves data to an xml element.
+	 */
+	private void saveData(Key uiData, Element elem) {
+		// TODO: Remove this code when implements save uiData section.
+	}
+}
