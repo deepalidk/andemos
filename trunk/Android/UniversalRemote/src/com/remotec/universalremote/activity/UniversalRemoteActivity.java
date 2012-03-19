@@ -1,20 +1,30 @@
+/*
+ * Copyright 2012 @ Copyright Remotec Technology Ltd., All rights reserved.
+ * 
+ * Author: Walker
+ */
 package com.remotec.universalremote.activity;
 
 
+import com.common.FileManager;
 import com.remotec.universalremote.activity.R;
 import com.remotec.universalremote.activity.R.layout;
+import com.remotec.universalremote.data.RemoteUi;
+import com.remotec.universalremote.persistence.XmlManager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+/*
+ *Display main activity for UI. 
+ */
 public class UniversalRemoteActivity extends Activity {
 	
-	// Debugging 
+	// Debugging Tags 
 	private static final String TAG = "UniversalRemoteActivity";
 	private static final boolean D = false;
-	private static final boolean emulatorTag = false;
 	
     /** Called when the activity is first created. */
     @Override
@@ -37,20 +47,23 @@ public class UniversalRemoteActivity extends Activity {
     	protected Integer doInBackground(Integer... params) {
     		// TODO Auto-generated method stub
 
-            try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//copys the UI XML file to sdcard.
+            FileManager.saveAs(UniversalRemoteActivity.this, R.raw.remote, 
+					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_XML_FILE);
 			
-    		return null;
+            XmlManager xm=new XmlManager();
+            xm.loadData(RemoteUi.getHandle(), RemoteUi.INTERNAL_DATA_DIRECTORY+"/"+RemoteUi.UI_XML_FILE);
+            
+            RemoteUi.getHandle().setVersion("2.0.0");
+            xm.saveData(RemoteUi.getHandle(), RemoteUi.INTERNAL_DATA_DIRECTORY+"/"+RemoteUi.UI_XML_FILE);
+            
+    		return 0;
     	}
 
     	@Override
         protected void onPreExecute() { 		
             mProgressDialog = ProgressDialog.show(UniversalRemoteActivity.this,     
-                    "", "Please wait...", true);
+                    "",getResources().getText(R.string.initial_waiting), true);
         }
 
     	@Override
@@ -62,6 +75,5 @@ public class UniversalRemoteActivity extends Activity {
         protected void onPostExecute(Integer result) {
     		mProgressDialog.dismiss();
         }
-
     }
 }
