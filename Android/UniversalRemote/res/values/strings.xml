@@ -4,5 +4,6 @@
     <string name="hello">Hello World, UniversalRemoteActivity!</string>
     <string name="app_name">UniversalRemote</string>
     <string name="initial_waiting">Please wait...</string>
+    <string name="add_device">Add Device</string>
 
 </resources>
