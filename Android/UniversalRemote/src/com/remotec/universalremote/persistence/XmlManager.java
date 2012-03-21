@@ -149,6 +149,17 @@ public class XmlManager {
 
 		uiData.setName(elem.getAttribute("name"));
 		uiData.setAddress(elem.getAttribute("address"));
+		
+		NodeList items = elem.getChildNodes();
+		Node child = null;
+		for (int i = 0; i < items.getLength(); i++) {
+			child = items.item(i);
+			if (child.getNodeType() == Node.ELEMENT_NODE) {
+				Device dev = new Device();
+				loadData(dev, (Element) items.item(i));
+				uiData.getChildren().add(dev);
+			}
+		}
 
 	}
 
@@ -157,6 +168,8 @@ public class XmlManager {
 	 */
 	private void loadData(Device uiData, Element elem) {
 		// TODO: Remove this code when implements load uiData section.
+		uiData.setName(elem.getAttribute("name"));
+		uiData.setIconName(elem.getAttribute("address"));
 	}
 
 	/*
@@ -195,7 +208,7 @@ public class XmlManager {
 		List<Device> children = ext.getChildren();
 
 		for (Device dev : children) {
-			// saveData(ext,serializer);
+			saveData(dev,serializer);
 		}
 
 		serializer.endTag("", "Extender");
@@ -204,8 +217,18 @@ public class XmlManager {
 	/*
 	 * Saves data to an xml element.
 	 */
-	private void saveData(Device uiData, Element elem) {
-		// TODO: Remove this code when implements save uiData section.
+	private void saveData(Device dev, XmlSerializer serializer) throws IllegalArgumentException, IllegalStateException, IOException {
+		serializer.startTag("", "Device");
+		serializer.attribute("","name", dev.getName());
+		serializer.attribute("","icon_name", dev.getIconName());
+
+		List<Key> children = dev.getChildren();
+
+		for (Key key : children) {
+//			saveData(dev,serializer);
+		}
+
+		serializer.endTag("", "Device");
 	}
 
 	/*

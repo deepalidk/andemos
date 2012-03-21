@@ -14,7 +14,34 @@ import java.util.List;
 public class Device {
               
        private List<Key> mChildren;
-          
+       
+       public List<Key> getChildren(){
+    	   return mChildren;
+       }
+       
+       private String mName;
+       
+       public String getName(){
+    	   return mName;
+       }
+       
+       public void setName(String name){
+    	   mName=name;
+       }
+       
+       /*
+        * the name of icon name
+        */
+       private String mIconName;
+       
+       public String getIconName(){
+    	   return mIconName;
+       }
+       
+       public void setIconName(String picName){
+    	   mIconName=picName;
+       }
+       
        public Device()
        {
     	   mChildren=new ArrayList<Key>();
