@@ -18,6 +18,7 @@ import android.webkit.WebSettings.TextSize;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.AbsoluteLayout;
+import android.widget.LinearLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;

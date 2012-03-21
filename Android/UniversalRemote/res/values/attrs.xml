@@ -4,9 +4,7 @@
         <attr name="left" format="dimension" />   
         <attr name="top" format="dimension" />   
         <attr name="right" format="dimension" />   
-        <attr name="bottom" format="dimension" />   
-    
+        <attr name="bottom" format="dimension" />    
         <attr name="fix_position" format="boolean" />   
-
     </declare-styleable>   
 </resources>
