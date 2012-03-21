@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <!-- Device Botton padding left-->
+    <dimen name="dev_btn_padding_left">45dp</dimen> 
+   <!-- Device Botton padding right-->
+    <dimen name="dev_btn_padding_right">45dp</dimen> 
+   <!-- Device Botton padding top-->
+    <dimen name="dev_btn_padding_top">5dp</dimen> 
+   <!-- Device Botton padding bottom-->
+    <dimen name="dev_btn_padding_bottom">5dp</dimen> 
+  <!--Device Title text view -->
+    <dimen name="dev_title_txt_size">28sp</dimen> 
+  <!--Device Title height -->
+    <dimen name="dev_title_height">74dp</dimen> 
+</resources>

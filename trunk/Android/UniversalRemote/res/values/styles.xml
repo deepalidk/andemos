@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DeviceButtonText">
+        <item name="android:textSize">21.0sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black_text</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="DeviceTitleText">
+        <item name="android:textSize">@dimen/dev_title_txt_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white_text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+</resources>

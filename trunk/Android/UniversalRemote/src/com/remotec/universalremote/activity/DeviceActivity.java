@@ -16,11 +16,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 
 /*
- *Display main activity for UI. 
+ *Displays device for UI. 
  */
-public class UniversalRemoteActivity extends Activity {
+public class DeviceActivity extends Activity {
 	
 	// Debugging Tags 
 	private static final String TAG = "UniversalRemoteActivity";
@@ -30,7 +31,10 @@ public class UniversalRemoteActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);   
+        
+        //remove the tile.
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.device);   
       
         //Initializing data.
         (new InitAppTask()).execute(0);
@@ -48,7 +52,7 @@ public class UniversalRemoteActivity extends Activity {
     		// TODO Auto-generated method stub
 
 			//copys the UI XML file to sdcard.
-            FileManager.saveAs(UniversalRemoteActivity.this, R.raw.remote, 
+            FileManager.saveAs(DeviceActivity.this, R.raw.remote, 
 					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_XML_FILE);
 			
             XmlManager xm=new XmlManager();
@@ -62,7 +66,7 @@ public class UniversalRemoteActivity extends Activity {
 
     	@Override
         protected void onPreExecute() { 		
-            mProgressDialog = ProgressDialog.show(UniversalRemoteActivity.this,     
+            mProgressDialog = ProgressDialog.show(DeviceActivity.this,     
                     "",getResources().getText(R.string.initial_waiting), true);
         }
 
