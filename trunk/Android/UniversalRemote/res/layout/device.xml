@@ -32,6 +32,7 @@
         android:scrollbars="vertical" >
 
         <TableLayout
+            android:id="@id/device_table"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="0,3" >
