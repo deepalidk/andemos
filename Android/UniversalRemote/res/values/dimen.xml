@@ -12,4 +12,9 @@
     <dimen name="dev_title_txt_size">28sp</dimen> 
   <!--Device Title height -->
     <dimen name="dev_title_height">74dp</dimen> 
+    
+   <!--Device Key BottomBar height -->
+    <dimen name="devkey_bottombar_height">78dp</dimen> 
+   <!--Device Key BottomBar height -->
+    <dimen name="devkey_bottombar_btn_width">266dp</dimen> 
 </resources>

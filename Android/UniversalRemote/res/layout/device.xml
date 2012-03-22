@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/dev_title_height"
         android:background="@drawable/title"
-        android:layout_weight="1"
+        android:layout_weight="0"
         android:gravity="center_vertical" >
         <TextView
             android:id="@+id/title_left_text"
@@ -73,12 +73,10 @@
             </TableRow>
 
             <TableRow>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent" />
-
                 <com.remotec.universalremote.activity.component.DeviceButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -112,12 +110,10 @@
             </TableRow>
 
             <TableRow>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent" />
-
                 <com.remotec.universalremote.activity.component.DeviceButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -130,7 +126,6 @@
                     android:text="@string/add_device"
                     android:visibility="invisible"
                     android:textAppearance="@style/DeviceButtonText" />
-
                 <com.remotec.universalremote.activity.component.DeviceButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -142,20 +137,17 @@
                     android:paddingBottom="@dimen/dev_btn_padding_bottom"
                     android:text="@string/add_device"
                     android:textAppearance="@style/DeviceButtonText" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent" />
             </TableRow>
-
+            
             <TableRow>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent" />
-
                 <com.remotec.universalremote.activity.component.DeviceButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -168,7 +160,6 @@
                     android:text="@string/add_device"
                     android:visibility="invisible"
                     android:textAppearance="@style/DeviceButtonText" />
-
                 <com.remotec.universalremote.activity.component.DeviceButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -181,7 +172,6 @@
                     android:text="@string/add_device"
                     android:visibility="invisible"
                     android:textAppearance="@style/DeviceButtonText" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

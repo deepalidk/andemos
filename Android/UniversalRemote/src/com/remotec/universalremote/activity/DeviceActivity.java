@@ -181,7 +181,13 @@ public class DeviceActivity extends Activity {
 			
 			//identifies add device button or device button
 			if(devButton.getDevice()!=null){
-				
+				/* crate a intent object, then call the device activity class */         
+				Intent devKeyIntent = new Intent(DeviceActivity.this, DeviceKeyActivity.class);
+			    Bundle bdl=new Bundle();
+			    bdl.putSerializable(DeviceKeyActivity.DEVICE_OBJECT, devButton.getDevice());
+			    devKeyIntent.putExtras(bdl);
+				startActivity(devKeyIntent);            
+
 			}else{
 				Device dev=new Device();
 				dev.setIconName("icon_device_tv_theather2");

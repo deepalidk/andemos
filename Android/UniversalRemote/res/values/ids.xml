@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- device layout -->
     <item type="id" name="device_title"></item>
     <item type="id" name="device_ScrollView"/>
     <item type="id" name="device_table"/>
+    
+    <!-- device key layout -->
+    <item type="id" name="devicekey_title"></item>
+    <item type="id" name="devicekey_title_left_text"></item>
+    <item type="id" name="btn_bottombar_control"></item>
+    <item type="id" name="btn_bottombar_menu"></item>
+    <item type="id" name="btn_bottombar_media"></item>
 </resources>
