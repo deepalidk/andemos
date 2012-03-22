@@ -21,8 +21,10 @@ import com.remotec.universalremote.persistence.XmlManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
@@ -57,12 +59,32 @@ public class DeviceActivity extends Activity {
      * inits the data for device activity
      */
     private void initData(){
+    	
+    	//we already load the device object infos now,
+    	//but the resId of icon can only access during run time.
+        //get the resId of icon with the icon name, and set to device object.
+    	initDeviceIconId();
+    	
     	mDevButtonList=new ArrayList<DeviceButton>();
     	
         ViewGroup tbLayout=(ViewGroup)findViewById(R.id.device_table);
         
         findDeviceButtons(tbLayout,mDevButtonList);
     	
+    }
+    
+    /*
+     * Inits the Device object Icon res id.
+     */
+    private void initDeviceIconId()
+    {	    	
+    	List<Device> devList=RemoteUi.getHandle().getChildren();
+    	
+    	for(Device dev:devList){
+    	   int resId=getResources().getIdentifier(dev.getIconName(), "drawable",
+    			   getApplicationInfo().packageName);
+    	   dev.setIconResId(resId);
+    	}
     }
     
     /*
@@ -74,6 +96,7 @@ public class DeviceActivity extends Activity {
         	View v=vg.getChildAt(i);
         	if(v instanceof DeviceButton){
         		devList.add((DeviceButton) v);
+        		v.setOnClickListener(mDevButtonOnClickListener);
         	}
         	else if(v instanceof ViewGroup)
         	{
@@ -89,17 +112,17 @@ public class DeviceActivity extends Activity {
     	
     	if(RemoteUi.getHandle().getChildren().size()>0)
     	{
-    		Extender ext=RemoteUi.getHandle().getChildren().get(0);
+    		List<Device> devList=RemoteUi.getHandle().getChildren();
     		
-    		for(int i=0;i<ext.getChildren().size();i++)
+    		for(int i=0;i<devList.size();i++)
     		{
-    			displayDevice(ext.getChildren().get(i),mDevButtonList.get(i));
+    			displayDevice(devList.get(i),mDevButtonList.get(i));
     		}
            
     		//add device button
-    		mDevButtonList.get(ext.getChildren().size()).setText(R.string.add_device);
+    		displayAddDevice(mDevButtonList.get(devList.size()));
     		
-    		for(int i=ext.getChildren().size()+1;i<mDevButtonList.size();i++)
+    		for(int i=devList.size()+1;i<mDevButtonList.size();i++)
     		{
     			mDevButtonList.get(i).setVisibility(View.INVISIBLE);
     		}
@@ -110,17 +133,67 @@ public class DeviceActivity extends Activity {
     		{
     			mDevButtonList.get(i).setVisibility(View.INVISIBLE);
     		}
-           
-    		mDevButtonList.get(0).setText(R.string.add_device);
+    		
+    		//add device button
+    		displayAddDevice(mDevButtonList.get(0));
     	}
     }
     
-    private void displayDevice(Device dev,DeviceButton devButton)
-    {
-    	devButton.setTag(dev);
+    /*
+     * displays a device button with device button object information.
+     */
+    private void displayDevice(Device dev,DeviceButton devButton){
+    	devButton.setDevice(dev);
+    	devButton.setVisibility(View.VISIBLE);
     	devButton.setText(dev.getName());
+    	setDevButtonIcon(devButton,dev.getIconResId());	
+    	
     }
+    
+    /*
+     * displays add device button.
+     */
+    private void displayAddDevice(DeviceButton devButton){
+    	devButton.setDevice(null);
+    	devButton.setVisibility(View.VISIBLE);
+    	devButton.setText(R.string.add_device);
+    	setDevButtonIcon(devButton,R.drawable.img_add);	
+    }
+    
+    /*
+     * Sets the device button Icon
+     */
+    private void setDevButtonIcon(DeviceButton devButton,int resId)
+    {
+    	Drawable topD=this.getResources().getDrawable(resId);
+    	if(topD!=null)
+    	{
+	    	topD.setBounds(0, 0, topD.getMinimumWidth(), topD.getMinimumHeight());
+	    	devButton.setCompoundDrawables(null, topD, null, null);	
+    	}
+    }
+    
+    private OnClickListener mDevButtonOnClickListener=new OnClickListener(){
 
+		@Override
+		public void onClick(View v) {
+			DeviceButton devButton=(DeviceButton)v;
+			
+			//identifies add device button or device button
+			if(devButton.getDevice()!=null){
+				
+			}else{
+				Device dev=new Device();
+				dev.setIconName("icon_device_tv_theather2");
+				dev.setName("Theather2");
+				RemoteUi.getHandle().getChildren().add(dev);
+				initDeviceIconId();
+				displayDevices();
+			}
+						
+		}
+    	
+    };
     
     /*
      * AsyncTask for App Initializing.
@@ -133,7 +206,6 @@ public class DeviceActivity extends Activity {
 		@Override
     	protected Integer doInBackground(Integer... params) {
     		// TODO Auto-generated method stub
-
 			//copys the UI XML file to sdcard.
             FileManager.saveAs(DeviceActivity.this, R.raw.remote, 
 					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_XML_FILE);
@@ -141,17 +213,7 @@ public class DeviceActivity extends Activity {
             XmlManager xm=new XmlManager();
             xm.loadData(RemoteUi.getHandle(), RemoteUi.INTERNAL_DATA_DIRECTORY+"/"+RemoteUi.UI_XML_FILE);
             
-            RemoteUi.getHandle().setVersion("2.0.0");
-            xm.saveData(RemoteUi.getHandle(), RemoteUi.INTERNAL_DATA_DIRECTORY+"/"+RemoteUi.UI_XML_FILE);
-            
-            initData();
-            
-            try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            initData();      
               
     		return 0;
     	}

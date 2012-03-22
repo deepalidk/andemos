@@ -42,6 +42,19 @@ public class Device {
     	   mIconName=picName;
        }
        
+       /*
+        * the res id of Icon
+        */
+       private int mIconResId;
+       
+       public int getIconResId(){
+    	   return mIconResId;
+       }
+       
+       public void setIconResId(int resId){
+    	   mIconResId=resId;
+       }
+       
        public Device()
        {
     	   mChildren=new ArrayList<Key>();
