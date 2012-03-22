@@ -37,12 +37,8 @@ public class Extender {
     	   mAddress=address;
        }
        
-       public List<Device> getChildren(){
-    	   return mChildren;
-       }
        
        public Extender()
        {
-    	   mChildren=new ArrayList<Device>();
        }
 }

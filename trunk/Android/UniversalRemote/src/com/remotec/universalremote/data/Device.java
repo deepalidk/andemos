@@ -5,15 +5,18 @@
  */
 package com.remotec.universalremote.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /*
  * Holds the data needed to run the UI.
  */
-public class Device {
+public class Device implements Serializable{
               
-       private List<Key> mChildren;
+	private static final long serialVersionUID = 1L;
+	
+	private List<Key> mChildren;
        
        public List<Key> getChildren(){
     	   return mChildren;
