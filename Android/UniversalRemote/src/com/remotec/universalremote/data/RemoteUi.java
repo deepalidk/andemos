@@ -66,12 +66,7 @@ public class RemoteUi {
        {
     	   return EMULATOR_TAG;
        }
-       
-       /*
-        * Holds the children objects.
-        */
-       private List<Extender> mChildren;
-       
+             
        private String mVersion;
        
        public String getVersion(){
@@ -82,12 +77,27 @@ public class RemoteUi {
     	   mVersion=ver;
        }
        
-       public List<Extender> getChildren(){
+       /*
+        * Holds the Extender objects.
+        */
+       private List<Extender> mExtenderList;
+       
+       public List<Extender> getExtenderList(){
+    	   return mExtenderList;
+       }
+       
+       /*
+        * Holds the children objects.
+        */
+       private List<Device> mChildren;
+       
+       public List<Device> getChildren(){
     	   return mChildren;
        }
           
        private RemoteUi()
        {
-    	   mChildren=new ArrayList<Extender>();
+    	   mChildren=new ArrayList<Device>();
+    	   mExtenderList=new ArrayList<Extender>();
        }
 }

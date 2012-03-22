@@ -135,9 +135,18 @@ public class XmlManager {
 		for (int i = 0; i < items.getLength(); i++) {
 			child = items.item(i);
 			if (child.getNodeType() == Node.ELEMENT_NODE) {
-				Extender ext = new Extender();
-				loadData(ext, (Element) items.item(i));
-				uiData.getChildren().add(ext);
+			    Element e= (Element) items.item(i);
+			    if(e.getNodeName().equals("Extender")){
+					Extender ext = new Extender();
+					loadData(ext, e);
+					uiData.getExtenderList().add(ext);
+			    }
+			    else if(e.getNodeName().equals("Device")){
+			    	Device dev = new Device();
+					loadData(dev, e);
+					uiData.getChildren().add(dev);
+			    }
+			   
 			}
 		}
 	}
@@ -149,17 +158,6 @@ public class XmlManager {
 
 		uiData.setName(elem.getAttribute("name"));
 		uiData.setAddress(elem.getAttribute("address"));
-		
-		NodeList items = elem.getChildNodes();
-		Node child = null;
-		for (int i = 0; i < items.getLength(); i++) {
-			child = items.item(i);
-			if (child.getNodeType() == Node.ELEMENT_NODE) {
-				Device dev = new Device();
-				loadData(dev, (Element) items.item(i));
-				uiData.getChildren().add(dev);
-			}
-		}
 
 	}
 
@@ -169,7 +167,7 @@ public class XmlManager {
 	private void loadData(Device uiData, Element elem) {
 		// TODO: Remove this code when implements load uiData section.
 		uiData.setName(elem.getAttribute("name"));
-		uiData.setIconName(elem.getAttribute("address"));
+		uiData.setIconName(elem.getAttribute("icon_name"));
 	}
 
 	/*
@@ -187,10 +185,16 @@ public class XmlManager {
 		serializer.startTag("", "RemoteUi");
 		serializer.attribute("","version", uiData.getVersion());
 
-		List<Extender> children = uiData.getChildren();
+		List<Extender> extList = uiData.getExtenderList();
 
-		for (Extender ext : children) {
+		for (Extender ext : extList) {
 			saveData(ext, serializer);
+		}
+		
+		List<Device> devList = uiData.getChildren();
+
+		for (Device dev : devList) {
+			saveData(dev, serializer);
 		}
 
 		serializer.endTag("", "RemoteUi");
@@ -204,12 +208,6 @@ public class XmlManager {
 		serializer.startTag("", "Extender");
 		serializer.attribute("","name", ext.getName());
 		serializer.attribute("","address", ext.getAddress());
-
-		List<Device> children = ext.getChildren();
-
-		for (Device dev : children) {
-			saveData(dev,serializer);
-		}
 
 		serializer.endTag("", "Extender");
 	}

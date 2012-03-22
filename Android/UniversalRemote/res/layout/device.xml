@@ -45,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_device_background"
-                    android:drawableTop="@drawable/icon_device_tv"
+                    android:drawableTop="@drawable/img_add"
                     android:paddingLeft="@dimen/dev_btn_padding_left"
                     android:paddingRight="@dimen/dev_btn_padding_right"
                     android:paddingTop="@dimen/dev_btn_padding_top"
@@ -63,6 +63,7 @@
                     android:paddingTop="@dimen/dev_btn_padding_top"
                     android:paddingBottom="@dimen/dev_btn_padding_bottom"
                     android:text="@string/add_device"
+                    android:visibility="invisible"
                     android:textAppearance="@style/DeviceButtonText" />
 
                 <TextView
@@ -88,6 +89,46 @@
                     android:paddingTop="@dimen/dev_btn_padding_top"
                     android:paddingBottom="@dimen/dev_btn_padding_bottom"
                     android:text="@string/add_device"
+                    android:visibility="invisible"
+                    android:textAppearance="@style/DeviceButtonText" />
+
+                <com.remotec.universalremote.activity.component.DeviceButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_device_background"
+                    android:drawableTop="@drawable/icon_device_tv"
+                    android:paddingLeft="@dimen/dev_btn_padding_left"
+                    android:paddingRight="@dimen/dev_btn_padding_right"
+                    android:paddingTop="@dimen/dev_btn_padding_top"
+                    android:paddingBottom="@dimen/dev_btn_padding_bottom"
+                    android:text="@string/add_device"
+                    android:visibility="invisible"
+                    android:textAppearance="@style/DeviceButtonText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent" />
+
+                <com.remotec.universalremote.activity.component.DeviceButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_device_background"
+                    android:drawableTop="@drawable/icon_device_tv"
+                    android:paddingLeft="@dimen/dev_btn_padding_left"
+                    android:paddingRight="@dimen/dev_btn_padding_right"
+                    android:paddingTop="@dimen/dev_btn_padding_top"
+                    android:paddingBottom="@dimen/dev_btn_padding_bottom"
+                    android:text="@string/add_device"
+                    android:visibility="invisible"
                     android:textAppearance="@style/DeviceButtonText" />
 
                 <com.remotec.universalremote.activity.component.DeviceButton
@@ -125,43 +166,7 @@
                     android:paddingTop="@dimen/dev_btn_padding_top"
                     android:paddingBottom="@dimen/dev_btn_padding_bottom"
                     android:text="@string/add_device"
-                    android:textAppearance="@style/DeviceButtonText" />
-
-                <com.remotec.universalremote.activity.component.DeviceButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_device_background"
-                    android:drawableTop="@drawable/icon_device_tv"
-                    android:paddingLeft="@dimen/dev_btn_padding_left"
-                    android:paddingRight="@dimen/dev_btn_padding_right"
-                    android:paddingTop="@dimen/dev_btn_padding_top"
-                    android:paddingBottom="@dimen/dev_btn_padding_bottom"
-                    android:text="@string/add_device"
-                    android:textAppearance="@style/DeviceButtonText" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent" />
-
-                <com.remotec.universalremote.activity.component.DeviceButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_device_background"
-                    android:drawableTop="@drawable/icon_device_tv"
-                    android:paddingLeft="@dimen/dev_btn_padding_left"
-                    android:paddingRight="@dimen/dev_btn_padding_right"
-                    android:paddingTop="@dimen/dev_btn_padding_top"
-                    android:paddingBottom="@dimen/dev_btn_padding_bottom"
-                    android:text="@string/add_device"
+                    android:visibility="invisible"
                     android:textAppearance="@style/DeviceButtonText" />
 
                 <com.remotec.universalremote.activity.component.DeviceButton
@@ -174,6 +179,7 @@
                     android:paddingTop="@dimen/dev_btn_padding_top"
                     android:paddingBottom="@dimen/dev_btn_padding_bottom"
                     android:text="@string/add_device"
+                    android:visibility="invisible"
                     android:textAppearance="@style/DeviceButtonText" />
 
                 <TextView
