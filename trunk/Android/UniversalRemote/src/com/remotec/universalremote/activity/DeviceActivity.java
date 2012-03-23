@@ -52,7 +52,8 @@ public class DeviceActivity extends Activity {
        
         //Initializing data.
         InitAppTask initor= new InitAppTask();
-        initor.execute(0);           
+        initor.execute(0);    
+    
     }
     
     /*
@@ -67,9 +68,9 @@ public class DeviceActivity extends Activity {
     	
     	mDevButtonList=new ArrayList<DeviceButton>();
     	
-        ViewGroup tbLayout=(ViewGroup)findViewById(R.id.device_table);
+        ViewGroup tbLayout=(ViewGroup)findViewById(R.id.device_table);        
         
-        findDeviceButtons(tbLayout,mDevButtonList);
+        findButtons(tbLayout,mDevButtonList,mDevButtonOnClickListener);
     	
     }
     
@@ -87,20 +88,19 @@ public class DeviceActivity extends Activity {
     	}
     }
     
-    /*
-     * finds all the device buttons in the layout.
-     */
-    private void findDeviceButtons(ViewGroup vg,List<DeviceButton> devList)
-    {
+  
+	private void findButtons(ViewGroup vg, List<DeviceButton> bList,OnClickListener listener) {
+    	
     	for(int i=0;i<vg.getChildCount();i++){
         	View v=vg.getChildAt(i);
-        	if(v instanceof DeviceButton){
-        		devList.add((DeviceButton) v);
-        		v.setOnClickListener(mDevButtonOnClickListener);
+            
+        	if( v instanceof DeviceButton){
+        		bList.add((DeviceButton)v);
+        		v.setOnClickListener(listener);
         	}
         	else if(v instanceof ViewGroup)
         	{
-        		findDeviceButtons((ViewGroup) v,devList);
+        		findButtons((ViewGroup) v,bList,listener);
         	}
         }
     }
