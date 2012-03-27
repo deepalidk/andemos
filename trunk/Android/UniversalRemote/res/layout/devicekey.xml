@@ -6,7 +6,6 @@
     android:orientation="vertical" >
 
     <!-- Device title Bar -->
-
     <RelativeLayout
         android:id="@id/devicekey_title"
         android:layout_width="fill_parent"

@@ -34,6 +34,7 @@ import android.widget.LinearLayout;
  */
 public class DeviceActivity extends Activity {
 	
+	private static final int REQUEST_ADD_DEVICE = 1;
 	// Debugging Tags 
 	private static final String TAG = "UniversalRemoteActivity";
 	private static final boolean D = false;
@@ -146,8 +147,7 @@ public class DeviceActivity extends Activity {
     	devButton.setDevice(dev);
     	devButton.setVisibility(View.VISIBLE);
     	devButton.setText(dev.getName());
-    	setDevButtonIcon(devButton,dev.getIconResId());	
-    	
+    	setDevButtonIcon(devButton,dev.getIconResId());	 	
     }
     
     /*
@@ -189,12 +189,14 @@ public class DeviceActivity extends Activity {
 				startActivity(devKeyIntent);            
 
 			}else{
-				Device dev=new Device();
-				dev.setIconName("icon_device_tv_theather2");
-				dev.setName("Theather2");
-				RemoteUi.getHandle().getChildren().add(dev);
-				initDeviceIconId();
-				displayDevices();
+//				Device dev=new Device();
+//				dev.setIconName("icon_device_tv_theather2");
+//				dev.setName("Theather2");
+//				RemoteUi.getHandle().getChildren().add(dev);
+//				initDeviceIconId();
+//				displayDevices();
+				Intent addDeviceIntent = new Intent(DeviceActivity.this, AddDeviceActivity.class);
+				startActivityForResult(addDeviceIntent, REQUEST_ADD_DEVICE);
 			}
 						
 		}
@@ -211,7 +213,7 @@ public class DeviceActivity extends Activity {
 
 		@Override
     	protected Integer doInBackground(Integer... params) {
-    		// TODO Auto-generated method stub
+
 			//copys the UI XML file to sdcard.
             FileManager.saveAs(DeviceActivity.this, R.raw.remote, 
 					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_XML_FILE);
