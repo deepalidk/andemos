@@ -3,7 +3,13 @@
     <style name="DeviceButtonText">
         <item name="android:textSize">21.0sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/black_text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/basic_white</item>
+    </style>
+    <style name="DeviceButton">
+        <item name="android:textSize">21.0sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white_text</item>
         <item name="android:singleLine">true</item>
     </style>
     <style name="DeviceTitleText">
@@ -18,5 +24,46 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@drawable/button_font_color</item>
         <item name="android:singleLine">true</item>
+    </style>
+     <style name="Dialog_TextView">
+        <item name="android:textSize">28.0sp</item>
+        <item name="android:textColor">@color/white_text</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="spiner_item_textview">
+        <item name="android:textSize">28.0sp</item>
+        <item name="android:textColor">@color/white_text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@android:color/black</item>
+    </style>
+    
+    <style name="spiner_textview">
+        <item name="android:textSize">28.0sp</item>
+        <item name="android:textColor">@color/white_text</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    
+    <style name="WizardButton">
+        <item name="android:textSize">21.0dip</item>
+        <item name="android:layout_width">160.0dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/basic_white</item>
+    </style>
+    
+    <style name="WizardFooter">
+        <item name="android:background">@color/settings_footer_base</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">70.0dip</item>
+    </style>
+    
+    <style name="WizardText">
+        <item name="android:textSize">21.0dip</item>
+        <item name="android:textColor">@color/basic_white</item>
+        <item name="android:background">@color/settings_footer_base</item>
+    </style>
+    <style name="WizardLabel">
+        <item name="android:textSize">21.0dip</item>
+        <item name="android:textColor">@color/basic_white</item>
     </style>
 </resources>

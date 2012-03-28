@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_device_background"
                     android:drawableTop="@drawable/icon_device_tv"
-                                        android:paddingLeft="@dimen/dev_btn_padding_left"
+                    android:paddingLeft="@dimen/dev_btn_padding_left"
                     android:paddingRight="@dimen/dev_btn_padding_right"
                     android:paddingTop="@dimen/dev_btn_padding_top"
                     android:paddingBottom="@dimen/dev_btn_padding_bottom"

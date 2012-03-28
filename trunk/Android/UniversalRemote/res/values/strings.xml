@@ -32,6 +32,12 @@
     <string name="key_sleep">Sleep</string> 
     <string name="key_br">BR</string>
     
-    <string name="add_device_device">Add Device</string>
+    <string name="add_device_comment">Select the category and manufacturer of your device.</string>
+    
+    <string name="label_category">Category:</string>
+    
+    <string name="label_maufacturer">Maufacturer:</string>
+    
+    <string name="laybel_model">Model:</string>
   
 </resources>
