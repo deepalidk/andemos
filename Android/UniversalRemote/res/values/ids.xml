@@ -15,4 +15,17 @@
     
     <!-- add device layout -->
     <item type="id" name="add_device_title"></item>
+    <item type="id" name="textview_category"></item>
+    <item type="id" name="spiner_category"></item>
+    <item type="id" name="textview_manufacturer"></item>
+    <item type="id" name="spiner_manufacturer"></item>
+    <item type="id" name="textview_model"></item>
+    <item type="id" name="spiner_model"></item>
+    <item type="id" name="textview_add_device_commnet"></item>
+    <item type="id" name="footer"></item>
+    <item type="id" name="btn_footer_cancel"></item>
+    <item type="id" name="btn_footer_next"></item>
+    <item type="id" name="btn_footer_back"></item>
+    <item type="id" name="select_ircode"></item>
+    <item type="id" name="device_info"></item>
 </resources>

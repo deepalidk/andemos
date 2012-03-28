@@ -46,5 +46,18 @@
     
     <!-- Key Botton height -->
     <dimen name="key_br_height">150dp</dimen>
+    
+    <!-- Add device wizard -->
+    <dimen name="center_layout_width">480dp</dimen>
+    <dimen name="spiner_width">300dp</dimen>
+    <dimen name="line_margin">16dp</dimen>
+    <dimen name="line_height">71dp</dimen>
+    <dimen name="label_width">204dp</dimen>
+    <dimen name="textview_width">500dp</dimen>
+    <dimen name="imageview_width">256.0dp</dimen>
+    <dimen name="imageview_height">160dp</dimen>
+    <dimen name="separator_width">703dp</dimen>
+    <dimen name="testbtn_width">600.0dp</dimen>
+    <dimen name="testbtn_text_size">21sp</dimen>
 
 </resources>

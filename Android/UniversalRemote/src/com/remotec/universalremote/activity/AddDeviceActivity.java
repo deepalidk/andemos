@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -42,7 +43,9 @@ public class AddDeviceActivity extends Activity {
 	 
 	private List<DeviceButton> mDevButtonList=null;
 	
-    private Spinner spinner2;       
+    private Spinner mSpinerCategory;    
+    private Spinner mSpinerManufacturer;   
+    private Spinner mSpinerModel;   
     private ArrayAdapter adapter2;  
 	
     /** Called when the activity is first created. */
@@ -54,24 +57,29 @@ public class AddDeviceActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.add_device_wizard);
         
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         
-        spinner2 = (Spinner) findViewById(R.id.Spinner01);     
-//      view2 = (TextView) findViewById(R.id.spinnerText02);       
+        mSpinerCategory = (Spinner) findViewById(R.id.spiner_category);     
+        mSpinerManufacturer = (Spinner) findViewById(R.id.spiner_manufacturer);   
+        mSpinerModel = (Spinner) findViewById(R.id.spiner_model);   
+        //view2 = (TextView) findViewById(R.id.spinnerText02);       
       
         //将可选内容与ArrayAdapter连接起来        
-        adapter2 = ArrayAdapter.createFromResource(this, R.array.dev_category, R.layout.irremote_spinner_item);       
+        adapter2 = ArrayAdapter.createFromResource(this, R.array.dev_category, R.layout.irremote_spinner);       
       
         //设置下拉列表的风格         
         adapter2.setDropDownViewResource(R.layout.irremote_spinner_item);       
       
         //将adapter2 添加到spinner中        
-        spinner2.setAdapter(adapter2);       
+        mSpinerCategory.setAdapter(adapter2);   
+        mSpinerManufacturer.setAdapter(adapter2);
+        mSpinerModel.setAdapter(adapter2);
+        
       
-//添加事件Spinner事件监听          
-//      spinner2.setOnItemSelectedListener(new SpinnerXMLSelectedListener());       
-      
-        //设置默认值        
-        spinner2.setVisibility(View.VISIBLE);       
+		//添加事件Spinner事件监听          
+		//spinner2.setOnItemSelectedListener(new SpinnerXMLSelectedListener());       
+        
 
     }
 }
