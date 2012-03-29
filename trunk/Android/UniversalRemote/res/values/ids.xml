@@ -1,31 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- device layout -->
-    <item type="id" name="device_title"></item>
-    <item type="id" name="device_ScrollView"/>
-    <item type="id" name="device_table"/>
-    
+    <item name="device_title" type="id"></item>
+    <item name="device_ScrollView" type="id"/>
+    <item name="device_table" type="id"/>
+
     <!-- device key layout -->
-    <item type="id" name="devicekey_title"></item>
-    <item type="id" name="devicekey_title_left_text"></item>
-    <item type="id" name="btn_bottombar_control"></item>
-    <item type="id" name="btn_bottombar_menu"></item>
-    <item type="id" name="btn_bottombar_media"></item>
-    
-    
+    <item name="devicekey_title" type="id"></item>
+    <item name="devicekey_title_left_text" type="id"></item>
+    <item name="btn_bottombar_control" type="id"></item>
+    <item name="btn_bottombar_menu" type="id"></item>
+    <item name="btn_bottombar_media" type="id"></item>
+
     <!-- add device layout -->
-    <item type="id" name="add_device_title"></item>
-    <item type="id" name="textview_category"></item>
-    <item type="id" name="spiner_category"></item>
-    <item type="id" name="textview_manufacturer"></item>
-    <item type="id" name="spiner_manufacturer"></item>
-    <item type="id" name="textview_model"></item>
-    <item type="id" name="spiner_model"></item>
-    <item type="id" name="textview_add_device_commnet"></item>
-    <item type="id" name="footer"></item>
-    <item type="id" name="btn_footer_cancel"></item>
-    <item type="id" name="btn_footer_next"></item>
-    <item type="id" name="btn_footer_back"></item>
-    <item type="id" name="select_ircode"></item>
-    <item type="id" name="device_info"></item>
+    <item name="add_device_title" type="id"></item>
+    <item name="textview_category" type="id"></item>
+    <item name="spiner_category" type="id"></item>
+    <item name="textview_manufacturer" type="id"></item>
+    <item name="spiner_manufacturer" type="id"></item>
+    <item name="textview_model" type="id"></item>
+    <item name="spiner_model" type="id"></item>
+    <item name="textview_add_device_commnet" type="id"></item>
+    <item name="footer" type="id"></item>
+    <item name="btn_footer_cancel" type="id"></item>
+    <item name="btn_footer_next" type="id"></item>
+    <item name="btn_footer_finish" type="id"></item>
+    <item name="btn_footer_back" type="id"></item>
+    <item name="btn_test" type="id"></item>
+    <item name="select_ircode" type="id"></item>
+    <item name="device_info" type="id"></item>
+    <item name="separator0" type="id"></item>
+    <item name="separator1" type="id"></item>
+    <item name="separator2" type="id"></item>
+    <item name="separator3" type="id"></item>
+    <item name="separator4" type="id"></item>
+    <item name="separator5" type="id"></item>
+    <item name="device_img" type="id"></item>
+    <item name="name_layout" type="id"></item>
+    <item name="name_label" type="id"></item>
+    <item name="name_edit" type="id"></item>
+    <item name="category_layout" type="id"></item>
+    <item name="category_label" type="id"></item>
+    <item name="category_textview" type="id"></item>
+    <item name="manufacturer_layout" type="id"></item>
+    <item name="manufacturer_label" type="id"></item>
+    <item name="manufacturer_textview" type="id"></item>
+    <item name="model_layout" type="id"></item>
+    <item name="model_label" type="id"></item>
+    <item name="model_textview" type="id"></item>
+
 </resources>

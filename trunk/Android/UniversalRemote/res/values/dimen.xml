@@ -59,5 +59,9 @@
     <dimen name="separator_width">703dp</dimen>
     <dimen name="testbtn_width">600.0dp</dimen>
     <dimen name="testbtn_text_size">21sp</dimen>
+    <dimen name="cancel_btn_left_margin">80.0dp</dimen>
+    <dimen name="next_btn_right_margin">80.0dp</dimen>
+    <dimen name="next_btn_finish_margin">80.0dp</dimen> 
+    <dimen name="back_btn_right_margin">30.0dp</dimen>
 
 </resources>

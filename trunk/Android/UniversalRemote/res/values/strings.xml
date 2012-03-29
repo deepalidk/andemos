@@ -39,5 +39,23 @@
     <string name="label_maufacturer">Maufacturer:</string>
     
     <string name="laybel_model">Model:</string>
+    
+    <string name="name_label_text">Name:</string>
+    
+    <string name="category_label_text">TV</string>
+    
+    <string name="manufacturer_label_text">Remotec</string>
+    
+    <string name="model_label_text">Model 1</string>
+    
+    <string name="btn_test">Remote control test</string>
+    
+    <string name="btn_cancel">Cancel</string>
+    
+    <string name="btn_next">Next</string>
+    
+    <string name="btn_finish">Finish</string>
+    
+    <string name="btn_back">Back</string>
   
 </resources>
