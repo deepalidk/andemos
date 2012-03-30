@@ -6,6 +6,7 @@
 package com.remotec.universalremote.activity;
 
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,6 @@ public class DeviceActivity extends Activity {
         //remove the tile.
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.device);   
-      
        
         //Initializing data.
         InitAppTask initor= new InitAppTask();
