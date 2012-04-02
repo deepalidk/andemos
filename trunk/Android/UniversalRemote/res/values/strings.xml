@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- system info -->
+    <string name="package_name">remotec.BluetoothRemote.activities</string>
+    <!--     init values of new device -->
+    <string name="dev_icon">icon_device_tv</string>
+    <string name="dev_name">TV</string>
+    <string name="dev_category">TV</string>
+    <string name="dev_manufacturer">Remotec</string>
+    <string name="dev_codenum">301</string>
+    
     <string name="hello">Hello World, UniversalRemoteActivity!</string>
     <string name="app_name">Universal Remote</string>
     <string name="initial_waiting">Please wait...</string>

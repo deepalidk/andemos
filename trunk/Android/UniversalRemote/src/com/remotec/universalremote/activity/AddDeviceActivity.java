@@ -19,9 +19,14 @@ import com.remotec.universalremote.persistence.XmlManager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -34,6 +39,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 /*
  *Displays device for UI.
@@ -65,13 +72,22 @@ public class AddDeviceActivity extends Activity {
 	private EditText mDeviceName; // name edittext
 
 	private ImageView mDeviceIcon;
+	
+	private TextView mCategory;
+	private TextView mManufacturer;
+	private TextView mCodeNum;
 
 	enum eCurrentPage {
 		eSelectDevice, eDeviceInfo
 	};
 
+	/*
+	 * marks the current page.
+	 */
 	private eCurrentPage mCurPage;
 
+	private Device mDevice;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -89,9 +105,11 @@ public class AddDeviceActivity extends Activity {
 		initControls();
 
 		mCurPage = eCurrentPage.eSelectDevice;
-
-		// 添加事件Spinner事件监听
-		// spinner2.setOnItemSelectedListener(new SpinnerXMLSelectedListener());
+		
+		mDevice=Device.createDevice(this);
+		
+		updateControls();
+        
 	}
 
 	void initCurrentPage(eCurrentPage curPage) {
@@ -140,6 +158,10 @@ public class AddDeviceActivity extends Activity {
 		mBtnTest.setOnClickListener(mOnTestListener);
 
 		mDeviceName = (EditText) findViewById(R.id.name_edit);
+		mDeviceName.addTextChangedListener(mDeviceNameWatcher);
+		mCategory=(TextView)findViewById(R.id.category_textview);
+		mManufacturer=(TextView)findViewById(R.id.manufacturer_textview);
+		mCodeNum=(TextView)findViewById(R.id.model_textview);
 
 		mDeviceIcon = (ImageView) findViewById(R.id.device_img);
 		mDeviceIcon.setOnClickListener(mOnIconListener);
@@ -227,5 +249,77 @@ public class AddDeviceActivity extends Activity {
 			startActivityForResult(addDeviceIntent, REQUEST_SELECT_ICON);
 		}
 	};
+	
+	/*
+	 * Catch the text change event.
+	 */
+	private TextWatcher mDeviceNameWatcher = new TextWatcher() {
+		public void afterTextChanged(Editable s) {
+			mDevice.setName(s.toString());
+		}
+
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			
+		}
+
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+             
+
+		}
+	};
+	
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+	 */
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (D)
+			Log.d(TAG, "onActivityResult " + resultCode);
+		switch (requestCode) {
+		case REQUEST_SELECT_ICON:
+			Integer resId=data.getIntExtra(SelectIconDialog.IMAGE_RES_ID, -1);
+			//the resId is the small icon picture id. now we change it to the large icon id.
+				
+			//set res id.
+			mDevice.setIconResId(getLargeIconId(resId,this));
+			//set res name.
+			mDevice.setIconName(this.getResources().getResourceName(mDevice.getIconResId()));
+			
+			updateControls();
+			break;
+		}
+	}
+	
+	/*
+	 * updates the controls
+	 */
+	void updateControls()
+	{
+		mDeviceIcon.setImageResource(mDevice.getIconResId());
+		mDeviceName.setText(mDevice.getName());
+		mCategory.setText(mDevice.getDeviceType());
+		mManufacturer.setText(mDevice.getManufacturer());
+		mCodeNum.setText(mDevice.getIrCode()+"");
+	}
+	
+	/*
+	 * the device picture has a large form (picturename.png) and a small form (picturename_s.png)
+	 * we use the small icon id to get the large icon id.
+	 */
+	public static int getLargeIconId(int resId,Context context)
+	{
+		int result=0;
+		
+		String pictureName=context.getResources().getResourceName(resId);
+		
+		pictureName=pictureName.substring(0,pictureName.length()-2);
+	    
+		result=context.getResources().getIdentifier(pictureName, "drawable",
+				context.getApplicationInfo().packageName);
+		
+		return result;
+	}
 
 }

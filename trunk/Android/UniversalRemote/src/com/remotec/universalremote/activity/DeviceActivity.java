@@ -17,6 +17,7 @@ import com.remotec.universalremote.activity.component.DeviceButton;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
 import com.remotec.universalremote.data.RemoteUi;
+import com.remotec.universalremote.persistence.DbManager;
 import com.remotec.universalremote.persistence.XmlManager;
 
 import android.app.Activity;
@@ -217,9 +218,20 @@ public class DeviceActivity extends Activity {
 			//copys the UI XML file to sdcard.
             FileManager.saveAs(DeviceActivity.this, R.raw.remote, 
 					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_XML_FILE);
+            
+        	//copys the codelist db file to sdcard.
+            FileManager.saveAs(DeviceActivity.this, R.raw.codelib, 
+					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_DB_FILE);
 			
+            /*
+             * load the UI component information.
+             */
             XmlManager xm=new XmlManager();
             xm.loadData(RemoteUi.getHandle(), RemoteUi.INTERNAL_DATA_DIRECTORY+"/"+RemoteUi.UI_XML_FILE);
+            
+            DbManager dbm=new DbManager();
+            dbm.loadDevCategory();
+            dbm.loadIrBrand();
             
             initData();      
               
