@@ -4,12 +4,19 @@ import com.remotec.universalremote.activity.R;
 import com.remotec.universalremote.activity.R.layout;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Window;
 
-public class ProgressDialog extends Activity {
-    /** Called when the activity is first created. */
+public class ProgressDialog extends Dialog {
+    public ProgressDialog(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	}
+
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

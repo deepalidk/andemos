@@ -23,6 +23,7 @@ import com.remotec.universalremote.data.Device;
 
 public class ImageAdapter extends BaseAdapter {
 
+
 	private Context mContext;
 
 	public ImageAdapter(Context c) {
@@ -56,6 +57,7 @@ public class ImageAdapter extends BaseAdapter {
 			imageview = (ImageView) convertView;
 		}
 		imageview.setImageResource(mThumbIds.get(position));
+		imageview.setTag(mThumbIds.get(position));
 		return imageview;
 	}
 
@@ -71,7 +73,7 @@ public class ImageAdapter extends BaseAdapter {
 
 			for (Field field : drawableFields){
 				// 如果该Field的名称以p_开头
-				if ((field.getName().indexOf("icon_") != -1)&&(field.getName().indexOf("_s") != -1)){
+				if ((field.getName().indexOf("icon_") != -1)&&(field.getName().endsWith("_s")==true)){
 					resourceValues.add(field.getInt(R.drawable.class));
 				}
 			}

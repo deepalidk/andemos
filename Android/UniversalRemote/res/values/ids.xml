@@ -49,5 +49,9 @@
     <item name="model_layout" type="id"></item>
     <item name="model_label" type="id"></item>
     <item name="model_textview" type="id"></item>
+    
+    <!-- Select Icon Dialog -->
+    <item name="btn_cancel" type="id"></item>
+    <item name="gridview_icons" type="id"></item>
 
 </resources>
