@@ -25,6 +25,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ import android.widget.LinearLayout;
 public class DeviceActivity extends Activity {
 	
 	private static final int REQUEST_ADD_DEVICE = 1;
+	
 	// Debugging Tags 
 	private static final String TAG = "UniversalRemoteActivity";
 	private static final boolean D = false;
@@ -204,6 +206,28 @@ public class DeviceActivity extends Activity {
     	
     };
     
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+	 */
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (D)
+			Log.d(TAG, "onActivityResult " + resultCode);
+		switch (requestCode) {
+		case REQUEST_ADD_DEVICE:
+			if(resultCode==Activity.RESULT_OK)
+			{
+				Device devTemp=(Device)data.getSerializableExtra(AddDeviceActivity.RESULT_DEVICE_OBJECT);
+				RemoteUi.getHandle().getChildren().add(devTemp);
+				XmlManager xmlManager=new XmlManager();
+				xmlManager.saveData(RemoteUi.getHandle(), RemoteUi.INTERNAL_DATA_DIRECTORY+"/"+RemoteUi.UI_XML_FILE);
+				displayDevices();
+			}
+			break;
+		}
+	}
+    
+    
     /*
      * AsyncTask for App Initializing.
      */
@@ -211,10 +235,11 @@ public class DeviceActivity extends Activity {
 	
     	private ProgressDialog mProgressDialog;
 
-
 		@Override
     	protected Integer doInBackground(Integer... params) {
 
+			RemoteUi.init();
+			
 			//copys the UI XML file to sdcard.
             FileManager.saveAs(DeviceActivity.this, R.raw.remote, 
 					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_XML_FILE);
@@ -224,11 +249,14 @@ public class DeviceActivity extends Activity {
 					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_DB_FILE);
 			
             /*
-             * load the UI component information.
+             * loads the UI component information.
              */
             XmlManager xm=new XmlManager();
             xm.loadData(RemoteUi.getHandle(), RemoteUi.INTERNAL_DATA_DIRECTORY+"/"+RemoteUi.UI_XML_FILE);
             
+            /*
+             * loads ircode information to memory for adding device.
+             */
             DbManager dbm=new DbManager();
             dbm.loadDevCategory();
             dbm.loadIrBrand();

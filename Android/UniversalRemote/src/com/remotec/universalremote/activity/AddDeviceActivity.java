@@ -12,15 +12,18 @@ import com.common.FileManager;
 import com.remotec.universalremote.activity.R;
 import com.remotec.universalremote.activity.R.layout;
 import com.remotec.universalremote.activity.component.DeviceButton;
+import com.remotec.universalremote.activity.component.RtArrayAdapter;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
 import com.remotec.universalremote.data.RemoteUi;
+import com.remotec.universalremote.persistence.DbManager;
 import com.remotec.universalremote.persistence.XmlManager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
@@ -33,6 +36,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +52,8 @@ import android.widget.TextView.OnEditorActionListener;
  */
 public class AddDeviceActivity extends Activity {
 
+	public static final String RESULT_DEVICE_OBJECT= "RESULT_DEVICE_OBJECT";
+	
 	private static final int REQUEST_SELECT_ICON = 1;
 	// Debugging Tags
 	private static final String TAG = "AddDeviceActivity";
@@ -58,7 +65,9 @@ public class AddDeviceActivity extends Activity {
 	private Spinner mSpinerManufacturer;
 	private Spinner mSpinerModel;
 
-	private ArrayAdapter adapter2;
+	private RtArrayAdapter<String> mCategoryAdapter;
+	private RtArrayAdapter<String> mManufacturerAdapter;
+	private RtArrayAdapter<String> mCodeAdapter;
 
 	private ViewGroup mVgSelectDevice;
 	private ViewGroup mVgDeviceInfo;
@@ -133,11 +142,33 @@ public class AddDeviceActivity extends Activity {
 		}
 	}
 
-	private void initControls() {
+	/*
+	 * loads the manufacturer adapter with specific category.
+	 */
+	private void loadManufacturer(String category){
+		
+		List<String> temp=RemoteUi.getHandle().getIrBrandMap().get(category);
+		mManufacturerAdapter.setData(temp);
+		mSpinerManufacturer.setAdapter(mManufacturerAdapter);
 
-		mSpinerCategory = (Spinner) findViewById(R.id.spiner_category);
-		mSpinerManufacturer = (Spinner) findViewById(R.id.spiner_manufacturer);
-		mSpinerModel = (Spinner) findViewById(R.id.spiner_model);
+	}
+	
+	/*
+	 * loads the manufacturer adapter with specific category.
+	 */
+	private void loadCodeNum(String category,String manufacturer){
+		
+		DbManager dbm=new DbManager();
+		List<String> temp=dbm.getCodesList(category,manufacturer);
+		mCodeAdapter.setData(temp);
+		mSpinerModel.setAdapter(mCodeAdapter);
+
+	}
+	
+	/*
+	 * init the controls
+	 */
+	private void initControls() {
 
 		mVgSelectDevice = (ViewGroup) findViewById(R.id.select_ircode);
 		mVgDeviceInfo = (ViewGroup) findViewById(R.id.device_info);
@@ -166,19 +197,102 @@ public class AddDeviceActivity extends Activity {
 		mDeviceIcon = (ImageView) findViewById(R.id.device_img);
 		mDeviceIcon.setOnClickListener(mOnIconListener);
 
+		mSpinerCategory = (Spinner) findViewById(R.id.spiner_category);
+		mSpinerCategory.setOnItemSelectedListener(mCategoryListener);
+		
+		mSpinerManufacturer = (Spinner) findViewById(R.id.spiner_manufacturer);
+		mSpinerManufacturer.setOnItemSelectedListener(mManufacturerListener);
+		
+		mSpinerModel = (Spinner) findViewById(R.id.spiner_model);
+		mSpinerModel.setOnItemSelectedListener(mModelListener);
+		
 		// 将可选内容与ArrayAdapter连接起来
-		adapter2 = ArrayAdapter.createFromResource(this, R.array.dev_category,
-				R.layout.irremote_spinner);
-
-		// 设置下拉列表的风格
-		adapter2.setDropDownViewResource(R.layout.irremote_spinner_item);
-
+		mCategoryAdapter=new RtArrayAdapter<String>(this, 
+				R.layout.irremote_spinner, 
+				0, 
+				RemoteUi.getHandle().getCategoryList());
+		mCategoryAdapter.setDropDownViewResource(R.layout.irremote_spinner_item);
 		// 将adapter2 添加到spinner中
-		mSpinerCategory.setAdapter(adapter2);
-		mSpinerManufacturer.setAdapter(adapter2);
-		mSpinerModel.setAdapter(adapter2);
+		mSpinerCategory.setAdapter(mCategoryAdapter);
+
+		mManufacturerAdapter=new RtArrayAdapter<String>(this, 
+				R.layout.irremote_spinner, 
+				0, 
+				RemoteUi.getHandle().getIrBrandMap().get(mCategoryAdapter.getItem(0)));
+		mManufacturerAdapter.setDropDownViewResource(R.layout.irremote_spinner_item);
+		mSpinerManufacturer.setAdapter(mManufacturerAdapter);
+		
+		mCodeAdapter=new RtArrayAdapter<String>(this, 
+				R.layout.irremote_spinner, 
+				0);
+		mCodeAdapter.setDropDownViewResource(R.layout.irremote_spinner_item);
+		mSpinerModel.setAdapter(mCodeAdapter);
+		
 	}
 
+	/*
+	 * handle the selection events of spinner Category
+	 */
+	private OnItemSelectedListener mCategoryListener=new OnItemSelectedListener(){
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view,
+				int position, long id) {
+			String s=mSpinerCategory.getSelectedItem().toString();
+			loadManufacturer(s);	
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+			
+		}
+		
+	};
+	
+	/*
+	 * handle the selection events of spinner Manufacturer
+	 */
+	private OnItemSelectedListener mManufacturerListener=new OnItemSelectedListener(){
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view,
+				int position, long id) {
+			String manufacturer=mSpinerManufacturer.getSelectedItem().toString();
+			String category=mSpinerCategory.getSelectedItem().toString();
+			loadCodeNum(category,manufacturer);	
+			mDevice.setDeviceType(category);
+			mDevice.setManufacturer(manufacturer);
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+			
+		}
+		
+	};
+	
+	/*
+	 * handle the selection events of spinner Model
+	 */
+	private OnItemSelectedListener mModelListener=new OnItemSelectedListener(){
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view,
+				int position, long id) {
+			String codeNum=mSpinerModel.getSelectedItem().toString();
+			
+			if((codeNum!=null)&&(codeNum.length()>0)){
+		    	mDevice.setIrCode(Integer.parseInt(codeNum));
+			}
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+			
+		}
+		
+	};
+	
 	/*
 	 * Deals cancel button click.
 	 */
@@ -210,6 +324,7 @@ public class AddDeviceActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
+			updateControls();
 			AddDeviceActivity.this.initCurrentPage(eCurrentPage.eDeviceInfo);
 		}
 	};
@@ -221,8 +336,18 @@ public class AddDeviceActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			AddDeviceActivity.this.setResult(RESULT_OK);
-			AddDeviceActivity.this.finish();
+			
+			Intent intent = new Intent(); // 申请Bundle变量
+
+    		try {
+    			intent.putExtra(AddDeviceActivity.RESULT_DEVICE_OBJECT,mDevice);
+    			AddDeviceActivity.this.setResult(Activity.RESULT_OK, intent);
+    			AddDeviceActivity.this.finish();
+    		} catch (Exception ex) {
+
+    		}		
+			
+
 		}
 	};
 
@@ -279,15 +404,19 @@ public class AddDeviceActivity extends Activity {
 			Log.d(TAG, "onActivityResult " + resultCode);
 		switch (requestCode) {
 		case REQUEST_SELECT_ICON:
-			Integer resId=data.getIntExtra(SelectIconDialog.IMAGE_RES_ID, -1);
-			//the resId is the small icon picture id. now we change it to the large icon id.
-				
-			//set res id.
-			mDevice.setIconResId(getLargeIconId(resId,this));
-			//set res name.
-			mDevice.setIconName(this.getResources().getResourceName(mDevice.getIconResId()));
 			
-			updateControls();
+			if(resultCode==Activity.RESULT_OK)
+			{
+				Integer resId=data.getIntExtra(SelectIconDialog.IMAGE_RES_ID, -1);
+				//the resId is the small icon picture id. now we change it to the large icon id.
+					
+				//set res id.
+				mDevice.setIconResId(getLargeIconId(resId,this));
+				//set res name.
+				mDevice.setIconName(this.getResources().getResourceName(mDevice.getIconResId()));
+				
+				updateControls();
+			}
 			break;
 		}
 	}

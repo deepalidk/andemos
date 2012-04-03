@@ -1,3 +1,8 @@
+/*
+ * Copyright 2012 @ Copyright Remotec Technology Ltd., All rights reserved.
+ * 
+ * Author: Walker
+ */
 package com.remotec.universalremote.persistence;
 
 import java.io.File;
@@ -9,9 +14,14 @@ import com.remotec.universalremote.data.RemoteUi;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DbManager {
 
+	// Debugging Tags 
+	private static final String TAG = "DbManager";
+	private static final boolean D = false;
+	
 	private static SQLiteDatabase mDataBase = null;
 
 	public static SQLiteDatabase getDataBase() {
@@ -65,6 +75,37 @@ public class DbManager {
 
 		return devType;
 	}
+	
+	/*
+	 * get codes of the specific category and brandName.
+	 */
+	public List<String> getCodesList(String category,String brandName)
+	{
+		List<String> result=new ArrayList<String>();
+		
+		try {
+
+			SQLiteDatabase db = getDataBase();
+			// 定义Cursor游标,用于管理数据，比如获得数据库的每一行数据
+			Cursor cursor = null;
+
+			String sql=String.format("Select ircodenum From irCodeList" +
+					" left join category on irCodeList.devType=category.devType" +
+					"  where name like \'%s\' and brandName like \'%s\'", category,brandName);
+			// 查询test_listview数据
+			cursor = db.rawQuery(sql,null);
+			// 通过强大的cursor把数据库的资料一行一行地读取出来
+			while (cursor.moveToNext()) {
+
+				result.add(cursor.getString(0));
+				
+			}
+		} catch (Exception e) {
+			result = null;
+		}
+
+		return result;
+	}
 
 	/*
 	 * loads the device category from database.
@@ -88,9 +129,14 @@ public class DbManager {
 				devTypes.add(temp);
 			}
 		} catch (Exception e) {
+			Log.e(TAG, e.getMessage());
 		}
 	}
 
+	/*
+	 * loads all the ir code information to RemoteUi object.
+	 * This will cost more memory and achieve a better performance when adding device.
+	 */
 	public void loadIrBrand() {
 		try {
 			// If there are code library files, add each one to the ArrayAdapter
@@ -106,7 +152,7 @@ public class DbManager {
 
 			// 查询test_listview数据
 			cursor = db.rawQuery("Select distinct(brandName),name devType"
-					+ "From MAIN.[irCodeList] A left join category B "
+					+ " From irCodeList A left join category B "
 					+ "on A.devType=B.devType", null);
 			// 通过强大的cursor把数据库的资料一行一行地读取出来
 			while (cursor.moveToNext()) {
@@ -123,6 +169,7 @@ public class DbManager {
 				tempList.add(brandName);
 			}
 		} catch (Exception e) {
+			Log.e(TAG, e.getMessage());
 		}
 	}
 }

@@ -48,13 +48,14 @@ public class RemoteUi {
 	    * Gets the singleton object.
 	    */
        public static RemoteUi getHandle()
-       {
-    	   if(sRemoteUi==null)
-    	   {
-    		   sRemoteUi=new RemoteUi();
-    	   }
-    	   
+       {  
     	   return sRemoteUi;
+       }
+       
+       public static void init(){
+
+          sRemoteUi=new RemoteUi();
+    	   
        }
        
        /*

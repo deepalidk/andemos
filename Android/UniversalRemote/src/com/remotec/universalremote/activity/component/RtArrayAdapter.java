@@ -274,6 +274,11 @@ public class RtArrayAdapter<T> extends BaseAdapter implements Filterable {
     	mContext=context;
     }
 
+    public void setData(List<T> objects)
+    {
+    	mObjects=objects;
+    }
+    
     /**
      * {@inheritDoc}
      */
