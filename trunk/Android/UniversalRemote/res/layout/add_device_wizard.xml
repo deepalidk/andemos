@@ -61,7 +61,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/textview_category"
             android:layout_marginTop="@dimen/line_margin"
-            android:text="@string/label_maufacturer"
+            android:text="@string/label_manufacturer"
             android:textAppearance="@style/Dialog_TextView" />
 
         <Spinner
@@ -80,7 +80,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/spiner_manufacturer"
             android:layout_marginTop="@dimen/line_margin"
-            android:text="@string/laybel_model"
+            android:text="@string/label_model"
             android:textAppearance="@style/Dialog_TextView" />
 
         <Spinner
@@ -190,7 +190,7 @@
                     android:layout_width="@dimen/label_width"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="@string/manufacturer_label_text" />
+                    android:text="@string/label_manufacturer" />
 
                 <TextView
                     android:id="@id/manufacturer_textview"
@@ -222,7 +222,7 @@
                     android:layout_width="@dimen/label_width"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="@string/laybel_model" />
+                    android:text="@string/label_model" />
 
                 <TextView
                     android:id="@id/model_textview"

@@ -59,7 +59,7 @@ public class SelectIconDialog extends Activity {
 		public void onClick(View v) {
 			SelectIconDialog.this.setResult(Activity.RESULT_CANCELED);
 			SelectIconDialog.this.finish();
-		}		
+		}		 
     };
     
     /*
