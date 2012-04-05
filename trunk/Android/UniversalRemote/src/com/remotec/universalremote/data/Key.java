@@ -7,11 +7,17 @@
  */
 package com.remotec.universalremote.data;
 
+import java.io.Serializable;
+
 /*
  * Holds the data needed to run the UI.
  */
-public class Key {
+public class Key implements Serializable {
       
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5996437544418198977L;
 	/*
 	 * the key button text;
 	 */
@@ -63,4 +69,18 @@ public class Key {
 	public void setIsLearned(boolean isLearned){
 		mIsLearned=isLearned;
 	} 
+	
+	/*
+	 * create a new copy of the key object.
+	 */
+	public Key colonel(){
+		Key result=new Key();
+		
+		result.mKeyId=this.mKeyId;
+		result.mIsLearned=this.mIsLearned;
+		result.mText=this.mText;
+		result.mVisible=this.mVisible;
+		
+		return result;
+	}
 }

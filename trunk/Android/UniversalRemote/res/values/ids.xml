@@ -55,6 +55,7 @@
     <item name="gridview_icons" type="id"></item>
     
     <!-- Key Id -->
+    <item name="key_id_invalid" type="integer" format="integer">-1</item>
     <item name="key_id_00_reserved" type="integer" format="integer">0x00</item>
     <item name="key_id_power" type="integer" format="integer">0x01</item>
     <item name="key_id_ch_down" type="integer" format="integer">0x02</item>
@@ -99,7 +100,7 @@
     <item name="key_id_quit" type="integer" format="integer">0x29</item>
     <item name="key_id_arrow_left" type="integer" format="integer">0x2a</item>
     <item name="key_id_arrow_up" type="integer" format="integer">0x2b</item>
-    <item name="key_id_row_right" type="integer" format="integer">0x2c</item>
+    <item name="key_id_arrow_right" type="integer" format="integer">0x2c</item>
     <item name="key_id_menu_ok" type="integer" format="integer">0x2d</item>
     <item name="key_id_arrow_down" type="integer" format="integer">0x2e</item>
     <item name="key_id_47_reserved" type="integer" format="integer">0x2f</item>
@@ -119,4 +120,6 @@
     <item name="key_id_61_reserved" type="integer" format="integer">0x3d</item>
     <item name="key_id_62_reserved" type="integer" format="integer">0x3e</item>
     <item name="key_id_63_reserved" type="integer" format="integer">0x3f</item>
+    <item name="key_id_64_reserved" type="integer" format="integer">0x40</item>
+    <item name="key_id_65_reserved" type="integer" format="integer">0x41</item>
 </resources>

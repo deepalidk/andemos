@@ -8,24 +8,30 @@ package com.remotec.universalremote.activity;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import com.common.FileManager;
 import com.remotec.universalremote.activity.R;
 import com.remotec.universalremote.activity.R.layout;
 import com.remotec.universalremote.activity.component.DeviceButton;
+import com.remotec.universalremote.activity.component.KeyButton;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
+import com.remotec.universalremote.data.Key;
 import com.remotec.universalremote.data.RemoteUi;
 import com.remotec.universalremote.persistence.DbManager;
 import com.remotec.universalremote.persistence.XmlManager;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -42,6 +48,11 @@ public class DeviceActivity extends Activity {
 	// Debugging Tags 
 	private static final String TAG = "UniversalRemoteActivity";
 	private static final boolean D = false;
+
+	//dialog¡¡ids
+	private static final int PROGRESS_DIALOG = 0;
+	
+	private ProgressDialog mProgressDialog;
 	
 	private List<DeviceButton> mDevButtonList=null;
 	
@@ -58,6 +69,22 @@ public class DeviceActivity extends Activity {
         InitAppTask initor= new InitAppTask();
         initor.execute(0);    
     }
+    
+    protected Dialog onCreateDialog(int id) {  
+        switch(id) {  
+        case PROGRESS_DIALOG:   
+        	 mProgressDialog =new ProgressDialog(this);
+        	 mProgressDialog.setTitle("");
+        	 mProgressDialog.setMessage(getResources().getText(R.string.initial_waiting));
+        	 mProgressDialog.setIndeterminate(true);
+        	 mProgressDialog.setCanceledOnTouchOutside(false);
+        	 mProgressDialog.setCancelable(false);
+            return mProgressDialog;  
+        default:  
+            return null;  
+        }  
+    }   
+
     
     /*
      * inits the data for device activity
@@ -188,7 +215,7 @@ public class DeviceActivity extends Activity {
 			    Bundle bdl=new Bundle();
 			    bdl.putSerializable(DeviceKeyActivity.DEVICE_OBJECT, devButton.getDevice());
 			    devKeyIntent.putExtras(bdl);
-				startActivity(devKeyIntent);            
+				startActivity(devKeyIntent);          
 
 			}else{
 				Intent addDeviceIntent = new Intent(DeviceActivity.this, AddDeviceActivity.class);
@@ -225,8 +252,6 @@ public class DeviceActivity extends Activity {
      * AsyncTask for App Initializing.
      */
     private class InitAppTask extends android.os.AsyncTask<Integer, Integer, Integer> {
-	
-    	private ProgressDialog mProgressDialog;
 
 		@Override
     	protected Integer doInBackground(Integer... params) {
@@ -255,14 +280,44 @@ public class DeviceActivity extends Activity {
             dbm.loadIrBrand();
             
             initData();      
-              
+            
+            
+            /*
+             * finds all key Buttons and create a keyLayout template.
+             */
+            LayoutInflater inflater=(LayoutInflater)DeviceActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+            View vgKey=inflater.inflate(R.layout.devicekey, null);
+        	/*
+        	 * finds all key Buttons
+        	 */
+            Map<Integer,KeyButton>  keyBtnMap=new Hashtable<Integer,KeyButton>();
+        	
+            ViewGroup vgKeyLayout=(ViewGroup)vgKey.findViewById(R.id.id_key_layout);        
+            
+            DeviceKeyActivity.findKeyButtons(vgKeyLayout,keyBtnMap,null);
+            
+            
+            /*
+             * save key button informations to the template map.
+             */       
+            Map<Integer,Key> map=RemoteUi.getHandle().getTemplateKeyMap();
+            
+            Integer invalidKeyId=DeviceActivity.this.getResources().getInteger(R.integer.key_id_invalid);
+            
+            for(KeyButton keyBtn: keyBtnMap.values()){
+	            	Key temp=new Key();
+	            	temp.setKeyId(keyBtn.getKeyId());
+	            	temp.setText(keyBtn.getText().toString());
+	            	temp.setVisible(keyBtn.getVisibility()==View.VISIBLE);
+	            	map.put(temp.getKeyId(), temp);
+            }
+                        
     		return 0;
     	}
 
     	@Override
         protected void onPreExecute() { 		
-            mProgressDialog = ProgressDialog.show(DeviceActivity.this,     
-                    "",getResources().getText(R.string.initial_waiting), true);
+    		DeviceActivity.this.showDialog(DeviceActivity.PROGRESS_DIALOG);
         }
 
     	@Override
@@ -275,7 +330,7 @@ public class DeviceActivity extends Activity {
     		
     		displayDevices();
     		
-    		mProgressDialog.dismiss();
+    		DeviceActivity.this.removeDialog(DeviceActivity.PROGRESS_DIALOG);
         }
     }
 }

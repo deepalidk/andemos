@@ -24,6 +24,7 @@
     <string name="key_num_9">9</string>
     <string name="key_num_0">0</string>
     <string name="key_guide">Guide</string>
+    <string name="key_tv_vcr">TV/VCR</string>
     <string name="key_enter">Enter</string>
     <string name="key_prev">Prev</string>
     <string name="key_ch">CH</string>
@@ -39,6 +40,7 @@
     <string name="key_eprd">EP RD</string>
     <string name="key_sleep">Sleep</string> 
     <string name="key_br">BR</string>
+    <string name="key_unknown">Unknown</string>
     
     <string name="add_device_comment">Select the category and manufacturer of your device.</string>
     
@@ -65,5 +67,9 @@
     <string name="btn_finish">Finish</string>
     
     <string name="btn_back">Back</string>
+    
+    <string name="cancel_adding_msg">Are you sure you want to cancel adding device?</string>
+    
+    <string name="cancel_adding_title">Cancel adding device</string>
   
 </resources>

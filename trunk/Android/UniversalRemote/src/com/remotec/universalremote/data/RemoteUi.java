@@ -122,6 +122,15 @@ public class RemoteUi {
        public List<String> getIrcodeList(String key){
     	   return mIrBrandMap.get(key);
        }
+       
+       /*
+        * Holds the template key maps
+        */
+       private Map<Integer, Key> mTemplateKeyMap;
+       
+       public Map<Integer, Key> getTemplateKeyMap(){
+    	   return mTemplateKeyMap;
+       }
                 
        private RemoteUi()
        {
@@ -129,5 +138,6 @@ public class RemoteUi {
     	   mExtenderList=new ArrayList<Extender>();
     	   mCategoryList=new ArrayList<String>();
     	   mIrBrandMap=new Hashtable<String,List<String>>();
+    	   mTemplateKeyMap=new Hashtable<Integer,Key>();
        }
 }
