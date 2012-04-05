@@ -6,9 +6,13 @@
 package com.remotec.universalremote.activity.component;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.Button;
 
+import com.remotec.universalremote.activity.R;
 import com.remotec.universalremote.data.Device;
 
 /*
@@ -41,6 +45,12 @@ public class KeyButton extends Button {
 
 	public KeyButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		
+		  TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.KeyButton);
+		  mKeyId=a.getInteger(R.styleable.KeyButton_key_id, -1);
+		  mIsIconBtn=a.getBoolean(R.styleable.KeyButton_is_icon_btn, false);
+		            
+	      a.recycle();   
 	}
 
 	public KeyButton(Context context, AttributeSet attrs, int defStyle) {
