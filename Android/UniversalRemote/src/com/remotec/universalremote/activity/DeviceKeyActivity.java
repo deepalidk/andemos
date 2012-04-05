@@ -6,9 +6,12 @@
 package com.remotec.universalremote.activity;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +27,7 @@ import com.remotec.universalremote.activity.component.BottomBarButton;
 import com.remotec.universalremote.activity.component.DeviceButton;
 import com.remotec.universalremote.activity.component.KeyButton;
 import com.remotec.universalremote.data.Device;
+import com.remotec.universalremote.data.Key;
 import com.remotec.universalremote.data.RemoteUi;
 import com.remotec.universalremote.persistence.XmlManager;
 
@@ -39,7 +43,12 @@ public class DeviceKeyActivity extends Activity {
 	//exchanges device object with deviceactivity.  
 	public static final String DEVICE_OBJECT="DEVICE_OBJECT";
 	
+	//dialog ids
+	private static final int PROGRESS_DIALOG = 0;
+	
 	private Device mDevice;
+	
+	private ProgressDialog mProgressDialog;
 	
 	/*
 	 * all bottom Bar buttons in key layout
@@ -49,7 +58,7 @@ public class DeviceKeyActivity extends Activity {
 	/*
 	 * all key buttons in key layout
 	 */
-	private List<KeyButton> mKeyButtonList=null;
+	private Map<Integer,KeyButton> mKeyButtonMap=null;
 	
 	//Control key View Group
 	private ViewGroup mVgControl=null;
@@ -72,15 +81,6 @@ public class DeviceKeyActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.devicekey);    
         
-        Bundle bdl = getIntent().getExtras();
-        mDevice= (Device)bdl.getSerializable(DEVICE_OBJECT);
-        
-        mTitleLeft=(TextView) this.findViewById(R.id.devicekey_title_left_text);
-        mTitleLeft.setText(mDevice.getName());
-        
-        mVgControl=(ViewGroup)this.findViewById(R.id.id_key_control_layout);
-        mVgMenu=(ViewGroup)this.findViewById(R.id.id_key_menu_layout);
-        mVgMedia=(ViewGroup)this.findViewById(R.id.id_key_media_layout);
         
         //Initializing data.
         InitAppTask initor= new InitAppTask();
@@ -88,13 +88,36 @@ public class DeviceKeyActivity extends Activity {
         
     }
     
+    protected Dialog onCreateDialog(int id) {  
+        switch(id) {  
+        case PROGRESS_DIALOG:   
+        	 mProgressDialog =new ProgressDialog(this);
+        	 mProgressDialog.setTitle("");
+        	 mProgressDialog.setMessage(getResources().getText(R.string.initial_waiting));
+        	 mProgressDialog.setIndeterminate(true);
+        	 mProgressDialog.setCanceledOnTouchOutside(false);
+        	 mProgressDialog.setCancelable(false);
+            return mProgressDialog;  
+        default:  
+            return null;  
+        }  
+    } 
    
     /*
      * inits the data for device activity
      */
     private void initData(){
     	
+        Bundle bdl = getIntent().getExtras();
+        mDevice= (Device)bdl.getSerializable(DEVICE_OBJECT);
    	
+        mTitleLeft=(TextView) this.findViewById(R.id.devicekey_title_left_text);
+        mTitleLeft.setText(mDevice.getName());
+        
+        mVgControl=(ViewGroup)this.findViewById(R.id.id_key_control_layout);
+        mVgMenu=(ViewGroup)this.findViewById(R.id.id_key_menu_layout);
+        mVgMedia=(ViewGroup)this.findViewById(R.id.id_key_media_layout);
+    	
     	/*
     	 * finds all BottomBar Buttons
     	 */
@@ -107,11 +130,11 @@ public class DeviceKeyActivity extends Activity {
     	/*
     	 * finds all key Buttons
     	 */
-        mKeyButtonList=new ArrayList<KeyButton>();
+        mKeyButtonMap=new Hashtable<Integer,KeyButton>();
     	
         vg=(ViewGroup)findViewById(R.id.id_key_layout);        
         
-        findKeyButtons(vg,mKeyButtonList,mKeyOnClickListener);
+        findKeyButtons(vg,mKeyButtonMap,mKeyOnClickListener);
         
     }
     
@@ -137,18 +160,22 @@ public class DeviceKeyActivity extends Activity {
 	/*
 	 * finds all key Buttons
 	 */
-	private void findKeyButtons(ViewGroup vg, List<KeyButton> bList,OnClickListener listener) {
+	public static void findKeyButtons(ViewGroup vg, Map<Integer,KeyButton> bMap,OnClickListener listener) {
     	
     	for(int i=0;i<vg.getChildCount();i++){
         	View v=vg.getChildAt(i);
             
         	if( v instanceof KeyButton){
-        		bList.add((KeyButton)v);
-        		v.setOnClickListener(listener);
+        		KeyButton btn=(KeyButton)v;
+        		if(btn.getKeyId()!=-1)
+        		{
+	        		bMap.put(btn.getKeyId(), btn);
+	        		v.setOnClickListener(listener);
+        		}
         	}
         	else if(v instanceof ViewGroup)
         	{
-        		findKeyButtons((ViewGroup) v,bList,listener);
+        		findKeyButtons((ViewGroup) v,bMap,listener);
         	}
         }
     }
@@ -206,11 +233,45 @@ public class DeviceKeyActivity extends Activity {
     };
     
     /*
+     * displays the devices on the screen.
+     */
+    private void displayKeys(){
+    	
+    	List<Key> keyList=mDevice.getChildren();
+    	
+    	for(KeyButton keyBtn:this.mKeyButtonMap.values()){
+    		keyBtn.setVisibility(View.INVISIBLE);
+    	}
+    	
+    	for(Key key:keyList){
+    		
+    			if(mKeyButtonMap.containsKey(key.getKeyId())){
+    				
+    				KeyButton keyBtn=mKeyButtonMap.get(key.getKeyId());
+    				
+    				keyBtn.setText(key.getText());
+    				
+    				if(key.getVisible())
+    				{
+    				 keyBtn.setVisibility(View.VISIBLE);
+    				}
+    				else
+    				{
+    				 keyBtn.setVisibility(View.INVISIBLE);
+    				}
+    				
+    				keyBtn.setTag(key);
+    			}
+    		
+    	}
+        
+    }
+    
+    
+    /*
      * AsyncTask for App Initializing.
      */
     private class InitAppTask extends android.os.AsyncTask<Integer, Integer, Integer> {
-	
-    	private ProgressDialog mProgressDialog;
 
 
 		@Override
@@ -223,8 +284,7 @@ public class DeviceKeyActivity extends Activity {
 
     	@Override
         protected void onPreExecute() { 		
-            mProgressDialog = ProgressDialog.show(DeviceKeyActivity.this,     
-                    "",getResources().getText(R.string.initial_waiting), true);
+    		DeviceKeyActivity.this.showDialog(DeviceKeyActivity.PROGRESS_DIALOG);
         }
 
     	@Override
@@ -234,9 +294,10 @@ public class DeviceKeyActivity extends Activity {
     	
     	@Override
         protected void onPostExecute(Integer result) {
-    		
-    		mProgressDialog.dismiss();
-        }
+    		displayKeys();
+    		DeviceKeyActivity.this.removeDialog(DeviceKeyActivity.PROGRESS_DIALOG);
+            
+    	}
     }
     
 }

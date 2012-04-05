@@ -62,7 +62,7 @@
                     android:layout_marginTop="@dimen/key_btn_margin_top"
                     android:background="@drawable/btn_key_1"
                     android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_47_reserved"
+                    remotec:key_id="@integer/key_id_invalid"
                     remotec:is_icon_btn="false"
                     android:visibility="invisible" />
 
@@ -241,8 +241,8 @@
                     android:layout_marginRight="@dimen/key_btn_margin_right"
                     android:layout_marginTop="@dimen/key_btn_margin_top"
                     android:background="@drawable/btn_key_1"
-                    android:text="@string/key_enter"
-                    remotec:key_id="@integer/key_id_enter"
+                    android:text="@string/key_tv_vcr"
+                    remotec:key_id="@integer/key_id_tv_vcr"
                     remotec:is_icon_btn="false"
                     android:textAppearance="@style/KeyButtonText" />
             </TableRow>
@@ -377,8 +377,8 @@
                     remotec:key_id="@integer/key_id_menu"
                     remotec:is_icon_btn="false"
                     android:textAppearance="@style/KeyButtonText" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
+                
+               <com.remotec.universalremote.activity.component.KeyButton
                     android:layout_width="@dimen/key_btn_width"
                     android:layout_height="@dimen/key_btn_height"
                     android:layout_marginBottom="@dimen/key_btn_margin_bottom"
@@ -386,10 +386,11 @@
                     android:layout_marginRight="@dimen/key_btn_margin_right"
                     android:layout_marginTop="@dimen/key_btn_margin_top"
                     android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_48_reserved"
+                    android:text="@string/key_unknown"
+                    remotec:key_id="@integer/key_id_invalid"
                     remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
+                    android:textAppearance="@style/KeyButtonText" 
+                    android:visibility="invisible"/>
 
                 <com.remotec.universalremote.activity.component.KeyButton
                     android:layout_width="@dimen/key_btn_width"
@@ -459,6 +460,8 @@
                     android:layout_marginLeft="@dimen/key_btn_margin_left"
                     android:layout_marginRight="@dimen/key_btn_margin_right"
                     android:layout_marginTop="@dimen/key_btn_margin_top"
+                    remotec:key_id="@integer/key_id_enter"
+                    remotec:is_icon_btn="true"
                     android:background="@drawable/btn_key_enter" />
 
                 <com.remotec.universalremote.activity.component.KeyButton
@@ -468,6 +471,8 @@
                     android:layout_marginLeft="@dimen/key_btn_margin_left"
                     android:layout_marginRight="@dimen/key_btn_margin_right"
                     android:layout_marginTop="@dimen/key_btn_margin_top"
+                    remotec:key_id="@integer/key_id_arrow_right"
+                    remotec:is_icon_btn="true"
                     android:background="@drawable/btn_key_right" />
             </TableRow>
 
@@ -529,7 +534,8 @@
                     android:layout_marginTop="@dimen/key_btn_margin_top"
                     android:background="@drawable/btn_key_1"
                     android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_49_reserved"
+                    android:text="@string/key_unknown"
+                    remotec:key_id="@integer/key_id_invalid"
                     remotec:is_icon_btn="false"
                     android:visibility="invisible" />
 
@@ -705,7 +711,7 @@
                     android:layout_marginTop="@dimen/key_btn_margin_top"
                     android:background="@drawable/btn_key_1"
                     android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_50_reserved"
+                    remotec:key_id="@integer/key_id_48_reserved"
                     remotec:is_icon_btn="false"
                     android:visibility="invisible" />
 
@@ -718,7 +724,7 @@
                     android:layout_marginTop="@dimen/key_btn_margin_top"
                     android:background="@drawable/btn_key_1"
                     android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_51_reserved"
+                    remotec:key_id="@integer/key_id_49_reserved"
                     remotec:is_icon_btn="false"
                     android:visibility="invisible" />
 
@@ -730,7 +736,7 @@
                     android:layout_marginRight="@dimen/key_btn_margin_right"
                     android:layout_marginTop="@dimen/key_btn_margin_top"
                     android:background="@drawable/btn_key_1"
-                    remotec:key_id="@integer/key_id_52_reserved"
+                    remotec:key_id="@integer/key_id_50_reserved"
                     remotec:is_icon_btn="false"
                     android:textAppearance="@style/KeyButtonText"
                     android:visibility="invisible" />
@@ -758,7 +764,7 @@
                     android:layout_marginTop="@dimen/key_btn_margin_top"
                     android:background="@drawable/btn_key_1"
                     android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_53_reserved"
+                    remotec:key_id="@integer/key_id_51_reserved"
                     remotec:is_icon_btn="false"
                     android:visibility="invisible" />
 
@@ -819,6 +825,8 @@
                     android:layout_marginLeft="@dimen/key_btn_margin_left"
                     android:layout_marginRight="@dimen/key_btn_margin_right"
                     android:layout_marginTop="@dimen/key_btn_margin_top"
+                    remotec:key_id="@integer/key_id_pause"
+                    remotec:is_icon_btn="true"
                     android:background="@drawable/btn_key_pause" />
 
                 <com.remotec.universalremote.activity.component.KeyButton
@@ -855,9 +863,38 @@
                     android:layout_marginTop="@dimen/key_btn_margin_top"
                     android:background="@drawable/btn_key_1"
                     android:textAppearance="@style/KeyButtonText"
+                    remotec:key_id="@integer/key_id_52_reserved"
+                    remotec:is_icon_btn="false"
+                    android:visibility="invisible" />
+
+                <com.remotec.universalremote.activity.component.KeyButton
+                    android:layout_width="@dimen/key_btn_width"
+                    android:layout_height="@dimen/key_btn_height"
+                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                    android:layout_marginLeft="@dimen/key_btn_margin_left"
+                    android:layout_marginRight="@dimen/key_btn_margin_right"
+                    android:layout_marginTop="@dimen/key_btn_margin_top"
+                    android:background="@drawable/btn_key_1"
+                    android:textAppearance="@style/KeyButtonText"
+                    remotec:key_id="@integer/key_id_53_reserved"
+                    remotec:is_icon_btn="false"
+                    android:visibility="invisible" />
+
+                <com.remotec.universalremote.activity.component.KeyButton
+                    android:layout_width="@dimen/key_btn_width"
+                    android:layout_height="@dimen/key_btn_height"
+                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                    android:layout_marginLeft="@dimen/key_btn_margin_left"
+                    android:layout_marginRight="@dimen/key_btn_margin_right"
+                    android:layout_marginTop="@dimen/key_btn_margin_top"
+                    android:background="@drawable/btn_key_1"
+                    android:textAppearance="@style/KeyButtonText"
                     remotec:key_id="@integer/key_id_54_reserved"
                     remotec:is_icon_btn="false"
                     android:visibility="invisible" />
+            </TableRow>
+
+            <TableRow>
 
                 <com.remotec.universalremote.activity.component.KeyButton
                     android:layout_width="@dimen/key_btn_width"
@@ -884,9 +921,6 @@
                     remotec:key_id="@integer/key_id_56_reserved"
                     remotec:is_icon_btn="false"
                     android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
 
                 <com.remotec.universalremote.activity.component.KeyButton
                     android:layout_width="@dimen/key_btn_width"
@@ -900,6 +934,9 @@
                     remotec:key_id="@integer/key_id_57_reserved"
                     remotec:is_icon_btn="false"
                     android:visibility="invisible" />
+            </TableRow>
+
+            <TableRow>
 
                 <com.remotec.universalremote.activity.component.KeyButton
                     android:layout_width="@dimen/key_btn_width"
@@ -926,9 +963,6 @@
                     remotec:key_id="@integer/key_id_59_reserved"
                     remotec:is_icon_btn="false"
                     android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
 
                 <com.remotec.universalremote.activity.component.KeyButton
                     android:layout_width="@dimen/key_btn_width"
@@ -942,6 +976,9 @@
                     remotec:key_id="@integer/key_id_60_reserved"
                     remotec:is_icon_btn="false"
                     android:visibility="invisible" />
+            </TableRow>
+
+            <TableRow>
 
                 <com.remotec.universalremote.activity.component.KeyButton
                     android:layout_width="@dimen/key_btn_width"
@@ -968,9 +1005,6 @@
                     remotec:key_id="@integer/key_id_62_reserved"
                     remotec:is_icon_btn="false"
                     android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
 
                 <com.remotec.universalremote.activity.component.KeyButton
                     android:layout_width="@dimen/key_btn_width"
@@ -983,28 +1017,6 @@
                     android:textAppearance="@style/KeyButtonText"
                     remotec:key_id="@integer/key_id_63_reserved"
                     remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    android:visibility="invisible" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
                     android:visibility="invisible" />
             </TableRow>
         </TableLayout>
