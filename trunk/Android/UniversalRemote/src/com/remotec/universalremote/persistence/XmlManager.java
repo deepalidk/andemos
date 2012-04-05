@@ -32,6 +32,8 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -139,7 +141,7 @@ public class XmlManager {
 			    if(e.getNodeName().equals("Extender")){
 					Extender ext = new Extender();
 					loadData(ext, e);
-					uiData.getExtenderList().add(ext);
+					uiData.getExtenderMap().put(ext.getAddress(),ext);
 			    }
 			    else if(e.getNodeName().equals("Device")){
 			    	Device dev = new Device();
@@ -185,9 +187,9 @@ public class XmlManager {
 		serializer.startTag("", "RemoteUi");
 		serializer.attribute("","version", uiData.getVersion());
 
-		List<Extender> extList = uiData.getExtenderList();
+		Map<String,Extender> extMap = uiData.getExtenderMap();
 
-		for (Extender ext : extList) {
+		for (Extender ext : extMap.values()) {
 			saveData(ext, serializer);
 		}
 		

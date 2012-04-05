@@ -86,10 +86,23 @@ public class RemoteUi {
        /*
         * Holds the Extender objects.
         */
-       private List<Extender> mExtenderList;
+       private Map<String,Extender> mExtenderMap;
        
-       public List<Extender> getExtenderList(){
-    	   return mExtenderList;
+       public Map<String,Extender> getExtenderMap(){
+    	   return mExtenderMap;
+       }
+       
+       /*
+        * active extender object for run time use.
+        */
+       private Extender mActiveExtender;
+       
+       public void setActiveExtender(Extender extender){
+    	   mActiveExtender=extender;
+       }
+       
+       public Extender getActiveExtender(){
+    	   return mActiveExtender;
        }
        
        /*
@@ -135,7 +148,7 @@ public class RemoteUi {
        private RemoteUi()
        {
     	   mChildren=new ArrayList<Device>();
-    	   mExtenderList=new ArrayList<Extender>();
+    	   mExtenderMap=new Hashtable<String,Extender>();
     	   mCategoryList=new ArrayList<String>();
     	   mIrBrandMap=new Hashtable<String,List<String>>();
     	   mTemplateKeyMap=new Hashtable<Integer,Key>();

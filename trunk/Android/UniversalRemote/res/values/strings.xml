@@ -9,6 +9,13 @@
     <string name="dev_manufacturer">Remotec</string>
     <string name="dev_codenum">301</string>
     
+    <!-- connection state -->
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="title_connecting">connecting...</string>
+    <string name="title_connected_to">connected: </string>
+    <string name="title_not_connected">not connected</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Remote.</string>
+    
     <string name="hello">Hello World, UniversalRemoteActivity!</string>
     <string name="app_name">Universal Remote</string>
     <string name="initial_waiting">Please wait...</string>
@@ -71,5 +78,23 @@
     <string name="cancel_adding_msg">Are you sure you want to cancel adding device?</string>
     
     <string name="cancel_adding_title">Cancel adding device</string>
+    
+    <string name="menu_connect">Connect</string>
+    <string name="menu_about">About</string>
   
+    <!-- bluetooth device list activity -->
+    <string name="scanning">scanning for devices...</string>
+    <string name="updating">updateing remote...</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="select_codelib">select a code library</string>
+    <string name="config_remote">Select Code Library</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="none_codelib_file">No code library files</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="codelib_files">Code Libraries</string>
+    <string name="button_scan">Scan for devices</string>
+    <string name="button_update">Update to extender</string>
+    
 </resources>

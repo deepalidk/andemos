@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- menu -->
+    <item name="menu_connect" type="id"/>
+    <item name="menu_about" type="id"/>
+    
     <!-- device layout -->
     <item name="device_title" type="id"></item>
+    <item name="title_right_text" type="id"></item>
     <item name="device_ScrollView" type="id"/>
     <item name="device_table" type="id"/>
 
