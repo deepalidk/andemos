@@ -57,7 +57,6 @@ public class DeviceActivity extends Activity {
         //Initializing data.
         InitAppTask initor= new InitAppTask();
         initor.execute(0);    
-    
     }
     
     /*
@@ -192,12 +191,6 @@ public class DeviceActivity extends Activity {
 				startActivity(devKeyIntent);            
 
 			}else{
-//				Device dev=new Device();
-//				dev.setIconName("icon_device_tv_theather2");
-//				dev.setName("Theather2");
-//				RemoteUi.getHandle().getChildren().add(dev);
-//				initDeviceIconId();
-//				displayDevices();
 				Intent addDeviceIntent = new Intent(DeviceActivity.this, AddDeviceActivity.class);
 				startActivityForResult(addDeviceIntent, REQUEST_ADD_DEVICE);
 			}
