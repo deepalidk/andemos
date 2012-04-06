@@ -96,5 +96,6 @@
     <string name="codelib_files">Code Libraries</string>
     <string name="button_scan">Scan for devices</string>
     <string name="button_update">Update to extender</string>
+    <string name="please_try_again_">Please try again!</string>
     
 </resources>

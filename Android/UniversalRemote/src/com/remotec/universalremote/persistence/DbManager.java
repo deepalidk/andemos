@@ -52,7 +52,7 @@ public class DbManager {
 	/*
 	 * Gets the device type by the name of device.
 	 */
-	public int getDevTypeByName(String typeName) {
+	public int getDevTypeIdByName(String typeName) {
 		int devType = 1;
 		try {
 

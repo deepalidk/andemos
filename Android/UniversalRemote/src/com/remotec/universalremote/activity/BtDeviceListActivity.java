@@ -158,18 +158,20 @@ public class BtDeviceListActivity extends Activity {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             // Cancel discovery because it's costly and we're about to connect
             mBtAdapter.cancelDiscovery();
+       	    	
+			Intent intent = new Intent(); // …Í«ÎBundle±‰¡ø
 
-            // Get the device MAC address, which is the last 17 chars in the View
-            String info = ((TextView) v).getText().toString();
-            String address = info.substring(info.length() - 17);
+			try {
+	            // Get the device MAC address, which is the last 17 chars in the View
+	            String info = ((TextView) v).getText().toString();
+	            String address = info.substring(info.length() - 17);
+				intent.putExtra(EXTRA_DEVICE_ADDRESS,address);
+				BtDeviceListActivity.this.setResult(Activity.RESULT_OK, intent);
+				BtDeviceListActivity.this.finish();
+			} catch (Exception ex) {
 
-            // Create the result Intent and include the MAC address
-            Intent intent = new Intent();
-            intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
-
-            // Set result and finish this Activity
-            setResult(Activity.RESULT_OK, intent);
-            finish();
+			}
+        	
         }
     };
 

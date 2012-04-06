@@ -29,6 +29,8 @@ import com.remotec.universalremote.activity.component.KeyButton;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Key;
 import com.remotec.universalremote.data.RemoteUi;
+import com.remotec.universalremote.irapi.BtConnectionManager;
+import com.remotec.universalremote.irapi.IrApi;
 import com.remotec.universalremote.persistence.XmlManager;
 
 /*
@@ -39,9 +41,6 @@ public class DeviceKeyActivity extends Activity {
 	// Debugging Tags 
 	private static final String TAG = "DeviceKeyActivity";
 	private static final boolean D = false;
-	
-	//exchanges device object with deviceactivity.  
-	public static final String DEVICE_OBJECT="DEVICE_OBJECT";
 	
 	//dialog ids
 	private static final int PROGRESS_DIALOG = 0;
@@ -70,7 +69,16 @@ public class DeviceKeyActivity extends Activity {
 	private ViewGroup mVgMedia=null;
 	
 	//Title
-	private TextView mTitleLeft=null;
+	private TextView mTitleLeft=null;	
+	
+	//Textviews
+	private TextView mVolLabel=null;
+	
+	//Textviews
+	private TextView mChLabel=null;
+	
+	//Textviews
+	private TextView mBrLabel=null;
 	
     /** Called when the activity is first created. */
     @Override
@@ -109,10 +117,18 @@ public class DeviceKeyActivity extends Activity {
     private void initData(){
     	
         Bundle bdl = getIntent().getExtras();
-        mDevice= (Device)bdl.getSerializable(DEVICE_OBJECT);
+        
+        /*
+         * global current active device store in RemoteUi.
+         */
+        mDevice= RemoteUi.getHandle().getActiveDevice();
    	
         mTitleLeft=(TextView) this.findViewById(R.id.devicekey_title_left_text);
         mTitleLeft.setText(mDevice.getName());
+        
+        mChLabel=(TextView)findViewById(R.id.key_id_ch);
+        mVolLabel=(TextView)findViewById(R.id.key_id_vol);
+        mBrLabel=(TextView)findViewById(R.id.key_id_br);
         
         mVgControl=(ViewGroup)this.findViewById(R.id.id_key_control_layout);
         mVgMenu=(ViewGroup)this.findViewById(R.id.id_key_menu_layout);
@@ -227,7 +243,20 @@ public class DeviceKeyActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 
+			if(RemoteUi.getEmulatorTag())return;
+			IrApi irController=IrApi.getHandle();
 			
+			if (irController != null) {
+                Key tempKey=(Key) v.getTag();
+                
+                if(tempKey!=null)
+                {
+						boolean result = irController.transmitPreprogramedCode(
+						(byte) 0x81, (byte) (mDevice.getIrCode() % 10), mDevice.getIrCode() / 10,
+						(byte) tempKey.getKeyId());
+                }
+
+			}
 		}
     	
     };
@@ -249,14 +278,13 @@ public class DeviceKeyActivity extends Activity {
     				
     				KeyButton keyBtn=mKeyButtonMap.get(key.getKeyId());
     				
-    				keyBtn.setText(key.getText());
-    				
-    				if(key.getVisible())
-    				{
-    				 keyBtn.setVisibility(View.VISIBLE);
+    				if(!keyBtn.getIsIconButton()){
+    				   keyBtn.setText(key.getText());
     				}
-    				else
-    				{
+    				
+    				if(key.getVisible()){
+    				 keyBtn.setVisibility(View.VISIBLE);
+    				}else{
     				 keyBtn.setVisibility(View.INVISIBLE);
     				}
     				
@@ -264,7 +292,54 @@ public class DeviceKeyActivity extends Activity {
     			}
     		
     	}
-        
+    	    
+    	displayLabel();
+    }
+    
+    /*
+     * set the ch , vol, br label
+     */
+    private void displayLabel(){
+    	KeyButton tempAddBtn;
+    	KeyButton tempMinusBtn; 
+    	Key tempKey;
+    	
+    	/*set void label*/
+    	tempAddBtn=	mKeyButtonMap.get(getResources().getInteger(R.integer.key_id_vol_up));
+    	tempMinusBtn=mKeyButtonMap.get(getResources().getInteger(R.integer.key_id_vol_up));
+    
+    	//any one is visible then label is visible
+    	if(tempAddBtn.getVisibility()==View.VISIBLE||tempMinusBtn.getVisibility()==View.VISIBLE){
+    		tempKey=(Key)tempAddBtn.getTag();
+    	    mVolLabel.setText(tempKey.getText());
+    	}else{
+    		mVolLabel.setVisibility(View.INVISIBLE);
+    	}
+    	
+    	/*set ch label*/
+    	tempAddBtn=	mKeyButtonMap.get(getResources().getInteger(R.integer.key_id_ch_up));
+    	tempMinusBtn=mKeyButtonMap.get(getResources().getInteger(R.integer.key_id_ch_up));
+    
+    	//any one is visible then label is visible
+    	if(tempAddBtn.getVisibility()==View.VISIBLE||tempMinusBtn.getVisibility()==View.VISIBLE){
+    		tempKey=(Key)tempAddBtn.getTag();
+    	    mChLabel.setText(tempKey.getText());
+    	}else{
+    		mChLabel.setVisibility(View.INVISIBLE);
+    	}
+    	
+    	/*set void label*/
+    	tempAddBtn=	mKeyButtonMap.get(getResources().getInteger(R.integer.key_id_br_up));
+    	tempMinusBtn=mKeyButtonMap.get(getResources().getInteger(R.integer.key_id_br_up));
+    
+    	//any one is visible then label is visible
+    	if(tempAddBtn.getVisibility()==View.VISIBLE||tempMinusBtn.getVisibility()==View.VISIBLE){
+    		tempKey=(Key)tempAddBtn.getTag();
+    	    mBrLabel.setText(tempKey.getText());
+    	}else{
+    		mBrLabel.setVisibility(View.INVISIBLE);
+    	}
+    
     }
     
     

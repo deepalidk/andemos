@@ -126,4 +126,8 @@
     <item name="key_id_63_reserved" type="integer" format="integer">0x3f</item>
     <item name="key_id_64_reserved" type="integer" format="integer">0x40</item>
     <item name="key_id_65_reserved" type="integer" format="integer">0x41</item>
+    
+    <item name="key_id_vol" type="id"></item>
+    <item name="key_id_ch" type="id"></item>
+    <item name="key_id_br" type="id"></item>
 </resources>

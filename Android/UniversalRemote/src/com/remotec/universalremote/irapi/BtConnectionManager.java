@@ -44,7 +44,7 @@ import android.util.Log;
  */
 public class BtConnectionManager extends IIo {
 	// Debugging
-	private static final String TAG = "BluetoothRemoteService";
+	private static final String TAG = "BtConnectionManager";
 	private static final boolean D = false;
 
 	// Name for the SDP record when creating server socket
@@ -54,12 +54,11 @@ public class BtConnectionManager extends IIo {
 	// private static final UUID MY_UUID =
 	// UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
 
-//	private static final UUID MY_UUID = UUID
-//			.fromString("00001101-0000-1000-8000-0800f9b34fb");
+	// private static final UUID MY_UUID = UUID
+	// .fromString("00001101-0000-1000-8000-0800f9b34fb");
 	private static final UUID MY_UUID = UUID
-	.fromString("00001101-0000-1000-8000-00805F9B34FB");
-	                     
- 
+			.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
 	// Member fields
 	private final BluetoothAdapter mAdapter;
 	private final Handler mHandler;
@@ -85,7 +84,7 @@ public class BtConnectionManager extends IIo {
 	 * @param handler
 	 *            A Handler to send messages back to the UI Activity
 	 */
-	public BtConnectionManager(Context context, Handler handler) {
+	public BtConnectionManager(Handler handler) {
 		mAdapter = BluetoothAdapter.getDefaultAdapter();
 		mState = STATE_NONE;
 		mHandler = handler;
@@ -103,8 +102,8 @@ public class BtConnectionManager extends IIo {
 		mState = state;
 
 		// Give the new state to the Handler so the UI Activity can update
-		mHandler.obtainMessage(DeviceActivity.CONNECTTION_STATE_CHANGE, state, -1)
-				.sendToTarget();
+		mHandler.obtainMessage(DeviceActivity.CONNECTTION_STATE_CHANGE, state,
+				-1).sendToTarget();
 	}
 
 	/**
@@ -213,10 +212,9 @@ public class BtConnectionManager extends IIo {
 		bundle.putString(DeviceActivity.DEVICE_ADDRESS, device.getAddress());
 		msg.setData(bundle);
 		mHandler.sendMessage(msg);
-		
+
 		// Send the name of the connected device back to the UI Activity
-		msg = mHandler
-				.obtainMessage(DeviceActivity.MESSAGE_DEVICE_NAME);
+		msg = mHandler.obtainMessage(DeviceActivity.MESSAGE_DEVICE_NAME);
 		bundle = new Bundle();
 		bundle.putString(DeviceActivity.DEVICE_NAME, device.getName());
 		msg.setData(bundle);
@@ -257,14 +255,13 @@ public class BtConnectionManager extends IIo {
 		// Synchronize a copy of the ConnectedThread
 		synchronized (this) {
 			if (mState != STATE_CONNECTED)
-				return ;
+				return;
 			r = mConnectedThread;
 		}
 		// Perform the write unsynchronized
 		r.write(out);
-		
-	}
 
+	}
 
 	/**
 	 * Indicate that the connection attempt failed and notify the UI Activity.
@@ -447,14 +444,15 @@ public class BtConnectionManager extends IIo {
 		private final BluetoothSocket mmSocket;
 		private final InputStream mmInStream;
 		private final OutputStream mmOutStream;
-//		private final LinkedList<byte[]> mmInputs;
+
+		// private final LinkedList<byte[]> mmInputs;
 
 		public ConnectedThread(BluetoothSocket socket) {
 			Log.d(TAG, "create ConnectedThread");
 			mmSocket = socket;
 			InputStream tmpIn = null;
 			OutputStream tmpOut = null;
-//			mmInputs = new LinkedList<byte[]>();
+			// mmInputs = new LinkedList<byte[]>();
 			// Get the BluetoothSocket input and output streams
 			try {
 				tmpIn = socket.getInputStream();
@@ -477,27 +475,22 @@ public class BtConnectionManager extends IIo {
 				try {
 					// Read from the InputStream
 					bytes = mmInStream.read(buffer);
-					
-					if(D)Log.d(TAG, String.format("read bytes=%d",bytes));
-					
-					for(int i=0;i<bytes;i++)
-					{
-						if(D)Log.d(TAG, String.format("bytes "+ i +" =%x",buffer[i]));
+
+					if (D) {
+
+						Log.d(TAG, String.format("read bytes=%d", bytes));
+
+						for (int i = 0; i < bytes; i++) {
+								Log.d(TAG, String.format("bytes " + i + " =%x",
+										buffer[i]));
+						}
 					}
-					
 
-//					byte[] temp = new byte[bytes];
-//					System.arraycopy(buffer, 0, temp, 0, bytes);
-
-					if(mmIOnRead!=null)
-					{
+					if (mmIOnRead != null) {
 						mmIOnRead.OnRead(buffer, bytes);
 					}
-					
-					// Send the obtained bytes to the UI Activity
-					// mHandler.obtainMessage(BluetoothRemote.MESSAGE_READ,
-					// bytes, -1, buffer)
-					// .sendToTarget();
+
+
 				} catch (IOException e) {
 					Log.e(TAG, "disconnected", e);
 					connectionLost();
@@ -516,10 +509,16 @@ public class BtConnectionManager extends IIo {
 			try {
 				mmOutStream.write(buffer);
 
-				// Share the sent message back to the UI Activity
-				// mHandler.obtainMessage(BluetoothRemote.MESSAGE_WRITE, -1, -1,
-				// buffer)
-				// .sendToTarget();
+				if (D) {
+                   
+					Log.d(TAG, String.format("write bytes =%d",
+							buffer.length));
+					for (int i = 0; i < buffer.length; i++) {
+							Log.d(TAG, String.format("bytes " + i + " =%x",
+									buffer[i]));
+					}
+				}
+				
 			} catch (IOException e) {
 				Log.e(TAG, "Exception during write", e);
 			}

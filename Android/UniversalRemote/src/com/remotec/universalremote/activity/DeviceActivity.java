@@ -53,9 +53,9 @@ import android.widget.Toast;
  */
 public class DeviceActivity extends Activity {
 
-	private static final int REQUEST_CONNECT_DEVICE = 0;
-	private static final int REQUEST_ADD_DEVICE = 1;
-	private static final int REQUEST_ENABLE_BT = 2;
+	private static final int REQUEST_CONNECT_DEVICE = 1;
+	private static final int REQUEST_ADD_DEVICE = 2;
+	private static final int REQUEST_ENABLE_BT = 3;
 
 	// Debugging Tags
 	private static final String TAG = "UniversalRemoteActivity";
@@ -78,7 +78,6 @@ public class DeviceActivity extends Activity {
 	public static final String DEVICE_ADDRESS = "device_address";
 	public static final String TOAST = "toast";
 
-
 	private ProgressDialog mProgressDialog;
 
 	private List<DeviceButton> mDevButtonList = null;
@@ -88,7 +87,7 @@ public class DeviceActivity extends Activity {
 	private BluetoothAdapter mBluetoothAdapter = null;
 	// Member object for the chat services
 	private BtConnectionManager mBtConnectMgr = null;
-	
+
 	/**
 	 * Ir API object
 	 */
@@ -108,11 +107,12 @@ public class DeviceActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.device);
 
+		//for null pointer bug, move the find right title text before bt init.
+		mTitleRight=(TextView)findViewById(R.id.title_right_text);
 		// Get local Bluetooth adapter
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		// If the adapter is null, then Bluetooth is not supported
-		if(!RemoteUi.getEmulatorTag())
-		{
+		if (!RemoteUi.getEmulatorTag()) {
 			if (mBluetoothAdapter == null) {
 				Toast.makeText(this, "Bluetooth is not available",
 						Toast.LENGTH_LONG).show();
@@ -120,7 +120,7 @@ public class DeviceActivity extends Activity {
 				return;
 			}
 		}
-		
+
 		// Initializing data.
 		InitAppTask initor = new InitAppTask();
 		initor.execute(0);
@@ -142,7 +142,7 @@ public class DeviceActivity extends Activity {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -155,7 +155,7 @@ public class DeviceActivity extends Activity {
 	 * inits the data for device activity
 	 */
 	private void initData() {
-	
+
 		/*
 		 * irApi init.
 		 */
@@ -165,7 +165,7 @@ public class DeviceActivity extends Activity {
 		// but the resId of icon can only access during run time.
 		// get the resId of icon with the icon name, and set to device object.
 		initDeviceIconId();
-
+		
 		mDevButtonList = new ArrayList<DeviceButton>();
 
 		ViewGroup tbLayout = (ViewGroup) findViewById(R.id.device_table);
@@ -176,11 +176,12 @@ public class DeviceActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
+
 		switch (item.getItemId()) {
 		case R.id.menu_connect:
 			// Launch the DeviceListActivity to see devices and do scan
-			Intent serverIntent = new Intent(this, BtDeviceListActivity.class);
+			Intent serverIntent = new Intent(DeviceActivity.this,
+					BtDeviceListActivity.class);
 			startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 			return true;
 		default:
@@ -194,9 +195,8 @@ public class DeviceActivity extends Activity {
 		super.onStart();
 		if (D)
 			Log.e(TAG, "++ ON START ++");
-       
-		if(!RemoteUi.getEmulatorTag())
-		{
+
+		if (!RemoteUi.getEmulatorTag()) {
 			// If BT is not on, request that it be enabled.
 			// setupChat() will then be called during onActivityResult
 			if (!mBluetoothAdapter.isEnabled()) {
@@ -231,7 +231,6 @@ public class DeviceActivity extends Activity {
 		}
 	}
 
-
 	@Override
 	public synchronized void onPause() {
 		super.onPause();
@@ -255,7 +254,7 @@ public class DeviceActivity extends Activity {
 		if (D)
 			Log.e(TAG, "--- ON DESTROY ---");
 	}
-	
+
 	/*
 	 * Inits the Device object Icon res id.
 	 */
@@ -355,12 +354,13 @@ public class DeviceActivity extends Activity {
 				/* crate a intent object, then call the device activity class */
 				Intent devKeyIntent = new Intent(DeviceActivity.this,
 						DeviceKeyActivity.class);
-				Bundle bdl = new Bundle();
-				bdl.putSerializable(DeviceKeyActivity.DEVICE_OBJECT,
-						devButton.getDevice());
-				devKeyIntent.putExtras(bdl);
+//				Bundle bdl = new Bundle();
+//				bdl.putSerializable(DeviceKeyActivity.DEVICE_OBJECT,
+//						devButton.getDevice());
+//				devKeyIntent.putExtras(bdl);
+				RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
+				
 				startActivity(devKeyIntent);
-
 			} else {
 				Intent addDeviceIntent = new Intent(DeviceActivity.this,
 						AddDeviceActivity.class);
@@ -370,8 +370,6 @@ public class DeviceActivity extends Activity {
 		}
 
 	};
-
-	private BtConnectionManager mBtConnection;
 
 	/*
 	 * (non-Javadoc)
@@ -385,13 +383,6 @@ public class DeviceActivity extends Activity {
 		switch (requestCode) {
 		case REQUEST_ADD_DEVICE:
 			if (resultCode == Activity.RESULT_OK) {
-				Device devTemp = (Device) data
-						.getSerializableExtra(AddDeviceActivity.RESULT_DEVICE_OBJECT);
-				RemoteUi.getHandle().getChildren().add(devTemp);
-				XmlManager xmlManager = new XmlManager();
-				xmlManager.saveData(RemoteUi.getHandle(),
-						RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
-								+ RemoteUi.UI_XML_FILE);
 				displayDevices();
 			}
 			break;
@@ -430,7 +421,7 @@ public class DeviceActivity extends Activity {
 
 		// Initialize the BluetoothRemoteService to perform bluetooth
 		// connections
-		mBtConnection = new BtConnectionManager(this, mHandler);
+		mBtConnectMgr = new BtConnectionManager(mHandler);
 
 	}
 
@@ -443,7 +434,7 @@ public class DeviceActivity extends Activity {
 				switch (msg.arg1) {
 				case BtConnectionManager.STATE_CONNECTED: {
 					boolean result = DeviceActivity.this.mIrController
-							.init(mBtConnection);
+							.init(mBtConnectMgr);
 					mTitleRight.setText(R.string.title_connected_to);
 					mTitleRight.append(mActiveExtender.getName());
 

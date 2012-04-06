@@ -11,6 +11,10 @@
     <dimen name="dev_btn_padding_bottom">5dp</dimen>
     <!-- Device Title text view -->
     <dimen name="dev_title_txt_size">28sp</dimen>
+    
+        <!-- Device Title text view -->
+    <dimen name="dev_right_title_txt_size">20sp</dimen>
+    
     <!-- Device Title height -->
     <dimen name="dev_title_height">74dp</dimen>
 

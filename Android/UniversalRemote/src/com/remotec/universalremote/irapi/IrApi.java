@@ -75,47 +75,33 @@ public class IrApi implements IOnRead {
 	 */
 	private boolean transmit_data(byte[] TXbuf) throws InterruptedException {
 
-		if(D)
-			Log.d("TimeElapsed","0");
-		if(D)
-			Log.d("TimeElapsed","1");
 		if(mmIIo==null)return false;
-		
-		if (D)
-			Log.d(TAG, "transmit_data");
-		int reTransmit = mmRetransimitCount;
 
-		if (D)
-			Log.d(TAG, "transmit_data:clear mmFrames");
+		int reTransmit = mmRetransimitCount;
 		mmFrames.clear();
 
 		
-		Time t1=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
-		Time t2=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
-		Time t3;
-		t1.setToNow(); // 取得系统时间。
+//		Time t1=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
+//		Time t2=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
+//		Time t3;
+//		t1.setToNow(); // 取得系统时间。
 		
 		do {	
 			mmIIo.write(TXbuf);
 
-			if(D)
-				Log.d("TimeElapsed","2");
-			if (D)
-				Log.d(TAG, "transmit_data:wait");
 			synchronized (mmFrames) {
 				mmFrames.wait(mmRetransimitTime);
 				if (mmFrames.size() > 0) {
 					if(mmFrames.getLast().getPayloadBuffer()[0]==EFrameStatus.Succeed
 							.getValue())
 					{
-						t2.setToNow();
-						long t=t2.toMillis(true)-t1.toMillis(true);
-						
-						String msg=String.format("%d", t);
-						
-						if(D)
-							Log.d("TimeElapsed",msg);
-						
+//						t2.setToNow();
+//						long t=t2.toMillis(true)-t1.toMillis(true);
+//						
+//						String msg=String.format("%d", t);
+//						
+//						if(D)
+//							Log.d("TimeElapsed",msg);		
 						return true;
 					}
 					else
@@ -142,9 +128,7 @@ public class IrApi implements IOnRead {
 
 		
 		if(mmIIo==null)return (byte) EFrameStatus.ErrorGeneral.getValue();
-		
-
-					
+				
 			mmIIo.write(TXbuf);
 			
 			synchronized (mmFrames) {
@@ -266,6 +250,44 @@ public class IrApi implements IOnRead {
 		}
 
 		return result;
+	}
+	
+	/**
+	 * GET KEY FLAG
+	 * 
+	 * @param devId
+	 *            device ID
+	 * @param codeNum
+	 *            code Number or Code location Number
+	 * @return
+	 * 1 byte status
+	 * 8 bytes flag.
+	 */
+	public byte[] getKeyFlag(byte devId, int codeNum) {
+		if (D)
+			Log.d(TAG, "getKeyFlag");
+		Frame frame = new Frame(3);
+		frame.setCmdID((byte) 0x03);
+        byte flags[]=null;
+
+		try {
+			boolean result = false;
+			frame.addPayload(devId);
+			frame.addPayload((byte) (codeNum >> 8));
+			frame.addPayload((byte) (codeNum & 0xFF));
+	
+			result = transmit_data(frame.getPacketBuffer());
+			
+			flags=mmFrames.getLast().getPayloadBuffer();
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			if (D)
+				Log.d(TAG, "getKeyFlag, exception");
+			e.printStackTrace();
+		}
+
+		return flags;
 	}
 	
 	/**
