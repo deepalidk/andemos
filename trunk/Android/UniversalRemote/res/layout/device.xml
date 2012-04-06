@@ -18,15 +18,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:textAppearance="@style/DeviceTitleText"
+            android:textAppearance="@style/DeviceLeftTitleText"
             android:text="@string/app_name" />
        <TextView android:id="@id/title_right_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:textAppearance="@style/DeviceTitleText"
-        android:text="@string/app_name"
+        android:textAppearance="@style/DeviceRightTitleText"
+        android:text="@string/title_not_connected"
         />
     </RelativeLayout>
 

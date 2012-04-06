@@ -18,6 +18,7 @@ import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
 import com.remotec.universalremote.data.Key;
 import com.remotec.universalremote.data.RemoteUi;
+import com.remotec.universalremote.irapi.IrApi;
 import com.remotec.universalremote.persistence.DbManager;
 import com.remotec.universalremote.persistence.XmlManager;
 
@@ -52,22 +53,17 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 /*
  *Displays device for UI.
  */
 public class AddDeviceActivity extends Activity {
 
-	public static final String RESULT_DEVICE_OBJECT = "RESULT_DEVICE_OBJECT";
-
 	private static final int REQUEST_SELECT_ICON = 1;
 	// Debugging Tags
 	private static final String TAG = "AddDeviceActivity";
 	private static final boolean D = false;
-
-	private static final int PROGRESS_DIALOG = 0;
-
-	private List<DeviceButton> mDevButtonList = null;
 
 	private Spinner mSpinerCategory;
 	private Spinner mSpinerManufacturer;
@@ -93,6 +89,9 @@ public class AddDeviceActivity extends Activity {
 	private TextView mCategory;
 	private TextView mManufacturer;
 	private TextView mCodeNum;
+	
+	//mark if the device is edit, then we should generate the key for it.
+	private boolean mDeviceEditTag;
 
 	enum eCurrentPage {
 		eSelectDevice, eDeviceInfo
@@ -127,6 +126,8 @@ public class AddDeviceActivity extends Activity {
 
 		mDevice = Device.createDevice(this);
 
+		mDeviceEditTag=true;
+		
 		updateControls();
 
 	}
@@ -163,30 +164,32 @@ public class AddDeviceActivity extends Activity {
 		builder.setMessage(R.string.cancel_adding_msg);
 
 		builder.setTitle(R.string.cancel_adding_title);
-		
+
 		builder.setIcon(android.R.drawable.ic_dialog_alert);
 
-		builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-				AddDeviceActivity.this.setResult(RESULT_CANCELED);
-				AddDeviceActivity.this.finish();
-					
-			}
-		});
+		builder.setPositiveButton(android.R.string.yes,
+				new DialogInterface.OnClickListener() {
 
-		builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						AddDeviceActivity.this.setResult(RESULT_CANCELED);
+						AddDeviceActivity.this.finish();
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
+					}
+				});
 
-				dialog.dismiss();
+		builder.setNegativeButton(android.R.string.no,
+				new DialogInterface.OnClickListener() {
 
-			}
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
 
-		});
+						dialog.dismiss();
+
+					}
+
+				});
 
 		builder.create().show();
 
@@ -212,7 +215,20 @@ public class AddDeviceActivity extends Activity {
 		List<String> temp = dbm.getCodesList(category, manufacturer);
 		mCodeAdapter.setData(temp);
 		mSpinerModel.setAdapter(mCodeAdapter);
+		
+		/*
+		 * set the device type id.
+		 */
+		setDeviceTypeId(dbm);
 
+	}
+	
+	/*
+	 * Get the device type id to transmit ir.
+	 */
+	private void setDeviceTypeId(DbManager dbm)
+	{
+		mDevice.setDeviceTypeId(dbm.getDevTypeIdByName(mDevice.getDeviceType()));
 	}
 
 	/*
@@ -332,7 +348,9 @@ public class AddDeviceActivity extends Activity {
 			String codeNum = mSpinerModel.getSelectedItem().toString();
 
 			if ((codeNum != null) && (codeNum.length() > 0)) {
+				
 				mDevice.setIrCode(Integer.parseInt(codeNum));
+				mDeviceEditTag=true;
 			}
 		}
 
@@ -388,11 +406,30 @@ public class AddDeviceActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 
-			Intent intent = new Intent(); // …Í«ÎBundle±‰¡ø
-
 			try {
-				intent.putExtra(AddDeviceActivity.RESULT_DEVICE_OBJECT, mDevice);
-				AddDeviceActivity.this.setResult(Activity.RESULT_OK, intent);
+				//generate the device key.
+				if(AddDeviceActivity.this.mDeviceEditTag)
+				{
+					boolean result=setDeviceKeys(AddDeviceActivity.this.mDevice, RemoteUi.getHandle()
+										.getTemplateKeyMap());
+					
+					if(!result){
+						Toast.makeText(getApplicationContext(),
+								R.string.please_try_again_, Toast.LENGTH_SHORT)
+								.show();
+						return;
+					}
+				}
+				/*
+				 * save the device object.
+				 */
+				RemoteUi.getHandle().getChildren().add(mDevice);
+				XmlManager xmlManager = new XmlManager();
+				xmlManager.saveData(RemoteUi.getHandle(),
+						RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
+								+ RemoteUi.UI_XML_FILE);
+
+				AddDeviceActivity.this.setResult(Activity.RESULT_OK);
 				AddDeviceActivity.this.finish();
 			} catch (Exception ex) {
 
@@ -408,16 +445,25 @@ public class AddDeviceActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			setDeviceKeys(AddDeviceActivity.this.mDevice, RemoteUi.getHandle()
-					.getTemplateKeyMap());
+			
+			//generate the device key.
+			if(AddDeviceActivity.this.mDeviceEditTag)
+			{
+				boolean result=setDeviceKeys(AddDeviceActivity.this.mDevice, RemoteUi.getHandle()
+						.getTemplateKeyMap());
+				if(!result){
+					Toast.makeText(getApplicationContext(),
+							R.string.please_try_again_, Toast.LENGTH_SHORT)
+							.show();
+					
+					return;
+				}
+			}
 
 			/* crate a intent object, then call the device activity class */
 			Intent devKeyIntent = new Intent(AddDeviceActivity.this,
 					DeviceKeyActivity.class);
-			Bundle bdl = new Bundle();
-			bdl.putSerializable(DeviceKeyActivity.DEVICE_OBJECT,
-					AddDeviceActivity.this.mDevice);
-			devKeyIntent.putExtras(bdl);
+		    RemoteUi.getHandle().setActiveDevice(mDevice);
 			startActivity(devKeyIntent);
 		}
 	};
@@ -425,19 +471,23 @@ public class AddDeviceActivity extends Activity {
 	/*
 	 * Sets the key layout to display device key.
 	 */
-	private void setDeviceKeys(Device dev, Map<Integer, Key> map) {
-		byte[] keyFlags = new byte[8];
+	private boolean setDeviceKeys(Device dev, Map<Integer, Key> map) {
+			
+		/*get the valid key ids.*/
+		byte[] keyFlags =  IrApi.getHandle().
+		        getKeyFlag((byte)dev.getDeviceTypeId(),dev.getIrCode()/10);
 
-		for (int i = 0; i < 8; i++) {
-			keyFlags[i] = (byte) 0xff;
-		}
-
+        if(keyFlags==null||keyFlags.length!=9)
+        {
+        	return false;
+        }
+		
 		dev.getChildren().clear();
 
 		int k = 0;
-		for (int i = 0; i < 8; i++) {
+		for (int i = 1; i < 9; i++) {
 			byte keyFlag = keyFlags[i];
-			for (int j = 0; j < 8; j++) {
+			for (int j = 7; j >-1; j--) {
 				if (map.containsKey(k)) {
 					Key newKey = map.get(k).colonel();
 
@@ -452,10 +502,14 @@ public class AddDeviceActivity extends Activity {
 				k++;
 			}
 		}
+		
+		mDeviceEditTag=false;
+		
+		return true;
 	}
 
 	/*
-	 * Deals finish button click.
+	 * Deals imageview click.
 	 */
 	private OnClickListener mOnIconListener = new OnClickListener() {
 

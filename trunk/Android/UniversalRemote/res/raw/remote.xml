@@ -1,9 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RemoteUi version="1.0.0">
-	<Extender name="BT10" address="1111" />
-
-	<Device name="TV1" icon_name="icon_device_tv_theather2">
-	</Device>
-	<Device name="TV2" icon_name="icon_device_tv2">
-	</Device>
 </RemoteUi>

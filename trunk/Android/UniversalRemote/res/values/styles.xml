@@ -12,9 +12,15 @@
         <item name="android:textColor">@color/white_text</item>
         <item name="android:singleLine">true</item>
     </style>
-    <style name="DeviceTitleText">
+    <style name="DeviceLeftTitleText">
         <item name="android:textSize">@dimen/dev_title_txt_size</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white_text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="DeviceRightTitleText">
+        <item name="android:textSize">@dimen/dev_right_title_txt_size</item>
         <item name="android:textColor">@color/white_text</item>
         <item name="android:singleLine">true</item>
         <item name="android:gravity">center_vertical</item>

@@ -115,6 +115,19 @@ public class RemoteUi {
        }
        
        /*
+        * global variable provide to DeviceKeyAvtivity.
+        */
+       private Device mCurActiveDevice=null;
+       
+       public Device getActiveDevice(){
+    	   return mCurActiveDevice;
+       }
+       
+       public void setActiveDevice(Device dev){
+    	   mCurActiveDevice=dev;
+       }
+       
+       /*
         * Holds the category
         */
        private List<String> mCategoryList;

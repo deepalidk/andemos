@@ -167,16 +167,37 @@ public class XmlManager {
 	 * Loads data to device object from an xml element
 	 */
 	private void loadData(Device uiData, Element elem) {
-		// TODO: Remove this code when implements load uiData section.
+		
 		uiData.setName(elem.getAttribute("name"));
 		uiData.setIconName(elem.getAttribute("icon_name"));
+		uiData.setDeviceType(elem.getAttribute("category"));
+		uiData.setDeviceTypeId(Integer.parseInt(elem.getAttribute("category_id")));
+		uiData.setManufacturer(elem.getAttribute("manufacturer"));
+		uiData.setIrCode(Integer.parseInt(elem.getAttribute("ircode")));
+		
+		NodeList items = elem.getChildNodes();
+		Node child = null;
+		for (int i = 0; i < items.getLength(); i++) {
+			child = items.item(i);
+			if (child.getNodeType() == Node.ELEMENT_NODE) {
+			    Element e= (Element) items.item(i);
+			    if(e.getNodeName().equals("Key")){
+					Key key = new Key();
+					loadData(key, e);
+					uiData.getChildren().add(key);
+			    }   
+			}
+		}
 	}
 
 	/*
 	 * Loads data to key object from an xml element
 	 */
-	private void loadData(Key uiData, Element elem) {
-		// TODO: Remove this code when implements load uiData section.
+	private void loadData(Key key, Element elem) {	
+		key.setKeyId(Integer.parseInt(elem.getAttribute("key_id")));
+		key.setIsLearned(Boolean.parseBoolean(elem.getAttribute("islearned")));
+		key.setVisible(Boolean.parseBoolean(elem.getAttribute("visible")));
+		key.setText(elem.getAttribute("text"));
 	}
 
 	/*
@@ -221,11 +242,15 @@ public class XmlManager {
 		serializer.startTag("", "Device");
 		serializer.attribute("","name", dev.getName());
 		serializer.attribute("","icon_name", dev.getIconName());
+		serializer.attribute("","manufacturer", dev.getManufacturer());
+		serializer.attribute("","category", dev.getDeviceType());
+		serializer.attribute("","category_id", ""+dev.getDeviceTypeId());
+		serializer.attribute("","ircode", ""+dev.getIrCode());
 
 		List<Key> children = dev.getChildren();
 
 		for (Key key : children) {
-//			saveData(dev,serializer);
+			saveData(key,serializer);
 		}
 
 		serializer.endTag("", "Device");
@@ -234,7 +259,13 @@ public class XmlManager {
 	/*
 	 * Saves data to an xml element.
 	 */
-	private void saveData(Key uiData, Element elem) {
-		// TODO: Remove this code when implements save uiData section.
+	private void saveData(Key key, XmlSerializer serializer) throws IllegalArgumentException, IllegalStateException, IOException {
+		serializer.startTag("", "Key");
+		serializer.attribute("","key_id", ""+key.getKeyId());
+		serializer.attribute("","text", key.getText());
+		serializer.attribute("","islearned", ""+key.getIsLearned());
+		serializer.attribute("","visible", ""+key.getVisible());
+		
+		serializer.endTag("", "Key");
 	}
 }

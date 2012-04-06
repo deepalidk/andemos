@@ -93,6 +93,19 @@ public class Device implements Serializable {
 	}
 	
 	/*
+	 * the id of dev Type
+	 */
+	private int mDevTypeId;
+
+	public int getDeviceTypeId() {
+		return mDevTypeId;
+	}
+
+	public void setDeviceTypeId(int devTypeId) {
+		mDevTypeId = devTypeId;
+	}
+	
+	/*
 	 * the ir code num
 	 */
 	private int mIrCode;
