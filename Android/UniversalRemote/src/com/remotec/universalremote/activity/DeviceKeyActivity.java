@@ -13,6 +13,8 @@ import java.util.Map;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -269,7 +271,7 @@ public class DeviceKeyActivity extends Activity {
     	List<Key> keyList=mDevice.getChildren();
     	
     	for(KeyButton keyBtn:this.mKeyButtonMap.values()){
-    		keyBtn.setVisibility(View.INVISIBLE);
+    		keyBtn.setVisibility(View.VISIBLE);		
     	}
     	
     	for(Key key:keyList){
@@ -284,6 +286,7 @@ public class DeviceKeyActivity extends Activity {
     				
     				if(key.getVisible()){
     				 keyBtn.setVisibility(View.VISIBLE);
+    				
     				}else{
     				 keyBtn.setVisibility(View.INVISIBLE);
     				}
@@ -312,6 +315,7 @@ public class DeviceKeyActivity extends Activity {
     	if(tempAddBtn.getVisibility()==View.VISIBLE||tempMinusBtn.getVisibility()==View.VISIBLE){
     		tempKey=(Key)tempAddBtn.getTag();
     	    mVolLabel.setText(tempKey.getText());
+    	    mVolLabel.setVisibility(View.VISIBLE);
     	}else{
     		mVolLabel.setVisibility(View.INVISIBLE);
     	}
@@ -330,7 +334,7 @@ public class DeviceKeyActivity extends Activity {
     	
     	/*set void label*/
     	tempAddBtn=	mKeyButtonMap.get(getResources().getInteger(R.integer.key_id_br_up));
-    	tempMinusBtn=mKeyButtonMap.get(getResources().getInteger(R.integer.key_id_br_up));
+    	tempMinusBtn=mKeyButtonMap.get(getResources().getInteger(R.integer.key_id_br_down));
     
     	//any one is visible then label is visible
     	if(tempAddBtn.getVisibility()==View.VISIBLE||tempMinusBtn.getVisibility()==View.VISIBLE){

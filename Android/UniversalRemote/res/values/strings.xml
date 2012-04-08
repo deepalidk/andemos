@@ -79,6 +79,10 @@
     
     <string name="cancel_adding_title">Cancel adding device</string>
     
+    <string name="connect_now">Do you want to connect a BT-IR extender now?</string>
+    
+    <string name="connect_extender">Please connect BT-IR extender</string>
+    
     <string name="menu_connect">Connect</string>
     <string name="menu_about">About</string>
   
@@ -97,5 +101,7 @@
     <string name="button_scan">Scan for devices</string>
     <string name="button_update">Update to extender</string>
     <string name="please_try_again_">Please try again!</string>
+    <string name="remove_device_message">Are you sure you want to remove the device?</string>
+    <string name="remove_device_title">Remove device</string>
     
 </resources>

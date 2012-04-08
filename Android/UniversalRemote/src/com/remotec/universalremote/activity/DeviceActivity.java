@@ -26,10 +26,13 @@ import com.remotec.universalremote.persistence.DbManager;
 import com.remotec.universalremote.persistence.XmlManager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -42,6 +45,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
@@ -88,6 +92,8 @@ public class DeviceActivity extends Activity {
 	// Member object for the chat services
 	private BtConnectionManager mBtConnectMgr = null;
 
+	private Device mLastClickDevice;
+
 	/**
 	 * Ir API object
 	 */
@@ -107,8 +113,8 @@ public class DeviceActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.device);
 
-		//for null pointer bug, move the find right title text before bt init.
-		mTitleRight=(TextView)findViewById(R.id.title_right_text);
+		// for null pointer bug, move the find right title text before bt init.
+		mTitleRight = (TextView) findViewById(R.id.title_right_text);
 		// Get local Bluetooth adapter
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		// If the adapter is null, then Bluetooth is not supported
@@ -165,12 +171,17 @@ public class DeviceActivity extends Activity {
 		// but the resId of icon can only access during run time.
 		// get the resId of icon with the icon name, and set to device object.
 		initDeviceIconId();
-		
+
 		mDevButtonList = new ArrayList<DeviceButton>();
 
 		ViewGroup tbLayout = (ViewGroup) findViewById(R.id.device_table);
 
-		findButtons(tbLayout, mDevButtonList, mDevButtonOnClickListener);
+		findButtons(tbLayout, mDevButtonList);
+
+		for (DeviceButton devBtn : mDevButtonList) {
+			devBtn.setOnClickListener(this.mDevButtonOnClickListener);
+			devBtn.setOnLongClickListener(this.mDevButtonOnLongClickListener);
+		}
 
 	}
 
@@ -179,15 +190,68 @@ public class DeviceActivity extends Activity {
 
 		switch (item.getItemId()) {
 		case R.id.menu_connect:
-			// Launch the DeviceListActivity to see devices and do scan
-			Intent serverIntent = new Intent(DeviceActivity.this,
-					BtDeviceListActivity.class);
-			startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+			startConnectDialog();
 			return true;
 		default:
 			break;
 		}
 		return false;
+	}
+
+	/*
+	 * check current bt connection state. if none, then ask if user wanna a
+	 * connection now. if connecting, then told user to try again. if connected,
+	 * do nothing.
+	 */
+	private boolean checkConnectionState() {
+
+		if (this.mBtConnectMgr.getState() == BtConnectionManager.STATE_NONE) {
+			/* build a dialog, ask if want to connect an extender */
+			AlertDialog.Builder builder = new Builder(this);
+
+			builder.setMessage(R.string.connect_now);
+
+			builder.setTitle(R.string.connect_extender);
+
+			builder.setIcon(android.R.drawable.ic_dialog_info);
+
+			builder.setPositiveButton(android.R.string.yes,
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+							// start connect extender activity.
+							startConnectDialog();
+						}
+					});
+
+			builder.setNegativeButton(android.R.string.no,
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+
+					});
+
+			builder.create().show();
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/*
+	 * starts an activity to connect an bt extender.
+	 */
+	private void startConnectDialog() {
+		// Launch the DeviceListActivity to see devices and do scan
+		Intent serverIntent = new Intent(DeviceActivity.this,
+				BtDeviceListActivity.class);
+		startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 	}
 
 	@Override
@@ -268,17 +332,15 @@ public class DeviceActivity extends Activity {
 		}
 	}
 
-	private void findButtons(ViewGroup vg, List<DeviceButton> bList,
-			OnClickListener listener) {
+	private void findButtons(ViewGroup vg, List<DeviceButton> bList) {
 
 		for (int i = 0; i < vg.getChildCount(); i++) {
 			View v = vg.getChildAt(i);
 
 			if (v instanceof DeviceButton) {
 				bList.add((DeviceButton) v);
-				v.setOnClickListener(listener);
 			} else if (v instanceof ViewGroup) {
-				findButtons((ViewGroup) v, bList, listener);
+				findButtons((ViewGroup) v, bList);
 			}
 		}
 	}
@@ -349,24 +411,54 @@ public class DeviceActivity extends Activity {
 		public void onClick(View v) {
 			DeviceButton devButton = (DeviceButton) v;
 
-			// identifies add device button or device button
-			if (devButton.getDevice() != null) {
-				/* crate a intent object, then call the device activity class */
-				Intent devKeyIntent = new Intent(DeviceActivity.this,
-						DeviceKeyActivity.class);
-//				Bundle bdl = new Bundle();
-//				bdl.putSerializable(DeviceKeyActivity.DEVICE_OBJECT,
-//						devButton.getDevice());
-//				devKeyIntent.putExtras(bdl);
-				RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
-				
-				startActivity(devKeyIntent);
-			} else {
-				Intent addDeviceIntent = new Intent(DeviceActivity.this,
-						AddDeviceActivity.class);
-				startActivityForResult(addDeviceIntent, REQUEST_ADD_DEVICE);
+			// check if an extender is connected, if not, then start an connect
+			// activity.
+			if (checkConnectionState()) {
+				// identifies add device button or device button
+				if (devButton.getDevice() != null) {
+
+					/*
+					 * crate a intent object, then call the device activity
+					 * class
+					 */
+					Intent devKeyIntent = new Intent(DeviceActivity.this,
+							DeviceKeyActivity.class);
+					// Bundle bdl = new Bundle();
+					// bdl.putSerializable(DeviceKeyActivity.DEVICE_OBJECT,
+					// devButton.getDevice());
+					// devKeyIntent.putExtras(bdl);
+					RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
+
+					startActivity(devKeyIntent);
+				} else {
+					Intent addDeviceIntent = new Intent(DeviceActivity.this,
+							AddDeviceActivity.class);
+					startActivityForResult(addDeviceIntent, REQUEST_ADD_DEVICE);
+				}
 			}
 
+		}
+
+	};
+
+	private OnLongClickListener mDevButtonOnLongClickListener = new OnLongClickListener() {
+
+		@Override
+		public boolean onLongClick(View v) {
+
+			DeviceButton devBtn = (DeviceButton) v;
+			// identifies add device button or device button
+			if (devBtn.getDevice() != null) {
+				Device dev = devBtn.getDevice();
+                
+				mLastClickDevice=dev;
+				
+				displayEditChoiceMenu(dev);
+			
+                return true;
+			}
+
+			return false;
 		}
 
 	};
@@ -423,6 +515,83 @@ public class DeviceActivity extends Activity {
 		// connections
 		mBtConnectMgr = new BtConnectionManager(mHandler);
 
+	}
+
+	/*
+	 * displays the remove confirm dialog.
+	 */
+	private void displayRemoveConfirmDlg() {
+		/*build a dialog, ask if want to close*/
+		AlertDialog.Builder builder = new Builder(DeviceActivity.this);
+
+		builder.setMessage(R.string.remove_device_message);
+
+		builder.setTitle(R.string.remove_device_title);
+
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+		builder.setPositiveButton(android.R.string.yes,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						
+						RemoteUi.getHandle().getChildren().remove(mLastClickDevice);
+
+						/*
+						 * save the data.
+						 */
+						XmlManager xmlManager = new XmlManager();
+						xmlManager.saveData(RemoteUi.getHandle(),
+								RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
+										+ RemoteUi.UI_XML_FILE);
+
+						dialog.dismiss();
+						DeviceActivity.this.displayDevices();
+					}
+				});
+
+		builder.setNegativeButton(android.R.string.no,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+
+				});
+
+		builder.create().show();
+	}
+
+	/*
+	 * display a choice menu
+	 */
+	private void displayEditChoiceMenu(Device dev) {
+		AlertDialog dlg;
+		Builder builder = new AlertDialog.Builder(DeviceActivity.this);
+		builder.setTitle(dev.getName());
+
+		// 设置可供选择的ListView
+		builder.setItems(R.array.dev_long_click_menu,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// which是选中的位置(基于0的)
+						if (which == 0) { // edit device
+
+						} else { // remove device
+							displayRemoveConfirmDlg();
+						}
+
+						dialog.dismiss();
+					}
+				});
+
+		dlg = builder.create();
+
+		dlg.show();
 	}
 
 	// The Handler that gets information back from the BluetoothRemoteService
@@ -495,6 +664,9 @@ public class DeviceActivity extends Activity {
 		@Override
 		protected Integer doInBackground(Integer... params) {
 
+			// if the data is already init , we jump out this method.
+			// if(RemoteUi.getHandle()!=null) return 0;
+
 			RemoteUi.init();
 
 			// copys the UI XML file to sdcard.
@@ -518,6 +690,11 @@ public class DeviceActivity extends Activity {
 			DbManager dbm = new DbManager();
 			dbm.loadDevCategory();
 			dbm.loadIrBrand();
+			/*
+			 * if a category has no device under it, we will not display it to
+			 * user.
+			 */
+			RemoteUi.getHandle().clearEmptyCategory();
 
 			initData();
 

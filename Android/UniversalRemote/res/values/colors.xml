@@ -8,4 +8,5 @@
     <color name="basic_white">#ffe5e5e5</color>
     <color name="separator_black">#ff666666</color>
     <color name="separator_white">#ffb2b2b2</color>
+    <color name="key_button_text">@android:color/black</color>
 </resources>

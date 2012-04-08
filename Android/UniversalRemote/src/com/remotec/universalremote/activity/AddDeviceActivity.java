@@ -159,6 +159,7 @@ public class AddDeviceActivity extends Activity {
 	 */
 	protected void cancelDialog() {
 
+		/*build a dialog, ask if want to close*/
 		AlertDialog.Builder builder = new Builder(AddDeviceActivity.this);
 
 		builder.setMessage(R.string.cancel_adding_msg);
@@ -326,6 +327,9 @@ public class AddDeviceActivity extends Activity {
 					.toString();
 			String category = mSpinerCategory.getSelectedItem().toString();
 			loadCodeNum(category, manufacturer);
+			
+			/*save data to the device object*/
+			mDevice.setName(category+"-"+manufacturer);
 			mDevice.setDeviceType(category);
 			mDevice.setManufacturer(manufacturer);
 		}
@@ -477,8 +481,7 @@ public class AddDeviceActivity extends Activity {
 		byte[] keyFlags =  IrApi.getHandle().
 		        getKeyFlag((byte)dev.getDeviceTypeId(),dev.getIrCode()/10);
 
-        if(keyFlags==null||keyFlags.length!=9)
-        {
+        if(keyFlags==null||keyFlags.length!=9){
         	return false;
         }
 		
