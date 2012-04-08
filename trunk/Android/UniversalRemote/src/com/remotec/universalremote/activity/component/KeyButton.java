@@ -7,13 +7,19 @@ package com.remotec.universalremote.activity.component;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import com.remotec.universalremote.activity.R;
 import com.remotec.universalremote.data.Device;
+import com.remotec.universalremote.data.Key;
 
 /*
  * Performs as a remote key.
@@ -56,5 +62,33 @@ public class KeyButton extends Button {
 	public KeyButton(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
+	
+	 /**
+     * Implement this to do your drawing.
+     *
+     * @param canvas the canvas on which the background will be drawn
+     */
+    protected void onDraw(Canvas canvas) {
+        
+    	Key key=(Key)getTag();
+    	
+    	if(!mIsIconBtn)
+    	{
+	    	if(key!=null){
+	    		if((!key.getVisible())&&(this.getVisibility()==View.VISIBLE))	{
+	                  this.setTextColor(Color.GRAY);
+	    		}else
+	    		{
+	    			 this.setTextColor(Color.BLACK);
+	    			 
+	    		}
+	    	}else{
+	    		 this.setTextColor(Color.BLACK); 		
+	    	}
+    	}
+    	
+        super.onDraw(canvas); 	  
+    }
+	
     
 }

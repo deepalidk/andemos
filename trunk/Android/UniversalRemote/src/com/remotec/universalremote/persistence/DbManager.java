@@ -172,4 +172,6 @@ public class DbManager {
 			Log.e(TAG, e.getMessage());
 		}
 	}
+	
+	
 }

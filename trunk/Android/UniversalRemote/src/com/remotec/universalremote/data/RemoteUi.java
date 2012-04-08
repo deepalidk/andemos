@@ -166,4 +166,19 @@ public class RemoteUi {
     	   mIrBrandMap=new Hashtable<String,List<String>>();
     	   mTemplateKeyMap=new Hashtable<Integer,Key>();
        }
+       
+       /*
+        * Clear the categories which has not brand under it.
+        */
+       public void clearEmptyCategory(){
+    	   for(int i=0;i<mCategoryList.size();){
+    		  String temp= mCategoryList.get(i);
+    		  
+    		  if(!mIrBrandMap.containsKey(temp)){
+    			  mCategoryList.remove(i);
+    		  }else{
+    			  i++;
+    		  }
+    	   }
+       }
 }

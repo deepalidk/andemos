@@ -2,10 +2,8 @@ package com.remotec.universalremote.irapi;
 
 import java.util.LinkedList;
 
-
 import android.text.format.Time;
 import android.util.Log;
-
 
 /**
  * @author walker
@@ -52,13 +50,12 @@ public class IrApi implements IOnRead {
 	 */
 	private int mmRetransimitCount = 2;
 
-	public static IrApi getHandle()
-	{
+	public static IrApi getHandle() {
 		return mmIrApi;
 	}
-	
-	private static IrApi mmIrApi=new IrApi();
-	
+
+	private static IrApi mmIrApi = new IrApi();
+
 	private IrApi() {
 		mmIIo = null;
 		mmParseState = EParseState.cmd;
@@ -75,47 +72,44 @@ public class IrApi implements IOnRead {
 	 */
 	private boolean transmit_data(byte[] TXbuf) throws InterruptedException {
 
-		if(mmIIo==null)return false;
+		if (mmIIo == null)
+			return false;
 
 		int reTransmit = mmRetransimitCount;
 		mmFrames.clear();
 
-		
-//		Time t1=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
-//		Time t2=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
-//		Time t3;
-//		t1.setToNow(); // 取得系统时间。
-		
-		do {	
+		// Time t1=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
+		// Time t2=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
+		// Time t3;
+		// t1.setToNow(); // 取得系统时间。
+
+		do {
 			mmIIo.write(TXbuf);
 
 			synchronized (mmFrames) {
 				mmFrames.wait(mmRetransimitTime);
 				if (mmFrames.size() > 0) {
-					if(mmFrames.getLast().getPayloadBuffer()[0]==EFrameStatus.Succeed
-							.getValue())
-					{
-//						t2.setToNow();
-//						long t=t2.toMillis(true)-t1.toMillis(true);
-//						
-//						String msg=String.format("%d", t);
-//						
-//						if(D)
-//							Log.d("TimeElapsed",msg);		
+					if (mmFrames.getLast().getPayloadBuffer()[0] == EFrameStatus.Succeed
+							.getValue()) {
+						// t2.setToNow();
+						// long t=t2.toMillis(true)-t1.toMillis(true);
+						//
+						// String msg=String.format("%d", t);
+						//
+						// if(D)
+						// Log.d("TimeElapsed",msg);
 						return true;
-					}
-					else
-					{
+					} else {
 						return false;
 					}
-					
+
 				}
 			}
 		} while (reTransmit-- > 0);
 
 		return false;
 	}
-	
+
 	/**
 	 * transmit data with RT300
 	 * 
@@ -126,17 +120,17 @@ public class IrApi implements IOnRead {
 	 */
 	private byte transmit_data_ex(byte[] TXbuf) throws InterruptedException {
 
-		
-		if(mmIIo==null)return (byte) EFrameStatus.ErrorGeneral.getValue();
-				
-			mmIIo.write(TXbuf);
-			
-			synchronized (mmFrames) {
-				mmFrames.wait(3000);
-				if (mmFrames.size() > 0) {
-				return	mmFrames.getLast().getPayloadBuffer()[0];		
-				}
+		if (mmIIo == null)
+			return (byte) EFrameStatus.ErrorGeneral.getValue();
+
+		mmIIo.write(TXbuf);
+
+		synchronized (mmFrames) {
+			mmFrames.wait(3000);
+			if (mmFrames.size() > 0) {
+				return mmFrames.getLast().getPayloadBuffer()[0];
 			}
+		}
 
 		return (byte) EFrameStatus.ErrorGeneral.getValue();
 	}
@@ -251,7 +245,7 @@ public class IrApi implements IOnRead {
 
 		return result;
 	}
-	
+
 	/**
 	 * GET KEY FLAG
 	 * 
@@ -259,27 +253,27 @@ public class IrApi implements IOnRead {
 	 *            device ID
 	 * @param codeNum
 	 *            code Number or Code location Number
-	 * @return
-	 * 1 byte status
-	 * 8 bytes flag.
+	 * @return 1 byte status 8 bytes flag.
 	 */
 	public byte[] getKeyFlag(byte devId, int codeNum) {
 		if (D)
 			Log.d(TAG, "getKeyFlag");
 		Frame frame = new Frame(3);
 		frame.setCmdID((byte) 0x03);
-        byte flags[]=null;
+		byte flags[] = null;
 
 		try {
 			boolean result = false;
 			frame.addPayload(devId);
 			frame.addPayload((byte) (codeNum >> 8));
 			frame.addPayload((byte) (codeNum & 0xFF));
-	
+
 			result = transmit_data(frame.getPacketBuffer());
-			
-			flags=mmFrames.getLast().getPayloadBuffer();
-			
+
+			if (result) {
+				flags = mmFrames.getLast().getPayloadBuffer();
+			}
+
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			if (D)
@@ -289,75 +283,72 @@ public class IrApi implements IOnRead {
 
 		return flags;
 	}
-	
+
 	/**
 	 * STORE SUPPLEMENTRARY LIBRARY TO E2PROM
 	 * 
 	 * @param location
-	 *        the location of library.
+	 *            the location of library.
 	 * 
 	 * @param data
-	 *        the data to be write.
-	 *
+	 *            the data to be write.
+	 * 
 	 * @return
 	 */
-	public boolean StoreLibrary2E2prom(byte location,byte[] data) {
+	public boolean StoreLibrary2E2prom(byte location, byte[] data) {
 		if (D)
 			Log.d(TAG, "StoreLibrary2E2prom");
-		
+
 		boolean result = false;
-		
-		if(data.length!=592)
-		{
+
+		if (data.length != 592) {
 			return result;
 		}
-	
-		try { 
-				//transform the first 4 packages.
-			int curStart=0;
-			int curLength=121;
-			byte status=0;
-	
-			  Frame frame;
-			 int i=0;
-			for(i=0;i<4;i++)
-			{
-				frame= new Frame(123);
-			   frame.setCmdID((byte) 0x07);
-			   frame.addPayload(location);
-			   frame.addPayload((byte)i);
-			   frame.addPayload(data,curStart,curLength);
-			
-			   status = transmit_data_ex(frame.getPacketBuffer());
-				
-				if(status!=0x31)
-				{
+
+		try {
+			// transform the first 4 packages.
+			int curStart = 0;
+			int curLength = 121;
+			byte status = 0;
+
+			Frame frame;
+			int i = 0;
+			for (i = 0; i < 4; i++) {
+				frame = new Frame(123);
+				frame.setCmdID((byte) 0x07);
+				frame.addPayload(location);
+				frame.addPayload((byte) i);
+				frame.addPayload(data, curStart, curLength);
+
+				status = transmit_data_ex(frame.getPacketBuffer());
+
+				if (status != 0x31) {
 					break;
 				}
-				
-				if(D)Log.d(TAG," " + status);
-				
-				curStart+=121;
+
+				if (D)
+					Log.d(TAG, " " + status);
+
+				curStart += 121;
 			}
-			
-			
-			if(status!=0x31)
-			{
+
+			if (status != 0x31) {
 				return result;
 			}
-			
+
 			frame = new Frame(110);
 			frame.setCmdID((byte) 0x07);
 			frame.addPayload(location);
-			frame.addPayload((byte)4);
-			frame.addPayload(data,484,108);
-			
-			if(D)Log.d(TAG," " + status);
-			
+			frame.addPayload((byte) 4);
+			frame.addPayload(data, 484, 108);
+
+			if (D)
+				Log.d(TAG, " " + status);
+
 			status = transmit_data_ex(frame.getPacketBuffer());
-				
-			result=(status==0x30);
-		
+
+			result = (status == 0x30);
+
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			if (D)
@@ -367,7 +358,7 @@ public class IrApi implements IOnRead {
 
 		return result;
 	}
-	
+
 	/***** end of ir api *******************/
 
 	/**
@@ -404,13 +395,13 @@ public class IrApi implements IOnRead {
 		} else if (mmParseState == EParseState.checkSum) {
 
 			if (buffer == mmFrame.calcAckChecksum()) {
-//				if (mmFrame.getPayloadBuffer()[0] == EFrameStatus.Succeed
-//						.getValue()) {
-					synchronized (mmFrames) {
-						mmFrames.add(mmFrame);
-						mmFrames.notify();
-					}
-//				}
+				// if (mmFrame.getPayloadBuffer()[0] == EFrameStatus.Succeed
+				// .getValue()) {
+				synchronized (mmFrames) {
+					mmFrames.add(mmFrame);
+					mmFrames.notify();
+				}
+				// }
 			}
 			mmParseState = EParseState.cmd;
 
@@ -511,22 +502,21 @@ public class IrApi implements IOnRead {
 					buffer.length);
 			mmPayloadIdx += buffer.length;
 		}
-		
+
 		/**
 		 * add data to frame
 		 * 
 		 * @param buffer
 		 *            the data to be added.
 		 */
-		public void addPayload(byte[] buffer,int start,int length) {
+		public void addPayload(byte[] buffer, int start, int length) {
 			System.arraycopy(buffer, start, mmPayloadBuffer, mmPayloadIdx,
 					length);
 			mmPayloadIdx += length;
 		}
-		
-		public void clearPayload()
-		{
-			mmPayloadIdx=0;
+
+		public void clearPayload() {
+			mmPayloadIdx = 0;
 		}
 
 		/**
