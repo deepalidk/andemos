@@ -60,6 +60,7 @@ public class DeviceActivity extends Activity {
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ADD_DEVICE = 2;
 	private static final int REQUEST_ENABLE_BT = 3;
+	private static final int REQUEST_EDIT_DEVICE = 4;
 
 	// Debugging Tags
 	private static final String TAG = "UniversalRemoteActivity";
@@ -91,8 +92,6 @@ public class DeviceActivity extends Activity {
 	private BluetoothAdapter mBluetoothAdapter = null;
 	// Member object for the chat services
 	private BtConnectionManager mBtConnectMgr = null;
-
-	private Device mLastClickDevice;
 
 	/**
 	 * Ir API object
@@ -447,15 +446,23 @@ public class DeviceActivity extends Activity {
 		public boolean onLongClick(View v) {
 
 			DeviceButton devBtn = (DeviceButton) v;
+
 			// identifies add device button or device button
 			if (devBtn.getDevice() != null) {
-				Device dev = devBtn.getDevice();
-                
-				mLastClickDevice=dev;
-				
-				displayEditChoiceMenu(dev);
-			
-                return true;
+
+				// check if an extender is connected, if not, then start an
+				// connect
+				// activity.
+				if (checkConnectionState()) {
+
+					Device dev = devBtn.getDevice();
+
+					RemoteUi.getHandle().setActiveDevice(dev);
+
+					displayEditChoiceMenu(dev);
+
+					return true;
+				}
 			}
 
 			return false;
@@ -474,6 +481,12 @@ public class DeviceActivity extends Activity {
 			Log.d(TAG, "onActivityResult " + resultCode);
 		switch (requestCode) {
 		case REQUEST_ADD_DEVICE:
+			if (resultCode == Activity.RESULT_OK) {
+				displayDevices();
+			}
+			break;
+
+		case REQUEST_EDIT_DEVICE:
 			if (resultCode == Activity.RESULT_OK) {
 				displayDevices();
 			}
@@ -521,7 +534,7 @@ public class DeviceActivity extends Activity {
 	 * displays the remove confirm dialog.
 	 */
 	private void displayRemoveConfirmDlg() {
-		/*build a dialog, ask if want to close*/
+		/* build a dialog, ask if want to close */
 		AlertDialog.Builder builder = new Builder(DeviceActivity.this);
 
 		builder.setMessage(R.string.remove_device_message);
@@ -535,8 +548,11 @@ public class DeviceActivity extends Activity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						
-						RemoteUi.getHandle().getChildren().remove(mLastClickDevice);
+
+						Device activeDev = RemoteUi.getHandle()
+								.getActiveDevice();
+
+						RemoteUi.getHandle().getChildren().remove(activeDev);
 
 						/*
 						 * save the data.
@@ -580,7 +596,11 @@ public class DeviceActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						// which是选中的位置(基于0的)
 						if (which == 0) { // edit device
-
+							Intent addDeviceIntent = new Intent(
+									DeviceActivity.this,
+									EditDeviceActivity.class);
+							startActivityForResult(addDeviceIntent,
+									REQUEST_ADD_DEVICE);
 						} else { // remove device
 							displayRemoveConfirmDlg();
 						}

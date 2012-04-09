@@ -9,4 +9,5 @@
     <color name="separator_black">#ff666666</color>
     <color name="separator_white">#ffb2b2b2</color>
     <color name="key_button_text">@android:color/black</color>
+    <color name="disable_key_mask">@android:color/white</color>
 </resources>

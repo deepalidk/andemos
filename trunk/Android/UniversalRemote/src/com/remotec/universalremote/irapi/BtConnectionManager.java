@@ -373,21 +373,62 @@ public class BtConnectionManager extends IIo {
 	 * fails.
 	 */
 	private class ConnectThread extends Thread {
-		private final BluetoothSocket mmSocket;
+		private BluetoothSocket mmSocket;
 		private final BluetoothDevice mmDevice;
 
 		public ConnectThread(BluetoothDevice device) {
 			mmDevice = device;
+             
+			createSocket();
+		}
+		
+		private void createSocket(){
 			BluetoothSocket tmp = null;
 
 			// Get a BluetoothSocket for a connection with the
 			// given BluetoothDevice
 			try {
-				tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
+				tmp = mmDevice.createRfcommSocketToServiceRecord(MY_UUID);
 			} catch (IOException e) {
 				Log.e(TAG, "create() failed", e);
 			}
 			mmSocket = tmp;
+		}
+
+		/*
+		 * connect a bluetooth device.
+		 * 
+		 * @times: retry times befor return false.
+		 */
+		private boolean connect(BluetoothSocket socket, int times) {
+
+			boolean result=false;
+			// Make a connection to the BluetoothSocket
+			try {
+				// This is a blocking call and will only return on a
+				// successful connection or an exception
+				mmSocket.connect();
+				result=true; 
+			} catch (IOException e) {
+
+				if (times-- > 0) {
+					result=connect(mmSocket, times);
+				} else {
+					// Close the socket
+					try {
+						mmSocket.close();
+					} catch (IOException e2) {
+						Log.e(TAG,
+								"unable to close() socket during connection failure",
+								e2);
+					}
+					result= false;
+				}
+
+
+			}
+
+			return result;
 		}
 
 		public void run() {
@@ -397,21 +438,21 @@ public class BtConnectionManager extends IIo {
 			// Always cancel discovery because it will slow down a connection
 			mAdapter.cancelDiscovery();
 
-			// Make a connection to the BluetoothSocket
-			try {
-				// This is a blocking call and will only return on a
-				// successful connection or an exception
-				mmSocket.connect();
-			} catch (IOException e) {
+			/*try to connect bt three times*/
+		   boolean connectResult=false;
+		   for(int i=0;i<3;i++){
+			   connectResult=connect(mmSocket,5);
+			   
+			   if(connectResult){
+				   break;
+			   }	
+			   
+			   /*recreate socket*/
+			   createSocket();
+		   }
+			
+			if(!connectResult){
 				connectionFailed();
-				// Close the socket
-				try {
-					mmSocket.close();
-				} catch (IOException e2) {
-					Log.e(TAG,
-							"unable to close() socket during connection failure",
-							e2);
-				}
 				// Start the service over to restart listening mode
 				BtConnectionManager.this.start();
 				return;
@@ -480,15 +521,14 @@ public class BtConnectionManager extends IIo {
 						Log.d(TAG, String.format("read bytes=%d", bytes));
 
 						for (int i = 0; i < bytes; i++) {
-								Log.d(TAG, String.format("bytes " + i + " =%x",
-										buffer[i]));
+							Log.d(TAG, String.format("bytes " + i + " =%x",
+									buffer[i]));
 						}
 					}
 
 					if (mmIOnRead != null) {
 						mmIOnRead.OnRead(buffer, bytes);
 					}
-
 
 				} catch (IOException e) {
 					Log.e(TAG, "disconnected", e);
@@ -509,15 +549,14 @@ public class BtConnectionManager extends IIo {
 				mmOutStream.write(buffer);
 
 				if (D) {
-                   
-					Log.d(TAG, String.format("write bytes =%d",
-							buffer.length));
+
+					Log.d(TAG, String.format("write bytes =%d", buffer.length));
 					for (int i = 0; i < buffer.length; i++) {
-							Log.d(TAG, String.format("bytes " + i + " =%x",
-									buffer[i]));
+						Log.d(TAG,
+								String.format("bytes " + i + " =%x", buffer[i]));
 					}
 				}
-				
+
 			} catch (IOException e) {
 				Log.e(TAG, "Exception during write", e);
 			}
