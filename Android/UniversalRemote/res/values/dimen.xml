@@ -51,6 +51,14 @@
     <!-- Key Botton height -->
     <dimen name="key_br_height">150dp</dimen>
     
+    <!-- horizontal padding of disable key  -->
+    <dimen name="disable_key_padding_h">3.0px</dimen>
+    <!-- vertical padding of disable key -->
+    <dimen name="disable_key_padding_v">2.5px</dimen>
+    
+     <!-- the radius of round rect -->
+    <dimen name="disable_key_mask_radius">3px</dimen>
+    
     <!-- Add device wizard -->
     <dimen name="center_layout_width">480dp</dimen>
     <dimen name="spiner_width">300dp</dimen>

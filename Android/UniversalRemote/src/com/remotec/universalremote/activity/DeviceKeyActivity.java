@@ -257,7 +257,6 @@ public class DeviceKeyActivity extends Activity {
 						(byte) 0x81, (byte) (mDevice.getIrCode() % 10), mDevice.getIrCode() / 10,
 						(byte) tempKey.getKeyId());
                 }
-
 			}
 		}
     	
@@ -272,6 +271,7 @@ public class DeviceKeyActivity extends Activity {
     	
     	for(KeyButton keyBtn:this.mKeyButtonMap.values()){
     		keyBtn.setVisibility(View.VISIBLE);		
+			 keyBtn.setDuplicateParentStateEnabled(false);
     	}
     	
     	for(Key key:keyList){
@@ -282,13 +282,20 @@ public class DeviceKeyActivity extends Activity {
     				
     				if(!keyBtn.getIsIconButton()){
     				   keyBtn.setText(key.getText());
+
     				}
     				
     				if(key.getVisible()){
     				 keyBtn.setVisibility(View.VISIBLE);
+    				 keyBtn.getDrawableState();
+//    				 keyBtn.getBackground().setAlpha(255);
+//    				 keyBtn.setEnabled(true);
     				
     				}else{
-    				 keyBtn.setVisibility(View.INVISIBLE);
+    				 keyBtn.setVisibility(View.VISIBLE);
+//    				 keyBtn.getBackground().setAlpha(40);
+//    				 keyBtn.setEnabled(false);
+//    				 keyBtn.setClickable(true);
     				}
     				
     				keyBtn.setTag(key);

@@ -55,7 +55,7 @@
     
     <string name="label_manufacturer">Manufacturer:</string>
     
-    <string name="label_model">Model:</string>
+    <string name="label_model">Code:</string>
     
     <string name="name_label_text">Name:</string>
     
@@ -67,11 +67,15 @@
     
     <string name="btn_test">Remote control test</string>
     
+    <string name="btn_edit_buttons">Edit remote buttons</string>
+    
     <string name="btn_cancel">Cancel</string>
     
     <string name="btn_next">Next</string>
     
     <string name="btn_finish">Finish</string>
+    
+    <string name="btn_done">Done</string>
     
     <string name="btn_back">Back</string>
     

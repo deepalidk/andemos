@@ -38,6 +38,12 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
         <activity
+            android:name=".EditDeviceActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+        <activity
             android:name=".SelectIconDialog"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Dialog" />
