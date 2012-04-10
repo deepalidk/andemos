@@ -164,6 +164,7 @@ public class EditDeviceActivity extends Activity {
 			/* crate a intent object, then call the device activity class */
 			Intent devKeyIntent = new Intent(EditDeviceActivity.this,
 					DeviceKeyActivity.class);
+			devKeyIntent.putExtra(DeviceKeyActivity.ACTIVITY_MODE, DeviceKeyActivity.ACTIVITY_EDIT);
 		    RemoteUi.getHandle().setActiveDevice(mDevice);
 			startActivity(devKeyIntent);
 		}

@@ -107,5 +107,11 @@
     <string name="please_try_again_">Please try again!</string>
     <string name="remove_device_message">Are you sure you want to remove the device?</string>
     <string name="remove_device_title">Remove device</string>
+    <string name="edit_buttons">Edit buttons</string>
+    
+    <string name="remove_key_message">Are you sure you want to delete the remote command assigned to this key?</string>
+    <string name="remove_key_title">Delete remote command</string>
+    
+    <string name="edit_key_label">Edit key labels</string>
     
 </resources>

@@ -7,8 +7,21 @@
         <item>SAT TV</item>      
         <item>CD</item>      
     </string-array>    
-        <string-array name="dev_long_click_menu">      
+    <string-array name="dev_long_click_menu">      
         <item>Edit device</item>      
         <item>Remove device</item>          
     </string-array>    
+    <string-array name="menu_label_key_visible">      
+        <item>Learn remote commands</item>     
+        <item>Delete remote commands</item>   
+        <item>Edit button labels</item>          
+    </string-array>  
+    <string-array name="menu_label_key_invisible">      
+        <item>Learn remote commands</item>       
+        <item>Edit button labels</item>          
+    </string-array>  
+    <string-array name="menu_icon_key_visible">      
+        <item>Learn remote commands</item>     
+        <item>Delete remote commands</item>           
+    </string-array>  
 </resources>

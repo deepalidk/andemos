@@ -467,6 +467,7 @@ public class AddDeviceActivity extends Activity {
 			/* crate a intent object, then call the device activity class */
 			Intent devKeyIntent = new Intent(AddDeviceActivity.this,
 					DeviceKeyActivity.class);
+			devKeyIntent.putExtra(DeviceKeyActivity.ACTIVITY_MODE, DeviceKeyActivity.ACTIVITY_CONTROL);
 		    RemoteUi.getHandle().setActiveDevice(mDevice);
 			startActivity(devKeyIntent);
 		}

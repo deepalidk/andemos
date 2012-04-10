@@ -102,9 +102,16 @@ public class KeyButton extends Button {
 	 */
 	protected void onDraw(Canvas canvas) {
 
+		super.onDraw(canvas);
+		
 		Key key = (Key) getTag();
 
 		if (key != null) {
+			
+//			if(key.getKeyId()==0x27){
+//				Log.d("test", "message");
+//			}
+			
 			if ((!key.getVisible()) && (this.getVisibility() == View.VISIBLE)) {
 				Rect r = getBackground().getBounds();
 
@@ -114,8 +121,6 @@ public class KeyButton extends Button {
 				canvas.drawRoundRect(rf, mRadius, mRadius, mPaint);
 			}
 		}
-
-		super.onDraw(canvas);
 	}
 
 }
