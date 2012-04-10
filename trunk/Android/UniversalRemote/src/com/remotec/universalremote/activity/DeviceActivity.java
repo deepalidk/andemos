@@ -422,17 +422,23 @@ public class DeviceActivity extends Activity {
 					 */
 					Intent devKeyIntent = new Intent(DeviceActivity.this,
 							DeviceKeyActivity.class);
-					// Bundle bdl = new Bundle();
-					// bdl.putSerializable(DeviceKeyActivity.DEVICE_OBJECT,
-					// devButton.getDevice());
-					// devKeyIntent.putExtras(bdl);
+					devKeyIntent.putExtra(DeviceKeyActivity.ACTIVITY_MODE,
+							DeviceKeyActivity.ACTIVITY_CONTROL);
 					RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
 
 					startActivity(devKeyIntent);
 				} else {
-					Intent addDeviceIntent = new Intent(DeviceActivity.this,
-							AddDeviceActivity.class);
-					startActivityForResult(addDeviceIntent, REQUEST_ADD_DEVICE);
+
+					if (RemoteUi.getHandle().getChildren().size() < (mDevButtonList
+							.size() - 1)) {
+						Intent addDeviceIntent = new Intent(
+								DeviceActivity.this, AddDeviceActivity.class);
+						startActivityForResult(addDeviceIntent,
+								REQUEST_ADD_DEVICE);
+					} else {
+						Toast.makeText(DeviceActivity.this, String.format("Can't add more than %d devices!", RemoteUi.getHandle().getChildren().size()),
+								Toast.LENGTH_SHORT).show();
+					}
 				}
 			}
 
