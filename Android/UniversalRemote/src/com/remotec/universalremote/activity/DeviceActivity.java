@@ -203,7 +203,7 @@ public class DeviceActivity extends Activity {
 	 * do nothing.
 	 */
 	private boolean checkConnectionState() {
-
+        
 		if (this.mBtConnectMgr.getState() == BtConnectionManager.STATE_NONE) {
 			/* build a dialog, ask if want to connect an extender */
 			AlertDialog.Builder builder = new Builder(this);
@@ -356,11 +356,14 @@ public class DeviceActivity extends Activity {
 				displayDevice(devList.get(i), mDevButtonList.get(i));
 			}
 
-			// add device button
-			displayAddDevice(mDevButtonList.get(devList.size()));
-
-			for (int i = devList.size() + 1; i < mDevButtonList.size(); i++) {
-				mDevButtonList.get(i).setVisibility(View.INVISIBLE);
+			if(devList.size()<mDevButtonList.size())
+			{	
+				// add device button
+				displayAddDevice(mDevButtonList.get(devList.size()));
+	
+				for (int i = devList.size() + 1; i < mDevButtonList.size(); i++) {
+					mDevButtonList.get(i).setVisibility(View.INVISIBLE);
+				}
 			}
 		} else {
 			for (int i = 1; i < mDevButtonList.size(); i++) {
@@ -429,16 +432,16 @@ public class DeviceActivity extends Activity {
 					startActivity(devKeyIntent);
 				} else {
 
-					if (RemoteUi.getHandle().getChildren().size() < (mDevButtonList
-							.size() - 1)) {
+//					if (RemoteUi.getHandle().getChildren().size() < (mDevButtonList
+//							.size() - 1)) {
 						Intent addDeviceIntent = new Intent(
 								DeviceActivity.this, AddDeviceActivity.class);
 						startActivityForResult(addDeviceIntent,
 								REQUEST_ADD_DEVICE);
-					} else {
-						Toast.makeText(DeviceActivity.this, String.format("Can't add more than %d devices!", RemoteUi.getHandle().getChildren().size()),
-								Toast.LENGTH_SHORT).show();
-					}
+//					} else {
+//						Toast.makeText(DeviceActivity.this, String.format("Can't add more than %d devices!", RemoteUi.getHandle().getChildren().size()),
+//								Toast.LENGTH_SHORT).show();
+//					}
 				}
 			}
 

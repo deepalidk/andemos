@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -396,9 +397,13 @@ public class DeviceKeyActivity extends Activity {
 			Key tempKey = (Key) keyBtn.getTag();
 
 			if (tempKey != null) {
-				boolean result = irController.transmitPreprogramedCode(
-						(byte) 0x81, (byte) (mDevice.getIrCode() % 10),
-						mDevice.getIrCode() / 10, (byte) tempKey.getKeyId());
+//				boolean result = irController.transmitPreprogramedCode(
+//						(byte) 0x81, (byte) (mDevice.getIrCode() % 10),
+//						mDevice.getIrCode() / 10, (byte) tempKey.getKeyId());
+				String data="04032202000800000110001135003202B308190DD4D8092BAE00C74AAE06807F418D2323240032323317312324012432378D232300000000000000000000000000000000000000000000000000000000";
+				boolean result=irController.transmitIrData((byte) 0x81,data);
+				if(D)
+		          Log.d(TAG, ""+result);
 			}
 		}
 	}

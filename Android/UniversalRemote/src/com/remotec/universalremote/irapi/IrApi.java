@@ -13,7 +13,7 @@ public class IrApi implements IOnRead {
 
 	// Debugging
 	private static final String TAG = "Irapi";
-	private static final boolean D = false;
+	private static final boolean D = true;
 
 	/**
 	 * IO Control handle
@@ -78,10 +78,10 @@ public class IrApi implements IOnRead {
 		int reTransmit = mmRetransimitCount;
 		mmFrames.clear();
 
-		// Time t1=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
-		// Time t2=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
-		// Time t3;
-		// t1.setToNow(); // 取得系统时间。
+		 Time t1=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
+		 Time t2=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
+		 Time t3;
+		 t1.setToNow(); // 取得系统时间。
 
 		do {
 			mmIIo.write(TXbuf);
@@ -91,13 +91,13 @@ public class IrApi implements IOnRead {
 				if (mmFrames.size() > 0) {
 					if (mmFrames.getLast().getPayloadBuffer()[0] == EFrameStatus.Succeed
 							.getValue()) {
-						// t2.setToNow();
-						// long t=t2.toMillis(true)-t1.toMillis(true);
-						//
-						// String msg=String.format("%d", t);
-						//
-						// if(D)
-						// Log.d("TimeElapsed",msg);
+						 t2.setToNow();
+						 long t=t2.toMillis(true)-t1.toMillis(true);
+						
+						 String msg=String.format("%d", t);
+						
+						 if(D)
+						 Log.d("TimeElapsed",msg);
 						return true;
 					} else {
 						return false;
@@ -234,6 +234,47 @@ public class IrApi implements IOnRead {
 			frame.addPayload((byte) (codeNum >> 8));
 			frame.addPayload((byte) (codeNum & 0xFF));
 			frame.addPayload(keyId);
+
+			result = transmit_data(frame.getPacketBuffer());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			if (D)
+				Log.d(TAG, "transmitPreprogramedCode, exception");
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	/**
+	 * TRANSMIT PREPROGRAMMED IR CODE
+	 * 
+	 * @param type
+	 *            IR transmission type
+	 * @param devId
+	 *            device ID
+	 * @param codeNum
+	 *            code Number or Code location Number
+	 * @param keyId
+	 *            Key ID
+	 * @return
+	 */
+	public boolean transmitIrData(byte type, String data) {
+		if (D)
+			Log.d(TAG, "transmitPreprogramedCode");
+		Frame frame = new Frame(81);
+		frame.setCmdID((byte) 0x20);
+		boolean result = false;
+
+		try {
+			
+			byte[] buffer=new byte[81];
+			buffer[0]=type;
+			for(int i=1;i<data.length();i+=2)
+			{
+				buffer[(i+1)/2]=(byte) Integer.parseInt(data.substring(i-1, i+1),16);
+			}
+			frame.addPayload(buffer);
 
 			result = transmit_data(frame.getPacketBuffer());
 		} catch (InterruptedException e) {
@@ -566,8 +607,8 @@ public class IrApi implements IOnRead {
 		public byte calcChecksum() {
 			byte result = 0;
 
-			result += 0x45;
-			result += 0x5A;
+			result += 0x4c;
+			result += 0x43;
 			result += mmCmdId;
 			result += mmPayloadBuffer.length + 4;
 
@@ -585,8 +626,8 @@ public class IrApi implements IOnRead {
 		 */
 		public byte[] getPacketBuffer() {
 			byte[] result = new byte[mmPayloadBuffer.length + 5];
-			result[0] = 0x45;
-			result[1] = 0x5A;
+			result[0] = 0x4c;
+			result[1] = 0x43;
 			result[2] = mmCmdId;
 			result[3] = (byte) (mmPayloadBuffer.length + 4);
 			System.arraycopy(mmPayloadBuffer, 0, result, 4,
