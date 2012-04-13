@@ -50,7 +50,7 @@ public class DeviceKeyActivity extends Activity {
 
 	// Debugging Tags
 	private static final String TAG = "DeviceKeyActivity";
-	private static final boolean D = false;
+	private static final boolean D = true;
 
 	// the activit mode of key layout activity
 	public static final String ACTIVITY_MODE = "ACTIVITY_MODE";
@@ -400,6 +400,8 @@ public class DeviceKeyActivity extends Activity {
 //				boolean result = irController.transmitPreprogramedCode(
 //						(byte) 0x81, (byte) (mDevice.getIrCode() % 10),
 //						mDevice.getIrCode() / 10, (byte) tempKey.getKeyId());
+				if(D)
+			          Log.d(TAG, ""+"Start");
 				String data="04032202000800000110001135003202B308190DD4D8092BAE00C74AAE06807F418D2323240032323317312324012432378D232300000000000000000000000000000000000000000000000000000000";
 				boolean result=irController.transmitIrData((byte) 0x81,data);
 				if(D)
@@ -518,6 +520,54 @@ public class DeviceKeyActivity extends Activity {
 	}
 	
 	/*
+	 * displays the prepare learn dialog.
+	 */
+	private void displayPreLearnDlg() {
+		/* build a dialog, ask if want to close */
+		AlertDialog.Builder builder = new Builder(this);
+
+		builder.setTitle(R.string.learn_remote_commands);
+		
+		ViewGroup vg=(ViewGroup) this.getLayoutInflater().inflate(R.layout.prelearn_dialog, null);
+		
+		builder.setView(vg);
+		builder.setPositiveButton(android.R.string.ok,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+						Key key=(Key)mCurActiveKey.getTag();
+						String text=mLabelEdit.getText().toString();
+						key.setText(text);
+					     
+						/*
+						 * save the data.
+						 */
+						XmlManager xmlManager = new XmlManager();
+						xmlManager.saveData(RemoteUi.getHandle(),
+								RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
+										+ RemoteUi.UI_XML_FILE);
+
+						dialog.dismiss();
+						displayKeys();
+					}
+				});
+
+		builder.setNegativeButton(android.R.string.cancel,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+
+				});
+
+		builder.create().show();
+	}
+	
+	/*
 	 * displays the delete confirm dialog.
 	 */
 	private void displayEditLabelDlg() {
@@ -532,7 +582,6 @@ public class DeviceKeyActivity extends Activity {
 		mLabelEdit.setText(key.getText());
 		
 		builder.setView(mLabelEdit);
-
 		builder.setPositiveButton(android.R.string.ok,
 				new DialogInterface.OnClickListener() {
 
@@ -573,8 +622,7 @@ public class DeviceKeyActivity extends Activity {
 	 * displays the learn dialog.
 	 */
 	private void displayLearnDlg(){
-		Toast.makeText(getApplicationContext(),
-				"Learn function to be implemented later!", Toast.LENGTH_SHORT).show();
+		displayPreLearnDlg();
 	}
 	
 	/*

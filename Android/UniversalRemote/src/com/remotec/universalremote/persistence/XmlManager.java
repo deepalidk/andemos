@@ -12,6 +12,7 @@ import android.util.Xml;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
 import com.remotec.universalremote.data.Key;
+import com.remotec.universalremote.data.Key.Mode;
 import com.remotec.universalremote.data.RemoteUi;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -137,18 +138,17 @@ public class XmlManager {
 		for (int i = 0; i < items.getLength(); i++) {
 			child = items.item(i);
 			if (child.getNodeType() == Node.ELEMENT_NODE) {
-			    Element e= (Element) items.item(i);
-			    if(e.getNodeName().equals("Extender")){
+				Element e = (Element) items.item(i);
+				if (e.getNodeName().equals("Extender")) {
 					Extender ext = new Extender();
 					loadData(ext, e);
-					uiData.getExtenderMap().put(ext.getAddress(),ext);
-			    }
-			    else if(e.getNodeName().equals("Device")){
-			    	Device dev = new Device();
+					uiData.getExtenderMap().put(ext.getAddress(), ext);
+				} else if (e.getNodeName().equals("Device")) {
+					Device dev = new Device();
 					loadData(dev, e);
 					uiData.getChildren().add(dev);
-			    }
-			   
+				}
+
 			}
 		}
 	}
@@ -167,25 +167,26 @@ public class XmlManager {
 	 * Loads data to device object from an xml element
 	 */
 	private void loadData(Device uiData, Element elem) {
-		
+
 		uiData.setName(elem.getAttribute("name"));
 		uiData.setIconName(elem.getAttribute("icon_name"));
 		uiData.setDeviceType(elem.getAttribute("category"));
-		uiData.setDeviceTypeId(Integer.parseInt(elem.getAttribute("category_id")));
+		uiData.setDeviceTypeId(Integer.parseInt(elem
+				.getAttribute("category_id")));
 		uiData.setManufacturer(elem.getAttribute("manufacturer"));
 		uiData.setIrCode(Integer.parseInt(elem.getAttribute("ircode")));
-		
+
 		NodeList items = elem.getChildNodes();
 		Node child = null;
 		for (int i = 0; i < items.getLength(); i++) {
 			child = items.item(i);
 			if (child.getNodeType() == Node.ELEMENT_NODE) {
-			    Element e= (Element) items.item(i);
-			    if(e.getNodeName().equals("Key")){
+				Element e = (Element) items.item(i);
+				if (e.getNodeName().equals("Key")) {
 					Key key = new Key();
 					loadData(key, e);
 					uiData.getChildren().add(key);
-			    }   
+				}
 			}
 		}
 	}
@@ -193,11 +194,16 @@ public class XmlManager {
 	/*
 	 * Loads data to key object from an xml element
 	 */
-	private void loadData(Key key, Element elem) {	
+	private void loadData(Key key, Element elem) {
 		key.setKeyId(Integer.parseInt(elem.getAttribute("key_id")));
-		key.setIsLearned(Boolean.parseBoolean(elem.getAttribute("islearned")));
+		key.setMode(Mode.values()[Integer.parseInt(elem.getAttribute("mode"))]);
 		key.setVisible(Boolean.parseBoolean(elem.getAttribute("visible")));
 		key.setText(elem.getAttribute("text"));
+		
+		if(elem.hasAttribute("data")){
+			String strData=elem.getAttribute("data");
+			key.setData(hexStringToByteArray(strData));
+		}
 	}
 
 	/*
@@ -206,14 +212,14 @@ public class XmlManager {
 	private void saveData(RemoteUi uiData, XmlSerializer serializer)
 			throws IllegalArgumentException, IllegalStateException, IOException {
 		serializer.startTag("", "RemoteUi");
-		serializer.attribute("","version", uiData.getVersion());
+		serializer.attribute("", "version", uiData.getVersion());
 
-		Map<String,Extender> extMap = uiData.getExtenderMap();
+		Map<String, Extender> extMap = uiData.getExtenderMap();
 
 		for (Extender ext : extMap.values()) {
 			saveData(ext, serializer);
 		}
-		
+
 		List<Device> devList = uiData.getChildren();
 
 		for (Device dev : devList) {
@@ -229,8 +235,8 @@ public class XmlManager {
 	private void saveData(Extender ext, XmlSerializer serializer)
 			throws IllegalArgumentException, IllegalStateException, IOException {
 		serializer.startTag("", "Extender");
-		serializer.attribute("","name", ext.getName());
-		serializer.attribute("","address", ext.getAddress());
+		serializer.attribute("", "name", ext.getName());
+		serializer.attribute("", "address", ext.getAddress());
 
 		serializer.endTag("", "Extender");
 	}
@@ -238,19 +244,20 @@ public class XmlManager {
 	/*
 	 * Saves data to an xml element.
 	 */
-	private void saveData(Device dev, XmlSerializer serializer) throws IllegalArgumentException, IllegalStateException, IOException {
+	private void saveData(Device dev, XmlSerializer serializer)
+			throws IllegalArgumentException, IllegalStateException, IOException {
 		serializer.startTag("", "Device");
-		serializer.attribute("","name", dev.getName());
-		serializer.attribute("","icon_name", dev.getIconName());
-		serializer.attribute("","manufacturer", dev.getManufacturer());
-		serializer.attribute("","category", dev.getDeviceType());
-		serializer.attribute("","category_id", ""+dev.getDeviceTypeId());
-		serializer.attribute("","ircode", ""+dev.getIrCode());
+		serializer.attribute("", "name", dev.getName());
+		serializer.attribute("", "icon_name", dev.getIconName());
+		serializer.attribute("", "manufacturer", dev.getManufacturer());
+		serializer.attribute("", "category", dev.getDeviceType());
+		serializer.attribute("", "category_id", "" + dev.getDeviceTypeId());
+		serializer.attribute("", "ircode", "" + dev.getIrCode());
 
 		List<Key> children = dev.getChildren();
 
 		for (Key key : children) {
-			saveData(key,serializer);
+			saveData(key, serializer);
 		}
 
 		serializer.endTag("", "Device");
@@ -259,13 +266,52 @@ public class XmlManager {
 	/*
 	 * Saves data to an xml element.
 	 */
-	private void saveData(Key key, XmlSerializer serializer) throws IllegalArgumentException, IllegalStateException, IOException {
+	private void saveData(Key key, XmlSerializer serializer)
+			throws IllegalArgumentException, IllegalStateException, IOException {
 		serializer.startTag("", "Key");
-		serializer.attribute("","key_id", ""+key.getKeyId());
-		serializer.attribute("","text", key.getText());
-		serializer.attribute("","islearned", ""+key.getIsLearned());
-		serializer.attribute("","visible", ""+key.getVisible());
-		
+		serializer.attribute("", "key_id", "" + key.getKeyId());
+		serializer.attribute("", "text", key.getText());
+		serializer.attribute("", "mode", "" + key.getMode().getValue());
+		serializer.attribute("", "visible", "" + key.getVisible());
+		if(key.getData()!=null){
+			String strData=byteArrayToHexString(key.getData());
+			serializer.attribute("", "data", strData);
+		}
+			
 		serializer.endTag("", "Key");
 	}
+
+	/**
+	 * converts given byte array to a hex string
+	 * 
+	 * @param bytes
+	 * @return
+	 */
+	public static String byteArrayToHexString(byte[] bytes) {
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < bytes.length; i++) {
+			if (((int) bytes[i] & 0xff) < 0x10)
+				buffer.append("0");
+			buffer.append(Long.toString((int) bytes[i] & 0xff, 16));
+		}
+		return buffer.toString();
+	}
+
+	/**
+	 * converts given hex string to a byte array (ex: "0D0A" => {0x0D, 0x0A,})
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static final byte[] hexStringToByteArray(String str) {
+		int i = 0;
+		byte[] results = new byte[str.length() / 2];
+		for (int k = 0; k < str.length();) {
+			results[i] = (byte) (Character.digit(str.charAt(k++), 16) << 4);
+			results[i] += (byte) (Character.digit(str.charAt(k++), 16));
+			i++;
+		}
+		return results;
+	}
+
 }
