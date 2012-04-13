@@ -13,7 +13,7 @@ public class IrApi implements IOnRead {
 
 	// Debugging
 	private static final String TAG = "Irapi";
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	/**
 	 * IO Control handle
@@ -43,7 +43,7 @@ public class IrApi implements IOnRead {
 	/**
 	 * time to Retransimit(ms)
 	 */
-	private int mmRetransimitTime = 100;
+	private int mmRetransimitTime = 500;
 
 	/**
 	 * time to Retransimit(ms)
@@ -276,7 +276,9 @@ public class IrApi implements IOnRead {
 			}
 			frame.addPayload(buffer);
 
+			Log.d("DeviceKeyActivity", ""+"changed");
 			result = transmit_data(frame.getPacketBuffer());
+			Log.d("DeviceKeyActivity", "result"+result);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			if (D)
@@ -607,8 +609,12 @@ public class IrApi implements IOnRead {
 		public byte calcChecksum() {
 			byte result = 0;
 
-			result += 0x4c;
-			result += 0x43;
+			result += 0x45;
+			result += 0x5a;
+			
+//			result += 0x4c;
+//			result += 0x43;
+			
 			result += mmCmdId;
 			result += mmPayloadBuffer.length + 4;
 
@@ -626,8 +632,12 @@ public class IrApi implements IOnRead {
 		 */
 		public byte[] getPacketBuffer() {
 			byte[] result = new byte[mmPayloadBuffer.length + 5];
-			result[0] = 0x4c;
-			result[1] = 0x43;
+			result[0] = 0x45;
+			result[1] = 0x5a;
+			
+//			result[0] = 0x4c;
+//			result[1] = 0x43;
+			
 			result[2] = mmCmdId;
 			result[3] = (byte) (mmPayloadBuffer.length + 4);
 			System.arraycopy(mmPayloadBuffer, 0, result, 4,
