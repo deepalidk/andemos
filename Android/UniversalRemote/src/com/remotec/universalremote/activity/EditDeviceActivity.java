@@ -97,7 +97,6 @@ public class EditDeviceActivity extends Activity {
 
 		initControls();
 
-
 		mDevice = RemoteUi.getHandle().getActiveDevice();
 		
 		updateControls();

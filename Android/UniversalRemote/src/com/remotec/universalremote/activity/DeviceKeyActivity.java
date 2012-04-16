@@ -38,6 +38,7 @@ import com.remotec.universalremote.activity.component.DeviceButton;
 import com.remotec.universalremote.activity.component.KeyButton;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Key;
+import com.remotec.universalremote.data.Key.Mode;
 import com.remotec.universalremote.data.RemoteUi;
 import com.remotec.universalremote.irapi.BtConnectionManager;
 import com.remotec.universalremote.irapi.IrApi;
@@ -110,6 +111,9 @@ public class DeviceKeyActivity extends Activity {
 
 	// store the cur edit key, for edit.
 	private KeyButton mCurActiveKey;
+	
+	//the object of learning dialog.
+	private AlertDialog mLearningDlg;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -397,15 +401,31 @@ public class DeviceKeyActivity extends Activity {
 			Key tempKey = (Key) keyBtn.getTag();
 
 			if (tempKey != null) {
-//				boolean result = irController.transmitPreprogramedCode(
-//						(byte) 0x81, (byte) (mDevice.getIrCode() % 10),
-//						mDevice.getIrCode() / 10, (byte) tempKey.getKeyId());
-				if(D)
-			          Log.d(TAG, ""+"Start");
-				String data="04032202000800000110001135003202B308190DD4D8092BAE00C74AAE06807F418D2323240032323317312324012432378D232300000000000000000000000000000000000000000000000000000000";
-				boolean result=irController.transmitIrData((byte) 0x81,data);
-				if(D)
-		          Log.d(TAG, ""+result);
+				
+				if(tempKey.getMode()==Mode.BuildIn){
+					boolean result = irController.transmitPreprogramedCode(
+					(byte) 0x81, (byte) (mDevice.getIrCode() % 10),
+					mDevice.getIrCode() / 10, (byte) tempKey.getKeyId());
+				}else if(tempKey.getMode()==Mode.Learn){
+					
+					boolean result=irController.storeLearnData((byte)0, tempKey.getData());
+					
+					if(result){
+					   result=irController.transmitLearnData((byte) 0x81,(byte)0);
+					}
+				
+					
+				}else if(tempKey.getMode()==Mode.UIRD){
+					if(D)
+				          Log.d(TAG, ""+"Start");
+					String data="04032202000800000110001135003202B308190DD4D8092BAE00C74AAE06807F418D2323240032323317312324012432378D232300000000000000000000000000000000000000000000000000000000";
+					boolean result=irController.transmitIrData((byte) 0x81,data);
+					if(D)
+			          Log.d(TAG, ""+result);
+				}
+				
+
+
 			}
 		}
 	}
@@ -520,6 +540,58 @@ public class DeviceKeyActivity extends Activity {
 	}
 	
 	/*
+	 * displays the learn failed dialog.
+	 */
+	private void displayLearnFailed() {
+		/* build a dialog, ask if want to close */
+		AlertDialog.Builder builder = new Builder(this);
+
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setTitle(R.string.learn_failed_title);
+		builder.setMessage(R.string.learn_failed_msg);
+		
+		builder.setPositiveButton(android.R.string.ok,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+                        displayPreLearnDlg();
+					}
+				});
+
+		builder.create().show();
+	}
+	
+	/*
+	 * displays the learn failed dialog.
+	 */
+	private void displayLearnSucess() {
+		
+		Toast.makeText(getApplicationContext(),
+				R.string.learning_succeed_msg, Toast.LENGTH_SHORT)
+				.show();
+	}
+	
+	/*
+	 * displays the learning dialog.
+	 */
+	private void displayLearningDlg() {
+		/* build a dialog, ask if want to close */
+		AlertDialog.Builder builder = new Builder(this);
+
+		builder.setTitle(R.string.Learn_dialog_title);
+		
+		ViewGroup vg=(ViewGroup) this.getLayoutInflater().inflate(R.layout.learn_dialog, null);
+		
+		builder.setView(vg);
+		
+		mLearningDlg=builder.create();
+		
+		mLearningDlg.show();
+	}
+	
+	/*
 	 * displays the prepare learn dialog.
 	 */
 	private void displayPreLearnDlg() {
@@ -531,26 +603,16 @@ public class DeviceKeyActivity extends Activity {
 		ViewGroup vg=(ViewGroup) this.getLayoutInflater().inflate(R.layout.prelearn_dialog, null);
 		
 		builder.setView(vg);
-		builder.setPositiveButton(android.R.string.ok,
+		builder.setPositiveButton(R.string.btn_start,
 				new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 
-						Key key=(Key)mCurActiveKey.getTag();
-						String text=mLabelEdit.getText().toString();
-						key.setText(text);
-					     
-						/*
-						 * save the data.
-						 */
-						XmlManager xmlManager = new XmlManager();
-						xmlManager.saveData(RemoteUi.getHandle(),
-								RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
-										+ RemoteUi.UI_XML_FILE);
-
 						dialog.dismiss();
-						displayKeys();
+						
+						LearningTask task=new LearningTask(); 
+						task.execute(0);
 					}
 				});
 
@@ -754,6 +816,81 @@ public class DeviceKeyActivity extends Activity {
 			DeviceKeyActivity.this
 					.removeDialog(DeviceKeyActivity.PROGRESS_DIALOG);
 
+		}
+	}
+	
+	/*
+	 * AsyncTask for Learning.
+	 */
+	private class LearningTask extends
+			android.os.AsyncTask<Integer, Integer, Integer> {	
+		
+		private static final byte LEARN_LOCATION = 0;
+		//learning result
+		boolean mLearningResult=false;
+		
+	    public boolean getLeaningResult(){
+	    	return mLearningResult;
+	    } 
+	    
+		//learning result
+		byte[] mData=null;
+		
+	    public byte[] getLeaningData(){
+	    	return mData;
+	    } 
+		
+		@Override
+		protected Integer doInBackground(Integer... params) {
+           
+			IrApi irController = IrApi.getHandle();
+			
+			//learn at loc 0
+			mLearningResult = irController.learnIrCode(LEARN_LOCATION);
+			
+			if(mLearningResult){
+				
+				byte[] data=irController.readLearnData(LEARN_LOCATION);
+				
+				//get the data at loc 0
+				Key key=(Key)mCurActiveKey.getTag();
+				key.setData(data);
+				key.setMode(Mode.Learn);
+				key.setVisible(true);
+				
+				/*
+				 * save the data.
+				 */
+				XmlManager xmlManager = new XmlManager();
+				xmlManager.saveData(RemoteUi.getHandle(),
+						RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
+								+ RemoteUi.UI_XML_FILE);
+			}
+			
+			return 0;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			displayLearningDlg();
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... progress) {
+
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			
+			mLearningDlg.dismiss();
+			mLearningDlg=null;
+			if(mLearningResult){
+				displayLearnSucess();
+				displayKeys();
+			}else{
+				displayLearnFailed();
+			}	
 		}
 	}
 

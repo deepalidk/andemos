@@ -204,41 +204,41 @@ public class DeviceActivity extends Activity {
 	 */
 	private boolean checkConnectionState() {
         
-		if (this.mBtConnectMgr.getState() == BtConnectionManager.STATE_NONE) {
-			/* build a dialog, ask if want to connect an extender */
-			AlertDialog.Builder builder = new Builder(this);
-
-			builder.setMessage(R.string.connect_now);
-
-			builder.setTitle(R.string.connect_extender);
-
-			builder.setIcon(android.R.drawable.ic_dialog_info);
-
-			builder.setPositiveButton(android.R.string.yes,
-					new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-							// start connect extender activity.
-							startConnectDialog();
-						}
-					});
-
-			builder.setNegativeButton(android.R.string.no,
-					new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-						}
-
-					});
-
-			builder.create().show();
-
-			return false;
-		}
+//		if (this.mBtConnectMgr.getState() == BtConnectionManager.STATE_NONE) {
+//			/* build a dialog, ask if want to connect an extender */
+//			AlertDialog.Builder builder = new Builder(this);
+//
+//			builder.setMessage(R.string.connect_now);
+//
+//			builder.setTitle(R.string.connect_extender);
+//
+//			builder.setIcon(android.R.drawable.ic_dialog_info);
+//
+//			builder.setPositiveButton(android.R.string.yes,
+//					new DialogInterface.OnClickListener() {
+//
+//						@Override
+//						public void onClick(DialogInterface dialog, int which) {
+//							dialog.dismiss();
+//							// start connect extender activity.
+//							startConnectDialog();
+//						}
+//					});
+//
+//			builder.setNegativeButton(android.R.string.no,
+//					new DialogInterface.OnClickListener() {
+//
+//						@Override
+//						public void onClick(DialogInterface dialog, int which) {
+//							dialog.dismiss();
+//						}
+//
+//					});
+//
+//			builder.create().show();
+//
+//			return false;
+//		}
 
 		return true;
 	}
