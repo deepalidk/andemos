@@ -79,6 +79,8 @@
     
     <string name="btn_back">Back</string>
     
+    <string name="btn_start">Start</string>
+    
     <string name="cancel_adding_msg">Are you sure you want to cancel adding device?</string>
     
     <string name="cancel_adding_title">Cancel adding device</string>
@@ -116,4 +118,17 @@
     
     <string name="learn_remote_commands">Learn remote commands</string>
     
+    <string name="place_remote">Place the remote control close to the extender, as shown.</string>
+    
+    <string name="press_key">When ready,select Start, and press the remote button you want Remote control to learn.</string>
+    
+    <string name="learn_failed_title">Cannot receive remote signal</string>
+    
+    <string name="learn_failed_msg">Move the IR transmitter of the remote closer to the extender, and try again.</string>
+    
+    <string name="Learn_dialog_title">Press a button on the remote</string>
+    
+    <string name="learned_success_command">Learned the remote command</string>
+    
+    <string name="learning_succeed_msg">Learning procedure succeed!</string>
 </resources>

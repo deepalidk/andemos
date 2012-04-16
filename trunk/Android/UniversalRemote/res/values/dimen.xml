@@ -75,5 +75,7 @@
     <dimen name="next_btn_right_margin">80.0dp</dimen>
     <dimen name="next_btn_finish_margin">80.0dp</dimen> 
     <dimen name="back_btn_right_margin">30.0dp</dimen>
-
+    <!-- Prelearn Dialog -->
+    <dimen name="image_margin">25.0dp</dimen>
+    <dimen name="text_comment_row_space">28.0sp</dimen>
 </resources>

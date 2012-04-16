@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/img_learning"
         android:layout_centerVertical="true"
+        android:layout_margin="@dimen/image_margin"
         />
 
     <TextView
@@ -17,7 +18,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/imageview_remote"
-        android:text="@string/btn_cancel" 
+        android:text="@string/place_remote" 
+        android:layout_marginTop="@dimen/image_margin"
+        style="@style/Learn_Dialog_TextView"
 		/>
     
     <TextView
@@ -26,7 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/imageview_remote"
         android:layout_below="@+id/textView_position"
-        android:text="@string/btn_cancel" 
+        android:text="@string/press_key" 
+        android:layout_marginTop="@dimen/image_margin"
+        style="@style/Learn_Dialog_TextView"
 		/>
 
 </RelativeLayout>

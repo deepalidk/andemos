@@ -39,7 +39,10 @@
      <style name="Dialog_TextView">
         <item name="android:textSize">28.0sp</item>
         <item name="android:textColor">@color/white_text</item>
-        <item name="android:singleLine">true</item>
+    </style>
+    <style name="Learn_Dialog_TextView">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">@color/white_text</item>
     </style>
     <style name="spiner_item_textview">
         <item name="android:textSize">28.0sp</item>

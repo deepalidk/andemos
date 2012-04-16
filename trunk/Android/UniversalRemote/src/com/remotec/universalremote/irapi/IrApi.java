@@ -67,15 +67,18 @@ public class IrApi implements IOnRead {
 	 * 
 	 * @param TXbuf
 	 *            data to send to RT300
+	 * @param timeOut
+	 *            retransmit timeout
+	 * @param retransmitCount
+	 *            retransmit count
 	 * @return Ack packet
 	 * @throws InterruptedException
 	 */
-	private boolean transmit_data(byte[] TXbuf) throws InterruptedException {
-
+	private boolean transmit_data(byte[] TXbuf,int timeOut,int retransmitCount) throws InterruptedException{
+		
 		if (mmIIo == null)
 			return false;
 
-		int reTransmit = mmRetransimitCount;
 		mmFrames.clear();
 
 		 Time t1=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
@@ -87,7 +90,7 @@ public class IrApi implements IOnRead {
 			mmIIo.write(TXbuf);
 
 			synchronized (mmFrames) {
-				mmFrames.wait(mmRetransimitTime);
+				mmFrames.wait(timeOut);
 				if (mmFrames.size() > 0) {
 					if (mmFrames.getLast().getPayloadBuffer()[0] == EFrameStatus.Succeed
 							.getValue()) {
@@ -105,9 +108,22 @@ public class IrApi implements IOnRead {
 
 				}
 			}
-		} while (reTransmit-- > 0);
+		} while (retransmitCount-- > 0);
 
 		return false;
+	}
+	
+	/**
+	 * transmit data with RT300
+	 * 
+	 * @param TXbuf
+	 *            data to send to RT300
+	 * @return Ack packet
+	 * @throws InterruptedException
+	 */
+	private boolean transmit_data(byte[] TXbuf) throws InterruptedException {
+
+		return transmit_data(TXbuf,mmRetransimitTime,mmRetransimitCount);
 	}
 
 	/**
@@ -402,6 +418,143 @@ public class IrApi implements IOnRead {
 		return result;
 	}
 
+	/**
+	 * TRANSMIT PREPROGRAMMED IR CODE
+	 * 
+	 * @param loc
+	 *        IR Code Storage Location(0-100)
+	 * @return
+	 */
+	public boolean learnIrCode(byte loc) {
+		if (D)
+			Log.d(TAG, "transmitPreprogramedCode");
+		Frame frame = new Frame(1);
+		frame.setCmdID((byte) 0x04);
+		boolean result = false;
+
+		try {
+			frame.addPayload(loc);
+
+			result = transmit_data(frame.getPacketBuffer(),15000,0);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			if (D)
+				Log.d(TAG, "transmitPreprogramedCode, exception");
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	/**
+	 * TRANSMIT PREPROGRAMMED IR CODE
+	 * 
+	 * @param loc
+	 *        IR Code Storage Location(0-100)
+	 * @return
+	 *     81 byte data.
+	 */
+	public byte[] readLearnData(byte loc) {
+		if (D)
+			Log.d(TAG, "transmitPreprogramedCode");
+		Frame frame = new Frame(1);
+		frame.setCmdID((byte) 0x12);
+		boolean result = false;
+		byte[] resultFrame=null;
+
+		try {
+			frame.addPayload(loc);
+
+			result = transmit_data(frame.getPacketBuffer());
+			
+			
+			if(result){
+			Frame resultframe = mmFrames.removeFirst();
+
+			if (D)
+				Log.d(TAG, "rsultframe.getPayloadBuffer();");
+			resultFrame = resultframe.getPayloadBuffer();
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			if (D)
+				Log.d(TAG, "transmitPreprogramedCode, exception");
+			e.printStackTrace();
+		}
+
+		return resultFrame;
+	}
+	
+	/**
+	 * TRANSMIT LEARNED IR CODE
+	 * 
+     * @param type
+	 *            IR transmission type
+	 * @param loc
+	 *            Learned IR Code Storage Location     
+	 * @return
+	 *     
+	 */
+	public boolean transmitLearnData(byte type,byte loc) {
+		if (D)
+			Log.d(TAG, "transmitPreprogramedCode");
+		Frame frame = new Frame(2);
+		frame.setCmdID((byte) 0x02);
+		boolean result = false;
+
+		try {
+			frame.addPayload(type);
+			frame.addPayload(loc);
+
+			result = transmit_data(frame.getPacketBuffer());
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			if (D)
+				Log.d(TAG, "transmitPreprogramedCode, exception");
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	/**
+	 * TRANSMIT PREPROGRAMMED IR CODE
+	 * 
+	 * @param type
+	 *        IR Code Storage Location(0-100)
+	 * @param data
+	 *        IR learn data.       
+	 * @return
+	 *     
+	 */
+	public boolean storeLearnData(byte loc,byte[] data) {
+		if (D)
+			Log.d(TAG, "transmitPreprogramedCode");
+		
+		if(data==null) return false;
+		
+		Frame frame = new Frame(82);
+		frame.setCmdID((byte) 0x13);
+		boolean result = false;
+
+		try {
+			frame.addPayload(loc);
+			frame.addPayload(data);
+
+			result = transmit_data(frame.getPacketBuffer());
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			if (D)
+				Log.d(TAG, "transmitPreprogramedCode, exception");
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	
 	/***** end of ir api *******************/
 
 	/**
