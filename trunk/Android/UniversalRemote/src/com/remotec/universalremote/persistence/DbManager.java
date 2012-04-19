@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.remotec.universalremote.data.RemoteUi;
+import com.remotec.universalremote.data.Uird;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -79,7 +80,7 @@ public class DbManager {
 	/*
 	 * get codes of the specific category and brandName.
 	 */
-	public List<String> getCodesList(String category,String brandName)
+	public List<String> getCodesList(String category,String brandName,boolean isUirdLib)
 	{
 		List<String> result=new ArrayList<String>();
 		
@@ -88,10 +89,11 @@ public class DbManager {
 			SQLiteDatabase db = getDataBase();
 			// 定义Cursor游标,用于管理数据，比如获得数据库的每一行数据
 			Cursor cursor = null;
-
+            int irSrc=isUirdLib?2:1;
+            
 			String sql=String.format("Select ircodenum From irCodeList" +
 					" left join category on irCodeList.devType=category.devType" +
-					"  where name like \'%s\' and brandName like \'%s\'", category,brandName);
+					"  where irCodeSrc=%d and name like \'%s\' and brandName like \'%s\'",irSrc, category,brandName);
 			// 查询test_listview数据
 			cursor = db.rawQuery(sql,null);
 			// 通过强大的cursor把数据库的资料一行一行地读取出来
@@ -107,6 +109,34 @@ public class DbManager {
 		return result;
 	}
 
+	public List<Uird> getUirdData(int devType,int irCode){
+		List<Uird> mDataList=new ArrayList<Uird>();
+		
+		try {
+
+			SQLiteDatabase db = getDataBase();
+			// 定义Cursor游标,用于管理数据，比如获得数据库的每一行数据
+			Cursor cursor = null;
+
+            
+			String sql=String.format("Select keyId,data From tbUirdData where codenum=%d and devtype=%d",irCode,devType);
+			// 查询test_listview数据
+			cursor = db.rawQuery(sql,null);
+			// 通过强大的cursor把数据库的资料一行一行地读取出来
+			while (cursor.moveToNext()) {
+                Uird temp=new Uird();
+                temp.setKeyId(cursor.getInt(0));
+                byte[] uirdData=XmlManager.hexStringToByteArray(cursor.getString(1));
+                temp.setUirdData(uirdData);
+                mDataList.add(temp);
+				
+			}
+		} catch (Exception e) {
+		}
+		
+		return mDataList;
+	}
+	
 	/*
 	 * loads the device category from database.
 	 */

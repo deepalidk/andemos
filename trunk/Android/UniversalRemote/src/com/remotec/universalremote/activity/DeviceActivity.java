@@ -98,11 +98,6 @@ public class DeviceActivity extends Activity {
 	 */
 	private IrApi mIrController;
 
-	/*
-	 * the connected extender;
-	 */
-	private Extender mActiveExtender;
-
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -631,15 +626,21 @@ public class DeviceActivity extends Activity {
 			case CONNECTTION_STATE_CHANGE:
 				switch (msg.arg1) {
 				case BtConnectionManager.STATE_CONNECTED: {
-					boolean result = DeviceActivity.this.mIrController
-							.init(mBtConnectMgr);
-					mTitleRight.setText(R.string.title_connected_to);
-					mTitleRight.append(mActiveExtender.getName());
-
-					XmlManager xm = new XmlManager();
-					xm.saveData(RemoteUi.getHandle(),
-							RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
-									+ RemoteUi.UI_XML_FILE);
+					
+					String version= mIrController.init(mBtConnectMgr);
+                    
+					if(version!=null){		
+						//set the version info to the extender.
+						RemoteUi.getHandle().getActiveExtender().setVersion(version);
+						
+						mTitleRight.setText(R.string.title_connected_to);
+						mTitleRight.append(RemoteUi.getHandle().getActiveExtender().getName());
+	
+						XmlManager xm = new XmlManager();
+						xm.saveData(RemoteUi.getHandle(),
+								RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
+										+ RemoteUi.UI_XML_FILE);
+					}
 
 					break;
 				}
@@ -654,16 +655,20 @@ public class DeviceActivity extends Activity {
 			case MESSAGE_DEVICE_ADDRESS:
 				// save the connected device's name
 				String devAddr = msg.getData().getString(DEVICE_ADDRESS);
-
+                
+				Extender activeExtender;
+				
 				// already has the extender.
 				if (RemoteUi.getHandle().getExtenderMap().containsKey(devAddr)) {
-					mActiveExtender = RemoteUi.getHandle().getExtenderMap()
+					activeExtender = RemoteUi.getHandle().getExtenderMap()
 							.get(devAddr);
+					RemoteUi.getHandle().setActiveExtender(activeExtender);
 				} else {
-					mActiveExtender = new Extender();
-					mActiveExtender.setAddress(devAddr);
+					activeExtender = new Extender();
+					activeExtender.setAddress(devAddr);
 					RemoteUi.getHandle().getExtenderMap()
-							.put(devAddr, mActiveExtender);
+							.put(devAddr, activeExtender);
+					RemoteUi.getHandle().setActiveExtender(activeExtender);
 				}
 
 				break;
@@ -672,7 +677,7 @@ public class DeviceActivity extends Activity {
 				String devName = msg.getData().getString(DEVICE_NAME);
 				Toast.makeText(getApplicationContext(),
 						"Connected to " + devName, Toast.LENGTH_SHORT).show();
-				mActiveExtender.setName(devName);
+				RemoteUi.getHandle().getActiveExtender().setName(devName);
 
 				break;
 			case MESSAGE_TOAST:
