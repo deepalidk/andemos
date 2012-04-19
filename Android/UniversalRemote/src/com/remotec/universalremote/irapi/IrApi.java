@@ -154,22 +154,27 @@ public class IrApi implements IOnRead {
 	/***** IR API *******************/
 
 	/**
-	 * @param iIo
-	 *            the interface of IO
-	 * @return true - succeeded. false- failed
+	 * @param in iIo
+	 *            the interface of IO 
+	 *                
+	 * @return the firmware version of RT300.
+	 *         
 	 */
-	public boolean init(IIo iIo) {
+	public String init(IIo iIo) {
 		mmIIo = iIo;
 		mmIIo.setOnReadFunc(this);
 		mmParseState = EParseState.cmd;
 
-		byte[] version = new byte[2];
-		boolean result = IrGetVersion(version);
-
+		byte[] versionTemp = IrGetVersion();
+		String result=null;
+	
 		if (!D) {
-			if (result == false) {
+			if (versionTemp == null) {
+			
 				mmIIo.setOnReadFunc(null);
 				mmIIo = null;
+			}else{
+				result=String.format("%02x%02x",versionTemp[1],versionTemp[2]);	
 			}
 		}
 
@@ -182,17 +187,16 @@ public class IrApi implements IOnRead {
 	 * @param version
 	 * @return true-success false-failed
 	 */
-	public boolean IrGetVersion(byte[] version) {
+	public byte[] IrGetVersion() {
 
 		if (D)
 			Log.d(TAG, "IrGetVersion");
 		Frame frame = new Frame(0);
 		frame.setCmdID((byte) 0x09);
-		boolean result = false;
+		byte[] version = null;
 
 		try {
-
-			result = transmit_data(frame.getPacketBuffer());
+		     boolean result = transmit_data(frame.getPacketBuffer());
 
 			if (result) {
 				if (D)
@@ -211,7 +215,7 @@ public class IrApi implements IOnRead {
 			e.printStackTrace();
 		}
 
-		return result;
+		return version;
 	}
 
 	/*******************************
@@ -275,22 +279,21 @@ public class IrApi implements IOnRead {
 	 *            Key ID
 	 * @return
 	 */
-	public boolean transmitIrData(byte type, String data) {
+	public boolean transmitIrData(byte type, byte[] data) {
 		if (D)
 			Log.d(TAG, "transmitPreprogramedCode");
+		
+		if(data==null){
+			return false;
+		}
+		
 		Frame frame = new Frame(81);
 		frame.setCmdID((byte) 0x20);
 		boolean result = false;
 
 		try {
-			
-			byte[] buffer=new byte[81];
-			buffer[0]=type;
-			for(int i=1;i<data.length();i+=2)
-			{
-				buffer[(i+1)/2]=(byte) Integer.parseInt(data.substring(i-1, i+1),16);
-			}
-			frame.addPayload(buffer);
+            frame.addPayload(type);
+			frame.addPayload(data);
 
 			Log.d("DeviceKeyActivity", ""+"changed");
 			result = transmit_data(frame.getPacketBuffer());
@@ -435,7 +438,22 @@ public class IrApi implements IOnRead {
 		try {
 			frame.addPayload(loc);
 
-			result = transmit_data(frame.getPacketBuffer(),15000,0);
+			result = transmit_data(frame.getPacketBuffer());
+			
+			if(result)
+			{
+				result=false;
+				synchronized (mmFrames) {
+					mmFrames.wait(20000);
+					if (mmFrames.size() > 1) {
+						if (mmFrames.getLast().getPayloadBuffer()[0] == EFrameStatus.Succeed
+								.getValue()) {
+							result= true;
+						}
+					}
+				}
+			}
+			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			if (D)

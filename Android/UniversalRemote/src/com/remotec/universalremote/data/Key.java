@@ -22,7 +22,7 @@ public class Key implements Serializable {
 		BuildIn(1),
 		Learn(2),
 		UIRD(3);
-		
+		 
 	    private final int val;  
 	  
 	    private Mode(int value) {  
@@ -86,7 +86,7 @@ public class Key implements Serializable {
 	 * 
 	 * null: empty code.
 	 */
-	private Mode mMode=Mode.Null;
+	private Mode mMode=Mode.BuildIn;
 	
 	public Mode getMode(){
 		return mMode;

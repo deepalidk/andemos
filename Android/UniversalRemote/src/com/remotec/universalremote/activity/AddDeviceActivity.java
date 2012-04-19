@@ -17,7 +17,9 @@ import com.remotec.universalremote.activity.component.RtArrayAdapter;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
 import com.remotec.universalremote.data.Key;
+import com.remotec.universalremote.data.Key.Mode;
 import com.remotec.universalremote.data.RemoteUi;
+import com.remotec.universalremote.data.Uird;
 import com.remotec.universalremote.irapi.IrApi;
 import com.remotec.universalremote.persistence.DbManager;
 import com.remotec.universalremote.persistence.XmlManager;
@@ -213,7 +215,9 @@ public class AddDeviceActivity extends Activity {
 	private void loadCodeNum(String category, String manufacturer) {
 
 		DbManager dbm = new DbManager();
-		List<String> temp = dbm.getCodesList(category, manufacturer);
+		Extender curExtender= RemoteUi.getHandle().getActiveExtender();
+		List<String> temp = dbm.getCodesList(category, manufacturer,curExtender.getSupportUirdLib());
+		
 		mCodeAdapter.setData(temp);
 		mSpinerModel.setAdapter(mCodeAdapter);
 		
@@ -472,15 +476,31 @@ public class AddDeviceActivity extends Activity {
 			startActivity(devKeyIntent);
 		}
 	};
-
+	
 	/*
-	 * Sets the key layout to display device key.
+	 * Sets the key layout to display device key
 	 */
 	private boolean setDeviceKeys(Device dev, Map<Integer, Key> map) {
+	    
+		boolean result=false;
+		//UIRD version Extender.
+		if(RemoteUi.getHandle().getActiveExtender().getSupportUirdLib()){
+			result= setDeviceKeysUird(dev,map);
+	     }else{
+	    	result= setDeviceKeysInternal(dev,map);
+	     }
+		
+		return result;
+	}
+	
+	/*
+	 * Sets the key layout to display device key£¨Internal Lib version£©.
+	 */
+	private boolean setDeviceKeysInternal(Device dev, Map<Integer, Key> map) {
 			
 		/*get the valid key ids.*/
 		byte[] keyFlags =  IrApi.getHandle().
-		        getKeyFlag((byte)dev.getDeviceTypeId(),dev.getIrCode()/10);
+		        getKeyFlag((byte)dev.getDeviceTypeId(),dev.getIrCode());
 
         if(keyFlags==null||keyFlags.length!=9){
         	return false;
@@ -511,12 +531,50 @@ public class AddDeviceActivity extends Activity {
 		
 		return true;
 	}
+	
+	/*
+	 * Sets the key layout to display device key£¨Uird Lib version£©.
+	 */
+	private boolean setDeviceKeysUird(Device dev, Map<Integer, Key> map) {
+			
+		/*get the valid key ids.*/
+		DbManager dbm = new DbManager();
+		
+		List<Uird> keyList =  dbm.getUirdData(dev.getDeviceTypeId(),dev.getIrCode());
+		
+		dev.getChildren().clear();
+		
+		for (int i = 0; i < 64; i++) {
+			if (map.containsKey(i)) {
+				Key newKey = map.get(i).colonel();
+                Uird temp=null;
+				for(Uird ud:keyList){
+					if(ud.getKeyId()==i){
+						temp=ud;
+						break;
+					}
+				}	
+				if(temp!=null){
+					newKey.setData(temp.getUirdData());
+					newKey.setMode(Mode.UIRD);
+					newKey.setVisible(true);
+				}else{
+					newKey.setVisible(false);
+				}
+
+				dev.getChildren().add(newKey);
+			}
+		}
+		
+		mDeviceEditTag=false;
+		
+		return true;
+	}
 
 	/*
 	 * Deals imageview click.
 	 */
 	private OnClickListener mOnIconListener = new OnClickListener() {
-
 		@Override
 		public void onClick(View v) {
 			Intent addDeviceIntent = new Intent(AddDeviceActivity.this,

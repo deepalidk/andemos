@@ -37,7 +37,48 @@ public class Extender {
     	   mAddress=address;
        }
        
+       //the version of the extender.
+       private String mVersion;
        
+       public String getVersion(){
+    	   return mVersion;
+       }
+              
+       public void setVersion(String ver){
+    	   setCapability(ver);
+    	   mVersion=ver;
+       }
+       
+       //the extender can supportLearning.
+       private boolean mSupportLearning=false;
+       public boolean getSupportLearning(){
+    	   return true;
+       }
+       
+       //the extender can supportInternalLib.
+       private boolean mSupportInternalLib=false;
+       public boolean getSupportInternalLib(){
+    	   return true;
+       }
+       
+       //the extender can supportUIRDLib.
+       private boolean mSupportUirdLib=false;
+       public boolean getSupportUirdLib(){
+    	   return true;
+       }
+       
+       private void setCapability(String ver){
+    	   if(ver.equals("0009")){
+    		   mSupportInternalLib=true;
+    		   mSupportLearning=false;
+    		   mSupportUirdLib=false;
+    	   }else if(ver.equals("ffff")){
+    		   mSupportInternalLib=false;
+    		   mSupportLearning=false;
+    		   mSupportUirdLib=true;
+    	   } 		   
+       }
+         
        public Extender()
        {
        }
