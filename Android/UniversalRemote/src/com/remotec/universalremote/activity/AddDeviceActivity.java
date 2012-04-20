@@ -221,6 +221,10 @@ public class AddDeviceActivity extends Activity {
 		mCodeAdapter.setData(temp);
 		mSpinerModel.setAdapter(mCodeAdapter);
 		
+		if(temp.size()==0){
+			mDevice.setIrCode(-1);
+		}
+		
 		/*
 		 * set the device type id.
 		 */
@@ -401,8 +405,13 @@ public class AddDeviceActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			updateControls();
-			AddDeviceActivity.this.initCurrentPage(eCurrentPage.eDeviceInfo);
+			
+			if(mDevice.getIrCode()!=-1){
+				updateControls();
+				AddDeviceActivity.this.initCurrentPage(eCurrentPage.eDeviceInfo);	
+			}else{
+				Toast.makeText(AddDeviceActivity.this, R.string.choose_code, Toast.LENGTH_SHORT).show();
+			}
 		}
 	};
 
@@ -521,6 +530,7 @@ public class AddDeviceActivity extends Activity {
 						newKey.setVisible(false);
 					}
 
+					newKey.setMode(Mode.BuildIn);
 					dev.getChildren().add(newKey);
 				}
 				k++;

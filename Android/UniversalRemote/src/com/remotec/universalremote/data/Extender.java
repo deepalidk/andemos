@@ -52,19 +52,19 @@ public class Extender {
        //the extender can supportLearning.
        private boolean mSupportLearning=false;
        public boolean getSupportLearning(){
-    	   return true;
+    	   return mSupportLearning;
        }
        
        //the extender can supportInternalLib.
        private boolean mSupportInternalLib=false;
        public boolean getSupportInternalLib(){
-    	   return true;
+    	   return mSupportInternalLib;
        }
        
        //the extender can supportUIRDLib.
        private boolean mSupportUirdLib=false;
        public boolean getSupportUirdLib(){
-    	   return true;
+    	   return mSupportUirdLib;
        }
        
        private void setCapability(String ver){
@@ -76,7 +76,11 @@ public class Extender {
     		   mSupportInternalLib=false;
     		   mSupportLearning=false;
     		   mSupportUirdLib=true;
-    	   } 		   
+    	   }else if(ver.equals("000a")){
+    		   mSupportInternalLib=true;
+    		   mSupportLearning=true;
+    		   mSupportUirdLib=false;
+    	   }	   
        }
          
        public Extender()

@@ -131,4 +131,10 @@
     <string name="learned_success_command">Learned the remote command</string>
     
     <string name="learning_succeed_msg">Learning procedure succeed!</string>
+    
+    <string name="choose_code">Please choose a code!</string>
+    
+    <string name="no_learning">The connected extender do not support learning!</string>
+    
+    <string name="about_title">About Universal Remote</string>
 </resources>
