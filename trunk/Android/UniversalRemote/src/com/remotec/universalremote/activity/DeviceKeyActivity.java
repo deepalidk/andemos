@@ -681,7 +681,12 @@ public class DeviceKeyActivity extends Activity {
 	 * displays the learn dialog.
 	 */
 	private void displayLearnDlg(){
-		displayPreLearnDlg();
+		if(RemoteUi.getHandle().getActiveExtender().getSupportLearning()){
+			 displayPreLearnDlg();
+		}else{
+             Toast.makeText(this, R.string.no_learning,
+            		 Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	/*

@@ -34,6 +34,10 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -186,6 +190,11 @@ public class DeviceActivity extends Activity {
 		case R.id.menu_connect:
 			startConnectDialog();
 			return true;
+
+		case R.id.menu_about:
+			displayAboutDialog();
+			return true;
+
 		default:
 			break;
 		}
@@ -198,42 +207,42 @@ public class DeviceActivity extends Activity {
 	 * do nothing.
 	 */
 	private boolean checkConnectionState() {
-        
-//		if (this.mBtConnectMgr.getState() == BtConnectionManager.STATE_NONE) {
-//			/* build a dialog, ask if want to connect an extender */
-//			AlertDialog.Builder builder = new Builder(this);
-//
-//			builder.setMessage(R.string.connect_now);
-//
-//			builder.setTitle(R.string.connect_extender);
-//
-//			builder.setIcon(android.R.drawable.ic_dialog_info);
-//
-//			builder.setPositiveButton(android.R.string.yes,
-//					new DialogInterface.OnClickListener() {
-//
-//						@Override
-//						public void onClick(DialogInterface dialog, int which) {
-//							dialog.dismiss();
-//							// start connect extender activity.
-//							startConnectDialog();
-//						}
-//					});
-//
-//			builder.setNegativeButton(android.R.string.no,
-//					new DialogInterface.OnClickListener() {
-//
-//						@Override
-//						public void onClick(DialogInterface dialog, int which) {
-//							dialog.dismiss();
-//						}
-//
-//					});
-//
-//			builder.create().show();
-//
-//			return false;
-//		}
+
+		if (this.mBtConnectMgr.getState() == BtConnectionManager.STATE_NONE) {
+			/* build a dialog, ask if want to connect an extender */
+			AlertDialog.Builder builder = new Builder(this);
+
+			builder.setMessage(R.string.connect_now);
+
+			builder.setTitle(R.string.connect_extender);
+
+			builder.setIcon(android.R.drawable.ic_dialog_info);
+
+			builder.setPositiveButton(android.R.string.yes,
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+							// start connect extender activity.
+							startConnectDialog();
+						}
+					});
+
+			builder.setNegativeButton(android.R.string.no,
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+
+					});
+
+			builder.create().show();
+
+			return false;
+		}
 
 		return true;
 	}
@@ -246,6 +255,71 @@ public class DeviceActivity extends Activity {
 		Intent serverIntent = new Intent(DeviceActivity.this,
 				BtDeviceListActivity.class);
 		startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+	}
+
+	/*
+	 * get Current apk version
+	 */
+	private String getVersionName() {
+		// 获取packagemanager的实例
+		PackageManager packageManager = getPackageManager();
+		// getPackageName()是你当前类的包名，0代表是获取版本信息
+		PackageInfo packInfo;
+		String version = "";
+		try {
+			packInfo = packageManager.getPackageInfo(getPackageName(), 0);
+			version = packInfo.versionName;
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return version;
+	}
+
+	/*
+	 * Display system info.
+	 */
+	private void displayAboutDialog() {
+
+//		String version = getVersionName(); // 得到版本信息
+//		Toast.makeText(this,
+//				"packageName:" + packageName + ";version:" + version,
+//				Toast.LENGTH_LONG).show();
+		
+		/*
+		 * displays the learn failed dialog.
+		 */
+			/* build a dialog, ask if want to close */
+			AlertDialog.Builder builder = new Builder(this);
+
+			builder.setIcon(android.R.drawable.ic_dialog_info);
+			builder.setTitle(R.string.about_title);
+			
+			String msg=String.format("Version:  %s\n", getVersionName());
+			
+			if(RemoteUi.getHandle().getActiveExtender()!=null){
+				msg+=String.format("Extender: %s\n",RemoteUi.getHandle().getActiveExtender().getVersion().toUpperCase());
+			}else{
+				msg+=String.format("Extender: not connected\n");
+			}
+			
+			builder.setMessage(msg);
+			
+			
+			
+			builder.setPositiveButton(android.R.string.ok,
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+
+			builder.create().show();
+		
+
 	}
 
 	@Override
@@ -351,11 +425,10 @@ public class DeviceActivity extends Activity {
 				displayDevice(devList.get(i), mDevButtonList.get(i));
 			}
 
-			if(devList.size()<mDevButtonList.size())
-			{	
+			if (devList.size() < mDevButtonList.size()) {
 				// add device button
 				displayAddDevice(mDevButtonList.get(devList.size()));
-	
+
 				for (int i = devList.size() + 1; i < mDevButtonList.size(); i++) {
 					mDevButtonList.get(i).setVisibility(View.INVISIBLE);
 				}
@@ -427,16 +500,18 @@ public class DeviceActivity extends Activity {
 					startActivity(devKeyIntent);
 				} else {
 
-//					if (RemoteUi.getHandle().getChildren().size() < (mDevButtonList
-//							.size() - 1)) {
-						Intent addDeviceIntent = new Intent(
-								DeviceActivity.this, AddDeviceActivity.class);
-						startActivityForResult(addDeviceIntent,
-								REQUEST_ADD_DEVICE);
-//					} else {
-//						Toast.makeText(DeviceActivity.this, String.format("Can't add more than %d devices!", RemoteUi.getHandle().getChildren().size()),
-//								Toast.LENGTH_SHORT).show();
-//					}
+					// if (RemoteUi.getHandle().getChildren().size() <
+					// (mDevButtonList
+					// .size() - 1)) {
+					Intent addDeviceIntent = new Intent(DeviceActivity.this,
+							AddDeviceActivity.class);
+					startActivityForResult(addDeviceIntent, REQUEST_ADD_DEVICE);
+					// } else {
+					// Toast.makeText(DeviceActivity.this,
+					// String.format("Can't add more than %d devices!",
+					// RemoteUi.getHandle().getChildren().size()),
+					// Toast.LENGTH_SHORT).show();
+					// }
 				}
 			}
 
@@ -626,16 +701,18 @@ public class DeviceActivity extends Activity {
 			case CONNECTTION_STATE_CHANGE:
 				switch (msg.arg1) {
 				case BtConnectionManager.STATE_CONNECTED: {
-					
-					String version= mIrController.init(mBtConnectMgr);
-                    
-					if(version!=null){		
-						//set the version info to the extender.
-						RemoteUi.getHandle().getActiveExtender().setVersion(version);
-						
+
+					String version = mIrController.init(mBtConnectMgr);
+
+					if (version != null) {
+						// set the version info to the extender.
+						RemoteUi.getHandle().getActiveExtender()
+								.setVersion(version);
+
 						mTitleRight.setText(R.string.title_connected_to);
-						mTitleRight.append(RemoteUi.getHandle().getActiveExtender().getName());
-	
+						mTitleRight.append(RemoteUi.getHandle()
+								.getActiveExtender().getName());
+
 						XmlManager xm = new XmlManager();
 						xm.saveData(RemoteUi.getHandle(),
 								RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
@@ -655,9 +732,9 @@ public class DeviceActivity extends Activity {
 			case MESSAGE_DEVICE_ADDRESS:
 				// save the connected device's name
 				String devAddr = msg.getData().getString(DEVICE_ADDRESS);
-                
+
 				Extender activeExtender;
-				
+
 				// already has the extender.
 				if (RemoteUi.getHandle().getExtenderMap().containsKey(devAddr)) {
 					activeExtender = RemoteUi.getHandle().getExtenderMap()
