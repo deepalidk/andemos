@@ -70,6 +70,8 @@ public class DbManager {
 
 				devType = cursor.getInt(0);
 			}
+			
+			cursor.close();
 		} catch (Exception e) {
 			devType = 1;
 		}
@@ -102,6 +104,8 @@ public class DbManager {
 				result.add(cursor.getString(0));
 				
 			}
+			
+			cursor.close();
 		} catch (Exception e) {
 			result = null;
 		}
@@ -131,6 +135,8 @@ public class DbManager {
                 mDataList.add(temp);
 				
 			}
+			
+			cursor.close();
 		} catch (Exception e) {
 		}
 		
@@ -158,6 +164,8 @@ public class DbManager {
 
 				devTypes.add(temp);
 			}
+			
+			cursor.close();
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 		}
@@ -198,10 +206,33 @@ public class DbManager {
 
 				tempList.add(brandName);
 			}
+			
+			cursor.close();
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 		}
 	}
 	
-	
+	/*
+	 * Gets the data base version.
+	 */
+	public static String getConfig(SQLiteDatabase db,String addr,String stateName,String sDefault)
+	{
+		String result=sDefault;
+		
+		// 定义Cursor游标,用于管理数据，比如获得数据库的每一行数据
+		Cursor cursor = null;
+
+		// 查询test_listview数据
+		cursor = db.query("tbConfig", null, "devAddr='"+addr+"' and stateName='"+stateName+"'", null, null,
+				null, null);
+		// 通过强大的cursor把数据库的资料一行一行地读取出来
+		if (cursor.moveToNext()) {
+			result=cursor.getString(cursor.getColumnIndex("stateValue"));
+		}
+		
+		cursor.close();
+		
+		return result;
+	}
 }

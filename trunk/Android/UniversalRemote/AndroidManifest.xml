@@ -15,7 +15,8 @@
         android:label="@string/app_name" >
         <activity
             android:name=".DeviceActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,19 +30,22 @@
         <activity
             android:name=".DeviceKeyActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".AddDeviceActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".EditDeviceActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".SelectIconDialog"
@@ -53,5 +57,9 @@
             android:label="@string/select_device"
             android:theme="@android:style/Theme.Dialog" />
     </application>
-
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:anyDensity="true" />
 </manifest>

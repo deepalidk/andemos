@@ -29,7 +29,9 @@ public class RemoteUi {
 	    
 	    public static String UI_XML_FILE="remote.xml";
 	    
-	    public static String UI_DB_FILE;
+	    public static String UI_DB_FILE="codelib.db";
+	    
+	    public static String UI_DB_FILE_TEMP="codelib_temp.db";
 	    
 	    /*
 	    * singleton

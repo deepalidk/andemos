@@ -5,6 +5,7 @@
  */
 package com.remotec.universalremote.activity;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -38,7 +39,9 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -437,7 +440,6 @@ public class DeviceActivity extends Activity {
 			for (int i = 1; i < mDevButtonList.size(); i++) {
 				mDevButtonList.get(i).setVisibility(View.INVISIBLE);
 			}
-
 			// add device button
 			displayAddDevice(mDevButtonList.get(0));
 		}
@@ -469,8 +471,21 @@ public class DeviceActivity extends Activity {
 	private void setDevButtonIcon(DeviceButton devButton, int resId) {
 		Drawable topD = this.getResources().getDrawable(resId);
 		if (topD != null) {
-			topD.setBounds(0, 0, topD.getMinimumWidth(),
-					topD.getMinimumHeight());
+			topD.setBounds(0, 0,(int)(topD.getMinimumWidth()*0.5),
+					(int)(topD.getMinimumHeight()*0.5));
+			devButton.setCompoundDrawables(null, topD, null, null);
+		}
+	}
+	
+	/*
+	 * Sets the device button Icon
+	 */
+	private void setDevButtonIcon(DeviceButton devButton,Drawable topD) {
+	
+		if (topD != null) {
+			topD.setBounds(0, 0, (int)(topD.getMinimumWidth()*0.5),
+					(int)(topD.getMinimumHeight()*0.5));
+		
 			devButton.setCompoundDrawables(null, topD, null, null);
 		}
 	}
@@ -772,9 +787,48 @@ public class DeviceActivity extends Activity {
 	private class InitAppTask extends
 			android.os.AsyncTask<Integer, Integer, Integer> {
 
+		/*
+		 * compare the db version of remote.db and remote_temp.db.
+		 * 
+		 * use the latest db and copy the device info to latest db. 
+		 * cover current db file with the latest one.
+		 */
+		private void doDbUpdate()
+		{
+	        //file current db file;
+	        File dbFileCur = new File(RemoteUi.INTERNAL_DATA_DIRECTORY+ "/" +RemoteUi.UI_DB_FILE); 
+	        File dbFileTemp=new File(RemoteUi.INTERNAL_DATA_DIRECTORY+ "/" +RemoteUi.UI_DB_FILE_TEMP);
+	        
+	        //open current db
+	        SQLiteDatabase databaseCur = SQLiteDatabase.openOrCreateDatabase( 
+	        		dbFileCur, null); 
+	        SQLiteDatabase databaseTemp = SQLiteDatabase.openOrCreateDatabase( 
+	        		dbFileTemp, null); 
+	        
+	        String curDbVer=DbManager.getConfig(databaseCur, "global", "db_version", "");
+	        String tempDbVer=DbManager.getConfig(databaseTemp, "global", "db_version", "");
+	        
+	        databaseCur.close();
+	        databaseTemp.close();
+	       
+	        //compare and cover
+	        if(!curDbVer.equals(tempDbVer))
+	        {
+	        	dbFileCur.delete();
+	        	dbFileTemp.renameTo(dbFileCur);
+	        }
+	        else
+	        {
+	        	dbFileTemp.delete();
+	        }
+	        
+	        return; 
+		}
+		
 		@Override
 		protected Integer doInBackground(Integer... params) {
 
+			try{
 			// if the data is already init , we jump out this method.
 			// if(RemoteUi.getHandle()!=null) return 0;
 
@@ -785,9 +839,14 @@ public class DeviceActivity extends Activity {
 					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_XML_FILE);
 
 			// copys the codelist db file to sdcard.
-			FileManager.saveAs(DeviceActivity.this, R.raw.codelib,
+			FileManager.saveZipAs(DeviceActivity.this, R.raw.codelib,
 					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_DB_FILE);
 
+			FileManager.saveZipAs(DeviceActivity.this,R.raw.codelib,
+					RemoteUi.INTERNAL_DATA_DIRECTORY,RemoteUi.UI_DB_FILE_TEMP);	
+			
+			doDbUpdate();
+			
 			/*
 			 * loads the UI component information.
 			 */
@@ -839,6 +898,9 @@ public class DeviceActivity extends Activity {
 				temp.setText(keyBtn.getText().toString());
 				temp.setVisible(keyBtn.getVisibility() == View.VISIBLE);
 				map.put(temp.getKeyId(), temp);
+			}
+			}catch(Exception ex){
+				Log.e(TAG, ex.getMessage());
 			}
 
 			return 0;

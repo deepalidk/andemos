@@ -2,15 +2,17 @@
 <resources>
 
     <!-- Device Botton padding left -->
-    <dimen name="dev_btn_padding_left">45dp</dimen>
+    <dimen name="dev_btn_margin_left">45dp</dimen>
     <!-- Device Botton padding right -->
-    <dimen name="dev_btn_padding_right">45dp</dimen>
+    <dimen name="dev_btn_margin_right">45dp</dimen>
     <!-- Device Botton padding top -->
-    <dimen name="dev_btn_padding_top">5dp</dimen>
+    <dimen name="dev_btn_margin_top">5dp</dimen>
     <!-- Device Botton padding bottom -->
-    <dimen name="dev_btn_padding_bottom">5dp</dimen>
+    <dimen name="dev_btn_margin_bottom">5dp</dimen>
     <!-- Device Title text view -->
     <dimen name="dev_title_txt_size">28sp</dimen>
+        <!-- device btn txt size -->
+    <dimen name="dev_btn_txt_size">21sp</dimen>
     
         <!-- Device Title text view -->
     <dimen name="dev_right_title_txt_size">20sp</dimen>
