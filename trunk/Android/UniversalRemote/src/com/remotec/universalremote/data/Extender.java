@@ -80,7 +80,11 @@ public class Extender {
     		   mSupportInternalLib=true;
     		   mSupportLearning=true;
     		   mSupportUirdLib=false;
-    	   }	   
+    	   }else if(ver.equals("000b")){
+    		   mSupportInternalLib=true;
+    		   mSupportLearning=true;
+    		   mSupportUirdLib=false;
+    	   }  
        }
          
        public Extender()

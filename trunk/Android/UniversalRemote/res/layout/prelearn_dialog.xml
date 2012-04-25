@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/imageview_remote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/learn_imageview_width"
+        android:layout_height="@dimen/learn_imageview_height"
         android:src="@drawable/img_learning"
         android:layout_centerVertical="true"
         android:layout_margin="@dimen/image_margin"

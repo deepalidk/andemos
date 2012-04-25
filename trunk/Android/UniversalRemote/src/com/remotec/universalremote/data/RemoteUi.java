@@ -104,7 +104,15 @@ public class RemoteUi {
        }
        
        public Extender getActiveExtender(){
-    	   return mActiveExtender;
+    	   if(RemoteUi.getEmulatorTag()){
+    		 Extender ex=new Extender();
+    		 ex.setAddress("00");
+    		 ex.setName("BF10");
+    		 ex.setVersion("ffff");
+    		 return ex;
+    	   }else{
+    	     return mActiveExtender;
+    	   }
        }
        
        /*

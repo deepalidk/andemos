@@ -264,7 +264,7 @@
                     <com.remotec.universalremote.activity.component.KeyButton
                         android:id="@+id/id_vol_add"
                         android:layout_width="@dimen/key_btn_width"
-                        android:layout_height="120dp"
+                        android:layout_height="@dimen/key_3_height"
                         android:layout_marginLeft="@dimen/key_btn_margin_left"
                         android:layout_marginRight="@dimen/key_btn_margin_right"
                         android:layout_marginTop="@dimen/key_btn_margin_top"
@@ -276,7 +276,7 @@
 
                     <com.remotec.universalremote.activity.component.KeyButton
                         android:layout_width="@dimen/key_btn_width"
-                        android:layout_height="120dp"
+                        android:layout_height="@dimen/key_3_height"
                         android:layout_below="@id/id_vol_add"
                         android:layout_marginBottom="@dimen/key_btn_margin_bottom"
                         android:layout_marginLeft="@dimen/key_btn_margin_left"
@@ -341,7 +341,7 @@
                     <com.remotec.universalremote.activity.component.KeyButton
                         android:id="@+id/id_ch_add"
                         android:layout_width="@dimen/key_btn_width"
-                        android:layout_height="120dp"
+                        android:layout_height="@dimen/key_3_height"
                         android:layout_marginLeft="@dimen/key_btn_margin_left"
                         android:layout_marginRight="@dimen/key_btn_margin_right"
                         android:layout_marginTop="@dimen/key_btn_margin_top"
@@ -353,7 +353,7 @@
 
                     <com.remotec.universalremote.activity.component.KeyButton
                         android:layout_width="@dimen/key_btn_width"
-                        android:layout_height="120dp"
+                        android:layout_height="@dimen/key_3_height"
                         android:layout_below="@id/id_ch_add"
                         android:layout_marginBottom="@dimen/key_btn_margin_bottom"
                         android:layout_marginLeft="@dimen/key_btn_margin_left"

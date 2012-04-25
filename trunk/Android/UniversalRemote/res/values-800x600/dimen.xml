@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="dev1_x">10dp</dimen>
-    <dimen name="dev1_y">10dp</dimen>
-    <dimen name="dev1_w">100dp</dimen>
-    <dimen name="dev1_h">50dp</dimen>    
-</resources>

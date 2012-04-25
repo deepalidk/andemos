@@ -216,8 +216,9 @@ public class AddDeviceActivity extends Activity {
 
 		DbManager dbm = new DbManager();
 		Extender curExtender= RemoteUi.getHandle().getActiveExtender();
-		List<String> temp = dbm.getCodesList(category, manufacturer,curExtender.getSupportUirdLib());
 		
+		List<String> temp=null;
+		temp = dbm.getCodesList(category, manufacturer,curExtender.getSupportUirdLib());
 		mCodeAdapter.setData(temp);
 		mSpinerModel.setAdapter(mCodeAdapter);
 		
