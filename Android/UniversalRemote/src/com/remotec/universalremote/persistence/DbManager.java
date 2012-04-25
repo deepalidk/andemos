@@ -219,9 +219,10 @@ public class DbManager {
 	public static String getConfig(SQLiteDatabase db,String addr,String stateName,String sDefault)
 	{
 		String result=sDefault;
-		
 		// 定义Cursor游标,用于管理数据，比如获得数据库的每一行数据
 		Cursor cursor = null;
+		try{
+
 
 		// 查询test_listview数据
 		cursor = db.query("tbConfig", null, "devAddr='"+addr+"' and stateName='"+stateName+"'", null, null,
@@ -232,6 +233,11 @@ public class DbManager {
 		}
 		
 		cursor.close();
+		}catch(Exception ex){
+			if(cursor!=null){
+				cursor.close();
+			}
+		}
 		
 		return result;
 	}

@@ -105,6 +105,8 @@ public class DeviceActivity extends Activity {
 	 */
 	private IrApi mIrController;
 
+	private float mScale=1;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -127,7 +129,7 @@ public class DeviceActivity extends Activity {
 				return;
 			}
 		}
-
+        
 		// Initializing data.
 		InitAppTask initor = new InitAppTask();
 		initor.execute(0);
@@ -168,6 +170,8 @@ public class DeviceActivity extends Activity {
 		 */
 		mIrController = IrApi.getHandle();
 
+	    mScale= getResources().getDimension(R.dimen.scale);
+		
 		// we already load the device object infos now,
 		// but the resId of icon can only access during run time.
 		// get the resId of icon with the icon name, and set to device object.
@@ -211,6 +215,10 @@ public class DeviceActivity extends Activity {
 	 */
 	private boolean checkConnectionState() {
 
+		if(RemoteUi.getEmulatorTag()){
+			return true;
+		}
+		
 		if (this.mBtConnectMgr.getState() == BtConnectionManager.STATE_NONE) {
 			/* build a dialog, ask if want to connect an extender */
 			AlertDialog.Builder builder = new Builder(this);
@@ -471,21 +479,8 @@ public class DeviceActivity extends Activity {
 	private void setDevButtonIcon(DeviceButton devButton, int resId) {
 		Drawable topD = this.getResources().getDrawable(resId);
 		if (topD != null) {
-			topD.setBounds(0, 0,(int)(topD.getMinimumWidth()*0.5),
-					(int)(topD.getMinimumHeight()*0.5));
-			devButton.setCompoundDrawables(null, topD, null, null);
-		}
-	}
-	
-	/*
-	 * Sets the device button Icon
-	 */
-	private void setDevButtonIcon(DeviceButton devButton,Drawable topD) {
-	
-		if (topD != null) {
-			topD.setBounds(0, 0, (int)(topD.getMinimumWidth()*0.5),
-					(int)(topD.getMinimumHeight()*0.5));
-		
+			topD.setBounds(0, 0,(int)(topD.getMinimumWidth()*mScale),
+					(int)(topD.getMinimumHeight()*mScale));
 			devButton.setCompoundDrawables(null, topD, null, null);
 		}
 	}

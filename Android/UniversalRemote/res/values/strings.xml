@@ -20,6 +20,7 @@
     <string name="app_name">Universal Remote</string>
     <string name="initial_waiting">Please wait...</string>
     <string name="add_device">Add Device</string>
+    <string name="edit_device">Edit Device</string>
     <string name="key_num_1">1</string>
     <string name="key_num_2">2</string>
     <string name="key_num_3">3</string>

@@ -275,13 +275,14 @@ public class DeviceKeyActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 
-			if (RemoteUi.getEmulatorTag())
-				return;
+
 
 			mCurActiveKey = (KeyButton) v;
 
 			if (mActivityMode == ACTIVITY_CONTROL) {
-				emitKeyIR(mCurActiveKey);
+				if (!RemoteUi.getEmulatorTag()){
+				  emitKeyIR(mCurActiveKey);
+				}
 			} else if (mActivityMode == ACTIVITY_EDIT) {
 				showKeyEditMenu(mCurActiveKey);
 			}
@@ -681,7 +682,7 @@ public class DeviceKeyActivity extends Activity {
 	 * displays the learn dialog.
 	 */
 	private void displayLearnDlg(){
-		if(RemoteUi.getHandle().getActiveExtender().getSupportLearning()){
+		if(RemoteUi.getHandle().getActiveExtender().getSupportLearning()||RemoteUi.getEmulatorTag()){
 			 displayPreLearnDlg();
 		}else{
              Toast.makeText(this, R.string.no_learning,
