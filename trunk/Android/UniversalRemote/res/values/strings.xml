@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- system info -->
-    <string name="package_name">remotec.BluetoothRemote.activities</string>
     <!--     init values of new device -->
     <string name="dev_icon">icon_device_tv</string>
     <string name="dev_name">TV</string>
