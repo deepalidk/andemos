@@ -21,6 +21,7 @@ import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
 import com.remotec.universalremote.data.Key;
 import com.remotec.universalremote.data.RemoteUi;
+import com.remotec.universalremote.data.RemoteUi.BrandListType;
 import com.remotec.universalremote.irapi.BtConnectionManager;
 import com.remotec.universalremote.irapi.IrApi;
 import com.remotec.universalremote.persistence.DbManager;
@@ -703,6 +704,32 @@ public class DeviceActivity extends Activity {
 		dlg.show();
 	}
 
+	/*
+	 * init the brand list used to add device.
+	 */
+	void loadCategoryAndBrand(BrandListType type){
+	
+		//we already load brand list when startup.
+		//Now we check the needed type and current type to determine whether reload
+		//brand list.
+		//if the the require type is the same as the current type we do nothing.
+		BrandListType curBrandType=RemoteUi.getHandle().getBrandListType();
+		
+		if(curBrandType==type)return;	
+		
+		/*
+		 * loads ircode information to memory for adding device.
+		 */
+		DbManager dbm = new DbManager();
+		dbm.loadDevCategory();
+		dbm.loadIrBrand(type);
+		/*
+		 * if a category has no device under it, we will not display it to
+		 * user.
+		 */
+		RemoteUi.getHandle().clearEmptyCategory();
+	}
+	
 	// The Handler that gets information back from the BluetoothRemoteService
 	private final Handler mHandler = new Handler() {
 		@Override
@@ -716,17 +743,27 @@ public class DeviceActivity extends Activity {
 
 					if (version != null) {
 						// set the version info to the extender.
-						RemoteUi.getHandle().getActiveExtender()
-								.setVersion(version);
+						Extender actExtender=RemoteUi.getHandle().getActiveExtender();
+						actExtender.setVersion(version);
 
 						mTitleRight.setText(R.string.title_connected_to);
-						mTitleRight.append(RemoteUi.getHandle()
-								.getActiveExtender().getName());
+						mTitleRight.append(actExtender.getName());
 
 						XmlManager xm = new XmlManager();
 						xm.saveData(RemoteUi.getHandle(),
 								RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
 										+ RemoteUi.UI_XML_FILE);
+						
+						
+                        //if the extender support Uird lib we load uird brand list.
+						//only when the extender not support uird and support buildIn. we load build in.
+						if(actExtender.getSupportUirdLib()){
+							loadCategoryAndBrand(BrandListType.UIRD);
+						}else if((!actExtender.getSupportUirdLib()) 
+								&& actExtender.getSupportInternalLib()){
+							loadCategoryAndBrand(BrandListType.BuildIn);
+						}
+
 					}
 
 					break;
@@ -790,31 +827,30 @@ public class DeviceActivity extends Activity {
 		 */
 		private void doDbUpdate()
 		{
-	        //file current db file;
-	        File dbFileCur = new File(RemoteUi.INTERNAL_DATA_DIRECTORY+ "/" +RemoteUi.UI_DB_FILE); 
-	        File dbFileTemp=new File(RemoteUi.INTERNAL_DATA_DIRECTORY+ "/" +RemoteUi.UI_DB_FILE_TEMP);
-	        
+			
+			//file current db file;
+	        File dbFileCur = new File(RemoteUi.INTERNAL_DATA_DIRECTORY+ "/" +RemoteUi.UI_DB_FILE); 	
+			// copys the codelist db file to sdcard.
+			FileManager.saveZipAs(DeviceActivity.this, R.raw.codelib,
+					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_DB_FILE);      
 	        //open current db
 	        SQLiteDatabase databaseCur = SQLiteDatabase.openOrCreateDatabase( 
 	        		dbFileCur, null); 
-	        SQLiteDatabase databaseTemp = SQLiteDatabase.openOrCreateDatabase( 
-	        		dbFileTemp, null); 
-	        
 	        String curDbVer=DbManager.getConfig(databaseCur, "global", "db_version", "");
-	        String tempDbVer=DbManager.getConfig(databaseTemp, "global", "db_version", "");
-	        
 	        databaseCur.close();
-	        databaseTemp.close();
-	       
+
+	        String version=
+	        	DeviceActivity.this.getResources().getString(R.string.db_version);
+	        
 	        //compare and cover
-	        if(!curDbVer.equals(tempDbVer))
+	        if(!curDbVer.equals(version))
 	        {
+	        	// copys the codelist db file to sdcard.
+				FileManager.saveZipAs(DeviceActivity.this, R.raw.codelib,
+						RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_DB_FILE_TEMP); 
+		        File dbFileTemp=new File(RemoteUi.INTERNAL_DATA_DIRECTORY+ "/" +RemoteUi.UI_DB_FILE_TEMP);
 	        	dbFileCur.delete();
 	        	dbFileTemp.renameTo(dbFileCur);
-	        }
-	        else
-	        {
-	        	dbFileTemp.delete();
 	        }
 	        
 	        return; 
@@ -833,13 +869,6 @@ public class DeviceActivity extends Activity {
 			FileManager.saveAs(DeviceActivity.this, R.raw.remote,
 					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_XML_FILE);
 
-			// copys the codelist db file to sdcard.
-			FileManager.saveZipAs(DeviceActivity.this, R.raw.codelib,
-					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_DB_FILE);
-
-			FileManager.saveZipAs(DeviceActivity.this,R.raw.codelib,
-					RemoteUi.INTERNAL_DATA_DIRECTORY,RemoteUi.UI_DB_FILE_TEMP);	
-			
 			doDbUpdate();
 			
 			/*
@@ -849,17 +878,12 @@ public class DeviceActivity extends Activity {
 			xm.loadData(RemoteUi.getHandle(), RemoteUi.INTERNAL_DATA_DIRECTORY
 					+ "/" + RemoteUi.UI_XML_FILE);
 
+			
 			/*
 			 * loads ircode information to memory for adding device.
 			 */
-			DbManager dbm = new DbManager();
-			dbm.loadDevCategory();
-			dbm.loadIrBrand();
-			/*
-			 * if a category has no device under it, we will not display it to
-			 * user.
-			 */
-			RemoteUi.getHandle().clearEmptyCategory();
+			boolean load_uird_brand=DeviceActivity.this.getResources().getBoolean(R.bool.load_uird_brand);
+			loadCategoryAndBrand(load_uird_brand?BrandListType.UIRD:BrandListType.BuildIn);
 
 			initData();
 

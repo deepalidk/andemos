@@ -37,6 +37,11 @@ public class Device implements Serializable {
 	}
 
 	public void setName(String name) {
+		
+		if(name.length()>10){
+			name=name.substring(0, 9);
+		}
+		
 		mName = name;
 	}
 

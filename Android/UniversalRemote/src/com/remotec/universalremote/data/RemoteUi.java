@@ -45,6 +45,12 @@ public class RemoteUi {
 	        UI_XML_FILE = "remote.xml";
 	        UI_DB_FILE="codelib.db";
 	    }
+	    
+	   public enum BrandListType{
+	    	empty,
+            BuildIn,
+            UIRD;
+	    };
 	   
 	   /*
 	    * Gets the singleton object.
@@ -157,6 +163,17 @@ public class RemoteUi {
        
        public List<String> getIrcodeList(String key){
     	   return mIrBrandMap.get(key);
+       }
+       
+       //Mark current brand list infomations.
+       private BrandListType mBrandListType=BrandListType.empty;
+       
+       public BrandListType getBrandListType() {
+    	   return mBrandListType;
+       }
+       
+       public void setBrandListType(BrandListType type){
+    	   mBrandListType=type;
        }
        
        /*

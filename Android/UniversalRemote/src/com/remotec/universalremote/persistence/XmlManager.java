@@ -72,6 +72,8 @@ public class XmlManager {
 			result = false;
 		} catch (IOException e) {
 			result = false;
+		} catch (Exception e){
+			result = false;
 		}
 
 		return result;

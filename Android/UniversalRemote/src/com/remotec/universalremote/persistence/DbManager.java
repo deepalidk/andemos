@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.remotec.universalremote.data.RemoteUi;
+import com.remotec.universalremote.data.RemoteUi.BrandListType;
 import com.remotec.universalremote.data.Uird;
 
 import android.database.Cursor;
@@ -152,6 +153,12 @@ public class DbManager {
 			String temp;
 			List<String> devTypes = RemoteUi.getHandle().getCategoryList();
 
+			if(devTypes==null){
+				return;
+			}else{
+				devTypes.clear();
+			}
+			
 			SQLiteDatabase db = getDataBase();
 			// 定义Cursor游标,用于管理数据，比如获得数据库的每一行数据
 			Cursor cursor = null;
@@ -175,7 +182,7 @@ public class DbManager {
 	 * loads all the ir code information to RemoteUi object.
 	 * This will cost more memory and achieve a better performance when adding device.
 	 */
-	public void loadIrBrand() {
+	public void loadIrBrand(BrandListType type) {
 		try {
 			// If there are code library files, add each one to the ArrayAdapter
 			String brandName;
@@ -184,14 +191,27 @@ public class DbManager {
 					.getIrBrandMap();
 			List<String> tempList;
 
+			
+			if(map==null){
+				return;
+			}else{
+				for(List<String> l:map.values()){
+					l.clear();
+				}
+				
+				map.clear();
+			}
+			
 			SQLiteDatabase db = getDataBase();
 			// 定义Cursor游标,用于管理数据，比如获得数据库的每一行数据
 			Cursor cursor = null;
 
-			// 查询test_listview数据
-			cursor = db.rawQuery("Select distinct(brandName),name devType"
+			String sql=String.format("Select distinct(brandName),name devType"
 					+ " From irCodeList A left join category B "
-					+ "on A.devType=B.devType", null);
+					+ "on A.devType=B.devType where irCodeSrc=%d",(type==BrandListType.UIRD)?2:1 );
+			
+			// 查询test_listview数据
+			cursor = db.rawQuery(sql, null);
 			// 通过强大的cursor把数据库的资料一行一行地读取出来
 			while (cursor.moveToNext()) {
 				brandName = cursor.getString(0);
@@ -208,6 +228,8 @@ public class DbManager {
 			}
 			
 			cursor.close();
+			RemoteUi.getHandle().setBrandListType(type);	
+			
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 		}
