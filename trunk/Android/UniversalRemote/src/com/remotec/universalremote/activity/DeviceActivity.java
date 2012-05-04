@@ -764,6 +764,8 @@ public class DeviceActivity extends Activity {
 							loadCategoryAndBrand(BrandListType.BuildIn);
 						}
 
+					}else{
+						mTitleRight.setText(R.string.title_not_connected);
 					}
 
 					break;
