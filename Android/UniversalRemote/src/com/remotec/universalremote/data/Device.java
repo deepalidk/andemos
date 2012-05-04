@@ -41,7 +41,7 @@ public class Device implements Serializable {
 		if(name.length()>10){
 			name=name.substring(0, 9);
 		}
-		
+		 
 		mName = name;
 	}
 
@@ -141,5 +141,4 @@ public class Device implements Serializable {
 				context.getApplicationInfo().packageName);
 		return newDev;
 	}
-
 }

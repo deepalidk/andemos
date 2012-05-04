@@ -21,9 +21,9 @@
     <dimen name="learn_dialog_txt_size">10.0sp</dimen>
    
     <!-- Device Botton padding left -->
-    <dimen name="dev_btn_margin_left">40dp</dimen>
+    <dimen name="dev_btn_margin_left">20dp</dimen>
     <!-- Device Botton padding right -->
-    <dimen name="dev_btn_margin_right">1dp</dimen>
+    <dimen name="dev_btn_margin_right">20dp</dimen>
     <!-- Device Botton padding top -->
     <dimen name="dev_btn_margin_top">1dp</dimen>
     <!-- Device Botton padding bottom -->
