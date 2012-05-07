@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Scale -->
-    <dimen name="scale">0.3px</dimen>
+    <dimen name="scale">0.5px</dimen>
     <!-- Text size -->
     <!-- Dialog text size -->
     <dimen name="dialog_textview_size">16.0sp</dimen>
