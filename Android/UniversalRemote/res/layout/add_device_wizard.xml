@@ -273,14 +273,14 @@
                 android:background="@drawable/btn_footer"
                 android:text="@string/btn_cancel" />
 
-             <Button
+			<Button
                 android:id="@id/btn_footer_back"
                 style="@style/WizardButton"
                 android:layout_marginRight="@dimen/back_btn_right_margin"
                 android:layout_toLeftOf="@id/btn_footer_next"
                 android:background="@drawable/btn_footer"
                 android:text="@string/btn_back" 
-                android:visibility="gone"/>
+                android:visibility="gone"/> 
             <Button
                 android:id="@id/btn_footer_next"
                 style="@style/WizardButton"

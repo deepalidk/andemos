@@ -64,14 +64,14 @@ public class DbManager {
 
 			// 查询test_listview数据
 			cursor = db.rawQuery(String.format(
-					"Select devType from category where name='%1'", typeName),
+					"Select devType from category where name = '%s'", typeName),
 					null);
 			// 通过强大的cursor把数据库的资料一行一行地读取出来
 			while (cursor.moveToNext()) {
 
 				devType = cursor.getInt(0);
 			}
-			
+			 
 			cursor.close();
 		} catch (Exception e) {
 			devType = 1;
