@@ -45,7 +45,7 @@ import android.util.Log;
 public class BtConnectionManager extends IIo {
 	// Debugging
 	private static final String TAG = "BtConnectionManager";
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	// Name for the SDP record when creating server socket
 	private static final String NAME = "BluetoothRemote";

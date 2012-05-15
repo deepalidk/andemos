@@ -397,8 +397,8 @@
                     android:layout_marginRight="@dimen/key_btn_margin_right"
                     android:layout_marginTop="@dimen/key_btn_margin_top"
                     android:background="@drawable/btn_key_1"
-                    android:text="@string/key_unknown"
-                    remotec:key_id="@integer/key_id_invalid"
+                    android:text="@string/key_enter"
+                    remotec:key_id="@integer/key_id_enter"
                     remotec:is_icon_btn="false"
                     android:textAppearance="@style/KeyButtonText" 
                     android:visibility="invisible"/>
@@ -473,7 +473,7 @@
                     android:layout_marginLeft="@dimen/key_btn_margin_left"
                     android:layout_marginRight="@dimen/key_btn_margin_right"
                     android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_enter"
+                    remotec:key_id="@integer/key_id_menu_ok"
                     remotec:is_icon_btn="true"
                     style="@style/KeyButtonNoText" 
                     android:background="@drawable/btn_key_enter" />

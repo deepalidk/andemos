@@ -51,7 +51,7 @@ public class DeviceKeyActivity extends Activity {
 
 	// Debugging Tags
 	private static final String TAG = "DeviceKeyActivity";
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	// the activit mode of key layout activity
 	public static final String ACTIVITY_MODE = "ACTIVITY_MODE";

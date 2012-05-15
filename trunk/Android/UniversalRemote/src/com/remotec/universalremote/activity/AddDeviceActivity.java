@@ -140,14 +140,14 @@ public class AddDeviceActivity extends Activity {
 		if (curPage == eCurrentPage.eSelectDevice) {
 			mBtnNext.setVisibility(View.VISIBLE);
 			mBtnFinish.setVisibility(View.INVISIBLE);
-			mBtnBack.setVisibility(View.INVISIBLE);
+			mBtnBack.setVisibility(View.INVISIBLE); 
 			mVgSelectDevice.setVisibility(View.VISIBLE);
 			mVgDeviceInfo.setVisibility(View.INVISIBLE);
 		} else if (curPage == eCurrentPage.eDeviceInfo) {
 
 			mBtnNext.setVisibility(View.INVISIBLE);
 			mBtnFinish.setVisibility(View.VISIBLE);
-			mBtnBack.setVisibility(View.VISIBLE);
+			mBtnBack.setVisibility(View.VISIBLE);  
 			mVgSelectDevice.setVisibility(View.INVISIBLE);
 			mVgDeviceInfo.setVisibility(View.VISIBLE);
 
@@ -257,6 +257,7 @@ public class AddDeviceActivity extends Activity {
 
 		mBtnFinish = (Button) findViewById(R.id.btn_footer_finish);
 		mBtnFinish.setOnClickListener(mOnFinishListener);
+
 
 		mBtnBack = (Button) findViewById(R.id.btn_footer_back);
 		mBtnBack.setOnClickListener(mOnBackListener);
@@ -389,7 +390,7 @@ public class AddDeviceActivity extends Activity {
 	};
 
 	/*
-	 * Deals back button click.
+	 * Deals back button click. 
 	 */
 	private OnClickListener mOnBackListener = new OnClickListener() {
 
@@ -613,6 +614,26 @@ public class AddDeviceActivity extends Activity {
 		}
 	};
 
+    @Override  
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {  
+    	/*skip back key*/
+        if (keyCode == KeyEvent.KEYCODE_BACK) {   
+        	
+        	if(mCurPage==eCurrentPage.eDeviceInfo){
+        	AddDeviceActivity.this.initCurrentPage(eCurrentPage.eSelectDevice);
+          //DO SOMETHING      
+        	return true;
+        	}else{
+        		
+        		cancelDialog();
+        		
+        		return super.onKeyDown(keyCode, event);  
+        	}
+        }else{
+            return super.onKeyDown(keyCode, event);  
+        }
+    } 
+	
 	/*
 	 * (non-Javadoc)
 	 * 
