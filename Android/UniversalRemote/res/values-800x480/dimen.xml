@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 800x480 -->
     <!-- Scale -->
     <dimen name="scale">0.5px</dimen>
     <!-- Text size -->
