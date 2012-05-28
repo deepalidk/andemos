@@ -91,6 +91,24 @@
             android:layout_below="@id/spiner_manufacturer"
             android:layout_marginTop="@dimen/line_margin"
             android:background="@drawable/spinner_background_holo_dark" />
+        <View
+                android:id="@id/separator6"
+                android:layout_marginTop="@dimen/line_margin"
+                android:layout_width="@dimen/separator_width"
+                android:layout_height="1.0dip"
+                android:layout_below="@id/spiner_model"
+                android:background="@color/separator_white" />
+        
+         <Button
+                android:id="@id/btn_autosearch"
+                style="@style/WizardButton"
+                android:layout_width="@dimen/testbtn_width"
+                android:layout_marginTop="@dimen/line_margin"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/separator6"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/btn_footer"
+                android:text="@string/btn_autosearch" />
     </RelativeLayout>
 
     <RelativeLayout
