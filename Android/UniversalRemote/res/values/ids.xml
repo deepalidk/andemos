@@ -33,6 +33,7 @@
     <item name="btn_footer_done" type="id"></item>
     <item name="btn_footer_back" type="id"></item>
     <item name="btn_test" type="id"></item>
+    <item name="btn_autosearch" type="id"></item>
     <item name="btn_edit_buttons" type="id"></item>
     <item name="select_ircode" type="id"></item>
     <item name="device_info" type="id"></item>
@@ -42,6 +43,7 @@
     <item name="separator3" type="id"></item>
     <item name="separator4" type="id"></item>
     <item name="separator5" type="id"></item>
+    <item name="separator6" type="id"></item>
     <item name="device_img" type="id"></item>
     <item name="name_layout" type="id"></item>
     <item name="name_label" type="id"></item>

@@ -8,11 +8,14 @@ package com.remotec.universalremote.activity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.common.FileManager;
 import com.remotec.universalremote.activity.R;
 import com.remotec.universalremote.activity.R.layout;
 import com.remotec.universalremote.activity.component.DeviceButton;
+import com.remotec.universalremote.activity.component.KeyButton;
 import com.remotec.universalremote.activity.component.RtArrayAdapter;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
@@ -35,6 +38,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -67,6 +72,8 @@ public class AddDeviceActivity extends Activity {
 	private static final String TAG = "AddDeviceActivity";
 	private static final boolean D = false;
 
+	private static final int MSG_TIMER = 1;
+
 	private Spinner mSpinerCategory;
 	private Spinner mSpinerManufacturer;
 	private Spinner mSpinerModel;
@@ -83,6 +90,7 @@ public class AddDeviceActivity extends Activity {
 	private Button mBtnBack;
 	private Button mBtnFinish;
 	private Button mBtnTest;
+	private Button mBtnAutoSearch;
 
 	private EditText mDeviceName; // name edittext
 
@@ -91,9 +99,13 @@ public class AddDeviceActivity extends Activity {
 	private TextView mCategory;
 	private TextView mManufacturer;
 	private TextView mCodeNum;
-	
-	//mark if the device is edit, then we should generate the key for it.
+
+	private Timer mTimer = null;
+	private TimerTask mTimeTask = null;
+
+	// mark if the device is edit, then we should generate the key for it.
 	private boolean mDeviceEditTag;
+	private int mNextAutoPosition;
 
 	enum eCurrentPage {
 		eSelectDevice, eDeviceInfo
@@ -126,10 +138,12 @@ public class AddDeviceActivity extends Activity {
 
 		mCurPage = eCurrentPage.eSelectDevice;
 
+		mTimer = new Timer();
+
 		mDevice = Device.createDevice(this);
 
-		mDeviceEditTag=true;
-		
+		mDeviceEditTag = true;
+
 		updateControls();
 
 	}
@@ -140,14 +154,14 @@ public class AddDeviceActivity extends Activity {
 		if (curPage == eCurrentPage.eSelectDevice) {
 			mBtnNext.setVisibility(View.VISIBLE);
 			mBtnFinish.setVisibility(View.INVISIBLE);
-			mBtnBack.setVisibility(View.INVISIBLE); 
+			mBtnBack.setVisibility(View.INVISIBLE);
 			mVgSelectDevice.setVisibility(View.VISIBLE);
 			mVgDeviceInfo.setVisibility(View.INVISIBLE);
 		} else if (curPage == eCurrentPage.eDeviceInfo) {
 
 			mBtnNext.setVisibility(View.INVISIBLE);
 			mBtnFinish.setVisibility(View.VISIBLE);
-			mBtnBack.setVisibility(View.VISIBLE);  
+			mBtnBack.setVisibility(View.VISIBLE);
 			mVgSelectDevice.setVisibility(View.INVISIBLE);
 			mVgDeviceInfo.setVisibility(View.VISIBLE);
 
@@ -161,7 +175,7 @@ public class AddDeviceActivity extends Activity {
 	 */
 	protected void cancelDialog() {
 
-		/*build a dialog, ask if want to close*/
+		/* build a dialog, ask if want to close */
 		AlertDialog.Builder builder = new Builder(AddDeviceActivity.this);
 
 		builder.setMessage(R.string.cancel_adding_msg);
@@ -215,29 +229,29 @@ public class AddDeviceActivity extends Activity {
 	private void loadCodeNum(String category, String manufacturer) {
 
 		DbManager dbm = new DbManager();
-		Extender curExtender= RemoteUi.getHandle().getActiveExtender();
-		
-		List<String> temp=null;
-		temp = dbm.getCodesList(category, manufacturer,curExtender.getSupportUirdLib());
+		Extender curExtender = RemoteUi.getHandle().getActiveExtender();
+
+		List<String> temp = null;
+		temp = dbm.getCodesList(category, manufacturer,
+				curExtender.getSupportUirdLib());
 		mCodeAdapter.setData(temp);
 		mSpinerModel.setAdapter(mCodeAdapter);
-		
-		if(temp.size()==0){
+
+		if (temp.size() == 0) {
 			mDevice.setIrCode(-1);
 		}
-		
+
 		/*
 		 * set the device type id.
 		 */
 		setDeviceTypeId(dbm);
 
 	}
-	
+
 	/*
 	 * Get the device type id to transmit ir.
 	 */
-	private void setDeviceTypeId(DbManager dbm)
-	{
+	private void setDeviceTypeId(DbManager dbm) {
 		mDevice.setDeviceTypeId(dbm.getDevTypeIdByName(mDevice.getDeviceType()));
 	}
 
@@ -258,9 +272,11 @@ public class AddDeviceActivity extends Activity {
 		mBtnFinish = (Button) findViewById(R.id.btn_footer_finish);
 		mBtnFinish.setOnClickListener(mOnFinishListener);
 
-
 		mBtnBack = (Button) findViewById(R.id.btn_footer_back);
 		mBtnBack.setOnClickListener(mOnBackListener);
+
+		mBtnAutoSearch = (Button) findViewById(R.id.btn_autosearch);
+		mBtnAutoSearch.setOnClickListener(mOnAutosearchListener);
 
 		mBtnTest = (Button) findViewById(R.id.btn_test);
 		mBtnTest.setOnClickListener(mOnTestListener);
@@ -337,9 +353,9 @@ public class AddDeviceActivity extends Activity {
 					.toString();
 			String category = mSpinerCategory.getSelectedItem().toString();
 			loadCodeNum(category, manufacturer);
-			
-			/*save data to the device object*/
-			mDevice.setName(category+"-"+manufacturer);
+
+			/* save data to the device object */
+			mDevice.setName(category + "-" + manufacturer);
 			mDevice.setDeviceType(category);
 			mDevice.setManufacturer(manufacturer);
 		}
@@ -362,9 +378,9 @@ public class AddDeviceActivity extends Activity {
 			String codeNum = mSpinerModel.getSelectedItem().toString();
 
 			if ((codeNum != null) && (codeNum.length() > 0)) {
-				
+
 				mDevice.setIrCode(Integer.parseInt(codeNum));
-				mDeviceEditTag=true;
+				mDeviceEditTag = true;
 			}
 		}
 
@@ -390,7 +406,7 @@ public class AddDeviceActivity extends Activity {
 	};
 
 	/*
-	 * Deals back button click. 
+	 * Deals back button click.
 	 */
 	private OnClickListener mOnBackListener = new OnClickListener() {
 
@@ -407,12 +423,14 @@ public class AddDeviceActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			
-			if(mDevice.getIrCode()!=-1){
+
+			if (mDevice.getIrCode() != -1) {
 				updateControls();
-				AddDeviceActivity.this.initCurrentPage(eCurrentPage.eDeviceInfo);	
-			}else{
-				Toast.makeText(AddDeviceActivity.this, R.string.choose_code, Toast.LENGTH_SHORT).show();
+				AddDeviceActivity.this
+						.initCurrentPage(eCurrentPage.eDeviceInfo);
+			} else {
+				Toast.makeText(AddDeviceActivity.this, R.string.choose_code,
+						Toast.LENGTH_SHORT).show();
 			}
 		}
 	};
@@ -426,13 +444,13 @@ public class AddDeviceActivity extends Activity {
 		public void onClick(View v) {
 
 			try {
-				//generate the device key.
-				if(AddDeviceActivity.this.mDeviceEditTag)
-				{
-					boolean result=setDeviceKeys(AddDeviceActivity.this.mDevice, RemoteUi.getHandle()
-										.getTemplateKeyMap());
-					
-					if(!result){
+				// generate the device key.
+				if (AddDeviceActivity.this.mDeviceEditTag) {
+					boolean result = setDeviceKeys(
+							AddDeviceActivity.this.mDevice, RemoteUi
+									.getHandle().getTemplateKeyMap());
+
+					if (!result) {
 						Toast.makeText(getApplicationContext(),
 								R.string.please_try_again_, Toast.LENGTH_SHORT)
 								.show();
@@ -464,17 +482,16 @@ public class AddDeviceActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			
-			//generate the device key.
-			if(AddDeviceActivity.this.mDeviceEditTag)
-			{
-				boolean result=setDeviceKeys(AddDeviceActivity.this.mDevice, RemoteUi.getHandle()
-						.getTemplateKeyMap());
-				if(!result){
+
+			// generate the device key.
+			if (AddDeviceActivity.this.mDeviceEditTag) {
+				boolean result = setDeviceKeys(AddDeviceActivity.this.mDevice,
+						RemoteUi.getHandle().getTemplateKeyMap());
+				if (!result) {
 					Toast.makeText(getApplicationContext(),
 							R.string.please_try_again_, Toast.LENGTH_SHORT)
 							.show();
-					
+
 					return;
 				}
 			}
@@ -482,47 +499,48 @@ public class AddDeviceActivity extends Activity {
 			/* crate a intent object, then call the device activity class */
 			Intent devKeyIntent = new Intent(AddDeviceActivity.this,
 					DeviceKeyActivity.class);
-			devKeyIntent.putExtra(DeviceKeyActivity.ACTIVITY_MODE, DeviceKeyActivity.ACTIVITY_CONTROL);
-		    RemoteUi.getHandle().setActiveDevice(mDevice);
+			devKeyIntent.putExtra(DeviceKeyActivity.ACTIVITY_MODE,
+					DeviceKeyActivity.ACTIVITY_CONTROL);
+			RemoteUi.getHandle().setActiveDevice(mDevice);
 			startActivity(devKeyIntent);
 		}
 	};
-	
+
 	/*
 	 * Sets the key layout to display device key
 	 */
 	private boolean setDeviceKeys(Device dev, Map<Integer, Key> map) {
-	    
-		boolean result=false;
-		//UIRD version Extender.
-		if(RemoteUi.getHandle().getActiveExtender().getSupportUirdLib()){
-			result= setDeviceKeysUird(dev,map);
-	     }else{
-	    	result= setDeviceKeysInternal(dev,map);
-	     }
-		
+
+		boolean result = false;
+		// UIRD version Extender.
+		if (RemoteUi.getHandle().getActiveExtender().getSupportUirdLib()) {
+			result = setDeviceKeysUird(dev, map);
+		} else {
+			result = setDeviceKeysInternal(dev, map);
+		}
+
 		return result;
 	}
-	
+
 	/*
 	 * Sets the key layout to display device key£¨Internal Lib version£©.
 	 */
 	private boolean setDeviceKeysInternal(Device dev, Map<Integer, Key> map) {
-			
-		/*get the valid key ids.*/
-		byte[] keyFlags =  IrApi.getHandle().
-		        getKeyFlag((byte)dev.getDeviceTypeId(),dev.getIrCode());
 
-        if(keyFlags==null||keyFlags.length!=9){
-        	return false;
-        }
-		
+		/* get the valid key ids. */
+		byte[] keyFlags = IrApi.getHandle().getKeyFlag(
+				(byte) dev.getDeviceTypeId(), dev.getIrCode());
+
+		if (keyFlags == null || keyFlags.length != 9) {
+			return false;
+		}
+
 		dev.getChildren().clear();
 
 		int k = 0;
 		for (int i = 1; i < 9; i++) {
 			byte keyFlag = keyFlags[i];
-			for (int j = 7; j >-1; j--) {
+			for (int j = 7; j > -1; j--) {
 				if (map.containsKey(k)) {
 					Key newKey = map.get(k).colonel();
 
@@ -538,48 +556,49 @@ public class AddDeviceActivity extends Activity {
 				k++;
 			}
 		}
-		
-		mDeviceEditTag=false;
-		
+
+		mDeviceEditTag = false;
+
 		return true;
 	}
-	
+
 	/*
 	 * Sets the key layout to display device key£¨Uird Lib version£©.
 	 */
 	private boolean setDeviceKeysUird(Device dev, Map<Integer, Key> map) {
-			
-		/*get the valid key ids.*/
+
+		/* get the valid key ids. */
 		DbManager dbm = new DbManager();
-		
-		List<Uird> keyList =  dbm.getUirdData(dev.getDeviceTypeId(),dev.getIrCode());
-		
+
+		List<Uird> keyList = dbm.getUirdData(dev.getDeviceTypeId(),
+				dev.getIrCode());
+
 		dev.getChildren().clear();
-		
+
 		for (int i = 0; i < 64; i++) {
 			if (map.containsKey(i)) {
 				Key newKey = map.get(i).colonel();
-                Uird temp=null;
-				for(Uird ud:keyList){
-					if(ud.getKeyId()==i){
-						temp=ud;
+				Uird temp = null;
+				for (Uird ud : keyList) {
+					if (ud.getKeyId() == i) {
+						temp = ud;
 						break;
 					}
-				}	
-				if(temp!=null){
+				}
+				if (temp != null) {
 					newKey.setData(temp.getUirdData());
 					newKey.setMode(Mode.UIRD);
 					newKey.setVisible(true);
-				}else{
+				} else {
 					newKey.setVisible(false);
 				}
 
 				dev.getChildren().add(newKey);
 			}
 		}
-		
-		mDeviceEditTag=false;
-		
+
+		mDeviceEditTag = false;
+
 		return true;
 	}
 
@@ -614,26 +633,27 @@ public class AddDeviceActivity extends Activity {
 		}
 	};
 
-    @Override  
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {  
-    	/*skip back key*/
-        if (keyCode == KeyEvent.KEYCODE_BACK) {   
-        	
-        	if(mCurPage==eCurrentPage.eDeviceInfo){
-        	AddDeviceActivity.this.initCurrentPage(eCurrentPage.eSelectDevice);
-          //DO SOMETHING      
-        	return true;
-        	}else{
-        		
-        		cancelDialog();
-        		
-        		return super.onKeyDown(keyCode, event);  
-        	}
-        }else{
-            return super.onKeyDown(keyCode, event);  
-        }
-    } 
-	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		/* skip back key */
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+			if (mCurPage == eCurrentPage.eDeviceInfo) {
+				AddDeviceActivity.this
+						.initCurrentPage(eCurrentPage.eSelectDevice);
+				// DO SOMETHING
+				return true;
+			} else {
+
+				cancelDialog();
+
+				return super.onKeyDown(keyCode, event);
+			}
+		} else {
+			return super.onKeyDown(keyCode, event);
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -690,6 +710,108 @@ public class AddDeviceActivity extends Activity {
 				context.getApplicationInfo().packageName);
 
 		return result;
+	}
+
+	/*
+	 * Deals Auto Search button click.
+	 */
+	private OnClickListener mOnAutosearchListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+
+			String sAutoSearch = getResources().getString(
+					R.string.btn_autosearch);
+
+			if (mTimer != null) {
+				mTimer.cancel();
+				// mTimeTask.cancel();
+				mTimer = null;
+			}
+
+			if (mBtnAutoSearch.getText().equals(sAutoSearch))// not time was
+																// init
+			{
+				mSpinerModel.setSelection(0);
+				mNextAutoPosition = 0;
+				mTimer = new Timer();
+				mTimeTask = new TimerTask() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						Message msg = mTimeHandle.obtainMessage(MSG_TIMER);
+						mTimeHandle.sendMessage(msg);
+					}
+
+				};
+				mTimer.schedule(mTimeTask, 0, 2000);
+			} else {
+				mBtnAutoSearch.setText(sAutoSearch);
+			}
+		}
+	};
+
+	// The Handler that gets information back from the timetask
+	private Handler mTimeHandle = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case MSG_TIMER: {
+
+				if (mNextAutoPosition < mSpinerModel.getCount()) {
+
+					mSpinerModel.setSelection(mNextAutoPosition);
+					String btnText = String.format("%s(%d/%d)", getResources()
+							.getString(R.string.btn_autosearch_stop),
+							mNextAutoPosition + 1, mSpinerModel.getCount());
+					mBtnAutoSearch.setText(btnText);
+
+					if (!RemoteUi.getEmulatorTag()) {
+						emitPowerKeyIR();
+					}
+
+					mNextAutoPosition++;
+				} else {
+					mBtnAutoSearch.setText(getResources().getString(
+							R.string.btn_autosearch));
+					mTimer.cancel();
+					// mTimeTask.cancel();
+					mTimer = null;
+				}
+			}
+				break;
+			}
+		}
+	};
+
+	/*
+	 * Emits key IR.
+	 */
+	private void emitPowerKeyIR() {
+
+		IrApi irController = IrApi.getHandle();
+
+		if (irController != null) {
+
+			// UIRD version Extender.
+			if (RemoteUi.getHandle().getActiveExtender().getSupportUirdLib()) {
+				/* get the valid key ids. */
+				DbManager dbm = new DbManager();
+
+				Uird uird = dbm.getUirdData(mDevice.getDeviceTypeId(),
+						mDevice.getIrCode(), 1);
+				if (uird != null) {
+					boolean result = irController.transmitIrData((byte) 0x81,
+							uird.getUirdData());
+				}
+			} else {
+				boolean result = irController.transmitPreprogramedCode(
+						(byte) 0x81, (byte) mDevice.getDeviceTypeId(),
+						mDevice.getIrCode(), (byte) 1);
+			}
+
+		}
 	}
 
 }

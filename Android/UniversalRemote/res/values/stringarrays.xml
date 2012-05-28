@@ -6,7 +6,14 @@
         <item>VCD</item>      
         <item>SAT TV</item>      
         <item>CD</item>      
-    </string-array>    
+    </string-array>   
+    <string-array name="auto_search_key_list">      
+        <item>1.Power</item>      
+        <item>2.CH-</item>  
+        <item>3.CH+</item>   
+        <item>4.VOL-</item>   
+        <item>5.VOL+</item>   
+    </string-array>     
     <string-array name="dev_long_click_menu">      
         <item>Edit device</item>      
         <item>Remove device</item>          

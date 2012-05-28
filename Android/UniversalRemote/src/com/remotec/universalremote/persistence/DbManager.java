@@ -144,6 +144,34 @@ public class DbManager {
 		return mDataList;
 	}
 	
+	public Uird getUirdData(int devType,int irCode,int keyId){
+        Uird result=null;
+		
+		try {
+
+			SQLiteDatabase db = getDataBase();
+			// 定义Cursor游标,用于管理数据，比如获得数据库的每一行数据
+			Cursor cursor = null;
+
+			String sql=String.format("Select data From tbUirdData where codenum=%d and devtype=%d and keyId=%d",irCode,devType,keyId);
+			// 查询test_listview数据
+			cursor = db.rawQuery(sql,null);
+			// 通过强大的cursor把数据库的资料一行一行地读取出来
+			while (cursor.moveToNext()) {
+				result=new Uird();
+				result.setKeyId(keyId);
+                byte[] uirdData=XmlManager.hexStringToByteArray(cursor.getString(0));
+                result.setUirdData(uirdData);
+				
+			}
+			
+			cursor.close();
+		} catch (Exception e) {
+		}
+		
+		return result;
+	}
+	
 	/*
 	 * loads the device category from database.
 	 */
