@@ -223,7 +223,7 @@ public class IrApi implements IOnRead {
 	 *******************************/
 	public void IrTransmitStop() {
 		byte buffer[] = new byte[1];
-		buffer[1] = 0x00;
+		buffer[0] = 0x00;
 		mmIIo.write(buffer);
 	}
 

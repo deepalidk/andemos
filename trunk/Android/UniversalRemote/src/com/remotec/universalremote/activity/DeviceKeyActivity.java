@@ -22,9 +22,12 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -98,12 +101,11 @@ public class DeviceKeyActivity extends Activity {
 
 	private int mActivityMode = ACTIVITY_CONTROL;
 
+	/* to identify current transmission type */
+	private boolean mContinuousTag = false;
+
 	private enum EditKeyType {
-		label_key_visible, 
-		label_key_invisible, 
-		icon_key_visible, 
-		icon_key_invisible, 
-		key_error
+		label_key_visible, label_key_invisible, icon_key_visible, icon_key_invisible, key_error
 	};
 
 	// mark to determine how to edit key.
@@ -111,10 +113,10 @@ public class DeviceKeyActivity extends Activity {
 
 	// store the cur edit key, for edit.
 	private KeyButton mCurActiveKey;
-	
-	//the object of learning dialog.
+
+	// the object of learning dialog.
 	private AlertDialog mLearningDlg;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -189,7 +191,7 @@ public class DeviceKeyActivity extends Activity {
 
 		vg = (ViewGroup) findViewById(R.id.id_key_layout);
 
-		findKeyButtons(vg, mKeyButtonMap, mKeyOnClickListener);
+		findKeyButtons(vg, mKeyButtonMap);
 
 	}
 
@@ -214,8 +216,7 @@ public class DeviceKeyActivity extends Activity {
 	/*
 	 * finds all key Buttons
 	 */
-	public static void findKeyButtons(ViewGroup vg,
-			Map<Integer, KeyButton> bMap, OnClickListener listener) {
+	private void findKeyButtons(ViewGroup vg, Map<Integer, KeyButton> bMap) {
 
 		for (int i = 0; i < vg.getChildCount(); i++) {
 			View v = vg.getChildAt(i);
@@ -224,10 +225,12 @@ public class DeviceKeyActivity extends Activity {
 				KeyButton btn = (KeyButton) v;
 				if (btn.getKeyId() != -1) {
 					bMap.put(btn.getKeyId(), btn);
-					v.setOnClickListener(listener);
+					v.setOnClickListener(mKeyOnClickListener);
+					v.setOnLongClickListener(mKeyButtonOnLongClickListener);
+					v.setOnTouchListener(mKeyButtonOnTouchListener);
 				}
 			} else if (v instanceof ViewGroup) {
-				findKeyButtons((ViewGroup) v, bMap, listener);
+				findKeyButtons((ViewGroup) v, bMap);
 			}
 		}
 	}
@@ -275,22 +278,74 @@ public class DeviceKeyActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 
-
-
 			mCurActiveKey = (KeyButton) v;
 
-			if (mActivityMode == ACTIVITY_CONTROL) {
-				if (!RemoteUi.getEmulatorTag()){
-				  emitKeyIR(mCurActiveKey);
-				}
-			} else if (mActivityMode == ACTIVITY_EDIT) {
+			if (mActivityMode == ACTIVITY_EDIT) {
 				showKeyEditMenu(mCurActiveKey);
 			}
 		}
 
 	};
-	private EditText mLabelEdit;
 
+	/*
+	 * key button long click
+	 */
+	private OnLongClickListener mKeyButtonOnLongClickListener = new OnLongClickListener() {
+
+		@Override
+		public boolean onLongClick(View v) {
+
+			mCurActiveKey = (KeyButton) v;
+
+			if (mActivityMode == ACTIVITY_CONTROL) {
+				if (!RemoteUi.getEmulatorTag()) {
+					mContinuousTag = true;
+					emitKeyIR(mCurActiveKey, (byte) 0x01);
+				}
+
+				return true;
+			}
+
+			return false;
+		}
+
+	};
+
+	/*
+	 * key on touch listener
+	 */
+	private OnTouchListener mKeyButtonOnTouchListener = new OnTouchListener() {
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+
+			if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+				if (mActivityMode == ACTIVITY_CONTROL) {
+					if (!RemoteUi.getEmulatorTag()) {
+						mCurActiveKey = (KeyButton) v;
+						emitKeyIR(mCurActiveKey, (byte) 0x81);
+					}
+				}
+
+			} else if (event.getAction() == MotionEvent.ACTION_UP) {
+				if (mContinuousTag) {
+					if (mActivityMode == ACTIVITY_CONTROL) {
+						if (!RemoteUi.getEmulatorTag()) {
+							IrApi irController = IrApi.getHandle();
+							irController.IrTransmitStop();
+							mContinuousTag = false;
+						}
+					}
+				}
+			}
+
+			return false;
+		}
+
+	};
+
+	private EditText mLabelEdit;
 
 	/*
 	 * displays the devices on the screen.
@@ -394,35 +449,38 @@ public class DeviceKeyActivity extends Activity {
 
 	/*
 	 * Emits key IR.
+	 * 
+	 * @emitType: 0x01: continuous transmission. need send stop command to stop
+	 * emit. 0x81: single transmission.
 	 */
-	private void emitKeyIR(KeyButton keyBtn) {
+	private void emitKeyIR(KeyButton keyBtn, byte emitType) {
 		IrApi irController = IrApi.getHandle();
 
 		if (irController != null) {
 			Key tempKey = (Key) keyBtn.getTag();
 
 			if (tempKey != null) {
-				
-				if(tempKey.getMode()==Mode.BuildIn){
+
+				if (tempKey.getMode() == Mode.BuildIn) {
 					boolean result = irController.transmitPreprogramedCode(
-					(byte) 0x81, (byte) mDevice.getDeviceTypeId(),
-					mDevice.getIrCode(), (byte) tempKey.getKeyId());
-				}else if(tempKey.getMode()==Mode.Learn){
-					
-					
-//					boolean result=irController.storeLearnData((byte)0, tempKey.getData());
-//					
-//					if(result){
-					   irController.transmitLearnData((byte) 0x81,(byte)0);
-//					}
-				
-					
-				}else if(tempKey.getMode()==Mode.UIRD){
-//					if(D)
-//				          Log.d(TAG, ""+"Start");
-					boolean result=irController.transmitIrData((byte) 0x81,tempKey.getData());
-					if(D)
-			          Log.d(TAG, ""+result);
+							emitType, (byte) mDevice.getDeviceTypeId(),
+							mDevice.getIrCode(), (byte) tempKey.getKeyId());
+				} else if (tempKey.getMode() == Mode.Learn) {
+
+					// boolean result=irController.storeLearnData((byte)0,
+					// tempKey.getData());
+					//
+					// if(result){
+					irController.transmitLearnData(emitType, (byte) 0);
+					// }
+
+				} else if (tempKey.getMode() == Mode.UIRD) {
+					// if(D)
+					// Log.d(TAG, ""+"Start");
+					boolean result = irController.transmitIrData(emitType,
+							tempKey.getData());
+					if (D)
+						Log.d(TAG, "" + result);
 				}
 			}
 		}
@@ -432,17 +490,17 @@ public class DeviceKeyActivity extends Activity {
 	 * provide key labels and commands
 	 */
 	private void showKeyEditMenu(KeyButton keyBtn) {
-		
-		mCurEditKeyType=getEditKeyType(keyBtn);
-		
-		if(mCurEditKeyType==EditKeyType.icon_key_invisible){
-			//To do start learn activity
+
+		mCurEditKeyType = getEditKeyType(keyBtn);
+
+		if (mCurEditKeyType == EditKeyType.icon_key_invisible) {
+			// To do start learn activity
 			displayLearnDlg();
-		}else{
+		} else {
 			displayEditChoiceMenu(mCurEditKeyType);
-		}	
+		}
 	}
-	
+
 	/*
 	 * display a choice menu
 	 */
@@ -451,92 +509,88 @@ public class DeviceKeyActivity extends Activity {
 		Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.edit_buttons);
 
-		int resStringArray=this.getMenuResource(type);
+		int resStringArray = this.getMenuResource(type);
 		// 设置可供选择的ListView
-		builder.setItems(resStringArray,
-				new DialogInterface.OnClickListener() {
+		builder.setItems(resStringArray, new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
 
-						menuItemSelected(which);
-						dialog.dismiss();
-					}
-				});
+				menuItemSelected(which);
+				dialog.dismiss();
+			}
+		});
 
 		dlg = builder.create();
 
 		dlg.show();
 	}
-    
+
 	/*
 	 * a menu is selected
 	 */
-	private void menuItemSelected(int which){
-		
-		switch(mCurEditKeyType){
+	private void menuItemSelected(int which) {
+
+		switch (mCurEditKeyType) {
 		case label_key_visible:
 			visibleLabelKeySelected(which);
 			break;
 		case label_key_invisible:
 			invisibleLabelKeySelected(which);
 			break;
-			
+
 		case icon_key_visible:
 			visibleIconKeySelected(which);
 			break;
 		}
-		
+
 	}
-	
+
 	/*
 	 * a visible label key menu item seleted.
 	 */
-	private void visibleLabelKeySelected(int which){
-		switch(which)
-		{
-			case 0: //learn
-				displayLearnDlg();
-				break;
-			case 1://delete
-				displayDeleteConfirmDlg();
-				break;
-			case 2://edit
-				displayEditLabelDlg();
-				break;
+	private void visibleLabelKeySelected(int which) {
+		switch (which) {
+		case 0: // learn
+			displayLearnDlg();
+			break;
+		case 1:// delete
+			displayDeleteConfirmDlg();
+			break;
+		case 2:// edit
+			displayEditLabelDlg();
+			break;
 		}
 	}
-	
+
 	/*
 	 * a visible icon key menu item seleted.
 	 */
-	private void visibleIconKeySelected(int which){
-		switch(which)
-		{
-			case 0: //learn
-				displayLearnDlg();
-				break;
-			case 1://delete
-				displayDeleteConfirmDlg();
-				break;
+	private void visibleIconKeySelected(int which) {
+		switch (which) {
+		case 0: // learn
+			displayLearnDlg();
+			break;
+		case 1:// delete
+			displayDeleteConfirmDlg();
+			break;
 		}
 	}
-	
+
 	/*
 	 * a visible label key menu item seleted.
 	 */
-	private void invisibleLabelKeySelected(int which){
-		switch(which)
-		{
-			case 0: //learn
-				displayLearnDlg();
-				break;
-			case 1://edit
-				displayEditLabelDlg();
-				break;
+	private void invisibleLabelKeySelected(int which) {
+		switch (which) {
+		case 0: // learn
+			displayLearnDlg();
+			break;
+		case 1:// edit
+			displayEditLabelDlg();
+			break;
 		}
 	}
-	
+
 	/*
 	 * displays the learn failed dialog.
 	 */
@@ -547,30 +601,29 @@ public class DeviceKeyActivity extends Activity {
 		builder.setIcon(android.R.drawable.ic_dialog_alert);
 		builder.setTitle(R.string.learn_failed_title);
 		builder.setMessage(R.string.learn_failed_msg);
-		
+
 		builder.setPositiveButton(android.R.string.ok,
 				new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 
-                        displayPreLearnDlg();
+						displayPreLearnDlg();
 					}
 				});
 
 		builder.create().show();
 	}
-	
+
 	/*
 	 * displays the learn failed dialog.
 	 */
 	private void displayLearnSucess() {
-		
-		Toast.makeText(getApplicationContext(),
-				R.string.learning_succeed_msg, Toast.LENGTH_SHORT)
-				.show();
+
+		Toast.makeText(getApplicationContext(), R.string.learning_succeed_msg,
+				Toast.LENGTH_SHORT).show();
 	}
-	
+
 	/*
 	 * displays the learning dialog.
 	 */
@@ -579,16 +632,17 @@ public class DeviceKeyActivity extends Activity {
 		AlertDialog.Builder builder = new Builder(this);
 
 		builder.setTitle(R.string.Learn_dialog_title);
-		
-		ViewGroup vg=(ViewGroup) this.getLayoutInflater().inflate(R.layout.learn_dialog, null);
-		
+
+		ViewGroup vg = (ViewGroup) this.getLayoutInflater().inflate(
+				R.layout.learn_dialog, null);
+
 		builder.setView(vg);
-		
-		mLearningDlg=builder.create();
-		
+
+		mLearningDlg = builder.create();
+
 		mLearningDlg.show();
 	}
-	
+
 	/*
 	 * displays the prepare learn dialog.
 	 */
@@ -597,9 +651,10 @@ public class DeviceKeyActivity extends Activity {
 		AlertDialog.Builder builder = new Builder(this);
 
 		builder.setTitle(R.string.learn_remote_commands);
-		
-		ViewGroup vg=(ViewGroup) this.getLayoutInflater().inflate(R.layout.prelearn_dialog, null);
-		
+
+		ViewGroup vg = (ViewGroup) this.getLayoutInflater().inflate(
+				R.layout.prelearn_dialog, null);
+
 		builder.setView(vg);
 		builder.setPositiveButton(R.string.btn_start,
 				new DialogInterface.OnClickListener() {
@@ -608,8 +663,8 @@ public class DeviceKeyActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 
 						dialog.dismiss();
-						
-						LearningTask task=new LearningTask(); 
+
+						LearningTask task = new LearningTask();
 						task.execute(0);
 					}
 				});
@@ -626,7 +681,7 @@ public class DeviceKeyActivity extends Activity {
 
 		builder.create().show();
 	}
-	
+
 	/*
 	 * displays the delete confirm dialog.
 	 */
@@ -635,12 +690,12 @@ public class DeviceKeyActivity extends Activity {
 		AlertDialog.Builder builder = new Builder(this);
 
 		builder.setTitle(R.string.edit_key_label);
-		
-		mLabelEdit=new EditText(this);
-		
-		Key key=(Key)mCurActiveKey.getTag();
+
+		mLabelEdit = new EditText(this);
+
+		Key key = (Key) mCurActiveKey.getTag();
 		mLabelEdit.setText(key.getText());
-		
+
 		builder.setView(mLabelEdit);
 		builder.setPositiveButton(android.R.string.ok,
 				new DialogInterface.OnClickListener() {
@@ -648,10 +703,10 @@ public class DeviceKeyActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 
-						Key key=(Key)mCurActiveKey.getTag();
-						String text=mLabelEdit.getText().toString();
+						Key key = (Key) mCurActiveKey.getTag();
+						String text = mLabelEdit.getText().toString();
 						key.setText(text);
-					     
+
 						/*
 						 * save the data.
 						 */
@@ -677,19 +732,20 @@ public class DeviceKeyActivity extends Activity {
 
 		builder.create().show();
 	}
-	
+
 	/*
 	 * displays the learn dialog.
 	 */
-	private void displayLearnDlg(){
-		if(RemoteUi.getHandle().getActiveExtender().getSupportLearning()||RemoteUi.getEmulatorTag()){
-			 displayPreLearnDlg();
-		}else{
-             Toast.makeText(this, R.string.no_learning,
-            		 Toast.LENGTH_SHORT).show();
+	private void displayLearnDlg() {
+		if (RemoteUi.getHandle().getActiveExtender().getSupportLearning()
+				|| RemoteUi.getEmulatorTag()) {
+			displayPreLearnDlg();
+		} else {
+			Toast.makeText(this, R.string.no_learning, Toast.LENGTH_SHORT)
+					.show();
 		}
 	}
-	
+
 	/*
 	 * displays the delete confirm dialog.
 	 */
@@ -709,9 +765,9 @@ public class DeviceKeyActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 
-						Key key=(Key)mCurActiveKey.getTag();
+						Key key = (Key) mCurActiveKey.getTag();
 						key.setVisible(false);
-					     
+
 						/*
 						 * save the data.
 						 */
@@ -737,50 +793,48 @@ public class DeviceKeyActivity extends Activity {
 
 		builder.create().show();
 	}
-	
-	
+
 	/*
 	 * get menu resource from edit type.
 	 */
-	private int getMenuResource(EditKeyType type){
-		int resResult=-1;
-		switch(type)
-		{
+	private int getMenuResource(EditKeyType type) {
+		int resResult = -1;
+		switch (type) {
 		case icon_key_visible:
-			resResult=R.array.menu_icon_key_visible;
+			resResult = R.array.menu_icon_key_visible;
 			break;
 		case label_key_invisible:
-			resResult=R.array.menu_label_key_invisible;
+			resResult = R.array.menu_label_key_invisible;
 			break;
 		case label_key_visible:
-			resResult=R.array.menu_label_key_visible;
+			resResult = R.array.menu_label_key_visible;
 			break;
 		}
-		
+
 		return resResult;
 	}
-	
+
 	/*
-	 *Gets edit key type from keyBtn 
+	 * Gets edit key type from keyBtn
 	 */
 	private EditKeyType getEditKeyType(KeyButton keyBtn) {
 		EditKeyType result = EditKeyType.key_error;
 
 		Key key = (Key) keyBtn.getTag();
 
-		if (key != null) {  //if no key object, it's a error key.
-			
+		if (key != null) { // if no key object, it's a error key.
+
 			if (key.getVisible() == true) {
 				if (keyBtn.getIsIconButton()) {
-					result=EditKeyType.icon_key_visible;
+					result = EditKeyType.icon_key_visible;
 				} else {
-					result=EditKeyType.label_key_visible;
+					result = EditKeyType.label_key_visible;
 				}
 			} else {
 				if (keyBtn.getIsIconButton()) {
-					result=EditKeyType.icon_key_invisible;
+					result = EditKeyType.icon_key_invisible;
 				} else {
-					result=EditKeyType.label_key_invisible;
+					result = EditKeyType.label_key_invisible;
 				}
 			}
 		}
@@ -821,46 +875,46 @@ public class DeviceKeyActivity extends Activity {
 
 		}
 	}
-	
+
 	/*
 	 * AsyncTask for Learning.
 	 */
 	private class LearningTask extends
-			android.os.AsyncTask<Integer, Integer, Integer> {	
-		
+			android.os.AsyncTask<Integer, Integer, Integer> {
+
 		private static final byte LEARN_LOCATION = 0;
-		//learning result
-		boolean mLearningResult=false;
-		
-	    public boolean getLeaningResult(){
-	    	return mLearningResult;
-	    } 
-	    
-		//learning result
-		byte[] mData=null;
-		
-	    public byte[] getLeaningData(){
-	    	return mData;
-	    } 
-		
+		// learning result
+		boolean mLearningResult = false;
+
+		public boolean getLeaningResult() {
+			return mLearningResult;
+		}
+
+		// learning result
+		byte[] mData = null;
+
+		public byte[] getLeaningData() {
+			return mData;
+		}
+
 		@Override
 		protected Integer doInBackground(Integer... params) {
-           
+
 			IrApi irController = IrApi.getHandle();
-			
-			//learn at loc 0
+
+			// learn at loc 0
 			mLearningResult = irController.learnIrCode(LEARN_LOCATION);
-			
-			if(mLearningResult){
-				
-				byte[] data=irController.readLearnData(LEARN_LOCATION);
-				
-				//get the data at loc 0
-				Key key=(Key)mCurActiveKey.getTag();
+
+			if (mLearningResult) {
+
+				byte[] data = irController.readLearnData(LEARN_LOCATION);
+
+				// get the data at loc 0
+				Key key = (Key) mCurActiveKey.getTag();
 				key.setData(data);
 				key.setMode(Mode.Learn);
 				key.setVisible(true);
-				
+
 				/*
 				 * save the data.
 				 */
@@ -869,7 +923,7 @@ public class DeviceKeyActivity extends Activity {
 						RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
 								+ RemoteUi.UI_XML_FILE);
 			}
-			
+
 			return 0;
 		}
 
@@ -885,15 +939,15 @@ public class DeviceKeyActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			
+
 			mLearningDlg.dismiss();
-			mLearningDlg=null;
-			if(mLearningResult){
+			mLearningDlg = null;
+			if (mLearningResult) {
 				displayLearnSucess();
 				displayKeys();
-			}else{
+			} else {
 				displayLearnFailed();
-			}	
+			}
 		}
 	}
 
