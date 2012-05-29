@@ -719,7 +719,6 @@ public class AddDeviceActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-
 			String sAutoSearch = getResources().getString(
 					R.string.btn_autosearch);
 
@@ -732,20 +731,8 @@ public class AddDeviceActivity extends Activity {
 			if (mBtnAutoSearch.getText().equals(sAutoSearch))// not time was
 																// init
 			{
-				mSpinerModel.setSelection(0);
-				mNextAutoPosition = 0;
-				mTimer = new Timer();
-				mTimeTask = new TimerTask() {
+				displayPreAutosearchDlg();
 
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						Message msg = mTimeHandle.obtainMessage(MSG_TIMER);
-						mTimeHandle.sendMessage(msg);
-					}
-
-				};
-				mTimer.schedule(mTimeTask, 0, 2000);
 			} else {
 				mBtnAutoSearch.setText(sAutoSearch);
 			}
@@ -812,6 +799,68 @@ public class AddDeviceActivity extends Activity {
 			}
 
 		}
+	}
+
+	/*
+	 * displays the prepare Auto search dialog.
+	 */
+	private void displayPreAutosearchDlg() {
+		/* build a dialog, ask if want to close */
+		AlertDialog.Builder builder = new Builder(this);
+
+		builder.setTitle(R.string.auto_search_title);
+		builder.setMessage(R.string.auto_search_comment);
+
+//		ViewGroup vg = (ViewGroup) this.getLayoutInflater().inflate(
+//				R.layout.auto_search_key_select_dialog, null);
+//
+//		builder.setView(vg);
+//		
+//		Spinner sp=(Spinner)vg.findViewById(R.id.spinner_auto_search);
+		
+		builder.setPositiveButton(android.R.string.search_go,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+						dialog.dismiss();
+						startAutoSearch();
+					}
+				});
+
+		builder.setNegativeButton(android.R.string.cancel,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+
+				});
+
+		builder.create().show();
+	}
+
+	/*
+	 * start time for autosearch
+	 */
+	private void startAutoSearch() {
+
+		mSpinerModel.setSelection(0);
+		mNextAutoPosition = 0;
+		mTimer = new Timer();
+		mTimeTask = new TimerTask() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Message msg = mTimeHandle.obtainMessage(MSG_TIMER);
+				mTimeHandle.sendMessage(msg);
+			}
+
+		};
+		mTimer.schedule(mTimeTask, 0, 1500);
 	}
 
 }

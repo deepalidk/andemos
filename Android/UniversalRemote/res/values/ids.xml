@@ -25,7 +25,9 @@
     <item name="spiner_manufacturer" type="id"></item>
     <item name="textview_model" type="id"></item>
     <item name="spiner_model" type="id"></item>
-    <item name="textview_add_device_commnet" type="id"></item>
+    <item name="textview_add_device_comment" type="id"></item>
+    <item name="textview_auto_search_comment" type="id"></item>
+    <item name="spinner_auto_search" type="id"></item>
     <item name="footer" type="id"></item>
     <item name="btn_footer_cancel" type="id"></item>
     <item name="btn_footer_next" type="id"></item>
