@@ -816,6 +816,26 @@ public class DeviceActivity extends Activity {
 	};
 
 	/*
+	 * finds all key Buttons
+	 */
+	private void findKeyButtons(ViewGroup vg,
+			Map<Integer, KeyButton> bMap) {
+
+		for (int i = 0; i < vg.getChildCount(); i++) {
+			View v = vg.getChildAt(i);
+
+			if (v instanceof KeyButton) {
+				KeyButton btn = (KeyButton) v;
+				if (btn.getKeyId() != -1) {
+					bMap.put(btn.getKeyId(), btn);
+				}
+			} else if (v instanceof ViewGroup) {
+				findKeyButtons((ViewGroup) v, bMap);
+			}
+		}
+	}
+	
+	/*
 	 * AsyncTask for App Initializing.
 	 */
 	private class InitAppTask extends
@@ -903,7 +923,7 @@ public class DeviceActivity extends Activity {
 			ViewGroup vgKeyLayout = (ViewGroup) vgKey
 					.findViewById(R.id.id_key_layout);
 
-			DeviceKeyActivity.findKeyButtons(vgKeyLayout, keyBtnMap, null);
+			findKeyButtons(vgKeyLayout, keyBtnMap);
 
 			/*
 			 * save key button informations to the template map.
