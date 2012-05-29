@@ -140,4 +140,8 @@
     <string name="no_learning">The connected extender do not support learning!</string>
     
     <string name="about_title">About Universal Remote</string>
+    
+    <string name="auto_search_title">Auto-search</string>
+    
+    <string name="auto_search_comment">1.Make sure the category and manufacturer of your device is already selected.\n\n2.Press search button. The extender will try a new code every second.\n\n3.Once your device(e.g.TV) turns off, press stop button.</string>
 </resources>

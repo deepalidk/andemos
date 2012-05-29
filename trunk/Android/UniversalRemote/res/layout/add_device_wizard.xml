@@ -25,7 +25,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@id/textview_add_device_commnet"
+        android:id="@id/textview_add_device_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_device_title"
