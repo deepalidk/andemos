@@ -22,28 +22,36 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.common.FileManager;
 import com.remotec.universalremote.activity.R;
 import com.remotec.universalremote.activity.component.BottomBarButton;
 import com.remotec.universalremote.activity.component.DeviceButton;
 import com.remotec.universalremote.activity.component.KeyButton;
+import com.remotec.universalremote.activity.component.ViewFlipperEx;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Key;
 import com.remotec.universalremote.data.Key.Mode;
 import com.remotec.universalremote.data.RemoteUi;
 import com.remotec.universalremote.irapi.BtConnectionManager;
+import com.remotec.universalremote.irapi.EmitTask;
 import com.remotec.universalremote.irapi.IrApi;
 import com.remotec.universalremote.persistence.XmlManager;
 
@@ -77,6 +85,7 @@ public class DeviceKeyActivity extends Activity {
 	 * all key buttons in key layout
 	 */
 	private Map<Integer, KeyButton> mKeyButtonMap = null;
+	
 
 	// Control key View Group
 	private ViewGroup mVgControl = null;
@@ -117,6 +126,13 @@ public class DeviceKeyActivity extends Activity {
 	// the object of learning dialog.
 	private AlertDialog mLearningDlg;
 
+	/* fliping animation */
+	private static final int SWIPE_MIN_DISTANCE = 120;
+	private static final int SWIPE_MAX_OFF_PATH = 250;
+	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+	private ViewFlipperEx viewFlipper;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -131,6 +147,9 @@ public class DeviceKeyActivity extends Activity {
 		// Initializing data.
 		InitAppTask initor = new InitAppTask();
 		initor.execute(0);
+		
+		viewFlipper = (ViewFlipperEx) findViewById(R.id.id_key_layout);
+		viewFlipper.setLongClickable(true);
 
 	}
 
@@ -319,6 +338,8 @@ public class DeviceKeyActivity extends Activity {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 
+			boolean result = v.onTouchEvent(event);
+			
 			if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
 				if (mActivityMode == ACTIVITY_CONTROL) {
@@ -332,20 +353,20 @@ public class DeviceKeyActivity extends Activity {
 				if (mContinuousTag) {
 					if (mActivityMode == ACTIVITY_CONTROL) {
 						if (!RemoteUi.getEmulatorTag()) {
-							IrApi irController = IrApi.getHandle();
-							irController.IrTransmitStop();
+							emitKeyIR(null, (byte)0);
 							mContinuousTag = false;
 						}
 					}
 				}
 			}
 
-			return false;
+			return result;
 		}
 
 	};
 
 	private EditText mLabelEdit;
+	private float mLastMotionPosX;
 
 	/*
 	 * displays the devices on the screen.
@@ -453,37 +474,11 @@ public class DeviceKeyActivity extends Activity {
 	 * @emitType: 0x01: continuous transmission. need send stop command to stop
 	 * emit. 0x81: single transmission.
 	 */
-	private void emitKeyIR(KeyButton keyBtn, byte emitType) {
-		IrApi irController = IrApi.getHandle();
-
-		if (irController != null) {
-			Key tempKey = (Key) keyBtn.getTag();
-
-			if (tempKey != null) {
-
-				if (tempKey.getMode() == Mode.BuildIn) {
-					boolean result = irController.transmitPreprogramedCode(
-							emitType, (byte) mDevice.getDeviceTypeId(),
-							mDevice.getIrCode(), (byte) tempKey.getKeyId());
-				} else if (tempKey.getMode() == Mode.Learn) {
-
-					// boolean result=irController.storeLearnData((byte)0,
-					// tempKey.getData());
-					//
-					// if(result){
-					irController.transmitLearnData(emitType, (byte) 0);
-					// }
-
-				} else if (tempKey.getMode() == Mode.UIRD) {
-					// if(D)
-					// Log.d(TAG, ""+"Start");
-					boolean result = irController.transmitIrData(emitType,
-							tempKey.getData());
-					if (D)
-						Log.d(TAG, "" + result);
-				}
-			}
-		}
+	private void emitKeyIR(KeyButton keyBtn, byte emitType) {	
+		
+		Key key=(keyBtn==null)?null:(Key)keyBtn.getTag();
+		EmitTask task=new EmitTask(mDevice,key,emitType);
+		task.execute(0);
 	}
 
 	/*
@@ -950,5 +945,30 @@ public class DeviceKeyActivity extends Activity {
 			}
 		}
 	}
+	
 
+
+	class MyGestureDetector extends SimpleOnGestureListener {
+		@Override
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+				float velocityY) {
+			
+			try {
+				if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+					return false;
+				// right to left swipe
+				if (e1.getRawX() - e2.getRawX() > SWIPE_MIN_DISTANCE
+						) {
+					
+				} else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
+						&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+
+				}
+			} catch (Exception e) {
+				// nothing
+			}
+			return false;
+		}
+	}
+	
 }
