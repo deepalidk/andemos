@@ -6,6 +6,7 @@
     android:orientation="vertical" >
 
     <!-- Device title Bar -->
+
     <RelativeLayout
         android:id="@id/devicekey_title"
         android:layout_width="fill_parent"
@@ -24,281 +25,571 @@
             android:textAppearance="@style/DeviceLeftTitleText" />
     </RelativeLayout>
 
-    <!-- key layout -->
-
-    <RelativeLayout
+    <com.remotec.universalremote.activity.component.ViewFlipperEx
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/id_key_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="3"
         android:background="@drawable/bg" >
 
-        <TableLayout
-            android:id="@+id/id_key_control_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="visible" >
+        <!-- key layout -->
 
-            <TableRow>
+        <RelativeLayout
+            android:id="@+id/id_key_layout1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_source" 
-                    remotec:is_icon_btn="true"
-                    remotec:key_id="@integer/key_id_00_reserved"/>
+            <TableLayout
+                android:id="@+id/id_key_control_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="visible" >
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_invalid"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_power"
-                    remotec:is_icon_btn="true"
-                    android:background="@drawable/btn_key_pwr" />
-            </TableRow>
-
-            <TableRow>
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_num_1"
-                    remotec:key_id="@integer/key_id_digit_one"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_num_2"
-                    remotec:key_id="@integer/key_id_digit_two"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_num_3"
-                    remotec:key_id="@integer/key_id_digit_three"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-            </TableRow>
-
-            <TableRow>
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_num_4"
-                    remotec:key_id="@integer/key_id_digit_four"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_num_5"
-                    remotec:key_id="@integer/key_id_digit_five"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_num_6"
-                    remotec:key_id="@integer/key_id_digit_six"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-            </TableRow>
-
-            <TableRow>
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_num_7"
-                    remotec:key_id="@integer/key_id_digit_seven"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_num_8"
-                    remotec:key_id="@integer/key_id_digit_eight"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_num_9"
-                    remotec:key_id="@integer/key_id_digit_nine"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-            </TableRow>
-
-            <TableRow>
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_guide"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_guide"
-                    remotec:is_icon_btn="false"
-                    android:textColor="@drawable/button_font_color" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_num_0"
-                    remotec:key_id="@integer/key_id_digit_zero"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_tv_vcr"
-                    remotec:key_id="@integer/key_id_tv_vcr"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-            </TableRow>
-
-            <TableRow>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <TextView
-                        android:id="@id/key_id_vol"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/key_vol"
-                        android:textAppearance="@style/KeyButtonText" />
-
-                    <com.remotec.universalremote.activity.component.KeyButton
-                        android:id="@+id/id_vol_add"
-                        android:layout_width="@dimen/key_btn_width"
-                        android:layout_height="@dimen/key_3_height"
-                        android:layout_marginLeft="@dimen/key_btn_margin_left"
-                        android:layout_marginRight="@dimen/key_btn_margin_right"
-                        android:layout_marginTop="@dimen/key_btn_margin_top"
-                        remotec:key_id="@integer/key_id_vol_up"
-                        remotec:is_icon_btn="true"
-                        android:text="@string/key_vol"
-                        style="@style/KeyButtonNoText" 
-                        android:background="@drawable/btn_key_add" />
+                <TableRow>
 
                     <com.remotec.universalremote.activity.component.KeyButton
                         android:layout_width="@dimen/key_btn_width"
-                        android:layout_height="@dimen/key_3_height"
-                        android:layout_below="@id/id_vol_add"
+                        android:layout_height="@dimen/key_btn_height"
                         android:layout_marginBottom="@dimen/key_btn_margin_bottom"
                         android:layout_marginLeft="@dimen/key_btn_margin_left"
                         android:layout_marginRight="@dimen/key_btn_margin_right"
-                        android:text="@string/key_vol"
-                        remotec:key_id="@integer/key_id_vol_down"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_source"
                         remotec:is_icon_btn="true"
-                        style="@style/KeyButtonNoText" 
-                        android:background="@drawable/btn_key_minus" />
-                </RelativeLayout>
+                        remotec:key_id="@integer/key_id_00_reserved" />
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent" >
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_invalid"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_pwr"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_power" />
+                </TableRow>
+
+                <TableRow>
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_digit_one"
+                        android:text="@string/key_num_1"
+                        android:textAppearance="@style/KeyButtonText" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_digit_two"
+                        android:text="@string/key_num_2"
+                        android:textAppearance="@style/KeyButtonText" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_digit_three"
+                        android:text="@string/key_num_3"
+                        android:textAppearance="@style/KeyButtonText" />
+                </TableRow>
+
+                <TableRow>
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_digit_four"
+                        android:text="@string/key_num_4"
+                        android:textAppearance="@style/KeyButtonText" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_digit_five"
+                        android:text="@string/key_num_5"
+                        android:textAppearance="@style/KeyButtonText" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_digit_six"
+                        android:text="@string/key_num_6"
+                        android:textAppearance="@style/KeyButtonText" />
+                </TableRow>
+
+                <TableRow>
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_digit_seven"
+                        android:text="@string/key_num_7"
+                        android:textAppearance="@style/KeyButtonText" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_digit_eight"
+                        android:text="@string/key_num_8"
+                        android:textAppearance="@style/KeyButtonText" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_digit_nine"
+                        android:text="@string/key_num_9"
+                        android:textAppearance="@style/KeyButtonText" />
+                </TableRow>
+
+                <TableRow>
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_guide"
+                        android:text="@string/key_guide"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:textColor="@drawable/button_font_color" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_digit_zero"
+                        android:text="@string/key_num_0"
+                        android:textAppearance="@style/KeyButtonText" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_tv_vcr"
+                        android:text="@string/key_tv_vcr"
+                        android:textAppearance="@style/KeyButtonText" />
+                </TableRow>
+
+                <TableRow>
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true" >
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@id/key_id_vol"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/key_vol"
+                            android:textAppearance="@style/KeyButtonText" />
 
                         <com.remotec.universalremote.activity.component.KeyButton
-                            android:id="@+id/id_key_prev"
+                            android:id="@+id/id_vol_add"
+                            style="@style/KeyButtonNoText"
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_3_height"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:layout_marginTop="@dimen/key_btn_margin_top"
+                            android:background="@drawable/btn_key_add"
+                            remotec:is_icon_btn="true"
+                            remotec:key_id="@integer/key_id_vol_up"
+                            android:text="@string/key_vol" />
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            style="@style/KeyButtonNoText"
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_3_height"
+                            android:layout_below="@id/id_vol_add"
+                            android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:background="@drawable/btn_key_minus"
+                            remotec:is_icon_btn="true"
+                            remotec:key_id="@integer/key_id_vol_down"
+                            android:text="@string/key_vol" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent" >
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true" >
+
+                            <com.remotec.universalremote.activity.component.KeyButton
+                                android:id="@+id/id_key_prev"
+                                android:layout_width="@dimen/key_btn_width"
+                                android:layout_height="@dimen/key_btn_height"
+                                android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                                android:layout_marginLeft="@dimen/key_btn_margin_left"
+                                android:layout_marginRight="@dimen/key_btn_margin_right"
+                                android:layout_marginTop="@dimen/key_btn_margin_top"
+                                android:background="@drawable/btn_key_1"
+                                remotec:is_icon_btn="false"
+                                remotec:key_id="@integer/key_id_prev_chan"
+                                android:text="@string/key_prev"
+                                android:textAppearance="@style/KeyButtonText" />
+
+                            <com.remotec.universalremote.activity.component.KeyButton
+                                style="@style/KeyButtonNoText"
+                                android:layout_width="@dimen/key_btn_width"
+                                android:layout_height="@dimen/key_btn_height"
+                                android:layout_below="@id/id_key_prev"
+                                android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                                android:layout_marginLeft="@dimen/key_btn_margin_left"
+                                android:layout_marginRight="@dimen/key_btn_margin_right"
+                                android:layout_marginTop="@dimen/key_btn_margin_top"
+                                android:background="@drawable/btn_key_mute"
+                                remotec:is_icon_btn="true"
+                                remotec:key_id="@integer/key_id_mute" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@id/key_id_ch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/key_ch"
+                            android:textAppearance="@style/KeyButtonText" />
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            android:id="@+id/id_ch_add"
+                            style="@style/KeyButtonNoText"
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_3_height"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:layout_marginTop="@dimen/key_btn_margin_top"
+                            android:background="@drawable/btn_key_increase"
+                            remotec:is_icon_btn="true"
+                            remotec:key_id="@integer/key_id_ch_up"
+                            android:text="@string/key_ch" />
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            style="@style/KeyButtonNoText"
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_3_height"
+                            android:layout_below="@id/id_ch_add"
+                            android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:background="@drawable/btn_key_decrease"
+                            remotec:is_icon_btn="true"
+                            remotec:key_id="@integer/key_id_ch_down"
+                            android:text="@string/key_ch" />
+                    </RelativeLayout>
+                </TableRow>
+            </TableLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/id_key_layout2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <TableLayout
+                android:id="@+id/id_key_menu_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="visible" >
+
+                <TableRow>
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_menu"
+                        android:text="@string/key_menu"
+                        android:textAppearance="@style/KeyButtonText" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_enter"
+                        android:text="@string/key_enter"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_quit"
+                        android:text="@string/key_exit"
+                        android:textAppearance="@style/KeyButtonText" />
+                </TableRow>
+
+                <TableRow>
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        android:visibility="invisible" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        style="@style/KeyButtonNoText"
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_up"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_arrow_up" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        android:visibility="invisible" />
+                </TableRow>
+
+                <TableRow>
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        style="@style/KeyButtonNoText"
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_left"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_arrow_left" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        style="@style/KeyButtonNoText"
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_enter"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_menu_ok" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        style="@style/KeyButtonNoText"
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_right"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_arrow_right" />
+                </TableRow>
+
+                <TableRow>
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        android:visibility="invisible" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_down"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_arrow_down" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        android:visibility="invisible" />
+                </TableRow>
+
+                <TableRow>
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_info"
+                        android:text="@string/key_info"
+                        android:textAppearance="@style/KeyButtonText" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_invalid"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
+
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_pip"
+                        android:text="@string/key_pip"
+                        android:textAppearance="@style/KeyButtonText" />
+                </TableRow>
+
+                <TableRow>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            android:id="@+id/id_key_toggle"
                             android:layout_width="@dimen/key_btn_width"
                             android:layout_height="@dimen/key_btn_height"
                             android:layout_marginBottom="@dimen/key_btn_margin_bottom"
@@ -306,369 +597,154 @@
                             android:layout_marginRight="@dimen/key_btn_margin_right"
                             android:layout_marginTop="@dimen/key_btn_margin_top"
                             android:background="@drawable/btn_key_1"
-                            android:text="@string/key_prev"
-                            remotec:key_id="@integer/key_id_prev_chan"
                             remotec:is_icon_btn="false"
+                            remotec:key_id="@integer/key_id_toggle"
+                            android:text="@string/key_toggle"
+                            android:textAppearance="@style/KeyButtonText" />
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            android:id="@+id/id_key_hold"
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_btn_height"
+                            android:layout_below="@id/id_key_toggle"
+                            android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:layout_marginTop="@dimen/key_btn_margin_top"
+                            android:background="@drawable/btn_key_1"
+                            remotec:is_icon_btn="false"
+                            remotec:key_id="@integer/key_id_hold"
+                            android:text="@string/key_hold"
                             android:textAppearance="@style/KeyButtonText" />
 
                         <com.remotec.universalremote.activity.component.KeyButton
                             android:layout_width="@dimen/key_btn_width"
                             android:layout_height="@dimen/key_btn_height"
-                            android:layout_below="@id/id_key_prev"
+                            android:layout_below="@id/id_key_hold"
                             android:layout_marginBottom="@dimen/key_btn_margin_bottom"
                             android:layout_marginLeft="@dimen/key_btn_margin_left"
                             android:layout_marginRight="@dimen/key_btn_margin_right"
                             android:layout_marginTop="@dimen/key_btn_margin_top"
-                            remotec:key_id="@integer/key_id_mute"
-                            remotec:is_icon_btn="true"
-                            style="@style/KeyButtonNoText" 
-                            android:background="@drawable/btn_key_mute" />
+                            android:background="@drawable/btn_key_1"
+                            remotec:is_icon_btn="false"
+                            remotec:key_id="@integer/key_id_ep_rd"
+                            android:text="@string/key_eprd"
+                            android:textAppearance="@style/KeyButtonText" />
                     </RelativeLayout>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <TextView
-                        android:id="@id/key_id_ch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/key_ch"
-                        android:textAppearance="@style/KeyButtonText" />
-
-                    <com.remotec.universalremote.activity.component.KeyButton
-                        android:id="@+id/id_ch_add"
-                        android:layout_width="@dimen/key_btn_width"
-                        android:layout_height="@dimen/key_3_height"
-                        android:layout_marginLeft="@dimen/key_btn_margin_left"
-                        android:layout_marginRight="@dimen/key_btn_margin_right"
-                        android:layout_marginTop="@dimen/key_btn_margin_top"
-                        android:text="@string/key_ch"
-                        remotec:key_id="@integer/key_id_ch_up"
-                        remotec:is_icon_btn="true"
-                        style="@style/KeyButtonNoText" 
-                        android:background="@drawable/btn_key_increase" />
-
-                    <com.remotec.universalremote.activity.component.KeyButton
-                        android:layout_width="@dimen/key_btn_width"
-                        android:layout_height="@dimen/key_3_height"
-                        android:layout_below="@id/id_ch_add"
-                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                        android:layout_marginLeft="@dimen/key_btn_margin_left"
-                        android:layout_marginRight="@dimen/key_btn_margin_right"
-                        android:text="@string/key_ch"
-                        remotec:key_id="@integer/key_id_ch_down"
-                        remotec:is_icon_btn="true"
-                        style="@style/KeyButtonNoText" 
-                        android:background="@drawable/btn_key_decrease" />
-                </RelativeLayout>
-            </TableRow>
-        </TableLayout>
-
-        <TableLayout
-            android:id="@+id/id_key_menu_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone" >
-
-            <TableRow>
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_menu"
-                    remotec:key_id="@integer/key_id_menu"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-                
-               <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_enter"
-                    remotec:key_id="@integer/key_id_enter"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" 
-                    android:visibility="invisible"/>
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_exit"
-                    remotec:key_id="@integer/key_id_quit"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-            </TableRow>
-
-            <TableRow>
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:visibility="invisible" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_arrow_up"
-                    remotec:is_icon_btn="true"
-                    style="@style/KeyButtonNoText" 
-                    android:background="@drawable/btn_key_up" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_arrow_left"
-                    remotec:is_icon_btn="true"
-                    style="@style/KeyButtonNoText" 
-                    android:background="@drawable/btn_key_left" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_menu_ok"
-                    remotec:is_icon_btn="true"
-                    style="@style/KeyButtonNoText" 
-                    android:background="@drawable/btn_key_enter" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_arrow_right"
-                    remotec:is_icon_btn="true"
-                    style="@style/KeyButtonNoText" 
-                    android:background="@drawable/btn_key_right" />
-            </TableRow>
-
-            <TableRow>
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:visibility="invisible" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_arrow_down"
-                    remotec:is_icon_btn="true"
-                    android:background="@drawable/btn_key_down" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_info"
-                    remotec:key_id="@integer/key_id_info"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    android:text="@string/key_unknown"
-                    remotec:key_id="@integer/key_id_invalid"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:text="@string/key_pip"
-                    remotec:key_id="@integer/key_id_pip"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText" />
-            </TableRow>
-
-            <TableRow>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <com.remotec.universalremote.activity.component.KeyButton
-                        android:id="@+id/id_key_toggle"
-                        android:layout_width="@dimen/key_btn_width"
-                        android:layout_height="@dimen/key_btn_height"
-                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                        android:layout_marginLeft="@dimen/key_btn_margin_left"
-                        android:layout_marginRight="@dimen/key_btn_margin_right"
-                        android:layout_marginTop="@dimen/key_btn_margin_top"
-                        android:background="@drawable/btn_key_1"
-                        android:text="@string/key_toggle"
-                        remotec:key_id="@integer/key_id_toggle"
-                        remotec:is_icon_btn="false"
-                        android:textAppearance="@style/KeyButtonText" />
-
-                    <com.remotec.universalremote.activity.component.KeyButton
-                        android:id="@+id/id_key_hold"
-                        android:layout_width="@dimen/key_btn_width"
-                        android:layout_height="@dimen/key_btn_height"
-                        android:layout_below="@id/id_key_toggle"
-                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                        android:layout_marginLeft="@dimen/key_btn_margin_left"
-                        android:layout_marginRight="@dimen/key_btn_margin_right"
-                        android:layout_marginTop="@dimen/key_btn_margin_top"
-                        android:background="@drawable/btn_key_1"
-                        android:text="@string/key_hold"
-                        remotec:key_id="@integer/key_id_hold"
-                        remotec:is_icon_btn="false"
-                        android:textAppearance="@style/KeyButtonText" />
-
-                    <com.remotec.universalremote.activity.component.KeyButton
-                        android:layout_width="@dimen/key_btn_width"
-                        android:layout_height="@dimen/key_btn_height"
-                        android:layout_below="@id/id_key_hold"
-                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                        android:layout_marginLeft="@dimen/key_btn_margin_left"
-                        android:layout_marginRight="@dimen/key_btn_margin_right"
-                        android:layout_marginTop="@dimen/key_btn_margin_top"
-                        android:background="@drawable/btn_key_1"
-                        android:text="@string/key_eprd"
-                        remotec:key_id="@integer/key_id_ep_rd"
-                        remotec:is_icon_btn="false"
-                        android:textAppearance="@style/KeyButtonText" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent" >
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true" >
+                        android:layout_height="fill_parent" >
 
-                        <TextView
-                            android:id="@id/key_id_br"
+                        <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:text="@string/key_br"
-                            android:textAppearance="@style/KeyButtonText" />
+                            android:layout_centerInParent="true" >
+
+                            <TextView
+                                android:id="@id/key_id_br"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="@string/key_br"
+                                android:textAppearance="@style/KeyButtonText" />
+
+                            <com.remotec.universalremote.activity.component.KeyButton
+                                android:id="@+id/id_br_add"
+                                style="@style/KeyButtonNoText"
+                                android:layout_width="@dimen/key_btn_width"
+                                android:layout_height="@dimen/key_br_height"
+                                android:layout_marginLeft="@dimen/key_btn_margin_left"
+                                android:layout_marginRight="@dimen/key_btn_margin_right"
+                                android:layout_marginTop="@dimen/key_btn_margin_top"
+                                android:background="@drawable/btn_key_increase"
+                                remotec:is_icon_btn="true"
+                                remotec:key_id="@integer/key_id_br_up"
+                                android:text="@string/key_br" />
+
+                            <com.remotec.universalremote.activity.component.KeyButton
+                                style="@style/KeyButtonNoText"
+                                android:layout_width="@dimen/key_btn_width"
+                                android:layout_height="@dimen/key_br_height"
+                                android:layout_below="@id/id_br_add"
+                                android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                                android:layout_marginLeft="@dimen/key_btn_margin_left"
+                                android:layout_marginRight="@dimen/key_btn_margin_right"
+                                android:background="@drawable/btn_key_decrease"
+                                remotec:is_icon_btn="true"
+                                remotec:key_id="@integer/key_id_br_down"
+                                android:text="@string/key_br" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
 
                         <com.remotec.universalremote.activity.component.KeyButton
-                            android:id="@+id/id_br_add"
+                            android:id="@+id/id_key_subtitle"
                             android:layout_width="@dimen/key_btn_width"
-                            android:layout_height="@dimen/key_br_height"
-                            android:layout_marginLeft="@dimen/key_btn_margin_left"
-                            android:layout_marginRight="@dimen/key_btn_margin_right"
-                            android:layout_marginTop="@dimen/key_btn_margin_top"
-                            android:text="@string/key_br"
-                            remotec:key_id="@integer/key_id_br_up"
-                            remotec:is_icon_btn="true"
-                            style="@style/KeyButtonNoText" 
-                            android:background="@drawable/btn_key_increase" />
-
-                        <com.remotec.universalremote.activity.component.KeyButton
-                            android:layout_width="@dimen/key_btn_width"
-                            android:layout_height="@dimen/key_br_height"
-                            android:layout_below="@id/id_br_add"
+                            android:layout_height="@dimen/key_btn_height"
                             android:layout_marginBottom="@dimen/key_btn_margin_bottom"
                             android:layout_marginLeft="@dimen/key_btn_margin_left"
                             android:layout_marginRight="@dimen/key_btn_margin_right"
-                            android:text="@string/key_br"
-                            remotec:key_id="@integer/key_id_br_down"
-                            remotec:is_icon_btn="true"
-                            style="@style/KeyButtonNoText" 
-                            android:background="@drawable/btn_key_decrease" />
+                            android:layout_marginTop="@dimen/key_btn_margin_top"
+                            android:background="@drawable/btn_key_1"
+                            remotec:is_icon_btn="false"
+                            remotec:key_id="@integer/key_id_subtitle"
+                            android:text="@string/key_subtitle"
+                            android:textAppearance="@style/KeyButtonText" />
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            android:id="@+id/id_key_smt"
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_btn_height"
+                            android:layout_below="@id/id_key_subtitle"
+                            android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:layout_marginTop="@dimen/key_btn_margin_top"
+                            android:background="@drawable/btn_key_1"
+                            remotec:is_icon_btn="false"
+                            remotec:key_id="@integer/key_id_smt"
+                            android:text="@string/key_smt"
+                            android:textAppearance="@style/KeyButtonText" />
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_btn_height"
+                            android:layout_below="@id/id_key_smt"
+                            android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:layout_marginTop="@dimen/key_btn_margin_top"
+                            android:background="@drawable/btn_key_1"
+                            remotec:is_icon_btn="false"
+                            remotec:key_id="@integer/key_id_sleep"
+                            android:text="@string/key_sleep"
+                            android:textAppearance="@style/KeyButtonText" />
                     </RelativeLayout>
-                </RelativeLayout>
+                </TableRow>
+            </TableLayout>
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+        </RelativeLayout>
+        
+        
+        <RelativeLayout
+            android:id="@+id/id_key_layout1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <TableLayout
+                android:id="@+id/id_key_media_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="visible" >
+
+                <TableRow>
 
                     <com.remotec.universalremote.activity.component.KeyButton
-                        android:id="@+id/id_key_subtitle"
                         android:layout_width="@dimen/key_btn_width"
                         android:layout_height="@dimen/key_btn_height"
                         android:layout_marginBottom="@dimen/key_btn_margin_bottom"
@@ -676,391 +752,339 @@
                         android:layout_marginRight="@dimen/key_btn_margin_right"
                         android:layout_marginTop="@dimen/key_btn_margin_top"
                         android:background="@drawable/btn_key_1"
-                        android:text="@string/key_subtitle"
-                        remotec:key_id="@integer/key_id_subtitle"
                         remotec:is_icon_btn="false"
-                        android:textAppearance="@style/KeyButtonText" />
+                        remotec:key_id="@integer/key_id_48_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
 
                     <com.remotec.universalremote.activity.component.KeyButton
-                        android:id="@+id/id_key_smt"
                         android:layout_width="@dimen/key_btn_width"
                         android:layout_height="@dimen/key_btn_height"
-                        android:layout_below="@id/id_key_subtitle"
                         android:layout_marginBottom="@dimen/key_btn_margin_bottom"
                         android:layout_marginLeft="@dimen/key_btn_margin_left"
                         android:layout_marginRight="@dimen/key_btn_margin_right"
                         android:layout_marginTop="@dimen/key_btn_margin_top"
                         android:background="@drawable/btn_key_1"
-                        android:text="@string/key_smt"
-                        remotec:key_id="@integer/key_id_smt"
                         remotec:is_icon_btn="false"
-                        android:textAppearance="@style/KeyButtonText" />
+                        remotec:key_id="@integer/key_id_49_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
 
                     <com.remotec.universalremote.activity.component.KeyButton
                         android:layout_width="@dimen/key_btn_width"
                         android:layout_height="@dimen/key_btn_height"
-                        android:layout_below="@id/id_key_smt"
                         android:layout_marginBottom="@dimen/key_btn_margin_bottom"
                         android:layout_marginLeft="@dimen/key_btn_margin_left"
                         android:layout_marginRight="@dimen/key_btn_margin_right"
                         android:layout_marginTop="@dimen/key_btn_margin_top"
                         android:background="@drawable/btn_key_1"
-                        android:text="@string/key_sleep"
-                        remotec:key_id="@integer/key_id_sleep"
                         remotec:is_icon_btn="false"
-                        android:textAppearance="@style/KeyButtonText" />
-                </RelativeLayout>
-            </TableRow>
-        </TableLayout>
+                        remotec:key_id="@integer/key_id_50_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
+                </TableRow>
 
-        <TableLayout
-            android:id="@+id/id_key_media_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone" >
+                <TableRow>
 
-            <TableRow>
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        style="@style/KeyButtonNoText"
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_last_chap"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_chap_down"
+                        android:text="@string/key_unknown" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_48_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_51_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_49_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        style="@style/KeyButtonNoText"
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_next_chap"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_chap_up"
+                        android:text="@string/key_unknown" />
+                </TableRow>
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    remotec:key_id="@integer/key_id_50_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:textAppearance="@style/KeyButtonText"
-                    android:visibility="invisible" />
-            </TableRow>
+                <TableRow>
 
-            <TableRow>
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_rew"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_rew" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_chap_down"
-                    remotec:is_icon_btn="true"
-                    style="@style/KeyButtonNoText"
-                    android:text="@string/key_unknown"
-                    android:background="@drawable/btn_key_last_chap" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_play"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_play" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_51_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_ff"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_ff" />
+                </TableRow>
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_chap_up"
-                    remotec:is_icon_btn="true"
-                    style="@style/KeyButtonNoText"
-                    android:text="@string/key_unknown"
-                    android:background="@drawable/btn_key_next_chap" />
-            </TableRow>
+                <TableRow>
 
-            <TableRow>
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_pause"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_pause" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_rew"
-                    remotec:is_icon_btn="true"
-                    android:background="@drawable/btn_key_rew" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_stop"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_stop" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_play"
-                    remotec:is_icon_btn="true"
-                    android:background="@drawable/btn_key_play" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_rec"
+                        remotec:is_icon_btn="true"
+                        remotec:key_id="@integer/key_id_rec" />
+                </TableRow>
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_ff"
-                    remotec:is_icon_btn="true"
-                    android:background="@drawable/btn_key_ff" />
-            </TableRow>
+                <TableRow>
 
-            <TableRow>
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_52_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_pause"
-                    remotec:is_icon_btn="true"
-                    android:background="@drawable/btn_key_pause" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_53_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_stop"
-                    remotec:is_icon_btn="true"
-                    android:background="@drawable/btn_key_stop" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_54_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
+                </TableRow>
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    remotec:key_id="@integer/key_id_rec"
-                    remotec:is_icon_btn="true"
-                    android:background="@drawable/btn_key_rec" />
-            </TableRow>
+                <TableRow>
 
-            <TableRow>
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_55_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_52_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_56_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_53_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_57_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
+                </TableRow>
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_54_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
-            </TableRow>
+                <TableRow>
 
-            <TableRow>
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_58_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_55_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_59_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_56_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_60_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
+                </TableRow>
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_57_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
-            </TableRow>
+                <TableRow>
 
-            <TableRow>
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_61_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_58_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_62_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
 
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_59_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_60_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_61_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    remotec:key_id="@integer/key_id_62_reserved"
-                    android:text="@string/key_unknown"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
-
-                <com.remotec.universalremote.activity.component.KeyButton
-                    android:layout_width="@dimen/key_btn_width"
-                    android:layout_height="@dimen/key_btn_height"
-                    android:layout_marginBottom="@dimen/key_btn_margin_bottom"
-                    android:layout_marginLeft="@dimen/key_btn_margin_left"
-                    android:layout_marginRight="@dimen/key_btn_margin_right"
-                    android:layout_marginTop="@dimen/key_btn_margin_top"
-                    android:background="@drawable/btn_key_1"
-                    android:textAppearance="@style/KeyButtonText"
-                    android:text="@string/key_unknown"
-                    remotec:key_id="@integer/key_id_63_reserved"
-                    remotec:is_icon_btn="false"
-                    android:visibility="invisible" />
-            </TableRow>
-        </TableLayout>
-    </RelativeLayout>
+                    <com.remotec.universalremote.activity.component.KeyButton
+                        android:layout_width="@dimen/key_btn_width"
+                        android:layout_height="@dimen/key_btn_height"
+                        android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                        android:layout_marginLeft="@dimen/key_btn_margin_left"
+                        android:layout_marginRight="@dimen/key_btn_margin_right"
+                        android:layout_marginTop="@dimen/key_btn_margin_top"
+                        android:background="@drawable/btn_key_1"
+                        remotec:is_icon_btn="false"
+                        remotec:key_id="@integer/key_id_63_reserved"
+                        android:text="@string/key_unknown"
+                        android:textAppearance="@style/KeyButtonText"
+                        android:visibility="invisible" />
+                </TableRow>
+            </TableLayout>
+        </RelativeLayout>
+        
+    </com.remotec.universalremote.activity.component.ViewFlipperEx>
 
     <RelativeLayout
         android:id="@+id/id_key_bottombar"
@@ -1073,8 +1097,8 @@
             android:id="@id/btn_bottombar_control"
             android:layout_width="@dimen/devkey_bottombar_btn_width"
             android:layout_height="fill_parent"
-            android:enabled="false"
-            android:background="@drawable/btn_bottombar_control" />
+            android:background="@drawable/btn_bottombar_control"
+            android:enabled="false" />
 
         <com.remotec.universalremote.activity.component.BottomBarButton
             android:id="@id/btn_bottombar_menu"
