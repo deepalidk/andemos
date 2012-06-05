@@ -42,7 +42,7 @@ import android.util.Log;
  * connections with other devices. It has a thread that listens for incoming
  * connections, a thread for connecting with a device, and a thread for
  * performing data transmissions when connected.
- */
+ */ 
 public class BluetoothRemoteService extends IIo {
 	// Debugging
 	private static final String TAG = "BluetoothRemoteService";

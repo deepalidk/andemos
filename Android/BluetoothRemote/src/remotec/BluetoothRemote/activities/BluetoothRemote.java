@@ -42,6 +42,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -173,7 +174,8 @@ public class BluetoothRemote extends Activity implements View.OnClickListener  {
 	private void doUpdate() {
 		FileManager.saveAs(this.getBaseContext(),R.raw.remote,Config.CR_PATH,Config.CR_DBNAME);	
 		FileManager.saveAs(this.getBaseContext(),R.raw.remote,Config.CR_PATH,Config.CR_DBNAME_TEMP);			
-		FileManager.saveAs(this.getBaseContext(),R.raw.rt300_maxdigital_dvd,Config.CR_PATH,"MaxDigital-DVD-MD700RM.rtdb");	
+		FileManager.saveAs(this.getBaseContext(),R.raw.maxdigital_dvd,Config.CR_PATH,"MaxDigital-DVD-MD700RM.rtdb");	
+		FileManager.saveAs(this.getBaseContext(),R.raw.benq_vl3735,Config.CR_PATH,"BENQ_VL3735.rtdb");	
 		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_tv_sty0250,Config.CR_PATH,"SANSUI-TV-STY0250.rtdb");
 		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_dvd_ht4002,Config.CR_PATH,"SANSUI-DVD-HT4002.rtdb");
 		FileManager.saveAs(this.getBaseContext(),R.raw.sansui_dvd_htib1002,Config.CR_PATH,"SANSUI-DVD-HTIB1002.rtdb");
