@@ -8,12 +8,9 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
-import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Scroller;
 import android.widget.ViewFlipper;
 
 public class ViewFlipperEx extends ViewFlipper{
@@ -28,20 +25,10 @@ public class ViewFlipperEx extends ViewFlipper{
 	private float mLastMotionPosX; // record last posX since the finger move.
 	private final static int TOUCH_STATE_REST = 0;
 	private final static int TOUCH_STATE_SCROLLING = 1;
-	private int mScreenWidth = 600;
-	private int mMaxPagePosX = 600;
-	private int mCurrentPage = 1;
-	private int mMaxPageNum=1;
-	private eTouchState mTouchState = eTouchState.none;
 	private int mTouchSlop;
-//	private Scroller mScroller;
-//	private ViewGroup mDotPanel;
-	private boolean bFirstInit=true;
-	Context mContext;
+    private Context mContext;
 	private VelocityTracker mVelocityTracker;
 	private float mMaximumVelocity;
-	private GestureDetector mGestureDetector=null;
-
 	private Animation slideLeftIn;
 	private Animation slideLeftOut;
 	private Animation slideRightIn;
@@ -64,7 +51,6 @@ public class ViewFlipperEx extends ViewFlipper{
 	};
 	
 	public void setGestureDetector(GestureDetector gDetector){
-		mGestureDetector=gDetector;
 	}
 	
 	public ViewFlipperEx(Context context) {
@@ -120,14 +106,14 @@ public class ViewFlipperEx extends ViewFlipper{
 			}
 			break;
 		case MotionEvent.ACTION_UP:
-			final int yDiff2 = (int) Math.abs(mLastMotionPosX - x);
-
-			boolean yMoved2 = yDiff2 > mTouchSlop;
-			// 判断是否是移动
-			if (yMoved2) {
-				touchState = TOUCH_STATE_SCROLLING;
-			}
-			break;
+//			final int yDiff2 = (int) Math.abs(mLastMotionPosX - x);
+//
+//			boolean yMoved2 = yDiff2 > mTouchSlop;
+//			// 判断是否是移动
+//			if (yMoved2) {
+//				touchState = TOUCH_STATE_SCROLLING;
+//			}
+//			break;
 		}
 		return touchState != TOUCH_STATE_REST;
 	}
@@ -215,4 +201,6 @@ public class ViewFlipperEx extends ViewFlipper{
 		}
 		return true;
 	}
+	
+	
 }

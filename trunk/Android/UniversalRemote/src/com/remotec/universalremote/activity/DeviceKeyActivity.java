@@ -131,7 +131,7 @@ public class DeviceKeyActivity extends Activity {
 	private static final int SWIPE_MAX_OFF_PATH = 250;
 	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
-	private ViewFlipperEx viewFlipper;
+	private ViewFlipperEx mViewFlipper;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -148,8 +148,8 @@ public class DeviceKeyActivity extends Activity {
 		InitAppTask initor = new InitAppTask();
 		initor.execute(0);
 		
-		viewFlipper = (ViewFlipperEx) findViewById(R.id.id_key_layout);
-		viewFlipper.setLongClickable(true);
+		mViewFlipper = (ViewFlipperEx) findViewById(R.id.id_key_layout);
+		mViewFlipper.setLongClickable(true);
 
 	}
 
@@ -272,17 +272,20 @@ public class DeviceKeyActivity extends Activity {
 			v.setEnabled(false);
 
 			if (v.getId() == R.id.btn_bottombar_control) {
-				mVgControl.setVisibility(View.VISIBLE);
-				mVgMenu.setVisibility(View.GONE);
-				mVgMedia.setVisibility(View.GONE);
+//				mVgControl.setVisibility(View.VISIBLE);
+//				mVgMenu.setVisibility(View.GONE);
+//				mVgMedia.setVisibility(View.GONE);
+				mViewFlipper.setDisplayedChild(0);
 			} else if (v.getId() == R.id.btn_bottombar_menu) {
-				mVgControl.setVisibility(View.GONE);
-				mVgMenu.setVisibility(View.VISIBLE);
-				mVgMedia.setVisibility(View.GONE);
+//				mVgControl.setVisibility(View.GONE);
+//				mVgMenu.setVisibility(View.VISIBLE);
+//				mVgMedia.setVisibility(View.GONE);
+				mViewFlipper.setDisplayedChild(1);
 			} else if (v.getId() == R.id.btn_bottombar_media) {
-				mVgControl.setVisibility(View.GONE);
-				mVgMenu.setVisibility(View.GONE);
-				mVgMedia.setVisibility(View.VISIBLE);
+//				mVgControl.setVisibility(View.GONE);
+//				mVgMenu.setVisibility(View.GONE);
+//				mVgMedia.setVisibility(View.VISIBLE);
+				mViewFlipper.setDisplayedChild(2);
 			}
 
 		}
