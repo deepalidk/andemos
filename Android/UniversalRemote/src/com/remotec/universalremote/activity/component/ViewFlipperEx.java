@@ -19,7 +19,7 @@ public class ViewFlipperEx extends ViewFlipper{
 	
 	 /**
      * The velocity at which a fling gesture will cause us to snap to the next screen
-     */
+     */ 
     private static final int SNAP_VELOCITY = 1000;
 	private int mLastLeftEdge;// the screen left edge when finger down.
 	private float mLastMotionPosX; // record last posX since the finger move.
@@ -33,7 +33,7 @@ public class ViewFlipperEx extends ViewFlipper{
 	private Animation slideLeftOut;
 	private Animation slideRightIn;
 	private Animation slideRightOut;
-	
+	 
 	private enum eSnatch
 	{
 		last,
@@ -170,7 +170,7 @@ public class ViewFlipperEx extends ViewFlipper{
 			break;
 		case MotionEvent.ACTION_UP:
 			// Move to the threshold of page
-            
+             
 			  final VelocityTracker velocityTracker = mVelocityTracker;
               velocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
               int velocityX = (int) velocityTracker.getXVelocity();
