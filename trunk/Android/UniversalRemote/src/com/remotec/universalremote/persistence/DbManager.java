@@ -94,7 +94,7 @@ public class DbManager {
 			Cursor cursor = null;
             int irSrc=isUirdLib?2:1;
             
-			String sql=String.format("Select ircodenum From irCodeList" +
+			String sql=String.format("Select distinct(ircodenum) From irCodeList" +
 					" left join category on irCodeList.devType=category.devType" +
 					"  where irCodeSrc=%d and name like \'%s\' and brandName like \'%s\'",irSrc, category,brandName);
 			// ²éÑ¯test_listviewÊý¾Ý

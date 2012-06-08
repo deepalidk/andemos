@@ -352,11 +352,14 @@ public class AddDeviceActivity extends Activity {
 			String manufacturer = mSpinerManufacturer.getSelectedItem()
 					.toString();
 			String category = mSpinerCategory.getSelectedItem().toString();
-			loadCodeNum(category, manufacturer);
-
+			
 			/* save data to the device object */
 			mDevice.setName(category + "-" + manufacturer);
 			mDevice.setDeviceType(category);
+			
+			loadCodeNum(category, manufacturer);
+
+
 			mDevice.setManufacturer(manufacturer);
 		}
 

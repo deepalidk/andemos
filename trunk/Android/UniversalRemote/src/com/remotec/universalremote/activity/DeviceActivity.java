@@ -45,6 +45,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -429,7 +430,7 @@ public class DeviceActivity extends Activity {
 	 * displays the devices on the screen.
 	 */
 	private void displayDevices() {
-
+ 
 		if (RemoteUi.getHandle().getChildren().size() > 0) {
 			List<Device> devList = RemoteUi.getHandle().getChildren();
 
@@ -708,7 +709,7 @@ public class DeviceActivity extends Activity {
 	 * init the brand list used to add device.
 	 */
 	void loadCategoryAndBrand(BrandListType type){
-	
+	 
 		//we already load brand list when startup.
 		//Now we check the needed type and current type to determine whether reload
 		//brand list.
@@ -914,7 +915,11 @@ public class DeviceActivity extends Activity {
 			 */
 			LayoutInflater inflater = (LayoutInflater) DeviceActivity.this
 					.getSystemService(LAYOUT_INFLATER_SERVICE);
+			
+			Looper.prepare(); 
+
 			View vgKey = inflater.inflate(R.layout.devicekey, null);
+			
 			/*
 			 * finds all key Buttons
 			 */
@@ -932,7 +937,7 @@ public class DeviceActivity extends Activity {
 
 			Integer invalidKeyId = DeviceActivity.this.getResources()
 					.getInteger(R.integer.key_id_invalid);
-
+ 
 			for (KeyButton keyBtn : keyBtnMap.values()) {
 				Key temp = new Key();
 				temp.setKeyId(keyBtn.getKeyId());
