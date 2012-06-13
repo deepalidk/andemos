@@ -14,7 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ViewFlipper;
 
 public class ViewFlipperEx extends ViewFlipper{
-	private static boolean D = true;
+	private static boolean D = false;
 	private static String TAG = "ViewFlipperEx";
 	
 	 /**
