@@ -13,7 +13,7 @@ public class EmitTask extends android.os.AsyncTask<Integer, Integer, Integer> {
 
 	// Debugging Tags
 	private static final String TAG = "EmitTask";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	
 	private static int count=0;
 	private Device mDevice;

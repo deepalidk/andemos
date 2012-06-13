@@ -271,20 +271,13 @@ public class DeviceKeyActivity extends Activity {
 
 			v.setEnabled(false);
 
+			mViewFlipper.setInAnimation(null);
+			mViewFlipper.setOutAnimation(null);
 			if (v.getId() == R.id.btn_bottombar_control) {
-//				mVgControl.setVisibility(View.VISIBLE);
-//				mVgMenu.setVisibility(View.GONE);
-//				mVgMedia.setVisibility(View.GONE);
 				mViewFlipper.setDisplayedChild(0);
 			} else if (v.getId() == R.id.btn_bottombar_menu) {
-//				mVgControl.setVisibility(View.GONE);
-//				mVgMenu.setVisibility(View.VISIBLE);
-//				mVgMedia.setVisibility(View.GONE);
 				mViewFlipper.setDisplayedChild(1);
 			} else if (v.getId() == R.id.btn_bottombar_media) {
-//				mVgControl.setVisibility(View.GONE);
-//				mVgMenu.setVisibility(View.GONE);
-//				mVgMedia.setVisibility(View.VISIBLE);
 				mViewFlipper.setDisplayedChild(2);
 			}
 
@@ -946,31 +939,6 @@ public class DeviceKeyActivity extends Activity {
 			} else {
 				displayLearnFailed();
 			}
-		}
-	}
-	
-
-
-	class MyGestureDetector extends SimpleOnGestureListener {
-		@Override
-		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-				float velocityY) {
-			
-			try {
-				if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-					return false;
-				// right to left swipe
-				if (e1.getRawX() - e2.getRawX() > SWIPE_MIN_DISTANCE
-						) {
-					
-				} else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-						&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-
-				}
-			} catch (Exception e) {
-				// nothing
-			}
-			return false;
 		}
 	}
 	
