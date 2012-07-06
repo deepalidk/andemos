@@ -50,10 +50,6 @@ public class BtConnectionManager extends IIo {
 	// Name for the SDP record when creating server socket
 	private static final String NAME = "BluetoothRemote";
 
-	// Unique UUID for this application
-	// private static final UUID MY_UUID =
-	// UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
-
 	// private static final UUID MY_UUID = UUID
 	// .fromString("00001101-0000-1000-8000-0800f9b34fb");
 	private static final UUID MY_UUID = UUID

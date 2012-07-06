@@ -40,7 +40,7 @@ public class RemoteUi {
        
 	    static {
 	        // The default protection domain grants access to these properties.
-	    	WORK_DIRECTORY = android.os.Environment.getExternalStorageDirectory().getAbsolutePath()+"/remotec"; //$NON-NLS-1$ //$NON-NLS-2$
+	    	WORK_DIRECTORY = android.os.Environment.getExternalStorageDirectory().getAbsolutePath()+"/remotec/bRemote"; //$NON-NLS-1$ //$NON-NLS-2$
 	    	INTERNAL_DATA_DIRECTORY = WORK_DIRECTORY+"/data";
 	        UI_XML_FILE = "remote.xml";
 	        UI_DB_FILE="codelib.db";

@@ -108,10 +108,6 @@ public class KeyButton extends Button {
 
 		if (key != null) {
 			
-//			if(key.getKeyId()==0x27){
-//				Log.d("test", "message");
-//			}
-			
 			if ((!key.getVisible()) && (this.getVisibility() == View.VISIBLE)) {
 				Rect r = getBackground().getBounds();
 

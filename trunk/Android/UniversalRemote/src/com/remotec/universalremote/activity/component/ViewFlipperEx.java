@@ -106,29 +106,10 @@ public class ViewFlipperEx extends ViewFlipper{
 			}
 			break;
 		case MotionEvent.ACTION_UP:
-//			final int yDiff2 = (int) Math.abs(mLastMotionPosX - x);
-//
-//			boolean yMoved2 = yDiff2 > mTouchSlop;
-//			// 判断是否是移动
-//			if (yMoved2) {
-//				touchState = TOUCH_STATE_SCROLLING;
-//			}
-//			break;
 		}
 		return touchState != TOUCH_STATE_REST;
 	}
 	
-//	@Override
-//	public boolean onTouchEvent(MotionEvent event) {
-//		
-//		if (D)
-//			Log.d(TAG, "onTouchEvent ev.getAction=" + event.getAction()+" ev.getX="+event.getX()+" ev.getRawX="+event.getRawX());
-//		event.setAction(0);
-//		if (mGestureDetector.onTouchEvent(event))
-//			return true;
-//		else
-//			return false;
-//	}
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
@@ -149,23 +130,6 @@ public class ViewFlipperEx extends ViewFlipper{
 
 			break;
 		case MotionEvent.ACTION_MOVE: {
-//			// 随手指 拖动的代码
-//			int deltaX = 0;
-//			deltaX = (int) (x - mLastMotionPosX);
-//
-//			if (D)
-//				Log.d(TAG, "deltaX=" + deltaX);
-//			scrollBy(-deltaX, 0);
-//
-//			if ((getScrollX() < -mScreenWidth / 3)) {
-//				scrollBy(deltaX, 0);
-//			}
-//
-//			if ((getScrollX() > (mMaxPagePosX + mScreenWidth / 3))) {
-//				scrollBy(deltaX, 0);
-//			}
-//
-//			mLastMotionPosX = x;
 		}
 			break;
 		case MotionEvent.ACTION_UP:
@@ -177,19 +141,16 @@ public class ViewFlipperEx extends ViewFlipper{
 
               if (velocityX > SNAP_VELOCITY) {
                   // Fling hard enough to move left
-//                  snatchLast();
 					setInAnimation(slideRightIn);
 					setOutAnimation(slideRightOut);
 					showPrevious();
               } else if (velocityX < -SNAP_VELOCITY ) {
-                  // Fling hard enough to move right
-//                  snatchNext();
-            	  
+                  // Fling hard enough to move right   	  
             	    setInAnimation(slideLeftIn);
 					setOutAnimation(slideLeftOut);
 					showNext();
               } else {
-//                  SnatchTarget();
+
               }
 			
               if (mVelocityTracker != null) {
