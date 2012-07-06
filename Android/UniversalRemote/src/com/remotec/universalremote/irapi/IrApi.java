@@ -780,11 +780,11 @@ public class IrApi implements IOnRead {
 		public byte calcChecksum() {
 			byte result = 0;
 
-			result += 0x45;
-			result += 0x5a;
+//			result += 0x45;
+//			result += 0x5a;
 			
-//			result += 0x4c;
-//			result += 0x43;
+			result += 0x45;
+			result += 0x34;
 			
 			result += mmCmdId;
 			result += mmPayloadBuffer.length + 4;
@@ -803,11 +803,11 @@ public class IrApi implements IOnRead {
 		 */
 		public byte[] getPacketBuffer() {
 			byte[] result = new byte[mmPayloadBuffer.length + 5];
-			result[0] = 0x45;
-			result[1] = 0x5a;
+//			result[0] = 0x45;
+//			result[1] = 0x5a;
 			
-//			result[0] = 0x4c;
-//			result[1] = 0x43;
+			result[0] = 0x45;
+			result[1] = 0x34;
 			
 			result[2] = mmCmdId;
 			result[3] = (byte) (mmPayloadBuffer.length + 4);
