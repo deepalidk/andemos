@@ -57,7 +57,12 @@ public class BtConnectionManager extends IIo {
 
 	// Member fields
 	private final BluetoothAdapter mAdapter;
-	private final Handler mHandler;
+	private Handler mHandler;
+	
+	public void setHandler(Handler handler){
+		mHandler=handler;
+	}
+	
 	// private AcceptThread mAcceptThread;
 	private ConnectThread mConnectThread;
 	private ConnectedThread mConnectedThread;

@@ -15,14 +15,19 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -42,13 +47,16 @@ import android.widget.ViewFlipper;
 
 import com.common.FileManager;
 import com.remotec.universalremote.activity.R;
+import com.remotec.universalremote.activity.AddDeviceActivity.eCurrentPage;
 import com.remotec.universalremote.activity.component.BottomBarButton;
 import com.remotec.universalremote.activity.component.DeviceButton;
 import com.remotec.universalremote.activity.component.KeyButton;
 import com.remotec.universalremote.activity.component.ViewFlipperEx;
 import com.remotec.universalremote.data.Device;
+import com.remotec.universalremote.data.Extender;
 import com.remotec.universalremote.data.Key;
 import com.remotec.universalremote.data.Key.Mode;
+import com.remotec.universalremote.data.RemoteUi.BrandListType;
 import com.remotec.universalremote.data.RemoteUi;
 import com.remotec.universalremote.irapi.BtConnectionManager;
 import com.remotec.universalremote.irapi.EmitTask;
@@ -64,10 +72,14 @@ public class DeviceKeyActivity extends Activity {
 	private static final String TAG = "DeviceKeyActivity";
 	private static final boolean D = false;
 
+	public static final String TOAST = "toast";
 	// the activit mode of key layout activity
 	public static final String ACTIVITY_MODE = "ACTIVITY_MODE";
 	public static final int ACTIVITY_CONTROL = 0;
 	public static final int ACTIVITY_EDIT = 1;
+	// Message types sent from the Bluetooth connect manager Handler
+	public static final int CONNECTTION_STATE_CHANGE = 1;
+	public static final int MESSAGE_TOAST = 5;
 
 	// dialog ids
 	private static final int PROGRESS_DIALOG = 0;
@@ -110,6 +122,9 @@ public class DeviceKeyActivity extends Activity {
 
 	private int mActivityMode = ACTIVITY_CONTROL;
 
+	//mark disconnect when on resume.
+	private boolean mDisconnectTag=true;
+	
 	/* to identify current transmission type */
 	private boolean mContinuousTag = false;
 
@@ -125,11 +140,14 @@ public class DeviceKeyActivity extends Activity {
 
 	// the object of learning dialog.
 	private AlertDialog mLearningDlg;
+	
+	private TextView mTitleRight = null;
 
 	/* fliping animation */
 	private static final int SWIPE_MIN_DISTANCE = 120;
 	private static final int SWIPE_MAX_OFF_PATH = 250;
 	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+	private static final int REQUEST_ENABLE_BT = 0;
 
 	private ViewFlipperEx mViewFlipper;
 
@@ -144,6 +162,31 @@ public class DeviceKeyActivity extends Activity {
 
 		mActivityMode = getIntent()
 				.getIntExtra(ACTIVITY_MODE, ACTIVITY_CONTROL);
+		
+		// for null pointer bug, move the find right title text before bt init.
+		mTitleRight = (TextView) findViewById(R.id.title_right_text);
+
+		if(RemoteUi.getHandle().getActiveExtender()!=null){
+			mTitleRight.setText(R.string.title_connected_to);
+			mTitleRight.append(RemoteUi.getHandle().getActiveExtender().getName());	
+		}else{
+			mTitleRight.setText(R.string.not_connected);
+		}
+		
+		if(RemoteUi.getHandle().getBluetoothAdapter()==null)
+			// Get local Bluetooth adapter
+				RemoteUi.getHandle().setBluetoothAdapter(BluetoothAdapter.getDefaultAdapter());
+			// If the adapter is null, then Bluetooth is not supported
+			if (!RemoteUi.getEmulatorTag()) {
+				if (RemoteUi.getHandle().getBluetoothAdapter() == null) {
+					Toast.makeText(this, "Bluetooth is not available",
+							Toast.LENGTH_LONG).show();
+					finish();
+					return;
+				}
+			}
+	
+		
 		// Initializing data.
 		InitAppTask initor = new InitAppTask();
 		initor.execute(0);
@@ -151,6 +194,113 @@ public class DeviceKeyActivity extends Activity {
 		mViewFlipper = (ViewFlipperEx) findViewById(R.id.id_key_layout);
 		mViewFlipper.setLongClickable(true);
 
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		if (D)
+			Log.e(TAG, "++ ON START ++");
+		if (!RemoteUi.getEmulatorTag()) {
+			// If BT is not on, request that it be enabled.
+			// setupChat() will then be called during onActivityResult
+			if (!RemoteUi.getHandle().getBluetoothAdapter().isEnabled()) {
+				Intent enableIntent = new Intent(
+						BluetoothAdapter.ACTION_REQUEST_ENABLE);
+				mDisconnectTag=false;
+				startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+				// Otherwise, setup the chat session
+			} else {
+					setupBluetooth();
+			}
+			
+			//connect last active device
+			if (RemoteUi.getHandle().getBtConnectionManager() != null) {
+
+				// Only if the state is STATE_NONE, do we know that we haven't
+				// started already
+				if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
+					// Start the Bluetooth chat services
+					RemoteUi.getHandle().getBtConnectionManager().start();
+					
+					if(RemoteUi.getHandle().getLastActiveExtender()!=null){
+						String deviceAddr=RemoteUi.getHandle().getLastActiveExtender().getAddress();
+					
+						BluetoothDevice device = RemoteUi.getHandle().getBluetoothAdapter()
+						.getRemoteDevice(deviceAddr);
+						// Attempt to connect to the device
+						RemoteUi.getHandle().getBtConnectionManager().connect(device);
+					}
+				}
+			}
+		}
+	}
+	
+	private void setupBluetooth() {
+		Log.d(TAG, "setupBluetooth()");
+
+		// Initialize the BluetoothRemoteService to perform bluetooth
+		// connections
+		if(RemoteUi.getHandle().getBtConnectionManager()==null){
+		  RemoteUi.getHandle().setBtConnectionManager(new BtConnectionManager(mHandler));
+		}else{
+		  RemoteUi.getHandle().getBtConnectionManager().setHandler(mHandler);
+		}
+
+	}
+	
+	@Override
+	public void onPause(){
+		super.onPause();
+		if (D)
+			Log.e(TAG, "++ ON Stop ++");
+		
+		// Stop the Bluetooth chat services
+		if (RemoteUi.getHandle().getBtConnectionManager() != null&&mDisconnectTag==true)
+		{
+			RemoteUi.getHandle().getBtConnectionManager().stop();
+		}
+		
+		mDisconnectTag=true;
+	}
+	
+	// The Handler that gets information back from the BluetoothRemoteService
+	private final Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case CONNECTTION_STATE_CHANGE:
+				switch (msg.arg1) {
+				case BtConnectionManager.STATE_CONNECTED: {	
+						mTitleRight.setText(R.string.title_connected_to);
+						mTitleRight.append(RemoteUi.getHandle().getLastActiveExtender().getName());	
+					break;
+				}
+				case BtConnectionManager.STATE_CONNECTING:
+					mTitleRight.setText(R.string.title_connecting);
+					break;
+				case BtConnectionManager.STATE_NONE:
+					mTitleRight.setText(R.string.title_not_connected);
+					break;
+				}
+				break;
+			case MESSAGE_TOAST:
+				Toast.makeText(getApplicationContext(),
+						msg.getData().getString(TOAST), Toast.LENGTH_SHORT)
+						.show();
+				break;
+			}
+		}
+	};
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		/* skip back key */
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+           mDisconnectTag=false;
+		} 
+	    
+		return super.onKeyDown(keyCode, event);
 	}
 
 	protected Dialog onCreateDialog(int id) {

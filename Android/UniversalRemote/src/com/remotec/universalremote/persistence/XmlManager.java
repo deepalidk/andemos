@@ -162,6 +162,9 @@ public class XmlManager {
 
 		uiData.setName(elem.getAttribute("name"));
 		uiData.setAddress(elem.getAttribute("address"));
+		if(elem.hasAttribute("isLastActive")){
+			uiData.setIsLastActive(Boolean.parseBoolean(elem.getAttribute("isLastActive")));
+		}
 
 	}
 
@@ -239,7 +242,8 @@ public class XmlManager {
 		serializer.startTag("", "Extender");
 		serializer.attribute("", "name", ext.getName());
 		serializer.attribute("", "address", ext.getAddress());
-
+		serializer.attribute("", "isLastActive", "" + ext.isLastactive());
+		
 		serializer.endTag("", "Extender");
 	}
 
