@@ -62,6 +62,26 @@ public class IrApi implements IOnRead {
 		mmFrames = new LinkedList<Frame>();
 	}
 
+	/*RT300 and 400 header*/
+	private static final byte[] RT400_HEADER=new byte[]{0x45,0x5a};
+	private static final byte[] RT300_HEADER=new byte[]{0x45,0x34};
+	
+	/*RT300 marker. Set in function Init().
+	 * true-rt300
+	 * false-rt400*/
+	private boolean mIsRT300=false;
+	
+	/*
+	 * THE Header for communication.
+	 */
+	private byte[] getHeader(){
+		if(mIsRT300==true){
+			return RT400_HEADER;
+		}else{
+			return RT300_HEADER;
+		}
+	}
+	
 	/**
 	 * transmit data with RT300
 	 * 
@@ -165,7 +185,16 @@ public class IrApi implements IOnRead {
 		mmIIo.setOnReadFunc(this);
 		mmParseState = EParseState.cmd;
 
+		/*try rt300 protocol*/
+		mIsRT300=true;
 		byte[] versionTemp = IrGetVersion();
+		
+		/*try rt400 protocol*/
+		if(versionTemp==null){
+			mIsRT300=false;
+			versionTemp = IrGetVersion();
+		}
+		
 		String result=null;
 	
 		if (!D) {
@@ -780,11 +809,9 @@ public class IrApi implements IOnRead {
 		public byte calcChecksum() {
 			byte result = 0;
 
-//			result += 0x45;
-//			result += 0x5a;
-			
-			result += 0x45;
-			result += 0x34;
+			byte[] header=getHeader();
+			result += header[0];
+			result += header[1];
 			
 			result += mmCmdId;
 			result += mmPayloadBuffer.length + 4;
@@ -795,7 +822,7 @@ public class IrApi implements IOnRead {
 
 			return result;
 		}
-
+		
 		/**
 		 * get ack packet buffer
 		 * 
@@ -803,11 +830,10 @@ public class IrApi implements IOnRead {
 		 */
 		public byte[] getPacketBuffer() {
 			byte[] result = new byte[mmPayloadBuffer.length + 5];
-//			result[0] = 0x45;
-//			result[1] = 0x5a;
 			
-			result[0] = 0x45;
-			result[1] = 0x34;
+			byte[] header=getHeader();
+			result[0] = header[0];
+			result[1] = header[1];
 			
 			result[2] = mmCmdId;
 			result[3] = (byte) (mmPayloadBuffer.length + 4);
