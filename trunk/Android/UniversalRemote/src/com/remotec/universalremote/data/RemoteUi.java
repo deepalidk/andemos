@@ -12,6 +12,10 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import android.bluetooth.BluetoothAdapter;
+
+import com.remotec.universalremote.irapi.BtConnectionManager;
+
 /*
  * Holds the data needed to run the UI.
  */
@@ -61,9 +65,7 @@ public class RemoteUi {
        }
        
        public static void init(){
-
-          sRemoteUi=new RemoteUi();
-    	   
+            sRemoteUi=new RemoteUi();     
        }
        
        /*
@@ -101,12 +103,43 @@ public class RemoteUi {
        }
        
        /*
+        * get last active extender , if no last active extender, return null.
+        */
+       public Extender getLastActiveExtender(){
+    	 
+    	   Extender result=null;
+    	  
+    	   /*
+    	    * clear last active flag.
+    	    */
+			for (Extender ext : mExtenderMap.values()) {
+				if(ext.isLastactive()){
+					result=ext;
+				}
+			}
+			
+			return result;
+       }
+       
+       
+       /*
         * active extender object for run time use.
         */
        private Extender mActiveExtender;
        
        public void setActiveExtender(Extender extender){
     	   mActiveExtender=extender;
+    	   
+    	   /*
+    	    * clear last active flag.
+    	    */
+			for (Extender ext : mExtenderMap.values()) {
+				ext.setIsLastActive(false);
+			}
+			
+			// set current active flag
+			mActiveExtender.setIsLastActive(true);
+    	   
        }
        
        public Extender getActiveExtender(){
@@ -184,7 +217,29 @@ public class RemoteUi {
        public Map<Integer, Key> getTemplateKeyMap(){
     	   return mTemplateKeyMap;
        }
-                
+       
+	   // Bluetooth adapter
+	   private BluetoothAdapter mBluetoothAdapter = null;
+	   
+	   public BluetoothAdapter getBluetoothAdapter(){
+		   return mBluetoothAdapter;
+	   }
+	   
+	   public void setBluetoothAdapter(BluetoothAdapter ba){
+		   mBluetoothAdapter=ba;
+	   }
+	   
+	   // Member object for the BT services
+	   private BtConnectionManager mBtConnectMgr = null;
+	   
+	   public BtConnectionManager getBtConnectionManager(){
+		   return mBtConnectMgr;
+	   }
+	   
+	   public void setBtConnectionManager(BtConnectionManager bm){
+		   mBtConnectMgr=bm;
+	   }
+	       
        private RemoteUi()
        {
     	   mChildren=new ArrayList<Device>();

@@ -37,6 +37,17 @@ public class Extender {
     	   mAddress=address;
        }
        
+       //the device is last connected device.
+       private boolean mIsLastActive=false;
+       
+       public boolean isLastactive(){
+    	   return mIsLastActive;
+       }
+              
+       public void setIsLastActive(boolean isLastActive){
+    	   mIsLastActive=isLastActive;
+       }
+       
        //the version of the extender.
        private String mVersion;
        

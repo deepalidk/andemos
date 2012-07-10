@@ -14,6 +14,7 @@ import java.util.Map;
 
 import com.common.FileManager;
 import com.remotec.universalremote.activity.R;
+import com.remotec.universalremote.activity.AddDeviceActivity.eCurrentPage;
 import com.remotec.universalremote.activity.R.layout;
 import com.remotec.universalremote.activity.component.DeviceButton;
 import com.remotec.universalremote.activity.component.KeyButton;
@@ -48,6 +49,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -73,7 +75,7 @@ public class DeviceActivity extends Activity {
 
 	// Debugging Tags
 	private static final String TAG = "UniversalRemoteActivity";
-	private static final boolean D = false;
+	private static final boolean D = true;
 
 	// dialog¡¡ids
 	private static final int PROGRESS_DIALOG = 0;
@@ -96,12 +98,10 @@ public class DeviceActivity extends Activity {
 
 	private List<DeviceButton> mDevButtonList = null;
 	private TextView mTitleRight = null;
-
-	// Local Bluetooth adapter
-	private BluetoothAdapter mBluetoothAdapter = null;
-	// Member object for the chat services
-	private BtConnectionManager mBtConnectMgr = null;
-
+	
+	//mark disconnect when on resume.
+	private boolean mDisconnectTag=true;
+	
 	/**
 	 * Ir API object
 	 */
@@ -120,11 +120,15 @@ public class DeviceActivity extends Activity {
 
 		// for null pointer bug, move the find right title text before bt init.
 		mTitleRight = (TextView) findViewById(R.id.title_right_text);
+		
+		RemoteUi.init();
+		
+		if(RemoteUi.getHandle().getBluetoothAdapter()==null)
 		// Get local Bluetooth adapter
-		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+			RemoteUi.getHandle().setBluetoothAdapter(BluetoothAdapter.getDefaultAdapter());
 		// If the adapter is null, then Bluetooth is not supported
 		if (!RemoteUi.getEmulatorTag()) {
-			if (mBluetoothAdapter == null) {
+			if (RemoteUi.getHandle().getBluetoothAdapter() == null) {
 				Toast.makeText(this, "Bluetooth is not available",
 						Toast.LENGTH_LONG).show();
 				finish();
@@ -221,7 +225,7 @@ public class DeviceActivity extends Activity {
 			return true;
 		}
 		
-		if (this.mBtConnectMgr.getState() == BtConnectionManager.STATE_NONE) {
+		if (RemoteUi.getHandle().getBluetoothAdapter().getState() == BtConnectionManager.STATE_NONE) {
 			/* build a dialog, ask if want to connect an extender */
 			AlertDialog.Builder builder = new Builder(this);
 
@@ -267,6 +271,7 @@ public class DeviceActivity extends Activity {
 		// Launch the DeviceListActivity to see devices and do scan
 		Intent serverIntent = new Intent(DeviceActivity.this,
 				BtDeviceListActivity.class);
+		mDisconnectTag=false;
 		startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 	}
 
@@ -329,7 +334,6 @@ public class DeviceActivity extends Activity {
 							dialog.dismiss();
 						}
 					});
-
 			builder.create().show();
 		
 
@@ -341,17 +345,40 @@ public class DeviceActivity extends Activity {
 		if (D)
 			Log.e(TAG, "++ ON START ++");
 
+		mDisconnectTag=true;
+		
 		if (!RemoteUi.getEmulatorTag()) {
 			// If BT is not on, request that it be enabled.
 			// setupChat() will then be called during onActivityResult
-			if (!mBluetoothAdapter.isEnabled()) {
+			if (!RemoteUi.getHandle().getBluetoothAdapter().isEnabled()) {
 				Intent enableIntent = new Intent(
 						BluetoothAdapter.ACTION_REQUEST_ENABLE);
+				mDisconnectTag=false;
 				startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
 				// Otherwise, setup the chat session
 			} else {
-				if (mBtConnectMgr == null)
+				if (RemoteUi.getHandle().getBtConnectionManager() == null)
 					setupBluetooth();
+			}
+			
+			//connect last active device
+			if (RemoteUi.getHandle().getBtConnectionManager() != null) {
+
+				// Only if the state is STATE_NONE, do we know that we haven't
+				// started already
+				if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
+					// Start the Bluetooth chat services
+					RemoteUi.getHandle().getBtConnectionManager().start();
+					
+					if(RemoteUi.getHandle().getLastActiveExtender()!=null){
+						String deviceAddr=RemoteUi.getHandle().getLastActiveExtender().getAddress();
+					
+						BluetoothDevice device = RemoteUi.getHandle().getBluetoothAdapter()
+						.getRemoteDevice(deviceAddr);
+						// Attempt to connect to the device
+						RemoteUi.getHandle().getBtConnectionManager().connect(device);
+					}
+				}
 			}
 		}
 	}
@@ -366,21 +393,23 @@ public class DeviceActivity extends Activity {
 		// not enabled during onStart(), so we were paused to enable it...
 		// onResume() will be called when ACTION_REQUEST_ENABLE activity
 		// returns.
-		if (mBtConnectMgr != null) {
-			// Only if the state is STATE_NONE, do we know that we haven't
-			// started already
-			if (mBtConnectMgr.getState() == mBtConnectMgr.STATE_NONE) {
-				// Start the Bluetooth chat services
-				mBtConnectMgr.start();
-			}
-		}
+	
 	}
 
 	@Override
 	public synchronized void onPause() {
 		super.onPause();
+
 		if (D)
 			Log.e(TAG, "- ON PAUSE -");
+		
+		// Stop the Bluetooth chat services
+		if (RemoteUi.getHandle().getBtConnectionManager() != null&&mDisconnectTag==true)
+		{
+			RemoteUi.getHandle().getBtConnectionManager().stop();
+		}
+		
+		mDisconnectTag=true;
 	}
 
 	@Override
@@ -388,14 +417,13 @@ public class DeviceActivity extends Activity {
 		super.onStop();
 		if (D)
 			Log.e(TAG, "-- ON STOP --");
+		
 	}
+	
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		// Stop the Bluetooth chat services
-		if (mBtConnectMgr != null)
-			mBtConnectMgr.stop();
 		if (D)
 			Log.e(TAG, "--- ON DESTROY ---");
 	}
@@ -493,11 +521,14 @@ public class DeviceActivity extends Activity {
 		public void onClick(View v) {
 			DeviceButton devButton = (DeviceButton) v;
 
+			mDisconnectTag=false;
+			
 			// check if an extender is connected, if not, then start an connect
 			// activity.
 			if (checkConnectionState()) {
 				// identifies add device button or device button
 				if (devButton.getDevice() != null) {
+
 
 					/*
 					 * crate a intent object, then call the device activity
@@ -508,7 +539,7 @@ public class DeviceActivity extends Activity {
 					devKeyIntent.putExtra(DeviceKeyActivity.ACTIVITY_MODE,
 							DeviceKeyActivity.ACTIVITY_CONTROL);
 					RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
-
+					
 					startActivity(devKeyIntent);
 				} else {
 
@@ -590,10 +621,10 @@ public class DeviceActivity extends Activity {
 				String address = data.getExtras().getString(
 						BtDeviceListActivity.EXTRA_DEVICE_ADDRESS);
 				// Get the BLuetoothDevice object
-				BluetoothDevice device = mBluetoothAdapter
+				BluetoothDevice device = RemoteUi.getHandle().getBluetoothAdapter()
 						.getRemoteDevice(address);
 				// Attempt to connect to the device
-				mBtConnectMgr.connect(device);
+				RemoteUi.getHandle().getBtConnectionManager().connect(device);
 			}
 			break;
 		case REQUEST_ENABLE_BT:
@@ -617,10 +648,13 @@ public class DeviceActivity extends Activity {
 
 		// Initialize the BluetoothRemoteService to perform bluetooth
 		// connections
-		mBtConnectMgr = new BtConnectionManager(mHandler);
+		if(RemoteUi.getHandle().getBtConnectionManager()==null){
+		  RemoteUi.getHandle().setBtConnectionManager(new BtConnectionManager(mHandler));
+		}else{
+		  RemoteUi.getHandle().getBtConnectionManager().setHandler(mHandler);
+		}
 
 	}
-
 	/*
 	 * displays the remove confirm dialog.
 	 */
@@ -690,6 +724,7 @@ public class DeviceActivity extends Activity {
 							Intent addDeviceIntent = new Intent(
 									DeviceActivity.this,
 									EditDeviceActivity.class);
+							mDisconnectTag=false;
 							startActivityForResult(addDeviceIntent,
 									REQUEST_ADD_DEVICE);
 						} else { // remove device
@@ -701,7 +736,6 @@ public class DeviceActivity extends Activity {
 				});
 
 		dlg = builder.create();
-
 		dlg.show();
 	}
 
@@ -740,7 +774,7 @@ public class DeviceActivity extends Activity {
 				switch (msg.arg1) {
 				case BtConnectionManager.STATE_CONNECTED: {
 
-					String version = mIrController.init(mBtConnectMgr);
+					String version = mIrController.init(RemoteUi.getHandle().getBtConnectionManager());
 
 					if (version != null) {
 						// set the version info to the extender.
@@ -790,6 +824,7 @@ public class DeviceActivity extends Activity {
 					activeExtender = RemoteUi.getHandle().getExtenderMap()
 							.get(devAddr);
 					RemoteUi.getHandle().setActiveExtender(activeExtender);
+					
 				} else {
 					activeExtender = new Extender();
 					activeExtender.setAddress(devAddr);
@@ -886,8 +921,6 @@ public class DeviceActivity extends Activity {
 			// if the data is already init , we jump out this method.
 			// if(RemoteUi.getHandle()!=null) return 0;
 
-			RemoteUi.init();
-
 			// copys the UI XML file to sdcard.
 			FileManager.saveAs(DeviceActivity.this, R.raw.remote,
 					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_XML_FILE);
@@ -966,7 +999,27 @@ public class DeviceActivity extends Activity {
 		protected void onPostExecute(Integer result) {
 
 			displayDevices();
+			
+			//connect last active device
+			if (RemoteUi.getHandle().getBtConnectionManager() != null) {
 
+				// Only if the state is STATE_NONE, do we know that we haven't
+				// started already
+				if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
+					// Start the Bluetooth chat services
+					RemoteUi.getHandle().getBtConnectionManager().start();
+					
+					if(RemoteUi.getHandle().getLastActiveExtender()!=null){
+						String deviceAddr=RemoteUi.getHandle().getLastActiveExtender().getAddress();
+					
+						BluetoothDevice device = RemoteUi.getHandle().getBluetoothAdapter()
+						.getRemoteDevice(deviceAddr);
+						// Attempt to connect to the device
+						RemoteUi.getHandle().getBtConnectionManager().connect(device);
+					}
+				}
+			}
+			
 			DeviceActivity.this.removeDialog(DeviceActivity.PROGRESS_DIALOG);
 		}
 	}
