@@ -284,6 +284,7 @@ public class DeviceKeyActivity extends Activity {
 					break;
 				case BtConnectionManager.STATE_NONE:
 					mTitleRight.setText(R.string.title_not_connected);
+					DeviceKeyActivity.this.finish();
 					break;
 				}
 				break;
