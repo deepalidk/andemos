@@ -411,22 +411,14 @@ public class BtConnectionManager extends IIo {
 				mmSocket.connect();
 				result=true; 
 			} catch (IOException e) {
-
-				if (times-- > 0) {
-					result=connect(mmSocket, times);
-				} else {
-					// Close the socket
-					try {
-						mmSocket.close();
-					} catch (IOException e2) {
-						Log.e(TAG,
-								"unable to close() socket during connection failure",
-								e2);
-					}
-					result= false;
+				try {
+					mmSocket.close();
+				} catch (IOException e2) {
+					Log.e(TAG,
+							"unable to close() socket during connection failure",
+							e2);
 				}
-
-
+				result= false;
 			}
 
 			return result;
@@ -441,8 +433,8 @@ public class BtConnectionManager extends IIo {
 
 			/*try to connect bt three times*/
 		   boolean connectResult=false;
-		   for(int i=0;i<3;i++){
-			   connectResult=connect(mmSocket,5);
+		   for(int i=0;i<1;i++){
+			   connectResult=connect(mmSocket,3);
 			   
 			   if(connectResult){
 				   break;

@@ -170,7 +170,7 @@ public class DeviceKeyActivity extends Activity {
 			mTitleRight.setText(R.string.title_connected_to);
 			mTitleRight.append(RemoteUi.getHandle().getActiveExtender().getName());	
 		}else{
-			mTitleRight.setText(R.string.not_connected);
+			mTitleRight.setText(R.string.title_not_connected);
 		}
 		
 		if(RemoteUi.getHandle().getBluetoothAdapter()==null)
@@ -197,10 +197,13 @@ public class DeviceKeyActivity extends Activity {
 	}
 	
 	@Override
-	public void onStart() {
+	public void onResume() {
 		super.onStart();
 		if (D)
-			Log.e(TAG, "++ ON START ++");
+			Log.e(TAG, "++ ON resume ++");
+		
+		mDisconnectTag=true;
+		
 		if (!RemoteUi.getEmulatorTag()) {
 			// If BT is not on, request that it be enabled.
 			// setupChat() will then be called during onActivityResult

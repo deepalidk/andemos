@@ -138,7 +138,9 @@ public class RemoteUi {
 			}
 			
 			// set current active flag
-			mActiveExtender.setIsLastActive(true);
+			if(mActiveExtender!=null){
+				mActiveExtender.setIsLastActive(true);
+			}
     	   
        }
        

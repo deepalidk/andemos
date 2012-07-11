@@ -108,6 +108,8 @@ public class DeviceActivity extends Activity {
 	private IrApi mIrController;
 
 	private float mScale=1;
+	private MenuItem mMenuConnect;
+	private MenuItem mMenuAbout;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -163,7 +165,46 @@ public class DeviceActivity extends Activity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.device_menu, menu);
 
+		mMenuConnect = (MenuItem) menu.findItem(R.id.menu_connect);
+		mMenuAbout = (MenuItem) menu.findItem(R.id.menu_about);
+		
+		setupMenu();
+		
 		return true;
+	}
+	
+	/*setup menu text and enablebility*/
+	public void setupMenu(){
+		// Initialize the BluetoothRemoteService to perform bluetooth
+		// connections
+		if(mMenuConnect!=null){
+			if(RemoteUi.getHandle()!=null&&RemoteUi.getHandle().getBtConnectionManager()!=null){
+	          
+				int connectState=RemoteUi.getHandle().getBtConnectionManager().getState();
+				
+				switch(connectState){
+					case BtConnectionManager.STATE_CONNECTED:
+						mMenuConnect.setTitle(R.string.menu_disconnect);
+						mMenuConnect.setEnabled(true);
+						mMenuAbout.setEnabled(true);
+						break;
+					case BtConnectionManager.STATE_CONNECTING:
+						mMenuConnect.setTitle(R.string.menu_disconnect);
+						mMenuConnect.setEnabled(false);
+						mMenuAbout.setEnabled(false);					
+				        break;
+					case BtConnectionManager.STATE_NONE:
+						mMenuConnect.setTitle(R.string.menu_connect);
+						mMenuConnect.setEnabled(true);
+						mMenuAbout.setEnabled(true);	
+						break;
+				}
+	
+			}else{
+				mMenuConnect.setEnabled(false);
+				mMenuAbout.setEnabled(false);
+			}
+		}
 	}
 
 	/*
@@ -201,7 +242,20 @@ public class DeviceActivity extends Activity {
 
 		switch (item.getItemId()) {
 		case R.id.menu_connect:
-			startConnectDialog();
+			if (RemoteUi.getHandle().getBtConnectionManager()!=null){
+				if(RemoteUi.getHandle().getBtConnectionManager().getState()==BtConnectionManager.STATE_NONE){
+					startConnectDialog();
+				}else{
+					// Stop the Bluetooth chat services
+					RemoteUi.getHandle().getBtConnectionManager().stop();
+					
+					RemoteUi.getHandle().setActiveExtender(null);
+					XmlManager xm = new XmlManager();
+					xm.saveData(RemoteUi.getHandle(),
+							RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
+									+ RemoteUi.UI_XML_FILE);
+				}
+			}
 			return true;
 
 		case R.id.menu_about:
@@ -259,7 +313,14 @@ public class DeviceActivity extends Activity {
 			builder.create().show();
 
 			return false;
+		}else if(RemoteUi.getHandle().getBluetoothAdapter().getState() == BtConnectionManager.STATE_NONE){
+			 Toast.makeText(DeviceActivity.this,
+			 String.format(getString(R.string.connecting_wait),
+			 RemoteUi.getHandle().getChildren().size()),
+			 Toast.LENGTH_SHORT).show();
+			 return false;
 		}
+			
 
 		return true;
 	}
@@ -345,7 +406,21 @@ public class DeviceActivity extends Activity {
 		if (D)
 			Log.e(TAG, "++ ON START ++");
 
-		mDisconnectTag=true;
+		
+	}
+
+	@Override
+	public synchronized void onResume() {
+		super.onResume();
+		if (D)
+			Log.e(TAG, "+ ON RESUME +");
+
+		// Performing this check in onResume() covers the case in which BT was
+		// not enabled during onStart(), so we were paused to enable it...
+		// onResume() will be called when ACTION_REQUEST_ENABLE activity
+		// returns.
+	
+       mDisconnectTag=true;
 		
 		if (!RemoteUi.getEmulatorTag()) {
 			// If BT is not on, request that it be enabled.
@@ -357,8 +432,15 @@ public class DeviceActivity extends Activity {
 				startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
 				// Otherwise, setup the chat session
 			} else {
-				if (RemoteUi.getHandle().getBtConnectionManager() == null)
 					setupBluetooth();
+					if(RemoteUi.getHandle().getActiveExtender()!=null){
+						mTitleRight.setText(R.string.title_connected_to);
+						mTitleRight.append(RemoteUi.getHandle().getActiveExtender().getName());	
+					}else{
+						mTitleRight.setText(R.string.title_not_connected);
+					}
+					
+					setupMenu();
 			}
 			
 			//connect last active device
@@ -381,19 +463,7 @@ public class DeviceActivity extends Activity {
 				}
 			}
 		}
-	}
-
-	@Override
-	public synchronized void onResume() {
-		super.onResume();
-		if (D)
-			Log.e(TAG, "+ ON RESUME +");
-
-		// Performing this check in onResume() covers the case in which BT was
-		// not enabled during onStart(), so we were paused to enable it...
-		// onResume() will be called when ACTION_REQUEST_ENABLE activity
-		// returns.
-	
+		
 	}
 
 	@Override
@@ -812,6 +882,9 @@ public class DeviceActivity extends Activity {
 					mTitleRight.setText(R.string.title_not_connected);
 					break;
 				}
+				
+				setupMenu();
+				
 				break;
 			case MESSAGE_DEVICE_ADDRESS:
 				// save the connected device's name
