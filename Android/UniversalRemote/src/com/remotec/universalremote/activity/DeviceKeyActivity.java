@@ -1029,10 +1029,10 @@ public class DeviceKeyActivity extends Activity {
 
 		private static final byte LEARN_LOCATION = 0;
 		// learning result
-		boolean mLearningResult = false;
+		byte[] mLearningResult = null;
 
 		public boolean getLeaningResult() {
-			return mLearningResult;
+			return mLearningResult!=null;
 		}
 
 		// learning result
@@ -1048,15 +1048,13 @@ public class DeviceKeyActivity extends Activity {
 			IrApi irController = IrApi.getHandle();
 
 			// learn at loc 0
-			mLearningResult = irController.learnIrCode(LEARN_LOCATION);
+			mLearningResult = irController.learnIrCode();
 
-			if (mLearningResult) {
-
-				byte[] data = irController.readLearnData(LEARN_LOCATION);
+			if (getLeaningResult()) {
 
 				// get the data at loc 0
 				Key key = (Key) mCurActiveKey.getTag();
-				key.setData(data);
+				key.setData(mLearningResult);
 				key.setMode(Mode.Learn);
 				key.setVisible(true);
 
@@ -1087,7 +1085,7 @@ public class DeviceKeyActivity extends Activity {
 
 			mLearningDlg.dismiss();
 			mLearningDlg = null;
-			if (mLearningResult) {
+			if (getLeaningResult()) {
 				displayLearnSucess();
 				displayKeys();
 			} else {

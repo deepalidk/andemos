@@ -4,9 +4,9 @@ require('luasql.sqlite3')
 local EXCEL_DIRECOTORY="D:\\android\\android\\workspace\\data\\CodeLibrary_20120216\\"
 local EXCEL_TYPE_FILENAME="KeyID_DeviceID_US_for LC_20120216.xls"
 local EXCEL_CODELIST_FILENAME="Codelist_LC_US_v11_20120215_(for release).xls"
-local EXCEL_UIRDDATA_FILENAME="US_LIBRARY_for_LC_Full_device_20111222.xls"
+local EXCEL_UIRDDATA_FILENAME="US_LIBRARY_FULL_DEVICE_UIRD_20120711.xls"
 
-local DB_PATH="D:\\android\\android\\workspace\\UniversalRemote\\res\\raw\\codelib.db"
+local DB_PATH="D:\\android\\android\\workspace\\data\\CodeLibrary_20120216\\codelib.db"
 
 local CODELIST_SHEETS={'TV','VCR','SAT','CBL','DVD','AUDIO','CD','HOME AUTOMATION'}
 local UIRD_SHEETS={'TV','VCR','SAT','CTV','DVD','Aud','CD','HOME'}
