@@ -95,6 +95,10 @@ public class Extender {
     		   mSupportInternalLib=true;
     		   mSupportLearning=true;
     		   mSupportUirdLib=false;
+    	   }else if(ver.equals("0000")){
+    		   mSupportInternalLib=false;
+    		   mSupportLearning=true;
+    		   mSupportUirdLib=true;
     	   }  
        }
          

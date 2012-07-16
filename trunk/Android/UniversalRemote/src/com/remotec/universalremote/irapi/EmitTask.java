@@ -43,7 +43,7 @@ public class EmitTask extends android.os.AsyncTask<Integer, Integer, Integer> {
 								mDevice.getIrCode(), (byte) mKey.getKeyId());
 					} else if (mKey.getMode() == Mode.Learn) {
 
-						irController.transmitLearnData(mEmitType, (byte) 0);
+						irController.transmitLearnData(mEmitType, mKey.getData());
 
 					} else if (mKey.getMode() == Mode.UIRD) {
 
