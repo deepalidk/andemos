@@ -337,26 +337,6 @@ public class DeviceActivity extends Activity {
 	}
 
 	/*
-	 * get Current apk version
-	 */
-	private String getVersionName() {
-		// 获取packagemanager的实例
-		PackageManager packageManager = getPackageManager();
-		// getPackageName()是你当前类的包名，0代表是获取版本信息
-		PackageInfo packInfo;
-		String version = "";
-		try {
-			packInfo = packageManager.getPackageInfo(getPackageName(), 0);
-			version = packInfo.versionName;
-		} catch (NameNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return version;
-	}
-
-	/*
 	 * Display system info.
 	 */
 	private void displayAboutDialog() {
@@ -370,32 +350,40 @@ public class DeviceActivity extends Activity {
 		 * displays the learn failed dialog.
 		 */
 			/* build a dialog, ask if want to close */
-			AlertDialog.Builder builder = new Builder(this);
-
-			builder.setIcon(android.R.drawable.ic_dialog_info);
-			builder.setTitle(R.string.about_title);
-			
-			String msg=String.format("Version:  %s\n", getVersionName());
-			
-			if(RemoteUi.getHandle().getActiveExtender()!=null){
-				msg+=String.format("Extender: %s\n",RemoteUi.getHandle().getActiveExtender().getVersion().toUpperCase());
-			}else{
-				msg+=String.format("Extender: not connected\n");
-			}
-			
-			builder.setMessage(msg);
-			
-			
-			
-			builder.setPositiveButton(android.R.string.ok,
-					new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-						}
-					});
-			builder.create().show();
+//			AlertDialog.Builder builder = new Builder(this);
+//
+//			builder.setIcon(android.R.drawable.ic_dialog_info);
+//			builder.setTitle(R.string.about_title);
+//			
+//			String msg=String.format("Version:  %s\n", getVersionName());
+//			
+//			if(RemoteUi.getHandle().getActiveExtender()!=null){
+//				msg+=String.format("Extender: %s\n",RemoteUi.getHandle().getActiveExtender().getVersion().toUpperCase());
+//			}else{
+//				msg+=String.format("Extender: not connected\n");
+//			}
+//			
+//			builder.setMessage(msg);
+//			
+//			
+//			
+//			builder.setPositiveButton(android.R.string.ok,
+//					new DialogInterface.OnClickListener() {
+//
+//						@Override
+//						public void onClick(DialogInterface dialog, int which) {
+//							dialog.dismiss();
+//						}
+//					});
+//			builder.create().show();
+		
+		/*
+		 * crate a intent object, then call the device activity
+		 * class
+		 */
+		Intent devKeyIntent = new Intent(DeviceActivity.this,
+				AboutActivity.class);		
+		startActivity(devKeyIntent);
 		
 
 	}
