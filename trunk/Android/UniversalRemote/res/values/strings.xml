@@ -64,9 +64,9 @@
     
     <string name="model_label_text">Model 1</string>
     
-    <string name="btn_test">Remote control test</string>
+    <string name="btn_test">Test</string>
     
-    <string name="btn_autosearch">Auto search</string>
+    <string name="btn_autosearch">Search</string>
     
     <string name="btn_autosearch_stop">Stop</string>
     
