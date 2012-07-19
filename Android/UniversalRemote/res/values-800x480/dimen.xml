@@ -81,7 +81,7 @@
     <dimen name="line_margin">15px</dimen>
     <dimen name="line_height">37.5px</dimen>
     <dimen name="label_width">165px</dimen>
-    <dimen name="textview_width">165px</dimen>
+    <dimen name="textview_width">180px</dimen>
     <dimen name="imageview_width">300.0px</dimen>
     <dimen name="imageview_height">180px</dimen>
     <dimen name="separator_width">360px</dimen>

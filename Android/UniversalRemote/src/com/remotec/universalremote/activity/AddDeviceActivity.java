@@ -67,6 +67,7 @@ import android.widget.Toast;
  */
 public class AddDeviceActivity extends Activity {
 
+	private static final int AutoSearchTimer = 2500;
 	private static final int REQUEST_SELECT_ICON = 1;
 	// Debugging Tags
 	private static final String TAG = "AddDeviceActivity";
@@ -82,12 +83,7 @@ public class AddDeviceActivity extends Activity {
 	private RtArrayAdapter<String> mManufacturerAdapter;
 	private RtArrayAdapter<String> mCodeAdapter;
 
-	private ViewGroup mVgSelectDevice;
-	private ViewGroup mVgDeviceInfo;
-
 	private Button mBtnCancel;
-	private Button mBtnNext;
-	private Button mBtnBack;
 	private Button mBtnFinish;
 	private Button mBtnTest;
 	private Button mBtnAutoSearch;
@@ -95,11 +91,7 @@ public class AddDeviceActivity extends Activity {
 	private EditText mDeviceName; // name edittext
 
 	private ImageView mDeviceIcon;
-
-	private TextView mCategory;
-	private TextView mManufacturer;
-	private TextView mCodeNum;
-
+	
 	private Timer mTimer = null;
 	private TimerTask mTimeTask = null;
 
@@ -146,28 +138,6 @@ public class AddDeviceActivity extends Activity {
 
 		updateControls();
 
-	}
-
-	// init the ui for add device.
-	void initCurrentPage(eCurrentPage curPage) {
-		mCurPage = curPage;
-		if (curPage == eCurrentPage.eSelectDevice) {
-			mBtnNext.setVisibility(View.VISIBLE);
-			mBtnFinish.setVisibility(View.INVISIBLE);
-			mBtnBack.setVisibility(View.INVISIBLE);
-			mVgSelectDevice.setVisibility(View.VISIBLE);
-			mVgDeviceInfo.setVisibility(View.INVISIBLE);
-		} else if (curPage == eCurrentPage.eDeviceInfo) {
-
-			mBtnNext.setVisibility(View.INVISIBLE);
-			mBtnFinish.setVisibility(View.VISIBLE);
-			mBtnBack.setVisibility(View.VISIBLE);
-			mVgSelectDevice.setVisibility(View.INVISIBLE);
-			mVgDeviceInfo.setVisibility(View.VISIBLE);
-
-			InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(mDeviceName.getWindowToken(), 0);
-		}
 	}
 
 	/*
@@ -260,20 +230,11 @@ public class AddDeviceActivity extends Activity {
 	 */
 	private void initControls() {
 
-		mVgSelectDevice = (ViewGroup) findViewById(R.id.select_ircode);
-		mVgDeviceInfo = (ViewGroup) findViewById(R.id.device_info);
-
 		mBtnCancel = (Button) findViewById(R.id.btn_footer_cancel);
 		mBtnCancel.setOnClickListener(mOnCancelListener);
 
-		mBtnNext = (Button) findViewById(R.id.btn_footer_next);
-		mBtnNext.setOnClickListener(mOnNextListener);
-
 		mBtnFinish = (Button) findViewById(R.id.btn_footer_finish);
 		mBtnFinish.setOnClickListener(mOnFinishListener);
-
-		mBtnBack = (Button) findViewById(R.id.btn_footer_back);
-		mBtnBack.setOnClickListener(mOnBackListener);
 
 		mBtnAutoSearch = (Button) findViewById(R.id.btn_autosearch);
 		mBtnAutoSearch.setOnClickListener(mOnAutosearchListener);
@@ -283,9 +244,6 @@ public class AddDeviceActivity extends Activity {
 
 		mDeviceName = (EditText) findViewById(R.id.name_edit);
 		mDeviceName.addTextChangedListener(mDeviceNameWatcher);
-		mCategory = (TextView) findViewById(R.id.category_textview);
-		mManufacturer = (TextView) findViewById(R.id.manufacturer_textview);
-		mCodeNum = (TextView) findViewById(R.id.model_textview);
 
 		mDeviceIcon = (ImageView) findViewById(R.id.device_img);
 		mDeviceIcon.setOnClickListener(mOnIconListener);
@@ -361,6 +319,8 @@ public class AddDeviceActivity extends Activity {
 
 
 			mDevice.setManufacturer(manufacturer);
+			
+			updateControls();
 		}
 
 		@Override
@@ -406,36 +366,6 @@ public class AddDeviceActivity extends Activity {
 
 		}
 
-	};
-
-	/*
-	 * Deals back button click.
-	 */
-	private OnClickListener mOnBackListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			AddDeviceActivity.this.initCurrentPage(eCurrentPage.eSelectDevice);
-		}
-	};
-
-	/*
-	 * Deals next button click.
-	 */
-	private OnClickListener mOnNextListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-
-			if (mDevice.getIrCode() != -1) {
-				updateControls();
-				AddDeviceActivity.this
-						.initCurrentPage(eCurrentPage.eDeviceInfo);
-			} else {
-				Toast.makeText(AddDeviceActivity.this, R.string.choose_code,
-						Toast.LENGTH_SHORT).show();
-			}
-		}
 	};
 
 	/*
@@ -486,26 +416,7 @@ public class AddDeviceActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 
-			// generate the device key.
-			if (AddDeviceActivity.this.mDeviceEditTag) {
-				boolean result = setDeviceKeys(AddDeviceActivity.this.mDevice,
-						RemoteUi.getHandle().getTemplateKeyMap());
-				if (!result) {
-					Toast.makeText(getApplicationContext(),
-							R.string.please_try_again_, Toast.LENGTH_SHORT)
-							.show();
-
-					return;
-				}
-			}
-
-			/* crate a intent object, then call the device activity class */
-			Intent devKeyIntent = new Intent(AddDeviceActivity.this,
-					DeviceKeyActivity.class);
-			devKeyIntent.putExtra(DeviceKeyActivity.ACTIVITY_MODE,
-					DeviceKeyActivity.ACTIVITY_CONTROL);
-			RemoteUi.getHandle().setActiveDevice(mDevice);
-			startActivity(devKeyIntent);
+			testRemoteKeys();
 		}
 	};
 
@@ -640,18 +551,9 @@ public class AddDeviceActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		/* skip back key */
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			cancelDialog();
 
-			if (mCurPage == eCurrentPage.eDeviceInfo) {
-				AddDeviceActivity.this
-						.initCurrentPage(eCurrentPage.eSelectDevice);
-				// DO SOMETHING
-				return true;
-			} else {
-
-				cancelDialog();
-
-				return super.onKeyDown(keyCode, event);
-			}
+			return super.onKeyDown(keyCode, event);	
 		} else {
 			return super.onKeyDown(keyCode, event);
 		}
@@ -693,9 +595,6 @@ public class AddDeviceActivity extends Activity {
 	void updateControls() {
 		mDeviceIcon.setImageResource(mDevice.getIconResId());
 		mDeviceName.setText(mDevice.getName());
-		mCategory.setText(mDevice.getDeviceType());
-		mManufacturer.setText(mDevice.getManufacturer());
-		mCodeNum.setText(mDevice.getIrCode() + "");
 	}
 
 	/*
@@ -738,6 +637,8 @@ public class AddDeviceActivity extends Activity {
 
 			} else {
 				mBtnAutoSearch.setText(sAutoSearch);
+				
+				testRemoteKeys();
 			}
 		}
 	};
@@ -850,8 +751,7 @@ public class AddDeviceActivity extends Activity {
 	 */
 	private void startAutoSearch() {
 
-		mSpinerModel.setSelection(0);
-		mNextAutoPosition = 0;
+		mNextAutoPosition=mSpinerModel.getSelectedItemPosition();
 		mTimer = new Timer();
 		mTimeTask = new TimerTask() {
 
@@ -863,7 +763,30 @@ public class AddDeviceActivity extends Activity {
 			}
 
 		};
-		mTimer.schedule(mTimeTask, 0, 1500);
+		mTimer.schedule(mTimeTask, 0, AutoSearchTimer);
+	}
+
+	private void testRemoteKeys() {
+		// generate the device key.
+		if (AddDeviceActivity.this.mDeviceEditTag) {
+			boolean result = setDeviceKeys(AddDeviceActivity.this.mDevice,
+					RemoteUi.getHandle().getTemplateKeyMap());
+			if (!result) {
+				Toast.makeText(getApplicationContext(),
+						R.string.please_try_again_, Toast.LENGTH_SHORT)
+						.show();
+
+				return;
+			}
+		}
+
+		/* crate a intent object, then call the device activity class */
+		Intent devKeyIntent = new Intent(AddDeviceActivity.this,
+				DeviceKeyActivity.class);
+		devKeyIntent.putExtra(DeviceKeyActivity.ACTIVITY_MODE,
+				DeviceKeyActivity.ACTIVITY_CONTROL);
+		RemoteUi.getHandle().setActiveDevice(mDevice);
+		startActivity(devKeyIntent);
 	}
 
 }

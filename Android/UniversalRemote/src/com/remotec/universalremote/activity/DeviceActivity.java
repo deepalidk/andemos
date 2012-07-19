@@ -75,7 +75,7 @@ public class DeviceActivity extends Activity {
 
 	// Debugging Tags
 	private static final String TAG = "UniversalRemoteActivity";
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	// dialog¡¡ids
 	private static final int PROGRESS_DIALOG = 0;
@@ -279,7 +279,7 @@ public class DeviceActivity extends Activity {
 			return true;
 		}
 		
-		if (RemoteUi.getHandle().getBluetoothAdapter().getState() == BtConnectionManager.STATE_NONE) {
+		if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
 			/* build a dialog, ask if want to connect an extender */
 			AlertDialog.Builder builder = new Builder(this);
 
@@ -313,7 +313,7 @@ public class DeviceActivity extends Activity {
 			builder.create().show();
 
 			return false;
-		}else if(RemoteUi.getHandle().getBluetoothAdapter().getState() == BtConnectionManager.STATE_NONE){
+		}else if(RemoteUi.getHandle().getBluetoothAdapter().getState() == BtConnectionManager.STATE_CONNECTING){
 			 Toast.makeText(DeviceActivity.this,
 			 String.format(getString(R.string.connecting_wait),
 			 RemoteUi.getHandle().getChildren().size()),
