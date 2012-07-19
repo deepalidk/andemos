@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="@dimen/image_margin"
+            android:src="@drawable/bt_ir_app" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/image_margin"
+            android:gravity="center_vertical"
+            android:singleLine="false"
+            android:text="Remotec Universal Remote 2012"
+            android:textSize="@dimen/dev_title_txt_size" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_appVer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="false"
+        android:layout_gravity="right"
+        android:text="Version:1.0.6"
+        android:textSize="@dimen/dev_title_txt_size" />
+
+    <TextView
+        android:id="@+id/textView_extVer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:singleLine="false"
+        android:text="Version:000F"
+        android:textSize="@dimen/dev_title_txt_size" />
+    <TextView
+        android:id="@+id/textView_extVer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:singleLine="false"
+        android:text="© 2012, Remotec Techology Limited"/>
+
+   <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/image_margin"
+        android:layout_gravity="left"
+        android:singleLine="false"
+        android:text="END USER LICENSE AGREEMENT
+ALL RIGHTS RESERVED.  "
+        android:textSize="@dimen/dev_title_txt_size" />
+    
+        <TextView
+        android:id="@+id/txtComment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="@dimen/image_margin"
+        android:layout_gravity="left"
+        android:singleLine="false"
+        android:scrollbars = "vertical"
+        android:text="The BXT-100 is a Bluetooth to AV IR Extender , which is solely developed by Remotec Technology Ltd. It works with any Android Smart Phones and Tablet by connecting Bluetooth control signals to AV IR control code. End user can set the IR code on any Smart Devices and transmit IR commands by each Extender. The IR code library supports almost every popular brand found in today&apos;s market and it is upgradeable which the users can download from Google Play Application. The Application contains materials protected under International Copyright Laws and Treaties. The Application made available through the Google Play, which is run by Google Inc., is licensed and not sold to you. The license to each Application that you obtain through Google Play is subject to your prior acceptance of this End User License Agreement , and you agree that the terms of this Agreement will apply to each Application that you obtain your license through Google Play. Your license to the use of Extender under this Agreement is granted by Remotec Technology Limited. Any unauthorized use of the Extender is prohibited. No part of the Extender may be reproduced in any form or by any means without express written permission from Remotec Technology Limited." />
+
+</LinearLayout>

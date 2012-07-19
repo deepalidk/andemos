@@ -181,7 +181,7 @@
         <RelativeLayout
             android:id="@+id/function_layout"
             android:layout_width="@dimen/center_layout_width"
-            android:layout_height="@dimen/line_height"
+            android:layout_height="wrap_content"
             android:layout_below="@id/separator5"
             android:layout_marginTop="@dimen/line_margin"
             android:orientation="horizontal" >
@@ -191,7 +191,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:orientation="horizontal" >
-
                 <Button
                     android:id="@id/btn_autosearch"
                     style="@style/WizardButton"
@@ -204,12 +203,12 @@
                 <Button
                     android:id="@id/btn_test"
                     style="@style/WizardButton"
-                    android:layout_width="@dimen/label_width"
+                     android:layout_width="@dimen/label_width"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/btn_autosearch"
                     android:background="@drawable/btn_footer"
-                    android:text="@string/btn_test" />
+                    android:text="@string/btn_test" /> 
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>

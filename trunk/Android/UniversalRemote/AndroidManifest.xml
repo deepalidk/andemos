@@ -52,6 +52,10 @@
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.Dialog" />
         <activity
+            android:name=".AboutActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".BtDeviceListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/select_device"
