@@ -21,7 +21,7 @@
             android:layout_margin="@dimen/image_margin"
             android:gravity="center_vertical"
             android:singleLine="false"
-            android:text="Remotec Universal Remote 2012"
+            android:text="Remotec Smart Universal Remote Controller"
             android:textSize="@dimen/dev_title_txt_size" />
     </LinearLayout>
 

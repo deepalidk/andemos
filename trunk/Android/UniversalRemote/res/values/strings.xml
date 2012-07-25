@@ -15,7 +15,7 @@
     <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Remote.</string>
     
     <string name="hello">Hello World, UniversalRemoteActivity!</string>
-    <string name="app_name">Universal Remote</string>
+    <string name="app_name">Smart URC</string>
     <string name="initial_waiting">Please wait...</string>
     <string name="add_device">Add Device</string>
     <string name="edit_device">Edit Device</string>
@@ -122,15 +122,15 @@
     
     <string name="learn_remote_commands">Learn remote commands</string>
     
-    <string name="place_remote">Place the remote control close to the extender, as shown.</string>
+    <string name="place_remote">Place the BXT-100 and your device remote as shown, aimed at each other 1-3 inches apart.</string>
     
-    <string name="press_key">When ready,select Start, and press the remote button you want Remote control to learn.</string>
+    <string name="press_key">Select Start, press and keep holding the key on your original equipment remote which you want to learn for a few seconds.</string>
     
     <string name="learn_failed_title">Cannot receive remote signal</string>
     
     <string name="learn_failed_msg">Move the IR transmitter of the remote closer to the extender, and try again.</string>
     
-    <string name="Learn_dialog_title">Press a button on the remote</string>
+    <string name="Learn_dialog_title">Press and keep holding the key!</string>
     
     <string name="learned_success_command">Learned the remote command</string>
     
@@ -144,7 +144,7 @@
     
     <string name="auto_search_title">Auto-search</string>
     
-    <string name="auto_search_comment">1.Make sure the category and manufacturer of your device is already selected.\n\n2.Press search button. The extender will try a new code every second.\n\n3.Once your device(e.g.TV) turns off, press stop button.</string>
+    <string name="auto_search_comment">1.Make sure the category and manufacturer of your device is already selected.\n\n2.Press search button. The extender will try a new code every second.\n\n3.Turn on your device(e.g.TV) manually. Once your device(e.g.TV) turns off, press stop button.</string>
     
     <string name="connecting_wait">Connecting, Please wait a minute.</string>
 </resources>
