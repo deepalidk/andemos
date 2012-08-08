@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class AboutActivity extends Activity {
         
         TextView tvAppVer=(TextView)this.findViewById(R.id.textView_appVer);
         TextView tvExtVer=(TextView)this.findViewById(R.id.textView_extVer);
-        
+        TextView tvResolution=(TextView)this.findViewById(R.id.textView_resolution);
         
 		String msg=String.format("Version:  %s", getVersionName());
 		tvAppVer.setText(msg);
@@ -42,6 +43,13 @@ public class AboutActivity extends Activity {
 		}
 		
 		tvExtVer.setText(msg);
+		 // 获取屏幕的宽、高
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        msg = "Resolution: " + dm.widthPixels + "x" + dm.heightPixels;
+       
+        tvResolution.setText(msg);
+
         
 		}
 	

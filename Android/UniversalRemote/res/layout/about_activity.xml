@@ -43,12 +43,21 @@
         android:text="Version:000F"
         android:textSize="@dimen/dev_title_txt_size" />
     <TextView
+        android:id="@+id/textView_resolution"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:singleLine="false"
+        android:text="Resolution: 800x480"
+        android:textSize="@dimen/dev_title_txt_size" />
+    <TextView
         android:id="@+id/textView_extVer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:singleLine="false"
         android:text="© 2012, Remotec Techology Limited"/>
+    
 
    <TextView
 

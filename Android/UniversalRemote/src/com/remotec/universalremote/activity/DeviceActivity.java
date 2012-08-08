@@ -340,49 +340,14 @@ public class DeviceActivity extends Activity {
 	 * Display system info.
 	 */
 	private void displayAboutDialog() {
-
-//		String version = getVersionName(); // 得到版本信息
-//		Toast.makeText(this,
-//				"packageName:" + packageName + ";version:" + version,
-//				Toast.LENGTH_LONG).show();
-		
-		/*
-		 * displays the learn failed dialog.
-		 */
-			/* build a dialog, ask if want to close */
-//			AlertDialog.Builder builder = new Builder(this);
-//
-//			builder.setIcon(android.R.drawable.ic_dialog_info);
-//			builder.setTitle(R.string.about_title);
-//			
-//			String msg=String.format("Version:  %s\n", getVersionName());
-//			
-//			if(RemoteUi.getHandle().getActiveExtender()!=null){
-//				msg+=String.format("Extender: %s\n",RemoteUi.getHandle().getActiveExtender().getVersion().toUpperCase());
-//			}else{
-//				msg+=String.format("Extender: not connected\n");
-//			}
-//			
-//			builder.setMessage(msg);
-//			
-//			
-//			
-//			builder.setPositiveButton(android.R.string.ok,
-//					new DialogInterface.OnClickListener() {
-//
-//						@Override
-//						public void onClick(DialogInterface dialog, int which) {
-//							dialog.dismiss();
-//						}
-//					});
-//			builder.create().show();
-		
+	
 		/*
 		 * crate a intent object, then call the device activity
 		 * class
 		 */
 		Intent devKeyIntent = new Intent(DeviceActivity.this,
 				AboutActivity.class);		
+		mDisconnectTag=false;
 		startActivity(devKeyIntent);
 		
 
