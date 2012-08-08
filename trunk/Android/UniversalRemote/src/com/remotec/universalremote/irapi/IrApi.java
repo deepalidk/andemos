@@ -186,17 +186,20 @@ public class IrApi implements IOnRead {
 	 * 
 	 */
 	public String init(IIo iIo) {
+		if(D)
+			Log.d(TAG, "init");
+		
 		mmIIo = iIo;
 		mmIIo.setOnReadFunc(this);
 		mmParseState = EParseState.cmd;
 
-		/* try rt300 protocol */
-		mIsRT300 = true;
+		/* try rt400 protocol */
+		mIsRT300 = false;
 		byte[] versionTemp = IrGetVersion();
 
 		/* try rt400 protocol */
 		if (versionTemp == null) {
-			mIsRT300 = false;
+			mIsRT300 = true;
 			versionTemp = IrGetVersion();
 		}
 
