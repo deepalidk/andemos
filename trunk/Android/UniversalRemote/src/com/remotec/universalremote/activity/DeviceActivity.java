@@ -313,7 +313,7 @@ public class DeviceActivity extends Activity {
 			builder.create().show();
 
 			return false;
-		}else if(RemoteUi.getHandle().getBluetoothAdapter().getState() == BtConnectionManager.STATE_CONNECTING){
+		}else if(RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_CONNECTING){
 			 Toast.makeText(DeviceActivity.this,
 			 String.format(getString(R.string.connecting_wait),
 			 RemoteUi.getHandle().getChildren().size()),
@@ -553,7 +553,6 @@ public class DeviceActivity extends Activity {
 			if (checkConnectionState()) {
 				// identifies add device button or device button
 				if (devButton.getDevice() != null) {
-
 
 					/*
 					 * crate a intent object, then call the device activity
