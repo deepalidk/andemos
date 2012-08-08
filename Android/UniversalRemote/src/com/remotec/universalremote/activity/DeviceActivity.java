@@ -462,7 +462,9 @@ public class DeviceActivity extends Activity {
 			Log.e(TAG, "- ON PAUSE -");
 		
 		// Stop the Bluetooth chat services
-		if (RemoteUi.getHandle().getBtConnectionManager() != null&&mDisconnectTag==true)
+		if (RemoteUi.getHandle().getBtConnectionManager() != null
+				&& RemoteUi.getHandle().getBtConnectionManager().getState()!=BtConnectionManager.STATE_CONNECTING
+				&& mDisconnectTag==true)
 		{
 			RemoteUi.getHandle().getBtConnectionManager().stop();
 		}

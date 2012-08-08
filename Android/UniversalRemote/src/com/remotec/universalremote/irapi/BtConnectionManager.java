@@ -132,12 +132,7 @@ public class BtConnectionManager extends IIo {
 			mConnectedThread.cancel();
 			mConnectedThread = null;
 		}
-
-		// Start the thread to listen on a BluetoothServerSocket
-		// if (mAcceptThread == null) {
-		// mAcceptThread = new AcceptThread();
-		// mAcceptThread.start();
-		// }
+		
 		setState(STATE_NONE);
 	}
 
@@ -267,6 +262,9 @@ public class BtConnectionManager extends IIo {
 	 * Indicate that the connection attempt failed and notify the UI Activity.
 	 */
 	private void connectionFailed() {
+		if(D) 
+			Log.d(TAG,"connectionFailed");
+		
 		setState(STATE_NONE);
 
 		// Send a failure message back to the Activity
@@ -281,6 +279,8 @@ public class BtConnectionManager extends IIo {
 	 * Indicate that the connection was lost and notify the UI Activity.
 	 */
 	private void connectionLost() {
+		if(D) 
+			Log.d(TAG,"connectionLost");
 		setState(STATE_NONE);
 
 		// Send a failure message back to the Activity
