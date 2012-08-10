@@ -124,7 +124,7 @@
     
     <string name="place_remote">Place the BXT-100 and your device remote as shown, aimed at each other 1-3 inches apart.</string>
     
-    <string name="press_key">Select Start, press and keep holding the key on your original equipment remote which you want to learn for a few seconds.</string>
+    <string name="press_key">Select Start, Press and keep holding the key on your original equipment remote which you want to learn until LED flash and prompt on the screen the learning result, it may take few seconds or more depending on IR codes of your remote.</string>
     
     <string name="learn_failed_title">Cannot receive remote signal</string>
     
