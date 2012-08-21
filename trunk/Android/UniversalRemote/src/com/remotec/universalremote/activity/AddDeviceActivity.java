@@ -67,7 +67,7 @@ import android.widget.Toast;
  */
 public class AddDeviceActivity extends Activity {
 
-	private static final int AutoSearchTimer = 2500;
+	private static final int AutoSearchTimer = 3500;
 	private static final int REQUEST_SELECT_ICON = 1;
 	// Debugging Tags
 	private static final String TAG = "AddDeviceActivity";
