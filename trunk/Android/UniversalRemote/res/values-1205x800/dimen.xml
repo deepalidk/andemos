@@ -91,8 +91,8 @@
     <dimen name="next_btn_right_margin">80.0px</dimen>
     <dimen name="next_btn_finish_margin">80.0px</dimen> 
     <dimen name="back_btn_right_margin">30.0px</dimen>
-    <dimen name="wizard_btn_width">120.0dip</dimen>
-    <dimen name="wizard_footer_height">80.0dip</dimen>
+    <dimen name="wizard_btn_width">120.0px</dimen>
+    <dimen name="wizard_footer_height">80.0px</dimen>
     <!-- Prelearn Dialog -->
     <dimen name="image_margin">18.0px</dimen>
     <dimen name="text_comment_row_space">16.0px</dimen>
