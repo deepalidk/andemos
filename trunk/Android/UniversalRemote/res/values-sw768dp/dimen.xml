@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 1280x768 -->
+    <!-- Scale -->
+    <dimen name="scale">0.7dp</dimen>
+    
+    <!-- Text size -->
+    <!-- Dialog text size -->
+    <dimen name="dialog_textview_size">21.0sp</dimen>
+    <!-- Device Title text view -->
+    <dimen name="dev_title_txt_size">28sp</dimen>
+    <!-- device btn txt size -->
+    <dimen name="dev_btn_txt_size">21sp</dimen>
+    <!-- Device Title text view -->
+    <dimen name="dev_right_title_txt_size">21sp</dimen>
+    <!-- Key Button txt size -->
+    <dimen name="key_btn_txt_size">21sp</dimen>
+    <!-- test button text size -->
+    <dimen name="testbtn_text_size">21.0sp</dimen>
+    <dimen name="spine_item_text_size">21.0sp</dimen>
+    <dimen name="wizard_txt_size">21.0sp</dimen>
+    <dimen name="wizard_btn_txt_size">21.0sp</dimen>
+    <dimen name="learn_dialog_txt_size">21.0sp</dimen>
+   
+    <!-- Device Botton padding left -->
+    <dimen name="dev_btn_margin_left">45dp</dimen>
+    <!-- Device Botton padding right -->
+    <dimen name="dev_btn_margin_right">45dp</dimen>
+    <!-- Device Botton padding top -->
+    <dimen name="dev_btn_margin_top">5dp</dimen>
+    <!-- Device Botton padding bottom -->
+    <dimen name="dev_btn_margin_bottom">5dp</dimen>
+
+    
+    <!-- Device Title height -->
+    <dimen name="dev_title_height">74dp</dimen>
+
+    <!-- Device Key BottomBar height -->
+    <dimen name="devkey_bottombar_height">78dp</dimen>
+    <!-- Device Key  BottomBar height -->
+    <dimen name="devkey_bottombar_btn_width">256dp</dimen>
+    <!-- Key Botton padding left -->
+    <dimen name="key_btn_padding_left">60dp</dimen>
+    <!-- Key  Botton padding right -->
+    <dimen name="key_btn_padding_right">60dp</dimen>
+    <!-- Key Botton padding top -->
+    <dimen name="key_btn_padding_top">30dp</dimen>
+    <!-- Key Botton padding bottom -->
+    <dimen name="key_btn_padding_bottom">30dp</dimen>
+
+    <!-- Key Botton margin left -->
+    <dimen name="key_btn_margin_left">0dp</dimen>
+    <!-- Key  Botton margin right -->
+    <dimen name="key_btn_margin_right">0dp</dimen>
+    <!-- Key Botton margin top -->
+    <dimen name="key_btn_margin_top">0dp</dimen>
+    <!-- Key Botton margin bottom -->
+    <dimen name="key_btn_margin_bottom">0dp</dimen>
+
+    <!-- Key Botton width -->
+    <dimen name="key_btn_width">192dp</dimen>
+    <!-- Key Botton height -->
+    <dimen name="key_btn_height">102dp</dimen>
+    
+    <!-- Key Botton height -->
+    <dimen name="key_3_height">144dp</dimen>
+    
+    <!-- Key Botton height -->
+    <dimen name="key_br_height">150dp</dimen>
+    
+    <!-- horizontal padding of disable key  -->
+    <dimen name="disable_key_padding_h">3.0dp</dimen>
+    <!-- vertical padding of disable key -->
+    <dimen name="disable_key_padding_v">2.5dp</dimen>
+    
+     <!-- the radius of round rect -->
+    <dimen name="disable_key_mask_radius">3dp</dimen>
+    
+    <!-- Add device wizard -->
+    <dimen name="center_layout_width">480dp</dimen>
+    <dimen name="spiner_width">300dp</dimen>
+    <dimen name="line_margin">16dp</dimen>
+    <dimen name="line_height">71dp</dimen>
+    <dimen name="label_width">204dp</dimen>
+    <dimen name="textview_width">500dp</dimen>
+    <dimen name="imageview_width">256.0dp</dimen>
+    <dimen name="imageview_height">160dp</dimen>
+    <dimen name="separator_width">703dp</dimen>
+    <dimen name="testbtn_width">600.0dp</dimen>
+    <dimen name="cancel_btn_left_margin">80.0dp</dimen>
+    <dimen name="next_btn_right_margin">80.0dp</dimen>
+    <dimen name="next_btn_finish_margin">80.0dp</dimen> 
+    <dimen name="back_btn_right_margin">30.0dp</dimen>
+    <dimen name="wizard_btn_width">120.0dp</dimen>
+    <dimen name="wizard_footer_height">80.0dp</dimen>
+    <!-- Prelearn Dialog -->
+    <dimen name="image_margin">18.0dp</dimen>
+    <dimen name="text_comment_row_space">16.0dp</dimen>
+    <dimen name="learn_imageview_width">200dp</dimen>
+    <dimen name="learn_imageview_height">200dp</dimen>
+    
+    <!-- Select Icon dialog -->
+    <dimen name="gridview_columnwith">100dp</dimen>
+    <dimen name="gridview_verticalspacing">10dp</dimen>
+    <dimen name="gridview_horizontalspacing">10dp</dimen>
+
+</resources>
