@@ -48,6 +48,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -217,7 +218,15 @@ public class DeviceActivity extends Activity {
 		 */
 		mIrController = IrApi.getHandle();
 
-	    mScale= getResources().getDimension(R.dimen.scale);
+//	    mScale= getResources().getDimension(R.dimen.scale);
+		DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+		float Scalex=(((float)dm.widthPixels)/600);	
+		float Scaley=(((float)dm.heightPixels)/1600);
+        
+		mScale=(Scalex<Scaley)?Scalex:Scaley;
+		
+		if(mScale>1)mScale=1;
 		
 		// we already load the device object infos now,
 		// but the resId of icon can only access during run time.
