@@ -147,4 +147,6 @@
     <string name="auto_search_comment">1.Make sure the category and manufacturer of your device is already selected.\n\n2.Press search button. The extender will try a new code every second.\n\n3.Turn on your device(e.g.TV) manually. Once your device(e.g.TV) turns off, press stop button.</string>
     
     <string name="connecting_wait">Connecting, Please wait a minute.</string>
+    
+    <string name="btn_learn">Learn</string>
 </resources>

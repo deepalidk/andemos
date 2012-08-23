@@ -5,6 +5,7 @@
  */
 package com.remotec.universalremote.activity;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -97,7 +98,6 @@ public class DeviceKeyActivity extends Activity {
 	 * all key buttons in key layout
 	 */
 	private Map<Integer, KeyButton> mKeyButtonMap = null;
-	
 
 	// Control key View Group
 	private ViewGroup mVgControl = null;
@@ -122,9 +122,9 @@ public class DeviceKeyActivity extends Activity {
 
 	private int mActivityMode = ACTIVITY_CONTROL;
 
-	//mark disconnect when on resume.
-	private boolean mDisconnectTag=true;
-	
+	// mark disconnect when on resume.
+	private boolean mDisconnectTag = true;
+
 	/* to identify current transmission type */
 	private boolean mContinuousTag = false;
 
@@ -140,7 +140,7 @@ public class DeviceKeyActivity extends Activity {
 
 	// the object of learning dialog.
 	private AlertDialog mLearningDlg;
-	
+
 	private TextView mTitleRight = null;
 
 	/* fliping animation */
@@ -162,62 +162,64 @@ public class DeviceKeyActivity extends Activity {
 
 		mActivityMode = getIntent()
 				.getIntExtra(ACTIVITY_MODE, ACTIVITY_CONTROL);
-		
+
 		// for null pointer bug, move the find right title text before bt init.
 		mTitleRight = (TextView) findViewById(R.id.title_right_text);
 
-		if(RemoteUi.getHandle().getActiveExtender()!=null){
+		if (RemoteUi.getHandle().getActiveExtender() != null) {
 			mTitleRight.setText(R.string.title_connected_to);
-			mTitleRight.append(RemoteUi.getHandle().getActiveExtender().getName());	
-		}else{
+			mTitleRight.append(RemoteUi.getHandle().getActiveExtender()
+					.getName());
+		} else {
 			mTitleRight.setText(R.string.title_not_connected);
 		}
-		
-		if(RemoteUi.getHandle().getBluetoothAdapter()==null)
+
+		if (RemoteUi.getHandle().getBluetoothAdapter() == null)
 			// Get local Bluetooth adapter
-				RemoteUi.getHandle().setBluetoothAdapter(BluetoothAdapter.getDefaultAdapter());
-			// If the adapter is null, then Bluetooth is not supported
-			if (!RemoteUi.getEmulatorTag()) {
-				if (RemoteUi.getHandle().getBluetoothAdapter() == null) {
-					Toast.makeText(this, "Bluetooth is not available",
-							Toast.LENGTH_LONG).show();
-					finish();
-					return;
-				}
+			RemoteUi.getHandle().setBluetoothAdapter(
+					BluetoothAdapter.getDefaultAdapter());
+		// If the adapter is null, then Bluetooth is not supported
+		if (!RemoteUi.getEmulatorTag()) {
+			if (RemoteUi.getHandle().getBluetoothAdapter() == null) {
+				Toast.makeText(this, "Bluetooth is not available",
+						Toast.LENGTH_LONG).show();
+				finish();
+				return;
 			}
-	
-		
+		}
+
 		// Initializing data.
 		InitAppTask initor = new InitAppTask();
 		initor.execute(0);
-		
+
 		mViewFlipper = (ViewFlipperEx) findViewById(R.id.id_key_layout);
 		mViewFlipper.setLongClickable(true);
+		mViewFlipper.setOnTouchListener(mViewFlipperOnTouchListener);
 
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onStart();
 		if (D)
 			Log.e(TAG, "++ ON resume ++");
-		
-		mDisconnectTag=true;
-		
+
+		mDisconnectTag = true;
+
 		if (!RemoteUi.getEmulatorTag()) {
 			// If BT is not on, request that it be enabled.
 			// setupChat() will then be called during onActivityResult
 			if (!RemoteUi.getHandle().getBluetoothAdapter().isEnabled()) {
 				Intent enableIntent = new Intent(
 						BluetoothAdapter.ACTION_REQUEST_ENABLE);
-				mDisconnectTag=false;
+				mDisconnectTag = false;
 				startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
 				// Otherwise, setup the chat session
 			} else {
-					setupBluetooth();
+				setupBluetooth();
 			}
-			
-			//connect last active device
+
+			// connect last active device
 			if (RemoteUi.getHandle().getBtConnectionManager() != null) {
 
 				// Only if the state is STATE_NONE, do we know that we haven't
@@ -225,48 +227,52 @@ public class DeviceKeyActivity extends Activity {
 				if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
 					// Start the Bluetooth chat services
 					RemoteUi.getHandle().getBtConnectionManager().start();
-					
-					if(RemoteUi.getHandle().getLastActiveExtender()!=null){
-						String deviceAddr=RemoteUi.getHandle().getLastActiveExtender().getAddress();
-					
-						BluetoothDevice device = RemoteUi.getHandle().getBluetoothAdapter()
-						.getRemoteDevice(deviceAddr);
+
+					if (RemoteUi.getHandle().getLastActiveExtender() != null) {
+						String deviceAddr = RemoteUi.getHandle()
+								.getLastActiveExtender().getAddress();
+
+						BluetoothDevice device = RemoteUi.getHandle()
+								.getBluetoothAdapter()
+								.getRemoteDevice(deviceAddr);
 						// Attempt to connect to the device
-						RemoteUi.getHandle().getBtConnectionManager().connect(device);
+						RemoteUi.getHandle().getBtConnectionManager()
+								.connect(device);
 					}
 				}
 			}
 		}
 	}
-	
+
 	private void setupBluetooth() {
 		Log.d(TAG, "setupBluetooth()");
 
 		// Initialize the BluetoothRemoteService to perform bluetooth
 		// connections
-		if(RemoteUi.getHandle().getBtConnectionManager()==null){
-		  RemoteUi.getHandle().setBtConnectionManager(new BtConnectionManager(mHandler));
-		}else{
-		  RemoteUi.getHandle().getBtConnectionManager().setHandler(mHandler);
+		if (RemoteUi.getHandle().getBtConnectionManager() == null) {
+			RemoteUi.getHandle().setBtConnectionManager(
+					new BtConnectionManager(mHandler));
+		} else {
+			RemoteUi.getHandle().getBtConnectionManager().setHandler(mHandler);
 		}
 
 	}
-	
+
 	@Override
-	public void onPause(){
+	public void onPause() {
 		super.onPause();
 		if (D)
 			Log.e(TAG, "++ ON Stop ++");
-		
+
 		// Stop the Bluetooth chat services
-		if (RemoteUi.getHandle().getBtConnectionManager() != null&&mDisconnectTag==true)
-		{
+		if (RemoteUi.getHandle().getBtConnectionManager() != null
+				&& mDisconnectTag == true) {
 			RemoteUi.getHandle().getBtConnectionManager().stop();
 		}
-		
-		mDisconnectTag=true;
+
+		mDisconnectTag = true;
 	}
-	
+
 	// The Handler that gets information back from the BluetoothRemoteService
 	private final Handler mHandler = new Handler() {
 		@Override
@@ -274,9 +280,10 @@ public class DeviceKeyActivity extends Activity {
 			switch (msg.what) {
 			case CONNECTTION_STATE_CHANGE:
 				switch (msg.arg1) {
-				case BtConnectionManager.STATE_CONNECTED: {	
-						mTitleRight.setText(R.string.title_connected_to);
-						mTitleRight.append(RemoteUi.getHandle().getLastActiveExtender().getName());	
+				case BtConnectionManager.STATE_CONNECTED: {
+					mTitleRight.setText(R.string.title_connected_to);
+					mTitleRight.append(RemoteUi.getHandle()
+							.getLastActiveExtender().getName());
 					break;
 				}
 				case BtConnectionManager.STATE_CONNECTING:
@@ -296,14 +303,14 @@ public class DeviceKeyActivity extends Activity {
 			}
 		}
 	};
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		/* skip back key */
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-           mDisconnectTag=false;
-		} 
-	    
+			mDisconnectTag = false;
+		}
+
 		return super.onKeyDown(keyCode, event);
 	}
 
@@ -483,13 +490,53 @@ public class DeviceKeyActivity extends Activity {
 	/*
 	 * key on touch listener
 	 */
+	private OnTouchListener mViewFlipperOnTouchListener = new OnTouchListener() {
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+
+			boolean result = v.onTouchEvent(event);
+
+			if (event.getAction() == MotionEvent.ACTION_UP) {
+				updateBottomBarBtnStatus();
+			}
+
+			return result;
+		}
+
+	};
+
+	/*
+	 * update the bottom bar button status.
+	 */
+	private void updateBottomBarBtnStatus() {
+
+		/*
+		 * change the btn state, and so the background will change.
+		 */
+		for (Button btn : DeviceKeyActivity.this.mBottomBarButtonList) {
+			btn.setEnabled(true);
+		}
+
+		int btnIndex = mViewFlipper.getDisplayedChild();
+
+		// set the select btn state;
+		if (btnIndex < mBottomBarButtonList.size()) {
+			mBottomBarButtonList.get(btnIndex).setEnabled(false);
+		}
+
+	}
+
+	/*
+	 * key on touch listener
+	 */
 	private OnTouchListener mKeyButtonOnTouchListener = new OnTouchListener() {
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 
 			boolean result = v.onTouchEvent(event);
-			
+
 			if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
 				if (mActivityMode == ACTIVITY_CONTROL) {
@@ -503,7 +550,7 @@ public class DeviceKeyActivity extends Activity {
 				if (mContinuousTag) {
 					if (mActivityMode == ACTIVITY_CONTROL) {
 						if (!RemoteUi.getEmulatorTag()) {
-							emitKeyIR(null, (byte)0);
+							emitKeyIR(null, (byte) 0);
 							mContinuousTag = false;
 						}
 					}
@@ -549,8 +596,8 @@ public class DeviceKeyActivity extends Activity {
 						keyBtn.setVisibility(View.INVISIBLE);
 					}
 				} else if (mActivityMode == ACTIVITY_EDIT) {// all key will be
-															// display in Edit
-															// mode.
+					// display in Edit
+					// mode.
 					keyBtn.setVisibility(View.VISIBLE);
 				}
 
@@ -624,10 +671,10 @@ public class DeviceKeyActivity extends Activity {
 	 * @emitType: 0x01: continuous transmission. need send stop command to stop
 	 * emit. 0x81: single transmission.
 	 */
-	private void emitKeyIR(KeyButton keyBtn, byte emitType) {	
-		
-		Key key=(keyBtn==null)?null:(Key)keyBtn.getTag();
-		EmitTask task=new EmitTask(mDevice,key,emitType);
+	private void emitKeyIR(KeyButton keyBtn, byte emitType) {
+
+		Key key = (keyBtn == null) ? null : (Key) keyBtn.getTag();
+		EmitTask task = new EmitTask(mDevice, key, emitType);
 		task.execute(0);
 	}
 
@@ -786,6 +833,93 @@ public class DeviceKeyActivity extends Activity {
 		mLearningDlg = builder.create();
 
 		mLearningDlg.show();
+	}
+
+	/*
+	 * displays the learning dialog.
+	 */
+	private void displayTestLearningKeyDlg() {
+		/* build a dialog, ask if want to close */
+		AlertDialog.Builder builder = new Builder(this);
+
+		builder.setTitle("Test the learned key!");
+
+		ViewGroup vg = (ViewGroup) this.getLayoutInflater().inflate(
+				R.layout.learn_dialog, null);
+
+		vg.findViewById(R.id.progressBar1).setVisibility(View.GONE);
+
+		builder.setView(vg);
+
+		builder.setPositiveButton(R.string.btn_test,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						try {
+							// 不关闭对话框
+							Field field = dialog.getClass().getSuperclass()
+									.getDeclaredField("mShowing");
+							field.setAccessible(true);
+							field.set(dialog, false);
+
+							emitKeyIR(mCurActiveKey, (byte) 0x81);
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+
+		builder.setNeutralButton(R.string.btn_learn,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+						try {
+
+							dialog.dismiss();
+
+							LearningTask task = new LearningTask();
+							task.execute(0);
+							// 关闭对话框
+							Field field = dialog.getClass().getSuperclass()
+									.getDeclaredField("mShowing");
+							field.setAccessible(true);
+							field.set(dialog, true);
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+					}
+				});
+
+		builder.setNegativeButton(R.string.btn_done,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						try {
+
+							dialog.dismiss();
+							displayKeys();
+
+							// 关闭对话框
+							Field field = dialog.getClass().getSuperclass()
+									.getDeclaredField("mShowing");
+							field.setAccessible(true);
+							field.set(dialog, true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+					}
+
+				});
+
+		builder.create().show();
 	}
 
 	/*
@@ -1032,7 +1166,7 @@ public class DeviceKeyActivity extends Activity {
 		byte[] mLearningResult = null;
 
 		public boolean getLeaningResult() {
-			return mLearningResult!=null;
+			return mLearningResult != null;
 		}
 
 		// learning result
@@ -1087,11 +1221,11 @@ public class DeviceKeyActivity extends Activity {
 			mLearningDlg = null;
 			if (getLeaningResult()) {
 				displayLearnSucess();
-				displayKeys();
+				displayTestLearningKeyDlg();
 			} else {
 				displayLearnFailed();
 			}
 		}
 	}
-	
+
 }

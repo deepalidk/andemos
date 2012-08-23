@@ -20,7 +20,7 @@ public class ViewFlipperEx extends ViewFlipper{
 	 /**
      * The velocity at which a fling gesture will cause us to snap to the next screen
      */ 
-    private static final int SNAP_VELOCITY = 1000;
+    private static final int SNAP_VELOCITY = 600;
 	private int mLastLeftEdge;// the screen left edge when finger down.
 	private float mLastMotionPosX; // record last posX since the finger move.
 	private final static int TOUCH_STATE_REST = 0;

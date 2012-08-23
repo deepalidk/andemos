@@ -2,7 +2,7 @@
 <resources>
     <!-- 800x480 -->
     <!-- Scale -->
-    <dimen name="scale">0.5dp</dimen>
+    <dimen name="scale">0.6px</dimen>
     <!-- Text size -->
     <!-- Dialog text size -->
     <dimen name="dialog_textview_size">16.0sp</dimen>
@@ -36,7 +36,7 @@
     <!-- Device Key BottomBar height -->
     <dimen name="devkey_bottombar_height">87dp</dimen>
     <!-- Device Key  BottomBar height -->
-    <dimen name="devkey_bottombar_btn_width">100.5dp</dimen>
+    <dimen name="devkey_bottombar_btn_width">133dp</dimen>
     <!-- Key Botton padding left -->
     <dimen name="key_btn_padding_left">67.5dp</dimen>
     <!-- Key  Botton padding right -->
