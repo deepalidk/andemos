@@ -84,7 +84,7 @@
     <dimen name="textview_width">165px</dimen>
     <dimen name="imageview_width">300px</dimen>
     <dimen name="imageview_height">180px</dimen>
-    <dimen name="separator_width">360px</dimen>
+    <dimen name="separator_width">405px</dimen>
     <dimen name="testbtn_width">240px</dimen>
     
     <dimen name="cancel_btn_left_margin">37.5px</dimen>
