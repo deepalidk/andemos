@@ -71,7 +71,7 @@
             <EditText
                 android:id="@id/name_edit"
                 style="@style/WizardText"
-                android:layout_width="@dimen/separator_width"
+                android:layout_width="@dimen/spiner_width"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/name_label"
