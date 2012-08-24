@@ -46,7 +46,7 @@ public class AboutActivity extends Activity {
 		 // 获取屏幕的宽、高
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        msg=String.format("Resolution: %dx%d %d",dm.widthPixels,dm.heightPixels,(int)dm.density*160);
+        msg=String.format("Resolution: %dx%d %d",dm.widthPixels,dm.heightPixels,(int)(dm.density*160));
        
         tvResolution.setText(msg);
 

@@ -5,21 +5,21 @@
     <dimen name="scale">0.5px</dimen>
     <!-- Text size -->
     <!-- Dialog text size -->
-    <dimen name="dialog_textview_size">16.0sp</dimen>
+    <dimen name="dialog_textview_size">24px</dimen>
         <!-- Device Title text view -->
-    <dimen name="dev_title_txt_size">16sp</dimen>
+    <dimen name="dev_title_txt_size">24px</dimen>
     <!-- device btn txt size -->
-    <dimen name="dev_btn_txt_size">16sp</dimen>
+    <dimen name="dev_btn_txt_size">24px</dimen>
     <!-- Device Title text view -->
-    <dimen name="dev_right_title_txt_size">12sp</dimen>
+    <dimen name="dev_right_title_txt_size">18px</dimen>
     <!-- Key Button txt size -->
-    <dimen name="key_btn_txt_size">16sp</dimen>
+    <dimen name="key_btn_txt_size">24px</dimen>
     <!-- test button text size -->
-    <dimen name="testbtn_text_size">16.0sp</dimen>
-    <dimen name="spine_item_text_size">16.0sp</dimen>
-    <dimen name="wizard_txt_size">16.0sp</dimen>
-    <dimen name="wizard_btn_txt_size">16.0sp</dimen>
-    <dimen name="learn_dialog_txt_size">12.0sp</dimen>
+    <dimen name="testbtn_text_size">24px</dimen>
+    <dimen name="spine_item_text_size">24px</dimen>
+    <dimen name="wizard_txt_size">24px</dimen>
+    <dimen name="wizard_btn_txt_size">24px</dimen>
+    <dimen name="learn_dialog_txt_size">18px</dimen>
    
     <!-- Device Botton padding left -->
     <dimen name="dev_btn_margin_left">1.5px</dimen>
