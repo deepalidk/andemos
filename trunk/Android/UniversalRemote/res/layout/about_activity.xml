@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:singleLine="false"
-        android:text="© 2012, Remotec Techology Limited"/>
+        android:text="© 2012, Remotec Technology Limited"/>
     
 
    <TextView
