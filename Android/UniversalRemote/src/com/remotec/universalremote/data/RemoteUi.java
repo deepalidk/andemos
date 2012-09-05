@@ -219,27 +219,12 @@ public class RemoteUi {
        public Map<Integer, Key> getTemplateKeyMap(){
     	   return mTemplateKeyMap;
        }
-       
-	   // Bluetooth adapter
-	   private BluetoothAdapter mBluetoothAdapter = null;
-	   
-	   public BluetoothAdapter getBluetoothAdapter(){
-		   return mBluetoothAdapter;
-	   }
-	   
-	   public void setBluetoothAdapter(BluetoothAdapter ba){
-		   mBluetoothAdapter=ba;
-	   }
-	   
+          
 	   // Member object for the BT services
 	   private BtConnectionManager mBtConnectMgr = null;
 	   
 	   public BtConnectionManager getBtConnectionManager(){
 		   return mBtConnectMgr;
-	   }
-	   
-	   public void setBtConnectionManager(BtConnectionManager bm){
-		   mBtConnectMgr=bm;
 	   }
 	       
        private RemoteUi()
@@ -249,6 +234,8 @@ public class RemoteUi {
     	   mCategoryList=new ArrayList<String>();
     	   mIrBrandMap=new Hashtable<String,List<String>>();
     	   mTemplateKeyMap=new Hashtable<Integer,Key>();
+    	   
+    	   mBtConnectMgr=new BtConnectionManager(null);
        }
        
        /*

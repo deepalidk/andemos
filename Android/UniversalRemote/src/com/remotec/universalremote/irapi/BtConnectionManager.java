@@ -25,12 +25,15 @@ import java.util.List;
 import java.util.UUID;
 
 import com.remotec.universalremote.activity.DeviceActivity;
+import com.remotec.universalremote.data.RemoteUi;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -59,10 +62,6 @@ public class BtConnectionManager extends IIo {
 	private final BluetoothAdapter mAdapter;
 	private Handler mHandler;
 	
-	public void setHandler(Handler handler){
-		mHandler=handler;
-	}
-	
 	// private AcceptThread mAcceptThread;
 	private ConnectThread mConnectThread;
 	private ConnectedThread mConnectedThread;
@@ -75,7 +74,30 @@ public class BtConnectionManager extends IIo {
 	public static final int STATE_CONNECTING = 2; // now initiating an outgoing
 													// connection
 	public static final int STATE_CONNECTED = 3; // now connected to a remote
+	
+	private static final int REQUEST_ENABLE_BT = 3;
 		
+	public void setHandler(Handler handler){
+		mHandler=handler;
+	}
+	
+	//Check if BT Adapter is Available;
+	public boolean isAdapterAvailable(){
+		return mAdapter!=null;
+	}
+	
+	//Check if BT Adapter is Enable;
+	public boolean isAdapterEnabled(){
+		return mAdapter.isEnabled();
+	}
+	
+	//pup up dialog for use to make the adapter enable.
+	public void makeAdapterEnabled(Activity activity){
+		Intent enableIntent = new Intent(
+				BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		activity.startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+	}
+	
 	/**
 	 * Constructor. Prepares a new BluetoothRemote session.
 	 * 
@@ -146,6 +168,38 @@ public class BtConnectionManager extends IIo {
 		if (D)
 			Log.d(TAG, "connect to: " + device);
 
+		// Cancel any thread attempting to make a connection
+		if (mState == STATE_CONNECTING) {
+			if (mConnectThread != null) {
+				mConnectThread.cancel();
+				mConnectThread = null;
+			}
+		}
+
+		// Cancel any thread currently running a connection
+		if (mConnectedThread != null) {
+			mConnectedThread.cancel();
+			mConnectedThread = null;
+		}
+
+		// Start the thread to connect with the given device
+		mConnectThread = new ConnectThread(device);
+		mConnectThread.start();
+		setState(STATE_CONNECTING);
+	}
+	
+	/**
+	 * Start the ConnectThread to initiate a connection to a remote device.
+	 * 
+	 * @param device address
+	 *            The BluetoothDevice to connect
+	 */
+	public synchronized void connect(String deviceAddr) {
+		if (D)
+			Log.d(TAG, "connect to: " + deviceAddr);
+
+		BluetoothDevice device =this.mAdapter.getRemoteDevice(deviceAddr);
+		
 		// Cancel any thread attempting to make a connection
 		if (mState == STATE_CONNECTING) {
 			if (mConnectThread != null) {

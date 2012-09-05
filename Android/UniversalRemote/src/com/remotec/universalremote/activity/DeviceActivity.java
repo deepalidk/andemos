@@ -99,19 +99,19 @@ public class DeviceActivity extends Activity {
 
 	private List<DeviceButton> mDevButtonList = null;
 	private TextView mTitleRight = null;
-	
-	//mark disconnect when on resume.
-	private boolean mDisconnectTag=true;
-	
+
+	// mark disconnect when on resume.
+	private boolean mDisconnectTag = true;
+
 	/**
 	 * Ir API object
 	 */
 	private IrApi mIrController;
 
-	private float mScale=1;
+	private float mScale = 1;
 	private MenuItem mMenuConnect;
 	private MenuItem mMenuAbout;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -123,22 +123,20 @@ public class DeviceActivity extends Activity {
 
 		// for null pointer bug, move the find right title text before bt init.
 		mTitleRight = (TextView) findViewById(R.id.title_right_text);
-		
+
 		RemoteUi.init();
-		
-		if(RemoteUi.getHandle().getBluetoothAdapter()==null)
-		// Get local Bluetooth adapter
-			RemoteUi.getHandle().setBluetoothAdapter(BluetoothAdapter.getDefaultAdapter());
+
 		// If the adapter is null, then Bluetooth is not supported
 		if (!RemoteUi.getEmulatorTag()) {
-			if (RemoteUi.getHandle().getBluetoothAdapter() == null) {
+			if (!RemoteUi.getHandle().getBtConnectionManager()
+					.isAdapterAvailable()) {
 				Toast.makeText(this, "Bluetooth is not available",
 						Toast.LENGTH_LONG).show();
 				finish();
 				return;
 			}
 		}
-        
+
 		// Initializing data.
 		InitAppTask initor = new InitAppTask();
 		initor.execute(0);
@@ -168,40 +166,42 @@ public class DeviceActivity extends Activity {
 
 		mMenuConnect = (MenuItem) menu.findItem(R.id.menu_connect);
 		mMenuAbout = (MenuItem) menu.findItem(R.id.menu_about);
-		
+
 		setupMenu();
-		
+
 		return true;
 	}
-	
-	/*setup menu text and enablebility*/
-	public void setupMenu(){
+
+	/* setup menu text and enablebility */
+	public void setupMenu() {
 		// Initialize the BluetoothRemoteService to perform bluetooth
 		// connections
-		if(mMenuConnect!=null){
-			if(RemoteUi.getHandle()!=null&&RemoteUi.getHandle().getBtConnectionManager()!=null){
-	          
-				int connectState=RemoteUi.getHandle().getBtConnectionManager().getState();
-				
-				switch(connectState){
-					case BtConnectionManager.STATE_CONNECTED:
-						mMenuConnect.setTitle(R.string.menu_disconnect);
-						mMenuConnect.setEnabled(true);
-						mMenuAbout.setEnabled(true);
-						break;
-					case BtConnectionManager.STATE_CONNECTING:
-						mMenuConnect.setTitle(R.string.menu_disconnect);
-						mMenuConnect.setEnabled(false);
-						mMenuAbout.setEnabled(false);					
-				        break;
-					case BtConnectionManager.STATE_NONE:
-						mMenuConnect.setTitle(R.string.menu_connect);
-						mMenuConnect.setEnabled(true);
-						mMenuAbout.setEnabled(true);	
-						break;
+		if (mMenuConnect != null) {
+			if (RemoteUi.getHandle() != null
+					&& RemoteUi.getHandle().getBtConnectionManager() != null) {
+
+				int connectState = RemoteUi.getHandle()
+						.getBtConnectionManager().getState();
+
+				switch (connectState) {
+				case BtConnectionManager.STATE_CONNECTED:
+					mMenuConnect.setTitle(R.string.menu_disconnect);
+					mMenuConnect.setEnabled(true);
+					mMenuAbout.setEnabled(true);
+					break;
+				case BtConnectionManager.STATE_CONNECTING:
+					mMenuConnect.setTitle(R.string.menu_disconnect);
+					mMenuConnect.setEnabled(false);
+					mMenuAbout.setEnabled(false);
+					break;
+				case BtConnectionManager.STATE_NONE:
+					mMenuConnect.setTitle(R.string.menu_connect);
+					mMenuConnect.setEnabled(true);
+					mMenuAbout.setEnabled(true);
+					break;
 				}
-	
-			}else{
+
+			} else {
 				mMenuConnect.setEnabled(false);
 				mMenuAbout.setEnabled(false);
 			}
@@ -218,16 +218,17 @@ public class DeviceActivity extends Activity {
 		 */
 		mIrController = IrApi.getHandle();
 
-//	    mScale= getResources().getDimension(R.dimen.scale);
+		// mScale= getResources().getDimension(R.dimen.scale);
 		DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-		float Scalex=(((float)dm.widthPixels)/600);	
-		float Scaley=(((float)dm.heightPixels)/1600);
-        
-		mScale=(Scalex<Scaley)?Scalex:Scaley;
-		
-		if(mScale>1)mScale=1;
-		
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		float Scalex = (((float) dm.widthPixels) / 600);
+		float Scaley = (((float) dm.heightPixels) / 1600);
+
+		mScale = (Scalex < Scaley) ? Scalex : Scaley;
+
+		if (mScale > 1)
+			mScale = 1;
+
 		// we already load the device object infos now,
 		// but the resId of icon can only access during run time.
 		// get the resId of icon with the icon name, and set to device object.
@@ -251,13 +252,13 @@ public class DeviceActivity extends Activity {
 
 		switch (item.getItemId()) {
 		case R.id.menu_connect:
-			if (RemoteUi.getHandle().getBtConnectionManager()!=null){
-				if(RemoteUi.getHandle().getBtConnectionManager().getState()==BtConnectionManager.STATE_NONE){
+			if (RemoteUi.getHandle().getBtConnectionManager() != null) {
+				if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
 					startConnectDialog();
-				}else{
+				} else {
 					// Stop the Bluetooth chat services
 					RemoteUi.getHandle().getBtConnectionManager().stop();
-					
+
 					RemoteUi.getHandle().setActiveExtender(null);
 					XmlManager xm = new XmlManager();
 					xm.saveData(RemoteUi.getHandle(),
@@ -284,10 +285,10 @@ public class DeviceActivity extends Activity {
 	 */
 	private boolean checkConnectionState() {
 
-		if(RemoteUi.getEmulatorTag()){
+		if (RemoteUi.getEmulatorTag()) {
 			return true;
 		}
-		
+
 		if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
 			/* build a dialog, ask if want to connect an extender */
 			AlertDialog.Builder builder = new Builder(this);
@@ -322,14 +323,14 @@ public class DeviceActivity extends Activity {
 			builder.create().show();
 
 			return false;
-		}else if(RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_CONNECTING){
-			 Toast.makeText(DeviceActivity.this,
-			 String.format(getString(R.string.connecting_wait),
-			 RemoteUi.getHandle().getChildren().size()),
-			 Toast.LENGTH_SHORT).show();
-			 return false;
+		} else if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_CONNECTING) {
+			Toast.makeText(
+					DeviceActivity.this,
+					String.format(getString(R.string.connecting_wait), RemoteUi
+							.getHandle().getChildren().size()),
+					Toast.LENGTH_SHORT).show();
+			return false;
 		}
-			
 
 		return true;
 	}
@@ -341,7 +342,7 @@ public class DeviceActivity extends Activity {
 		// Launch the DeviceListActivity to see devices and do scan
 		Intent serverIntent = new Intent(DeviceActivity.this,
 				BtDeviceListActivity.class);
-		mDisconnectTag=false;
+		mDisconnectTag = false;
 		startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 	}
 
@@ -349,16 +350,14 @@ public class DeviceActivity extends Activity {
 	 * Display system info.
 	 */
 	private void displayAboutDialog() {
-	
+
 		/*
-		 * crate a intent object, then call the device activity
-		 * class
+		 * crate a intent object, then call the device activity class
 		 */
 		Intent devKeyIntent = new Intent(DeviceActivity.this,
-				AboutActivity.class);		
-		mDisconnectTag=false;
+				AboutActivity.class);
+		mDisconnectTag = false;
 		startActivity(devKeyIntent);
-		
 
 	}
 
@@ -368,7 +367,6 @@ public class DeviceActivity extends Activity {
 		if (D)
 			Log.e(TAG, "++ ON START ++");
 
-		
 	}
 
 	@Override
@@ -381,51 +379,50 @@ public class DeviceActivity extends Activity {
 		// not enabled during onStart(), so we were paused to enable it...
 		// onResume() will be called when ACTION_REQUEST_ENABLE activity
 		// returns.
-	
-       mDisconnectTag=true;
-		
+
+		mDisconnectTag = true;
+
 		if (!RemoteUi.getEmulatorTag()) {
 			// If BT is not on, request that it be enabled.
 			// setupChat() will then be called during onActivityResult
-			if (!RemoteUi.getHandle().getBluetoothAdapter().isEnabled()) {
-				Intent enableIntent = new Intent(
-						BluetoothAdapter.ACTION_REQUEST_ENABLE);
-				mDisconnectTag=false;
-				startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+			if (!RemoteUi.getHandle().getBtConnectionManager()
+					.isAdapterEnabled()) {
+				mDisconnectTag = false;
+				RemoteUi.getHandle().getBtConnectionManager()
+						.makeAdapterEnabled(this);
 				// Otherwise, setup the chat session
 			} else {
-					setupBluetooth();
-					if(RemoteUi.getHandle().getActiveExtender()!=null){
-						mTitleRight.setText(R.string.title_connected_to);
-						mTitleRight.append(RemoteUi.getHandle().getActiveExtender().getName());	
-					}else{
-						mTitleRight.setText(R.string.title_not_connected);
-					}
-					
-					setupMenu();
-			}
-			
-			//connect last active device
-			if (RemoteUi.getHandle().getBtConnectionManager() != null) {
+				setupBluetooth();
+				if (RemoteUi.getHandle().getActiveExtender() != null) {
+					mTitleRight.setText(R.string.title_connected_to);
+					mTitleRight.append(RemoteUi.getHandle().getActiveExtender()
+							.getName());
+				} else {
+					mTitleRight.setText(R.string.title_not_connected);
+				}
 
-				// Only if the state is STATE_NONE, do we know that we haven't
-				// started already
-				if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
-					// Start the Bluetooth chat services
-					RemoteUi.getHandle().getBtConnectionManager().start();
-					
-					if(RemoteUi.getHandle().getLastActiveExtender()!=null){
-						String deviceAddr=RemoteUi.getHandle().getLastActiveExtender().getAddress();
-					
-						BluetoothDevice device = RemoteUi.getHandle().getBluetoothAdapter()
-						.getRemoteDevice(deviceAddr);
-						// Attempt to connect to the device
-						RemoteUi.getHandle().getBtConnectionManager().connect(device);
-					}
+				setupMenu();
+			}
+ 
+			RemoteUi.getHandle().getBtConnectionManager()
+					.setHandler(this.mHandler);
+			// Only if the state is STATE_NONE, do we know that we haven't
+			// started already
+			if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
+				// Start the Bluetooth chat services
+				RemoteUi.getHandle().getBtConnectionManager().start();
+
+				if (RemoteUi.getHandle().getLastActiveExtender() != null) {
+					String deviceAddr = RemoteUi.getHandle()
+							.getLastActiveExtender().getAddress();
+
+					// Attempt to connect to the device
+					RemoteUi.getHandle().getBtConnectionManager()
+							.connect(deviceAddr);
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -434,16 +431,15 @@ public class DeviceActivity extends Activity {
 
 		if (D)
 			Log.e(TAG, "- ON PAUSE -");
-		
+
 		// Stop the Bluetooth chat services
 		if (RemoteUi.getHandle().getBtConnectionManager() != null
-				&& RemoteUi.getHandle().getBtConnectionManager().getState()!=BtConnectionManager.STATE_CONNECTING
-				&& mDisconnectTag==true)
-		{
+				&& RemoteUi.getHandle().getBtConnectionManager().getState() != BtConnectionManager.STATE_CONNECTING
+				&& mDisconnectTag == true) {
 			RemoteUi.getHandle().getBtConnectionManager().stop();
 		}
-		
-		mDisconnectTag=true;
+
+		mDisconnectTag = true;
 	}
 
 	@Override
@@ -451,9 +447,8 @@ public class DeviceActivity extends Activity {
 		super.onStop();
 		if (D)
 			Log.e(TAG, "-- ON STOP --");
-		
+
 	}
-	
 
 	@Override
 	public void onDestroy() {
@@ -492,7 +487,7 @@ public class DeviceActivity extends Activity {
 	 * displays the devices on the screen.
 	 */
 	private void displayDevices() {
- 
+
 		if (RemoteUi.getHandle().getChildren().size() > 0) {
 			List<Device> devList = RemoteUi.getHandle().getChildren();
 
@@ -543,8 +538,8 @@ public class DeviceActivity extends Activity {
 	private void setDevButtonIcon(DeviceButton devButton, int resId) {
 		Drawable topD = this.getResources().getDrawable(resId);
 		if (topD != null) {
-			topD.setBounds(0, 0,(int)(topD.getMinimumWidth()*mScale),
-					(int)(topD.getMinimumHeight()*mScale));
+			topD.setBounds(0, 0, (int) (topD.getMinimumWidth() * mScale),
+					(int) (topD.getMinimumHeight() * mScale));
 			devButton.setCompoundDrawables(null, topD, null, null);
 		}
 	}
@@ -555,8 +550,8 @@ public class DeviceActivity extends Activity {
 		public void onClick(View v) {
 			DeviceButton devButton = (DeviceButton) v;
 
-			mDisconnectTag=false;
-			
+			mDisconnectTag = false;
+
 			// check if an extender is connected, if not, then start an connect
 			// activity.
 			if (checkConnectionState()) {
@@ -572,7 +567,7 @@ public class DeviceActivity extends Activity {
 					devKeyIntent.putExtra(DeviceKeyActivity.ACTIVITY_MODE,
 							DeviceKeyActivity.ACTIVITY_CONTROL);
 					RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
-					
+
 					startActivity(devKeyIntent);
 				} else {
 
@@ -653,11 +648,8 @@ public class DeviceActivity extends Activity {
 				// Get the device MAC address
 				String address = data.getExtras().getString(
 						BtDeviceListActivity.EXTRA_DEVICE_ADDRESS);
-				// Get the BLuetoothDevice object
-				BluetoothDevice device = RemoteUi.getHandle().getBluetoothAdapter()
-						.getRemoteDevice(address);
 				// Attempt to connect to the device
-				RemoteUi.getHandle().getBtConnectionManager().connect(device);
+				RemoteUi.getHandle().getBtConnectionManager().connect(address);
 			}
 			break;
 		case REQUEST_ENABLE_BT:
@@ -679,15 +671,10 @@ public class DeviceActivity extends Activity {
 	private void setupBluetooth() {
 		Log.d(TAG, "setupBluetooth()");
 
-		// Initialize the BluetoothRemoteService to perform bluetooth
-		// connections
-		if(RemoteUi.getHandle().getBtConnectionManager()==null){
-		  RemoteUi.getHandle().setBtConnectionManager(new BtConnectionManager(mHandler));
-		}else{
-		  RemoteUi.getHandle().getBtConnectionManager().setHandler(mHandler);
-		}
+		RemoteUi.getHandle().getBtConnectionManager().setHandler(mHandler);
 
 	}
+
 	/*
 	 * displays the remove confirm dialog.
 	 */
@@ -757,7 +744,7 @@ public class DeviceActivity extends Activity {
 							Intent addDeviceIntent = new Intent(
 									DeviceActivity.this,
 									EditDeviceActivity.class);
-							mDisconnectTag=false;
+							mDisconnectTag = false;
 							startActivityForResult(addDeviceIntent,
 									REQUEST_ADD_DEVICE);
 						} else { // remove device
@@ -775,16 +762,19 @@ public class DeviceActivity extends Activity {
 	/*
 	 * init the brand list used to add device.
 	 */
-	void loadCategoryAndBrand(BrandListType type){
-	 
-		//we already load brand list when startup.
-		//Now we check the needed type and current type to determine whether reload
-		//brand list.
-		//if the the require type is the same as the current type we do nothing.
-		BrandListType curBrandType=RemoteUi.getHandle().getBrandListType();
-		
-		if(curBrandType==type)return;	
-		
+	void loadCategoryAndBrand(BrandListType type) {
+
+		// we already load brand list when startup.
+		// Now we check the needed type and current type to determine whether
+		// reload
+		// brand list.
+		// if the the require type is the same as the current type we do
+		// nothing.
+		BrandListType curBrandType = RemoteUi.getHandle().getBrandListType();
+
+		if (curBrandType == type)
+			return;
+
 		/*
 		 * loads ircode information to memory for adding device.
 		 */
@@ -792,12 +782,11 @@ public class DeviceActivity extends Activity {
 		dbm.loadDevCategory();
 		dbm.loadIrBrand(type);
 		/*
-		 * if a category has no device under it, we will not display it to
-		 * user.
+		 * if a category has no device under it, we will not display it to user.
 		 */
 		RemoteUi.getHandle().clearEmptyCategory();
 	}
-	
+
 	// The Handler that gets information back from the BluetoothRemoteService
 	private final Handler mHandler = new Handler() {
 		@Override
@@ -807,11 +796,13 @@ public class DeviceActivity extends Activity {
 				switch (msg.arg1) {
 				case BtConnectionManager.STATE_CONNECTED: {
 
-					String version = mIrController.init(RemoteUi.getHandle().getBtConnectionManager());
+					String version = mIrController.init(RemoteUi.getHandle()
+							.getBtConnectionManager());
 
 					if (version != null) {
 						// set the version info to the extender.
-						Extender actExtender=RemoteUi.getHandle().getActiveExtender();
+						Extender actExtender = RemoteUi.getHandle()
+								.getActiveExtender();
 						actExtender.setVersion(version);
 
 						mTitleRight.setText(R.string.title_connected_to);
@@ -821,18 +812,19 @@ public class DeviceActivity extends Activity {
 						xm.saveData(RemoteUi.getHandle(),
 								RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
 										+ RemoteUi.UI_XML_FILE);
-						
-						
-                        //if the extender support Uird lib we load uird brand list.
-						//only when the extender not support uird and support buildIn. we load build in.
-						if(actExtender.getSupportUirdLib()){
+
+						// if the extender support Uird lib we load uird brand
+						// list.
+						// only when the extender not support uird and support
+						// buildIn. we load build in.
+						if (actExtender.getSupportUirdLib()) {
 							loadCategoryAndBrand(BrandListType.UIRD);
-						}else if((!actExtender.getSupportUirdLib()) 
-								&& actExtender.getSupportInternalLib()){
+						} else if ((!actExtender.getSupportUirdLib())
+								&& actExtender.getSupportInternalLib()) {
 							loadCategoryAndBrand(BrandListType.BuildIn);
 						}
 
-					}else{
+					} else {
 						mTitleRight.setText(R.string.title_not_connected);
 					}
 
@@ -845,9 +837,9 @@ public class DeviceActivity extends Activity {
 					mTitleRight.setText(R.string.title_not_connected);
 					break;
 				}
-				
+
 				setupMenu();
-				
+
 				break;
 			case MESSAGE_DEVICE_ADDRESS:
 				// save the connected device's name
@@ -860,7 +852,7 @@ public class DeviceActivity extends Activity {
 					activeExtender = RemoteUi.getHandle().getExtenderMap()
 							.get(devAddr);
 					RemoteUi.getHandle().setActiveExtender(activeExtender);
-					
+
 				} else {
 					activeExtender = new Extender();
 					activeExtender.setAddress(devAddr);
@@ -890,8 +882,7 @@ public class DeviceActivity extends Activity {
 	/*
 	 * finds all key Buttons
 	 */
-	private void findKeyButtons(ViewGroup vg,
-			Map<Integer, KeyButton> bMap) {
+	private void findKeyButtons(ViewGroup vg, Map<Integer, KeyButton> bMap) {
 
 		for (int i = 0; i < vg.getChildCount(); i++) {
 			View v = vg.getChildAt(i);
@@ -906,7 +897,7 @@ public class DeviceActivity extends Activity {
 			}
 		}
 	}
-	
+
 	/*
 	 * AsyncTask for App Initializing.
 	 */
@@ -916,105 +907,110 @@ public class DeviceActivity extends Activity {
 		/*
 		 * compare the db version of remote.db and remote_temp.db.
 		 * 
-		 * use the latest db and copy the device info to latest db. 
-		 * cover current db file with the latest one.
+		 * use the latest db and copy the device info to latest db. cover
+		 * current db file with the latest one.
 		 */
-		private void doDbUpdate()
-		{
-			
-			//file current db file;
-	        File dbFileCur = new File(RemoteUi.INTERNAL_DATA_DIRECTORY+ "/" +RemoteUi.UI_DB_FILE); 	
+		private void doDbUpdate() {
+
+			// file current db file;
+			File dbFileCur = new File(RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
+					+ RemoteUi.UI_DB_FILE);
 			// copys the codelist db file to sdcard.
 			FileManager.saveZipAs(DeviceActivity.this, R.raw.codelib,
-					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_DB_FILE);      
-	        //open current db
-	        SQLiteDatabase databaseCur = SQLiteDatabase.openOrCreateDatabase( 
-	        		dbFileCur, null); 
-	        String curDbVer=DbManager.getConfig(databaseCur, "global", "db_version", "");
-	        databaseCur.close();
+					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_DB_FILE);
+			// open current db
+			SQLiteDatabase databaseCur = SQLiteDatabase.openOrCreateDatabase(
+					dbFileCur, null);
+			String curDbVer = DbManager.getConfig(databaseCur, "global",
+					"db_version", "");
+			databaseCur.close();
 
-	        String version=
-	        	DeviceActivity.this.getResources().getString(R.string.db_version);
-	        
-	        //compare and cover
-	        if(!curDbVer.equals(version))
-	        {
-	        	// copys the codelist db file to sdcard.
+			String version = DeviceActivity.this.getResources().getString(
+					R.string.db_version);
+
+			// compare and cover
+			if (!curDbVer.equals(version)) {
+				// copys the codelist db file to sdcard.
 				FileManager.saveZipAs(DeviceActivity.this, R.raw.codelib,
-						RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_DB_FILE_TEMP); 
-		        File dbFileTemp=new File(RemoteUi.INTERNAL_DATA_DIRECTORY+ "/" +RemoteUi.UI_DB_FILE_TEMP);
-	        	dbFileCur.delete();
-	        	dbFileTemp.renameTo(dbFileCur);
-	        }
-	        
-	        return; 
+						RemoteUi.INTERNAL_DATA_DIRECTORY,
+						RemoteUi.UI_DB_FILE_TEMP);
+				File dbFileTemp = new File(RemoteUi.INTERNAL_DATA_DIRECTORY
+						+ "/" + RemoteUi.UI_DB_FILE_TEMP);
+				dbFileCur.delete();
+				dbFileTemp.renameTo(dbFileCur);
+			}
+
+			return;
 		}
-		
+
 		@Override
 		protected Integer doInBackground(Integer... params) {
 
-			try{
-			// if the data is already init , we jump out this method.
-			// if(RemoteUi.getHandle()!=null) return 0;
+			try {
+				// if the data is already init , we jump out this method.
+				// if(RemoteUi.getHandle()!=null) return 0;
 
-			// copys the UI XML file to sdcard.
-			FileManager.saveAs(DeviceActivity.this, R.raw.remote,
-					RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_XML_FILE);
+				// copys the UI XML file to sdcard.
+				FileManager.saveAs(DeviceActivity.this, R.raw.remote,
+						RemoteUi.INTERNAL_DATA_DIRECTORY, RemoteUi.UI_XML_FILE);
 
-			doDbUpdate();
-			
-			/*
-			 * loads the UI component information.
-			 */
-			XmlManager xm = new XmlManager();
-			xm.loadData(RemoteUi.getHandle(), RemoteUi.INTERNAL_DATA_DIRECTORY
-					+ "/" + RemoteUi.UI_XML_FILE);
+				doDbUpdate();
 
-			
-			/*
-			 * loads ircode information to memory for adding device.
-			 */
-			boolean load_uird_brand=DeviceActivity.this.getResources().getBoolean(R.bool.load_uird_brand);
-			loadCategoryAndBrand(load_uird_brand?BrandListType.UIRD:BrandListType.BuildIn);
+				/*
+				 * loads the UI component information.
+				 */
+				XmlManager xm = new XmlManager();
+				xm.loadData(RemoteUi.getHandle(),
+						RemoteUi.INTERNAL_DATA_DIRECTORY + "/"
+								+ RemoteUi.UI_XML_FILE);
 
-			initData();
+				/*
+				 * loads ircode information to memory for adding device.
+				 */
+				boolean load_uird_brand = DeviceActivity.this.getResources()
+						.getBoolean(R.bool.load_uird_brand);
+				loadCategoryAndBrand(load_uird_brand ? BrandListType.UIRD
+						: BrandListType.BuildIn);
 
-			/*
-			 * finds all key Buttons and create a keyLayout template.
-			 */
-			LayoutInflater inflater = (LayoutInflater) DeviceActivity.this
-					.getSystemService(LAYOUT_INFLATER_SERVICE);
-			
-			Looper.prepare(); 
+				initData();
 
-			View vgKey = inflater.inflate(R.layout.devicekey, null);
-			
-			/*
-			 * finds all key Buttons
-			 */
-			Map<Integer, KeyButton> keyBtnMap = new Hashtable<Integer, KeyButton>();
+				/*
+				 * finds all key Buttons and create a keyLayout template.
+				 */
+				LayoutInflater inflater = (LayoutInflater) DeviceActivity.this
+						.getSystemService(LAYOUT_INFLATER_SERVICE);
 
-			ViewGroup vgKeyLayout = (ViewGroup) vgKey
-					.findViewById(R.id.id_key_layout);
+				Looper.prepare();
 
-			findKeyButtons(vgKeyLayout, keyBtnMap);
+				View vgKey = inflater.inflate(R.layout.devicekey, null);
 
-			/*
-			 * save key button informations to the template map.
-			 */
-			Map<Integer, Key> map = RemoteUi.getHandle().getTemplateKeyMap();
+				/*
+				 * finds all key Buttons
+				 */
+				Map<Integer, KeyButton> keyBtnMap = new Hashtable<Integer, KeyButton>();
 
-			Integer invalidKeyId = DeviceActivity.this.getResources()
-					.getInteger(R.integer.key_id_invalid);
- 
-			for (KeyButton keyBtn : keyBtnMap.values()) {
-				Key temp = new Key();
-				temp.setKeyId(keyBtn.getKeyId());
-				temp.setText(keyBtn.getText().toString());
-				temp.setVisible(keyBtn.getVisibility() == View.VISIBLE);
-				map.put(temp.getKeyId(), temp);
-			}
-			}catch(Exception ex){
+				ViewGroup vgKeyLayout = (ViewGroup) vgKey
+						.findViewById(R.id.id_key_layout);
+
+				findKeyButtons(vgKeyLayout, keyBtnMap);
+
+				/*
+				 * save key button informations to the template map.
+				 */
+				Map<Integer, Key> map = RemoteUi.getHandle()
+						.getTemplateKeyMap();
+
+				Integer invalidKeyId = DeviceActivity.this.getResources()
+						.getInteger(R.integer.key_id_invalid);
+
+				for (KeyButton keyBtn : keyBtnMap.values()) {
+					Key temp = new Key();
+					temp.setKeyId(keyBtn.getKeyId());
+					temp.setText(keyBtn.getText().toString());
+					temp.setVisible(keyBtn.getVisibility() == View.VISIBLE);
+					map.put(temp.getKeyId(), temp);
+				}
+			} catch (Exception ex) {
 				Log.e(TAG, ex.getMessage());
 			}
 
@@ -1035,8 +1031,8 @@ public class DeviceActivity extends Activity {
 		protected void onPostExecute(Integer result) {
 
 			displayDevices();
-			
-			//connect last active device
+
+			// connect last active device
 			if (RemoteUi.getHandle().getBtConnectionManager() != null) {
 
 				// Only if the state is STATE_NONE, do we know that we haven't
@@ -1044,18 +1040,17 @@ public class DeviceActivity extends Activity {
 				if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
 					// Start the Bluetooth chat services
 					RemoteUi.getHandle().getBtConnectionManager().start();
-					
-					if(RemoteUi.getHandle().getLastActiveExtender()!=null){
-						String deviceAddr=RemoteUi.getHandle().getLastActiveExtender().getAddress();
-					
-						BluetoothDevice device = RemoteUi.getHandle().getBluetoothAdapter()
-						.getRemoteDevice(deviceAddr);
+
+					if (RemoteUi.getHandle().getLastActiveExtender() != null) {
+						String deviceAddr = RemoteUi.getHandle()
+								.getLastActiveExtender().getAddress();
 						// Attempt to connect to the device
-						RemoteUi.getHandle().getBtConnectionManager().connect(device);
+						RemoteUi.getHandle().getBtConnectionManager()
+								.connect(deviceAddr);
 					}
 				}
 			}
-			
+
 			DeviceActivity.this.removeDialog(DeviceActivity.PROGRESS_DIALOG);
 		}
 	}
