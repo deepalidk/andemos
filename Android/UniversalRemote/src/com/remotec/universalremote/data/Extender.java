@@ -79,7 +79,11 @@ public class Extender {
        }
        
        private void setCapability(String ver){
-    	   if(ver.equals("0009")){
+    	   if(ver.equals("0001")){
+    		   mSupportInternalLib=false;
+    		   mSupportLearning=true;
+    		   mSupportUirdLib=true;
+    	   }else if(ver.equals("0009")){
     		   mSupportInternalLib=true;
     		   mSupportLearning=false;
     		   mSupportUirdLib=false;

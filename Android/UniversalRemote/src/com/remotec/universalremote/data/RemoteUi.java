@@ -15,6 +15,7 @@ import java.util.Map;
 import android.bluetooth.BluetoothAdapter;
 
 import com.remotec.universalremote.irapi.BtConnectionManager;
+import com.remotec.universalremote.irapi.IConnectionManager;
 
 /*
  * Holds the data needed to run the UI.
@@ -221,10 +222,10 @@ public class RemoteUi {
        }
           
 	   // Member object for the BT services
-	   private BtConnectionManager mBtConnectMgr = null;
+	   private IConnectionManager mConnectMgr = null;
 	   
-	   public BtConnectionManager getBtConnectionManager(){
-		   return mBtConnectMgr;
+	   public IConnectionManager getConnectionManager(){
+		   return mConnectMgr;
 	   }
 	       
        private RemoteUi()
@@ -235,7 +236,7 @@ public class RemoteUi {
     	   mIrBrandMap=new Hashtable<String,List<String>>();
     	   mTemplateKeyMap=new Hashtable<Integer,Key>();
     	   
-    	   mBtConnectMgr=new BtConnectionManager(null);
+    	   mConnectMgr=new BtConnectionManager(null);
        }
        
        /*

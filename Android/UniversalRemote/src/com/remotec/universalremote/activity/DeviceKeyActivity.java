@@ -176,7 +176,7 @@ public class DeviceKeyActivity extends Activity {
 
 		// If the adapter is null, then Bluetooth is not supported
 		if (!RemoteUi.getEmulatorTag()) {
-			if (!RemoteUi.getHandle().getBtConnectionManager()
+			if (!RemoteUi.getHandle().getConnectionManager()
 					.isAdapterAvailable()) {
 				Toast.makeText(this, "Bluetooth is not available",
 						Toast.LENGTH_LONG).show();
@@ -206,30 +206,30 @@ public class DeviceKeyActivity extends Activity {
 		if (!RemoteUi.getEmulatorTag()) {
 			// If BT is not on, request that it be enabled.
 			// setupChat() will then be called during onActivityResult
-			if (!RemoteUi.getHandle().getBtConnectionManager()
+			if (!RemoteUi.getHandle().getConnectionManager()
 					.isAdapterEnabled()) {
 				mDisconnectTag = false;
-				RemoteUi.getHandle().getBtConnectionManager()
+				RemoteUi.getHandle().getConnectionManager()
 						.makeAdapterEnabled(this);
 				// Otherwise, setup the chat session
 			} else {
 				setupBluetooth();
 			}
 
-			RemoteUi.getHandle().getBtConnectionManager()
+			RemoteUi.getHandle().getConnectionManager()
 					.setHandler(this.mHandler);
 			// Only if the state is STATE_NONE, do we know that we haven't
 			// started already
-			if (RemoteUi.getHandle().getBtConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
+			if (RemoteUi.getHandle().getConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
 				// Start the Bluetooth chat services
-				RemoteUi.getHandle().getBtConnectionManager().start();
+				RemoteUi.getHandle().getConnectionManager().start();
 
 				if (RemoteUi.getHandle().getLastActiveExtender() != null) {
 					String deviceAddr = RemoteUi.getHandle()
 							.getLastActiveExtender().getAddress();
 
 					// Attempt to connect to the device
-					RemoteUi.getHandle().getBtConnectionManager()
+					RemoteUi.getHandle().getConnectionManager()
 							.connect(deviceAddr);
 				}
 			}
@@ -241,7 +241,7 @@ public class DeviceKeyActivity extends Activity {
 
 		// Initialize the BluetoothRemoteService to perform bluetooth
 		// connection
-		RemoteUi.getHandle().getBtConnectionManager().setHandler(mHandler);
+		RemoteUi.getHandle().getConnectionManager().setHandler(mHandler);
 
 	}
 
@@ -252,9 +252,9 @@ public class DeviceKeyActivity extends Activity {
 			Log.e(TAG, "++ ON Stop ++");
 
 		// Stop the Bluetooth chat services
-		if (RemoteUi.getHandle().getBtConnectionManager() != null
+		if (RemoteUi.getHandle().getConnectionManager() != null
 				&& mDisconnectTag == true) {
-			RemoteUi.getHandle().getBtConnectionManager().stop();
+			RemoteUi.getHandle().getConnectionManager().stop();
 		}
 
 		mDisconnectTag = true;
