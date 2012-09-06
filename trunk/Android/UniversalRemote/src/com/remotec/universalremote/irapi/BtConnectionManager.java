@@ -19,6 +19,8 @@ package com.remotec.universalremote.irapi;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +29,7 @@ import java.util.UUID;
 import com.remotec.universalremote.activity.DeviceActivity;
 import com.remotec.universalremote.data.RemoteUi;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -45,7 +48,7 @@ import android.util.Log;
  * connections, a thread for connecting with a device, and a thread for
  * performing data transmissions when connected.
  */
-public class BtConnectionManager extends IIo {
+public class BtConnectionManager extends IIo implements IConnectionManager {
 	// Debugging
 	private static final String TAG = "BtConnectionManager";
 	private static final boolean D = false;
@@ -57,47 +60,40 @@ public class BtConnectionManager extends IIo {
 	// .fromString("00001101-0000-1000-8000-0800f9b34fb");
 	private static final UUID MY_UUID = UUID
 			.fromString("00001101-0000-1000-8000-00805F9B34FB");
+	private static final UUID CUSTOM_UUID = UUID
+			.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
 	// Member fields
 	private final BluetoothAdapter mAdapter;
 	private Handler mHandler;
-	
+
 	// private AcceptThread mAcceptThread;
 	private ConnectThread mConnectThread;
 	private ConnectedThread mConnectedThread;
 	private int mState;
 
-	// Constants that indicate the current connection state
-	public static final int STATE_NONE = 0; // we're doing nothing
-	// public static final int STATE_LISTEN = 1; // now listening for incoming
-	// connections
-	public static final int STATE_CONNECTING = 2; // now initiating an outgoing
-													// connection
-	public static final int STATE_CONNECTED = 3; // now connected to a remote
-	
 	private static final int REQUEST_ENABLE_BT = 3;
-		
-	public void setHandler(Handler handler){
-		mHandler=handler;
+
+	public void setHandler(Handler handler) {
+		mHandler = handler;
 	}
-	
-	//Check if BT Adapter is Available;
-	public boolean isAdapterAvailable(){
-		return mAdapter!=null;
+
+	// Check if BT Adapter is Available;
+	public boolean isAdapterAvailable() {
+		return mAdapter != null;
 	}
-	
-	//Check if BT Adapter is Enable;
-	public boolean isAdapterEnabled(){
+
+	// Check if BT Adapter is Enable;
+	public boolean isAdapterEnabled() {
 		return mAdapter.isEnabled();
 	}
-	
-	//pup up dialog for use to make the adapter enable.
-	public void makeAdapterEnabled(Activity activity){
-		Intent enableIntent = new Intent(
-				BluetoothAdapter.ACTION_REQUEST_ENABLE);
+
+	// pup up dialog for use to make the adapter enable.
+	public void makeAdapterEnabled(Activity activity) {
+		Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 		activity.startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
 	}
-	
+
 	/**
 	 * Constructor. Prepares a new BluetoothRemote session.
 	 * 
@@ -154,7 +150,7 @@ public class BtConnectionManager extends IIo {
 			mConnectedThread.cancel();
 			mConnectedThread = null;
 		}
-		
+
 		setState(STATE_NONE);
 	}
 
@@ -187,19 +183,19 @@ public class BtConnectionManager extends IIo {
 		mConnectThread.start();
 		setState(STATE_CONNECTING);
 	}
-	
+
 	/**
 	 * Start the ConnectThread to initiate a connection to a remote device.
 	 * 
-	 * @param device address
-	 *            The BluetoothDevice to connect
+	 * @param device
+	 *            address The BluetoothDevice to connect
 	 */
 	public synchronized void connect(String deviceAddr) {
 		if (D)
 			Log.d(TAG, "connect to: " + deviceAddr);
 
-		BluetoothDevice device =this.mAdapter.getRemoteDevice(deviceAddr);
-		
+		BluetoothDevice device = this.mAdapter.getRemoteDevice(deviceAddr);
+
 		// Cancel any thread attempting to make a connection
 		if (mState == STATE_CONNECTING) {
 			if (mConnectThread != null) {
@@ -316,9 +312,9 @@ public class BtConnectionManager extends IIo {
 	 * Indicate that the connection attempt failed and notify the UI Activity.
 	 */
 	private void connectionFailed() {
-		if(D) 
-			Log.d(TAG,"connectionFailed");
-		
+		if (D)
+			Log.d(TAG, "connectionFailed");
+
 		setState(STATE_NONE);
 
 		// Send a failure message back to the Activity
@@ -333,8 +329,8 @@ public class BtConnectionManager extends IIo {
 	 * Indicate that the connection was lost and notify the UI Activity.
 	 */
 	private void connectionLost() {
-		if(D) 
-			Log.d(TAG,"connectionLost");
+		if (D)
+			Log.d(TAG, "connectionLost");
 		setState(STATE_NONE);
 
 		// Send a failure message back to the Activity
@@ -433,19 +429,42 @@ public class BtConnectionManager extends IIo {
 
 		public ConnectThread(BluetoothDevice device) {
 			mmDevice = device;
-             
+
 			createSocket();
 		}
-		
-		private void createSocket(){
+
+		private void createSocket() {
 			BluetoothSocket tmp = null;
 
 			// Get a BluetoothSocket for a connection with the
 			// given BluetoothDevice
 			try {
-				tmp = mmDevice.createRfcommSocketToServiceRecord(MY_UUID);
+//				 int iSdkVer = Integer.parseInt(android.os.Build.VERSION.SDK);
+//				
+//				 if (iSdkVer < 10) {
+//				 tmp = mmDevice.createRfcommSocketToServiceRecord(MY_UUID);
+//				 } else {
+//				 // tmp = mmDevice.createInsecureRfcommSocketToServiceRecord(MY_UUID);
+//				 Method m = mmDevice.getClass().getMethod(
+//				 "createInsecureRfcommSocketToServiceRecord",
+//				 new Class[] { UUID.class });
+//				 m.setAccessible(true);
+//				 tmp = (BluetoothSocket) m.invoke(mmDevice, MY_UUID);
+//				
+//				 }
+
+				tmp = InsecureBluetooth.createRfcommSocketToServiceRecord(
+						mmDevice, MY_UUID, false);
+
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} catch (IOException e) {
-				Log.e(TAG, "create() failed", e);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			mmSocket = tmp;
 		}
@@ -457,13 +476,13 @@ public class BtConnectionManager extends IIo {
 		 */
 		private boolean connect(BluetoothSocket socket, int times) {
 
-			boolean result=false;
+			boolean result = false;
 			// Make a connection to the BluetoothSocket
 			try {
 				// This is a blocking call and will only return on a
 				// successful connection or an exception
 				mmSocket.connect();
-				result=true; 
+				result = true;
 			} catch (IOException e) {
 				try {
 					mmSocket.close();
@@ -472,7 +491,7 @@ public class BtConnectionManager extends IIo {
 							"unable to close() socket during connection failure",
 							e2);
 				}
-				result= false;
+				result = false;
 			}
 
 			return result;
@@ -485,20 +504,20 @@ public class BtConnectionManager extends IIo {
 			// Always cancel discovery because it will slow down a connection
 			mAdapter.cancelDiscovery();
 
-			/*try to connect bt three times*/
-		   boolean connectResult=false;
-		   for(int i=0;i<1;i++){
-			   connectResult=connect(mmSocket,3);
-			   
-			   if(connectResult){
-				   break;
-			   }	
-			   
-			   /*recreate socket*/
-			   createSocket();
-		   }
-			
-			if(!connectResult){
+			/* try to connect bt three times */
+			boolean connectResult = false;
+			for (int i = 0; i < 1; i++) {
+				connectResult = connect(mmSocket, 3);
+
+				if (connectResult) {
+					break;
+				}
+
+				/* recreate socket */
+				createSocket();
+			}
+
+			if (!connectResult) {
 				connectionFailed();
 				// Start the service over to restart listening mode
 				BtConnectionManager.this.start();
