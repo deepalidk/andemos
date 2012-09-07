@@ -13,9 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 
 import com.remotec.universalremote.irapi.BtConnectionManager;
 import com.remotec.universalremote.irapi.IConnectionManager;
+import com.remotec.universalremote.irapi.WifiConnectionManager;
 
 /*
  * Holds the data needed to run the UI.
@@ -65,8 +67,8 @@ public class RemoteUi {
     	   return sRemoteUi;
        }
        
-       public static void init(){
-            sRemoteUi=new RemoteUi();     
+       public static void init(Context context){
+            sRemoteUi=new RemoteUi(context);     
        }
        
        /*
@@ -83,7 +85,19 @@ public class RemoteUi {
        {
     	   return EMULATOR_TAG;
        }
-             
+       
+       public static boolean IS_BT_MODE=false;
+       
+       /*
+        * Gets current extender mode.
+        *  True: BT mode.
+        * False: Wifi mode.
+        */
+       public static boolean isBtMode()
+       {
+    	   return IS_BT_MODE;
+       }
+       
        private String mVersion;
        
        public String getVersion(){
@@ -121,8 +135,7 @@ public class RemoteUi {
 			
 			return result;
        }
-       
-       
+         
        /*
         * active extender object for run time use.
         */
@@ -228,7 +241,7 @@ public class RemoteUi {
 		   return mConnectMgr;
 	   }
 	       
-       private RemoteUi()
+       private RemoteUi(Context context)
        {
     	   mChildren=new ArrayList<Device>();
     	   mExtenderMap=new Hashtable<String,Extender>();
@@ -236,7 +249,11 @@ public class RemoteUi {
     	   mIrBrandMap=new Hashtable<String,List<String>>();
     	   mTemplateKeyMap=new Hashtable<Integer,Key>();
     	   
-    	   mConnectMgr=new BtConnectionManager(null);
+    	   if(IS_BT_MODE){
+    		   mConnectMgr=new BtConnectionManager(null);
+    	   }else{
+    	       mConnectMgr=new WifiConnectionManager(null,context);
+    	   }
        }
        
        /*

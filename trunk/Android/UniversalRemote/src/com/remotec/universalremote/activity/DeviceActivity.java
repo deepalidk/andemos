@@ -125,7 +125,7 @@ public class DeviceActivity extends Activity {
 		// for null pointer bug, move the find right title text before bt init.
 		mTitleRight = (TextView) findViewById(R.id.title_right_text);
 
-		RemoteUi.init();
+		RemoteUi.init(this);
 
 		// If the adapter is null, then Bluetooth is not supported
 		if (!RemoteUi.getEmulatorTag()) {
