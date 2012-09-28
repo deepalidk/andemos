@@ -98,7 +98,7 @@ public class RemoteUi {
         */
        public static int communicationMode()
        {
-    	   return SERIAL_MODE;
+    	   return BT_MODE;
        }
        
        private String mVersion;
