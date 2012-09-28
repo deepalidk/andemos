@@ -43,6 +43,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android_serialport_api.SerialPortFinder;
 
 /**
  * This Activity appears as a dialog. It lists any paired devices and devices
@@ -66,7 +67,8 @@ public class BtDeviceListActivity extends Activity {
 	private int mThreadCount;
 
 	private static final int MESSAGE_WIFI_ADDRESS = 1;
-
+	private static final int MESSAGE_SERIALPORT_ADDRESS = 2;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -104,15 +106,17 @@ public class BtDeviceListActivity extends Activity {
 		newDevicesListView.setAdapter(mNewDevicesArrayAdapter);
 		newDevicesListView.setOnItemClickListener(mDeviceClickListener);
 
-		if (RemoteUi.isBtMode()) {
+		if (RemoteUi.communicationMode()==RemoteUi.BT_MODE) {
 			SetupBtDiscover();
-		} else {
+		} else if (RemoteUi.communicationMode()==RemoteUi.WIFI_MODE){
 			setProgressBarIndeterminateVisibility(true);
             scanButton.setVisibility(View.GONE);
             newDevicesListView.setVisibility(View.GONE);
             findViewById(R.id.title_paired_devices).setVisibility(View.GONE);
             findViewById(R.id.title_new_devices).setVisibility(View.GONE);
 			discoverWifiDevice();
+		}else{
+			discoverSerialDevice();
 		}
 	}
 
@@ -149,7 +153,7 @@ public class BtDeviceListActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 
-		if(RemoteUi.IS_BT_MODE){
+		if(RemoteUi.communicationMode()==RemoteUi.BT_MODE){
 			// Make sure we're not doing discovery anymore
 			if (mBtAdapter != null) {
 				mBtAdapter.cancelDiscovery();
@@ -188,7 +192,7 @@ public class BtDeviceListActivity extends Activity {
 	// The on-click listener for all devices in the ListViews
 	private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
-			if (RemoteUi.isBtMode()) {
+			if (RemoteUi.communicationMode()==RemoteUi.BT_MODE) {
 				// Cancel discovery because it's costly and we're about to
 				// connect
 				mBtAdapter.cancelDiscovery();
@@ -314,6 +318,7 @@ public class BtDeviceListActivity extends Activity {
 		}
 
 	}
+	
 
 	//check if an device ip has an extender listening services.
 	public class DiscoverWifiDeviceThread extends Thread {
@@ -336,6 +341,18 @@ public class BtDeviceListActivity extends Activity {
 			} catch (Exception e) {
 				System.out.println(mIpAddress + " is not an Extender");
 			}
+		}
+
+	}
+	
+	// discover the device in local net work.
+	private void discoverSerialDevice() {
+		// get local area net ip address
+        SerialPortFinder serialPortFinder=new SerialPortFinder();
+
+		for (String path:serialPortFinder.getAllDevicesPath()) {
+			
+			mPairedDevicesArrayAdapter.add("Remotec Extender" + "\n" + path);
 		}
 
 	}
