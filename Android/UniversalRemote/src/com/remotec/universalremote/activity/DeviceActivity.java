@@ -1033,21 +1033,23 @@ public class DeviceActivity extends Activity {
 
 			displayDevices();
 
-			// connect last active device
-			if (RemoteUi.getHandle().getConnectionManager() != null) {
-
-				// Only if the state is STATE_NONE, do we know that we haven't
-				// started already
-				if (RemoteUi.getHandle().getConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
-					// Start the Bluetooth chat services
-					RemoteUi.getHandle().getConnectionManager().start();
-
-					if (RemoteUi.getHandle().getLastActiveExtender() != null) {
-						String deviceAddr = RemoteUi.getHandle()
-								.getLastActiveExtender().getAddress();
-						// Attempt to connect to the device
-						RemoteUi.getHandle().getConnectionManager()
-								.connect(deviceAddr);
+			if(!RemoteUi.getEmulatorTag()){
+				// connect last active device
+				if (RemoteUi.getHandle().getConnectionManager() != null) {
+	
+					// Only if the state is STATE_NONE, do we know that we haven't
+					// started already
+					if (RemoteUi.getHandle().getConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
+						// Start the Bluetooth chat services
+						RemoteUi.getHandle().getConnectionManager().start();
+	
+						if (RemoteUi.getHandle().getLastActiveExtender() != null) {
+							String deviceAddr = RemoteUi.getHandle()
+									.getLastActiveExtender().getAddress();
+							// Attempt to connect to the device
+							RemoteUi.getHandle().getConnectionManager()
+									.connect(deviceAddr);
+						}
 					}
 				}
 			}

@@ -17,6 +17,7 @@ import android.content.Context;
 
 import com.remotec.universalremote.irapi.BtConnectionManager;
 import com.remotec.universalremote.irapi.IConnectionManager;
+import com.remotec.universalremote.irapi.SerialPortConnectionManager;
 import com.remotec.universalremote.irapi.WifiConnectionManager;
 
 /*
@@ -86,16 +87,18 @@ public class RemoteUi {
     	   return EMULATOR_TAG;
        }
        
-       public static boolean IS_BT_MODE=false;
+       public static final int BT_MODE=0;
+       public static final int WIFI_MODE=1;
+       public static final int SERIAL_MODE=2;
        
        /*
         * Gets current extender mode.
         *  True: BT mode.
         * False: Wifi mode.
         */
-       public static boolean isBtMode()
+       public static int communicationMode()
        {
-    	   return IS_BT_MODE;
+    	   return SERIAL_MODE;
        }
        
        private String mVersion;
@@ -249,10 +252,18 @@ public class RemoteUi {
     	   mIrBrandMap=new Hashtable<String,List<String>>();
     	   mTemplateKeyMap=new Hashtable<Integer,Key>();
     	   
-    	   if(IS_BT_MODE){
+    	   switch(communicationMode()){
+    	   case BT_MODE:
     		   mConnectMgr=new BtConnectionManager(null);
-    	   }else{
-    	       mConnectMgr=new WifiConnectionManager(null,context);
+    		   break;
+    		   
+    	   case WIFI_MODE:
+    		   mConnectMgr=new WifiConnectionManager(null,context);
+    		   break;
+    		   
+    	   case SERIAL_MODE:
+    		   mConnectMgr=new SerialPortConnectionManager(null);
+    		   break;
     	   }
        }
        

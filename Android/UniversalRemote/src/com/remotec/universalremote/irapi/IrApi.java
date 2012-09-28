@@ -175,7 +175,7 @@ public class IrApi implements IOnRead {
 
 		return (byte) EFrameStatus.ErrorGeneral.getValue();
 	}
-
+ 
 	/***** IR API *******************/
 
 	/**
