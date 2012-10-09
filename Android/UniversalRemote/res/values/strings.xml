@@ -15,7 +15,7 @@
     <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Remote.</string>
     
     <string name="hello">Hello World, UniversalRemoteActivity!</string>
-    <string name="app_name">Smart URC(WiFi)</string>
+    <string name="app_name">Smart URC</string>
     <string name="initial_waiting">Please wait...</string>
     <string name="add_device">Add Device</string>
     <string name="edit_device">Edit Device</string>
