@@ -34,7 +34,7 @@
     <dimen name="dev_title_height">48dp</dimen>
 
     <!-- Device Key BottomBar height -->
-    <dimen name="devkey_bottombar_height">87dp</dimen>
+    <dimen name="devkey_bottombar_height">80dp</dimen>
     <!-- Device Key  BottomBar height -->
     <dimen name="devkey_bottombar_btn_width">133dp</dimen>
     <!-- Key Botton padding left -->
@@ -57,15 +57,15 @@
     <dimen name="key_btn_margin_bottom">0dp</dimen>
 
     <!-- Key Botton width -->
-    <dimen name="key_btn_width">150dp</dimen>
+    <dimen name="key_btn_width">120dp</dimen>
     <!-- Key Botton height -->
-    <dimen name="key_btn_height">75dp</dimen>
+    <dimen name="key_btn_height">60dp</dimen>
     
     <!-- Key Botton height -->
-    <dimen name="key_3_height">90dp</dimen>
+    <dimen name="key_3_height">72dp</dimen>
     
     <!-- Key Botton height -->
-    <dimen name="key_br_height">97.5dp</dimen>
+    <dimen name="key_br_height">78dp</dimen>
     
     <!-- horizontal padding of disable key  -->
     <dimen name="disable_key_padding_h">3.0dp</dimen>
@@ -101,6 +101,6 @@
     
     <!-- Select Icon dialog -->
     <dimen name="gridview_columnwith">75dp</dimen>
-    <dimen name="gridview_verticalspacing">3dp</dimen>
-    <dimen name="gridview_horizontalspacing">3dp</dimen>
+    <dimen name="gridview_verticalspacing">2dp</dimen>
+    <dimen name="gridview_horizontalspacing">2dp</dimen>
 </resources>
