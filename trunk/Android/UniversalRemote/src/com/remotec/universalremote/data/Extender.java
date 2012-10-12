@@ -103,6 +103,12 @@ public class Extender {
     		   mSupportInternalLib=false;
     		   mSupportLearning=true;
     		   mSupportUirdLib=true;
+    	   }else{
+    		   
+    		   mSupportInternalLib=false;
+    		   mSupportLearning=true;
+    		   mSupportUirdLib=true;
+    		   
     	   }  
        }
          
