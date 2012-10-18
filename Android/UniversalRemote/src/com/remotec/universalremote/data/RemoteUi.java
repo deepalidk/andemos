@@ -75,7 +75,7 @@ public class RemoteUi {
        /*
         * Marks current running state.
         */
-       private static final boolean EMULATOR_TAG = false;
+       private static final boolean EMULATOR_TAG = true;
        
        /*
         * Gets the current running state.
@@ -100,6 +100,7 @@ public class RemoteUi {
        {
     	   return BT_MODE;
        }
+       
        
        private String mVersion;
        

@@ -21,12 +21,6 @@ public class Device implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private List<Key> mChildren;
-
-	public List<Key> getChildren() {
-		return mChildren;
-	}
-
 	/*
 	 * dev name
 	 */
@@ -110,6 +104,10 @@ public class Device implements Serializable {
 		mDevTypeId = devTypeId;
 	}
 	
+	public List<Key> getChildren(){
+		return null;
+	}
+	
 	/*
 	 * the ir code num
 	 */
@@ -125,13 +123,13 @@ public class Device implements Serializable {
 	
 	
 	public Device() {
-		mChildren = new ArrayList<Key>();
+
 
 	}
 	
 	public static  Device createDevice(Context context)
 	{
-		Device newDev=new Device();
+		Device newDev=new AvDevice();
 		newDev.mIconName =context.getResources().getString(R.string.dev_icon);
 		newDev.mName=context.getResources().getString(R.string.dev_name);
 		newDev.mDevType=context.getResources().getString(R.string.dev_category);
@@ -142,3 +140,6 @@ public class Device implements Serializable {
 		return newDev;
 	}
 }
+
+
+

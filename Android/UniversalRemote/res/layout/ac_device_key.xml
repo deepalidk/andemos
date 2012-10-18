@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:remotec="http://schemas.android.com/apk/res/com.remotec.universalremote.activity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- Device title Bar -->
+
+    <RelativeLayout
+        android:id="@id/devicekey_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dev_title_height"
+        android:layout_weight="0"
+        android:background="@drawable/title"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@id/devicekey_title_left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/app_name"
+            android:textAppearance="@style/DeviceLeftTitleText" />
+
+        <TextView
+            android:id="@id/title_right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/title_not_connected"
+            android:textAppearance="@style/DeviceRightTitleText" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/id_key_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
+        android:background="@drawable/bg" >
+
+        <!-- key layout -->
+
+        <RelativeLayout
+            android:id="@+id/id_key_layout1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" >
+
+                <RelativeLayout
+                    android:id="@+id/id_panel"
+                    android:layout_width="@dimen/spiner_width"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="#336633" >
+
+                    <TextView
+                        android:id="@+id/textview_temp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="25℃"
+                        android:textAppearance="@style/TempText" />
+                    <ImageView
+                        android:id="@+id/imageview_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/image_margin"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/cool" />
+                    <TextView
+                        android:id="@+id/textview_fanmode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/textview_temp"
+                        android:text="Auto"
+                        android:textAppearance="@style/TempText" />
+                </RelativeLayout>
+
+                <TableLayout
+                    android:id="@+id/id_key_control_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/id_panel"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="visible" >
+
+                    <TableRow>
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_btn_height"
+                            android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:layout_marginTop="@dimen/key_btn_margin_top"
+                            android:background="@drawable/btn_key_1"
+                            android:text="Fan"
+                            android:textAppearance="@style/KeyButtonText"
+                            android:textColor="@drawable/button_font_color"
+                            remotec:is_icon_btn="false"
+                            remotec:key_id="0x08" />
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_btn_height"
+                            android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:layout_marginTop="@dimen/key_btn_margin_top"
+                            android:background="@drawable/btn_key_pwr"
+                            remotec:is_icon_btn="true"
+                            remotec:key_id="0x01" />
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_btn_height"
+                            android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:layout_marginTop="@dimen/key_btn_margin_top"
+                            android:background="@drawable/btn_key_1"
+                            android:text="Mode"
+                            android:textAppearance="@style/KeyButtonText"
+                            android:textColor="@drawable/button_font_color"
+                            remotec:is_icon_btn="false"
+                            remotec:key_id="0x03" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_btn_height"
+                            android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:layout_marginTop="@dimen/key_btn_margin_top"
+                            android:background="@drawable/btn_key1_decrease"
+                            remotec:is_icon_btn="true"
+                            remotec:key_id="0x0e" />
+
+                        <TextView
+                            android:id="@id/key_id_vol"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Temp."
+                            android:textAppearance="@style/KeyButtonText" />
+
+                        <com.remotec.universalremote.activity.component.KeyButton
+                            android:layout_width="@dimen/key_btn_width"
+                            android:layout_height="@dimen/key_btn_height"
+                            android:layout_marginBottom="@dimen/key_btn_margin_bottom"
+                            android:layout_marginLeft="@dimen/key_btn_margin_left"
+                            android:layout_marginRight="@dimen/key_btn_margin_right"
+                            android:layout_marginTop="@dimen/key_btn_margin_top"
+                            android:background="@drawable/btn_key1_increase"
+                            remotec:is_icon_btn="true"
+                            remotec:key_id="0x0d" />
+                    </TableRow>
+                </TableLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>
