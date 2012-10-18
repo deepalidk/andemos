@@ -25,6 +25,12 @@
         <item name="android:textColor">@drawable/button_font_color</item>
         <item name="android:singleLine">true</item>
     </style>
+     <style name="TempText">
+        <item name="android:textSize">@dimen/dev_title_txt_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@drawable/button_font_color</item>
+        <item name="android:singleLine">true</item>
+    </style>
     <style name="KeyButtonNoText">
         <item name="android:textSize">0sp</item>
         <item name="android:textColor">@color/transparent</item>

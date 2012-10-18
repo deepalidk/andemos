@@ -564,9 +564,9 @@ public class DeviceActivity extends Activity {
 					 * class
 					 */
 					Intent devKeyIntent = new Intent(DeviceActivity.this,
-							DeviceKeyActivity.class);
-					devKeyIntent.putExtra(DeviceKeyActivity.ACTIVITY_MODE,
-							DeviceKeyActivity.ACTIVITY_CONTROL);
+							AvDeviceKeyActivity.class);
+					devKeyIntent.putExtra(AvDeviceKeyActivity.ACTIVITY_MODE,
+							AvDeviceKeyActivity.ACTIVITY_CONTROL);
 					RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
 
 					startActivity(devKeyIntent);
@@ -983,7 +983,7 @@ public class DeviceActivity extends Activity {
 
 				Looper.prepare();
 
-				View vgKey = inflater.inflate(R.layout.devicekey, null);
+				View vgKey = inflater.inflate(R.layout.av_device_key, null);
 
 				/*
 				 * finds all key Buttons

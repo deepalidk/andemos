@@ -67,10 +67,10 @@ import com.remotec.universalremote.persistence.XmlManager;
 /*
  *Displays device key for UI. 
  */
-public class DeviceKeyActivity extends Activity {
+public class AvDeviceKeyActivity extends Activity {
 
 	// Debugging Tags
-	private static final String TAG = "DeviceKeyActivity";
+	private static final String TAG = "AvDeviceKeyActivity";
 	private static final boolean D = false;
 
 	public static final String TOAST = "toast";
@@ -158,7 +158,7 @@ public class DeviceKeyActivity extends Activity {
 
 		// remove the tile.
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.devicekey);
+		setContentView(R.layout.av_device_key);
 
 		mActivityMode = getIntent()
 				.getIntExtra(ACTIVITY_MODE, ACTIVITY_CONTROL);
@@ -278,7 +278,7 @@ public class DeviceKeyActivity extends Activity {
 					break;
 				case BtConnectionManager.STATE_NONE:
 					mTitleRight.setText(R.string.title_not_connected);
-					DeviceKeyActivity.this.finish();
+					AvDeviceKeyActivity.this.finish();
 					break;
 				}
 				break;
@@ -413,7 +413,7 @@ public class DeviceKeyActivity extends Activity {
 			/*
 			 * change the btn state, and so the background will change.
 			 */
-			for (Button btn : DeviceKeyActivity.this.mBottomBarButtonList) {
+			for (Button btn : AvDeviceKeyActivity.this.mBottomBarButtonList) {
 				btn.setEnabled(true);
 			}
 
@@ -501,7 +501,7 @@ public class DeviceKeyActivity extends Activity {
 		/*
 		 * change the btn state, and so the background will change.
 		 */
-		for (Button btn : DeviceKeyActivity.this.mBottomBarButtonList) {
+		for (Button btn : AvDeviceKeyActivity.this.mBottomBarButtonList) {
 			btn.setEnabled(true);
 		}
 
@@ -1124,8 +1124,8 @@ public class DeviceKeyActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			DeviceKeyActivity.this
-					.showDialog(DeviceKeyActivity.PROGRESS_DIALOG);
+			AvDeviceKeyActivity.this
+					.showDialog(AvDeviceKeyActivity.PROGRESS_DIALOG);
 		}
 
 		@Override
@@ -1136,8 +1136,8 @@ public class DeviceKeyActivity extends Activity {
 		@Override
 		protected void onPostExecute(Integer result) {
 			displayKeys();
-			DeviceKeyActivity.this
-					.removeDialog(DeviceKeyActivity.PROGRESS_DIALOG);
+			AvDeviceKeyActivity.this
+					.removeDialog(AvDeviceKeyActivity.PROGRESS_DIALOG);
 
 		}
 	}

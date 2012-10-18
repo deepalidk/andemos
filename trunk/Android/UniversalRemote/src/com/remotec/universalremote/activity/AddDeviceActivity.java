@@ -782,11 +782,19 @@ public class AddDeviceActivity extends Activity {
 
 		/* crate a intent object, then call the device activity class */
 		Intent devKeyIntent = new Intent(AddDeviceActivity.this,
-				DeviceKeyActivity.class);
-		devKeyIntent.putExtra(DeviceKeyActivity.ACTIVITY_MODE,
-				DeviceKeyActivity.ACTIVITY_CONTROL);
+				AcDeviceKeyActivity.class);
+		devKeyIntent.putExtra(AcDeviceKeyActivity.ACTIVITY_MODE,
+				AcDeviceKeyActivity.ACTIVITY_CONTROL);
 		RemoteUi.getHandle().setActiveDevice(mDevice);
 		startActivity(devKeyIntent);
+		
+//		/* crate a intent object, then call the device activity class */
+//		Intent devKeyIntent = new Intent(AddDeviceActivity.this,
+//				AvDeviceKeyActivity.class);
+//		devKeyIntent.putExtra(AvDeviceKeyActivity.ACTIVITY_MODE,
+//				AvDeviceKeyActivity.ACTIVITY_CONTROL);
+//		RemoteUi.getHandle().setActiveDevice(mDevice);
+//		startActivity(devKeyIntent);
 	}
 
 }
