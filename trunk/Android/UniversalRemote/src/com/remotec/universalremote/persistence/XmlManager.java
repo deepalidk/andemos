@@ -9,6 +9,8 @@ package com.remotec.universalremote.persistence;
 
 import android.util.Xml;
 
+import com.remotec.universalremote.data.AcDevice;
+import com.remotec.universalremote.data.AvDevice;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
 import com.remotec.universalremote.data.Key;
@@ -145,10 +147,13 @@ public class XmlManager {
 					Extender ext = new Extender();
 					loadData(ext, e);
 					uiData.getExtenderMap().put(ext.getAddress(), ext);
-				} else if (e.getNodeName().equals("Device")) {
-					Device dev = new Device();
-					loadData(dev, e);
-					uiData.getChildren().add(dev);
+				} else if (e.getNodeName().equals("Device")) {			
+					String categoryId=e.getAttribute("category_id");
+					if(categoryId!=null&&Integer.parseInt(categoryId)==9){//ac
+						Device dev = Device.createDevice(Integer.parseInt(categoryId));
+						loadData(dev, e);
+						uiData.getChildren().add(dev);
+					}
 				}
 
 			}
@@ -228,7 +233,11 @@ public class XmlManager {
 		List<Device> devList = uiData.getChildren();
 
 		for (Device dev : devList) {
-			saveData(dev, serializer);
+			if(dev instanceof AvDevice){
+			 saveData((AvDevice)dev, serializer);
+			}else{
+			 saveData((AcDevice)dev,serializer);
+			}
 		}
 
 		serializer.endTag("", "RemoteUi");
@@ -250,7 +259,7 @@ public class XmlManager {
 	/*
 	 * Saves data to an xml element.
 	 */
-	private void saveData(Device dev, XmlSerializer serializer)
+	private void saveData(AvDevice dev, XmlSerializer serializer)
 			throws IllegalArgumentException, IllegalStateException, IOException {
 		serializer.startTag("", "Device");
 		serializer.attribute("", "name", dev.getName());
@@ -265,6 +274,23 @@ public class XmlManager {
 		for (Key key : children) {
 			saveData(key, serializer);
 		}
+
+		serializer.endTag("", "Device");
+	}
+	
+	/*
+	 * Saves data to an xml element.
+	 */
+	private void saveData(AcDevice dev, XmlSerializer serializer)
+			throws IllegalArgumentException, IllegalStateException, IOException {
+		serializer.startTag("", "Device");
+		serializer.attribute("", "name", dev.getName());
+		serializer.attribute("", "icon_name", dev.getIconName());
+		serializer.attribute("", "manufacturer", dev.getManufacturer());
+		serializer.attribute("", "category", dev.getDeviceType());
+		serializer.attribute("", "category_id", "" + dev.getDeviceTypeId());
+		serializer.attribute("", "ircode", "" + dev.getIrCode());
+
 
 		serializer.endTag("", "Device");
 	}

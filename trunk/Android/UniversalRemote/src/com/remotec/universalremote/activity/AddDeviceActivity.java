@@ -17,6 +17,8 @@ import com.remotec.universalremote.activity.R.layout;
 import com.remotec.universalremote.activity.component.DeviceButton;
 import com.remotec.universalremote.activity.component.KeyButton;
 import com.remotec.universalremote.activity.component.RtArrayAdapter;
+import com.remotec.universalremote.data.AcDevice;
+import com.remotec.universalremote.data.AvDevice;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
 import com.remotec.universalremote.data.Key;
@@ -109,6 +111,10 @@ public class AddDeviceActivity extends Activity {
 	private eCurrentPage mCurPage;
 
 	private Device mDevice;
+	
+	private AvDevice mAvDevice;
+	
+	private AcDevice mAcDevice;
 
 	private AlertDialog mCancelDialog;
 
@@ -132,7 +138,7 @@ public class AddDeviceActivity extends Activity {
 
 		mTimer = new Timer();
 
-		mDevice = Device.createDevice(this);
+		mDevice = Device.createDevice(this,1); //TV
 
 		mDeviceEditTag = true;
 
@@ -215,6 +221,12 @@ public class AddDeviceActivity extends Activity {
 		 * set the device type id.
 		 */
 		setDeviceTypeId(dbm);
+		
+		if(mDevice.getDeviceTypeId()==9){//ac
+			this.mBtnAutoSearch.setVisibility(View.GONE);
+		}else{
+			this.mBtnAutoSearch.setVisibility(View.VISIBLE);
+		}
 
 	}
 
@@ -289,6 +301,9 @@ public class AddDeviceActivity extends Activity {
 		public void onItemSelected(AdapterView<?> parent, View view,
 				int position, long id) {
 			String s = mSpinerCategory.getSelectedItem().toString();
+			DbManager dbm = new DbManager();
+			int categoryId=dbm.getDevTypeIdByName(s);
+			mDevice = Device.createDevice(AddDeviceActivity.this,categoryId); //TV
 			loadManufacturer(s);
 		}
 
@@ -426,12 +441,16 @@ public class AddDeviceActivity extends Activity {
 	private boolean setDeviceKeys(Device dev, Map<Integer, Key> map) {
 
 		boolean result = false;
-		// UIRD version Extender.
-		if (RemoteUi.getHandle().getActiveExtender().getSupportUirdLib()) {
-			result = setDeviceKeysUird(dev, map);
-		} else {
-			result = setDeviceKeysInternal(dev, map);
-		}
+		if(dev.getDeviceTypeId()==9){ //ac
+			result=true;
+		}else{
+			// UIRD version Extender.
+			if (RemoteUi.getHandle().getActiveExtender().getSupportUirdLib()) {
+				result = setDeviceKeysUird(dev, map);
+			} else {
+				result = setDeviceKeysInternal(dev, map);
+			}
+	    }
 
 		return result;
 	}
@@ -780,21 +799,25 @@ public class AddDeviceActivity extends Activity {
 			}
 		}
 
-		/* crate a intent object, then call the device activity class */
-		Intent devKeyIntent = new Intent(AddDeviceActivity.this,
-				AcDeviceKeyActivity.class);
-		devKeyIntent.putExtra(AcDeviceKeyActivity.ACTIVITY_MODE,
-				AcDeviceKeyActivity.ACTIVITY_CONTROL);
-		RemoteUi.getHandle().setActiveDevice(mDevice);
-		startActivity(devKeyIntent);
+		if(mDevice.getDeviceTypeId()==9){
 		
-//		/* crate a intent object, then call the device activity class */
-//		Intent devKeyIntent = new Intent(AddDeviceActivity.this,
-//				AvDeviceKeyActivity.class);
-//		devKeyIntent.putExtra(AvDeviceKeyActivity.ACTIVITY_MODE,
-//				AvDeviceKeyActivity.ACTIVITY_CONTROL);
-//		RemoteUi.getHandle().setActiveDevice(mDevice);
-//		startActivity(devKeyIntent);
+			/* crate a intent object, then call the device activity class */
+			Intent devKeyIntent = new Intent(AddDeviceActivity.this,
+					AcDeviceKeyActivity.class);
+			devKeyIntent.putExtra(AcDeviceKeyActivity.ACTIVITY_MODE,
+					AcDeviceKeyActivity.ACTIVITY_CONTROL);
+			RemoteUi.getHandle().setActiveDevice(mDevice);
+			startActivity(devKeyIntent);
+		}else{
+		
+			/* crate a intent object, then call the device activity class */
+			Intent devKeyIntent = new Intent(AddDeviceActivity.this,
+					AvDeviceKeyActivity.class);
+			devKeyIntent.putExtra(AvDeviceKeyActivity.ACTIVITY_MODE,
+					AvDeviceKeyActivity.ACTIVITY_CONTROL);
+			RemoteUi.getHandle().setActiveDevice(mDevice);
+			startActivity(devKeyIntent);
+		}
 	}
 
 }

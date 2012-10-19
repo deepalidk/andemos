@@ -56,7 +56,7 @@ public class EmitTask extends android.os.AsyncTask<Integer, Integer, Integer> {
 				
 				Thread.sleep(150);
 				} catch (Exception e) {
-
+					e.printStackTrace();
 				}
 			}
 		}

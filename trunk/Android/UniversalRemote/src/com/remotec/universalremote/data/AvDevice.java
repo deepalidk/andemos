@@ -3,8 +3,11 @@
  */
 package com.remotec.universalremote.data;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.xmlpull.v1.XmlSerializer;
 
 import com.remotec.universalremote.data.Device;
 
@@ -13,7 +16,7 @@ import com.remotec.universalremote.data.Device;
  *
  */
 public class AvDevice extends Device {
-
+	
 	private List<Key> mChildren;
 
 	@Override public List<Key> getChildren() {
@@ -24,5 +27,6 @@ public class AvDevice extends Device {
 		
 		mChildren = new ArrayList<Key>();
 	}
+	
 	
 }

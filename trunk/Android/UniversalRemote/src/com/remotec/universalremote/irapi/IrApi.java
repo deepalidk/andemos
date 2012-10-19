@@ -749,6 +749,12 @@ public class IrApi implements IOnRead {
 		 * data buffer
 		 */
 		private byte[] mmPayloadBuffer;
+		
+		/*
+		 * buffer len
+		 */
+		private int mmPayloadLen;
+		
 		/**
 		 * the idx of current data buffer
 		 */
@@ -783,7 +789,8 @@ public class IrApi implements IOnRead {
 		}
 
 		public Frame(int len) {
-			mmPayloadBuffer = new byte[len];
+			mmPayloadBuffer = new byte[300];
+			mmPayloadLen=len;
 			mmPayloadIdx = 0;
 		}
 
@@ -793,14 +800,20 @@ public class IrApi implements IOnRead {
 		 * @return
 		 */
 		public byte[] getPayloadBuffer() {
-			return mmPayloadBuffer;
+			
+			byte[] result=new byte[mmPayloadIdx];
+			
+			System.arraycopy(mmPayloadBuffer, 0, result, 0,
+					mmPayloadIdx);
+			
+			return result;
 		}
 
 		/**
 		 * get frame is complete.
 		 */
 		public boolean isPayloadFull() {
-			return mmPayloadIdx == mmPayloadBuffer.length;
+			return mmPayloadIdx == mmPayloadLen;
 		}
 
 		/**
@@ -852,9 +865,9 @@ public class IrApi implements IOnRead {
 			byte result = 0;
 
 			result += mmCmdId;
-			result += mmPayloadBuffer.length + 2;
+			result += mmPayloadIdx + 2;
 
-			for (int i = 0; i < mmPayloadBuffer.length; i++) {
+			for (int i = 0; i < mmPayloadIdx; i++) {
 				result += mmPayloadBuffer[i];
 			}
 
@@ -867,12 +880,12 @@ public class IrApi implements IOnRead {
 		 * @return
 		 */
 		public byte[] getAckPacketBuffer() {
-			byte[] result = new byte[mmPayloadBuffer.length + 3];
+			byte[] result = new byte[mmPayloadIdx + 3];
 
 			result[0] = mmCmdId;
-			result[1] = (byte) (mmPayloadBuffer.length + 2);
+			result[1] = (byte) (mmPayloadIdx + 2);
 			System.arraycopy(mmPayloadBuffer, 0, result, 2,
-					mmPayloadBuffer.length);
+					mmPayloadIdx);
 			result[result.length - 1] = calcAckChecksum();
 
 			return result;
@@ -893,9 +906,9 @@ public class IrApi implements IOnRead {
 			result += header[1];
 
 			result += mmCmdId;
-			result += mmPayloadBuffer.length + 4;
+			result += mmPayloadIdx + 4;
 
-			for (int i = 0; i < mmPayloadBuffer.length; i++) {
+			for (int i = 0; i < mmPayloadIdx; i++) {
 				result += mmPayloadBuffer[i];
 			}
 
@@ -908,16 +921,16 @@ public class IrApi implements IOnRead {
 		 * @return
 		 */
 		public byte[] getPacketBuffer() {
-			byte[] result = new byte[mmPayloadBuffer.length + 5];
+			byte[] result = new byte[mmPayloadIdx + 5];
 
 			byte[] header = getHeader();
 			result[0] = header[0];
 			result[1] = header[1];
 
 			result[2] = mmCmdId;
-			result[3] = (byte) (mmPayloadBuffer.length + 4);
+			result[3] = (byte) (mmPayloadIdx + 4);
 			System.arraycopy(mmPayloadBuffer, 0, result, 4,
-					mmPayloadBuffer.length);
+					mmPayloadIdx);
 			result[result.length - 1] = calcChecksum();
 
 			return result;

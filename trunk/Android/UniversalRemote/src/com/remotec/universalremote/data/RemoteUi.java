@@ -75,7 +75,7 @@ public class RemoteUi {
        /*
         * Marks current running state.
         */
-       private static final boolean EMULATOR_TAG = true;
+       private static final boolean EMULATOR_TAG = false;
        
        /*
         * Gets the current running state.
