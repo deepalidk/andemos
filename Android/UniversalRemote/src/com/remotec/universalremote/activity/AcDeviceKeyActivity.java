@@ -57,12 +57,14 @@ import com.remotec.universalremote.activity.component.ViewFlipperEx;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
 import com.remotec.universalremote.data.Key;
+import com.remotec.universalremote.data.Uird;
 import com.remotec.universalremote.data.Key.Mode;
 import com.remotec.universalremote.data.RemoteUi.BrandListType;
 import com.remotec.universalremote.data.RemoteUi;
 import com.remotec.universalremote.irapi.BtConnectionManager;
 import com.remotec.universalremote.irapi.EmitTask;
 import com.remotec.universalremote.irapi.IrApi;
+import com.remotec.universalremote.persistence.DbManager;
 import com.remotec.universalremote.persistence.XmlManager;
 
 /*
@@ -89,16 +91,15 @@ public class AcDeviceKeyActivity extends Activity {
 	private Device mDevice;
 
 	private ProgressDialog mProgressDialog;
-	
+
 	private ImageView mModeImageview;
 	private TextView mTempTextview;
 	private TextView mFanTextview;
-	
+
 	/*
 	 * all key buttons in key layout
 	 */
 	private Map<Integer, KeyButton> mKeyButtonMap = null;
-
 
 	private int mActivityMode = ACTIVITY_CONTROL;
 
@@ -128,90 +129,90 @@ public class AcDeviceKeyActivity extends Activity {
 	private static final int SWIPE_MAX_OFF_PATH = 250;
 	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 	private static final int REQUEST_ENABLE_BT = 0;
-	
-	private String[] modes={"auto","cool","dry","fan","heat"};
-	private String[] fans={"auto","high","low"};
-	
-	private int temp=25;
-	private int mode=0;
-	private int fan=0;
-	private boolean power=false;
-	private ViewGroup mVgPanel=null;
-	
-	private void nextMode(){
-		
-		mode=(mode+1)%5;
+
+	private String[] modes = { "auto", "cool", "dry", "fan", "heat" };
+	private String[] fans = { "auto", "high", "low" };
+
+	private int temp = 25;
+	private int mode = 0;
+	private int fan = 0;
+	private boolean power = false;
+	private ViewGroup mVgPanel = null;
+
+	private void nextMode() {
+
+		mode = (mode + 1) % 5;
 	}
-	
-	private void nextFan(){
-		fan=(fan+1)%3;
+
+	private void nextFan() {
+		fan = (fan + 1) % 3;
 	}
-	
-	private void resetStatus(){
-		mode=1;
-		fan=0;
-		temp=25;
-		power=!power;
+
+	private void resetStatus() {
+		mode = 1;
+		fan = 0;
+		temp = 25;
+		power = !power;
 	}
-	
-	void displayPower(){
-		
-		if(power){
-			
+
+	void displayPower() {
+
+		if (power) {
+
 			mVgPanel.setBackgroundColor(Color.BLUE);
-			
-		}else{
-			
+
+		} else {
+
 			mVgPanel.setBackgroundColor(Color.LTGRAY);
-			
+
 		}
-		
+
 	}
-	
-	private void nextTemp(){
-		if(temp<31)temp++;
-		
+
+	private void nextTemp() {
+		if (temp < 31)
+			temp++;
+
 	}
-	
-	private void lastTemp(){
-		
-	   if(temp>17){
-		   
-		   temp--;
-	   }
+
+	private void lastTemp() {
+
+		if (temp > 17) {
+
+			temp--;
+		}
 	}
-	
-	private void display(){
-		
+
+	private void display() {
+
 		displayMode();
 		displayTemp();
 		displayFan();
 		displayPower();
-		
+
 	}
-	
-	private void displayTemp(){
-		
-		if(mTempTextview!=null){
-			mTempTextview.setText(String.format("%d¡æ",temp));
+
+	private void displayTemp() {
+
+		if (mTempTextview != null) {
+			mTempTextview.setText(String.format("%d¡æ", temp));
 		}
-		
+
 	}
-	
-	private void displayFan(){
-		
-		if(mFanTextview!=null){
-			mFanTextview.setText(fans[fan]);	
+
+	private void displayFan() {
+
+		if (mFanTextview != null) {
+			mFanTextview.setText(fans[fan]);
 		}
-		
+
 	}
-	
-	private void displayMode(){
-		
-		if(mModeImageview!=null)
-		{
-			switch(mode){
-			
+
+	private void displayMode() {
+
+		if (mModeImageview != null) {
+			switch (mode) {
+
 			case 0:
 				mModeImageview.setImageResource(R.drawable.auto);
 				break;
@@ -229,13 +230,8 @@ public class AcDeviceKeyActivity extends Activity {
 				break;
 			}
 		}
-		
-	}
-	
-	
-	
-	
 
+	}
 
 	/** Called when the activity is first created. */
 	@Override
@@ -245,10 +241,10 @@ public class AcDeviceKeyActivity extends Activity {
 		// remove the tile.
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.ac_device_key);
-//
-//		mActivityMode = getIntent()
-//				.getIntExtra(ACTIVITY_MODE, ACTIVITY_CONTROL);
-//
+		//
+		// mActivityMode = getIntent()
+		// .getIntExtra(ACTIVITY_MODE, ACTIVITY_CONTROL);
+		//
 		// for null pointer bug, move the find right title text before bt init.
 		mTitleRight = (TextView) findViewById(R.id.title_right_text);
 
@@ -272,37 +268,34 @@ public class AcDeviceKeyActivity extends Activity {
 		}
 
 		// Initializing data.
-//		InitAppTask initor = new InitAppTask();
-//		initor.execute(0);
-		
+		// InitAppTask initor = new InitAppTask();
+		// initor.execute(0);
+
 		initData();
 
 		display();
 
 	}
-	
 
-/*
- * finds all key Buttons
- */
-private void findKeyButtons(ViewGroup vg, Map<Integer, KeyButton> bMap) {
+	/*
+	 * finds all key Buttons
+	 */
+	private void findKeyButtons(ViewGroup vg, Map<Integer, KeyButton> bMap) {
 
-	for (int i = 0; i < vg.getChildCount(); i++) {
-		View v = vg.getChildAt(i);
+		for (int i = 0; i < vg.getChildCount(); i++) {
+			View v = vg.getChildAt(i);
 
-		if (v instanceof KeyButton) {
-			KeyButton btn = (KeyButton) v;
-			if (btn.getKeyId() != -1) {
-				bMap.put(btn.getKeyId(), btn);
-				v.setOnClickListener(mKeyOnClickListener);
-				v.setOnLongClickListener(mKeyButtonOnLongClickListener);
-				v.setOnTouchListener(mKeyButtonOnTouchListener);
+			if (v instanceof KeyButton) {
+				KeyButton btn = (KeyButton) v;
+				if (btn.getKeyId() != -1) {
+					bMap.put(btn.getKeyId(), btn);
+					v.setOnClickListener(mKeyOnClickListener);
+				}
+			} else if (v instanceof ViewGroup) {
+				findKeyButtons((ViewGroup) v, bMap);
 			}
-		} else if (v instanceof ViewGroup) {
-			findKeyButtons((ViewGroup) v, bMap);
 		}
 	}
-}
 
 	@Override
 	public void onResume() {
@@ -315,8 +308,7 @@ private void findKeyButtons(ViewGroup vg, Map<Integer, KeyButton> bMap) {
 		if (!RemoteUi.getEmulatorTag()) {
 			// If BT is not on, request that it be enabled.
 			// setupChat() will then be called during onActivityResult
-			if (!RemoteUi.getHandle().getConnectionManager()
-					.isAdapterEnabled()) {
+			if (!RemoteUi.getHandle().getConnectionManager().isAdapterEnabled()) {
 				mDisconnectTag = false;
 				RemoteUi.getHandle().getConnectionManager()
 						.makeAdapterEnabled(this);
@@ -437,23 +429,22 @@ private void findKeyButtons(ViewGroup vg, Map<Integer, KeyButton> bMap) {
 		 * global current active device store in RemoteUi.
 		 */
 		mDevice = RemoteUi.getHandle().getActiveDevice();
-		
-		mModeImageview=(ImageView)findViewById(R.id.imageview_mode);
-		mFanTextview=(TextView)findViewById(R.id.textview_fanmode);
-		mTempTextview=(TextView)findViewById(R.id.textview_temp);
-        mVgPanel=(ViewGroup)findViewById(R.id.id_panel);
-		
+
+		mModeImageview = (ImageView) findViewById(R.id.imageview_mode);
+		mFanTextview = (TextView) findViewById(R.id.textview_fanmode);
+		mTempTextview = (TextView) findViewById(R.id.textview_temp);
+		mVgPanel = (ViewGroup) findViewById(R.id.id_panel);
+
 		/*
 		 * finds all key Buttons
 		 */
 		mKeyButtonMap = new Hashtable<Integer, KeyButton>();
-		
+
 		ViewGroup vg = (ViewGroup) findViewById(R.id.id_key_layout);
 
 		findKeyButtons(vg, mKeyButtonMap);
-		
-	}
 
+	}
 
 	/*
 	 * Key click listener.
@@ -465,101 +456,41 @@ private void findKeyButtons(ViewGroup vg, Map<Integer, KeyButton> bMap) {
 
 			mCurActiveKey = (KeyButton) v;
 
-//			if (mActivityMode == ACTIVITY_EDIT) {
-//				showKeyEditMenu(mCurActiveKey);
-//			}
-		  int keyId=	mCurActiveKey.getKeyId();
-		  
-		  
-		  if(power!=false||keyId==0x01){  
-			  switch(keyId){
-			  
-			  case 0x08: //fan
-				  
-				  nextFan();
-				  
-				  break;
-			  case 0x01: //power
-				  
-				  resetStatus();
-				  break;
-			  case 0x03: //mode
-				  nextMode();
-				  break;
-			  case 0x0e: // temp down
-				  lastTemp();
-				  break;
-			  case 0x0d: //temp up
-				  
-				  nextTemp();
-				  
-				  break;
-			  
-			  }
-		  }
-		  display();
-			
-			
-		}
+			// if (mActivityMode == ACTIVITY_EDIT) {
+			// showKeyEditMenu(mCurActiveKey);
+			// }
+			int keyId = mCurActiveKey.getKeyId();
 
-	};
+			if (power != false || keyId == 0x01) {
+				switch (keyId) {
 
-	/*
-	 * key button long click
-	 */
-	private OnLongClickListener mKeyButtonOnLongClickListener = new OnLongClickListener() {
+				case 0x08: // fan
 
-		@Override
-		public boolean onLongClick(View v) {
+					nextFan();
 
-			mCurActiveKey = (KeyButton) v;
+					break;
+				case 0x01: // power
 
-			if (mActivityMode == ACTIVITY_CONTROL) {
-				if (!RemoteUi.getEmulatorTag()) {
-					mContinuousTag = true;
-					emitKeyIR(mCurActiveKey, (byte) 0x01);
+					resetStatus();
+					break;
+				case 0x03: // mode
+					nextMode();
+					break;
+				case 0x0e: // temp down
+					lastTemp();
+					break;
+				case 0x0d: // temp up
+
+					nextTemp();
+
+					break;
+
 				}
-
-				return true;
+				
+				emitKeyIR(mCurActiveKey,(byte)0x81);
 			}
+			display();
 
-			return false;
-		}
-
-	};
-
-
-	/*
-	 * key on touch listener
-	 */
-	private OnTouchListener mKeyButtonOnTouchListener = new OnTouchListener() {
-
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-
-			boolean result = v.onTouchEvent(event);
-
-			if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-				if (mActivityMode == ACTIVITY_CONTROL) {
-					if (!RemoteUi.getEmulatorTag()) {
-						mCurActiveKey = (KeyButton) v;
-						emitKeyIR(mCurActiveKey, (byte) 0x81);
-					}
-				}
-
-			} else if (event.getAction() == MotionEvent.ACTION_UP) {
-				if (mContinuousTag) {
-					if (mActivityMode == ACTIVITY_CONTROL) {
-						if (!RemoteUi.getEmulatorTag()) {
-							emitKeyIR(null, (byte) 0);
-							mContinuousTag = false;
-						}
-					}
-				}
-			}
-
-			return result;
 		}
 
 	};
@@ -567,7 +498,27 @@ private void findKeyButtons(ViewGroup vg, Map<Integer, KeyButton> bMap) {
 	private EditText mLabelEdit;
 	private float mLastMotionPosX;
 
+	private Key getCurKey(KeyButton keyBtn) {
 
+		DbManager dbm = new DbManager();
+		String powerStatus= power ? "ON" : "OFF";
+		String modeStatus = modes[mode];
+		String tempStatus = String.format("%d", temp);
+		String swingStatus = String.format("%s", "ON");
+		String fanStatus = fans[fan];
+
+		Uird uird = dbm.getUirdData(mDevice.getIrCode(), keyBtn.getKeyId(),
+				powerStatus, modeStatus, tempStatus, swingStatus, fanStatus);
+		Key result=null;
+		if(uird!=null){
+			
+			result=new Key();
+			result.setMode(Mode.UIRD);
+			result.setData(uird.getUirdData());
+		}
+      
+		return result;
+	}
 
 	/*
 	 * Emits key IR.
@@ -577,9 +528,12 @@ private void findKeyButtons(ViewGroup vg, Map<Integer, KeyButton> bMap) {
 	 */
 	private void emitKeyIR(KeyButton keyBtn, byte emitType) {
 
-		Key key = (keyBtn == null) ? null : (Key) keyBtn.getTag();
-		EmitTask task = new EmitTask(mDevice, key, emitType);
-		task.execute(0);
+		Key key = getCurKey(keyBtn);
+
+		if(key!=null){
+			EmitTask task = new EmitTask(mDevice, key, emitType);
+			task.execute(0);
+		}
 	}
 
 	/*

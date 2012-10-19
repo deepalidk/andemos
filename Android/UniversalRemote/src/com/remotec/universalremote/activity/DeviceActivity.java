@@ -559,14 +559,28 @@ public class DeviceActivity extends Activity {
 				// identifies add device button or device button
 				if (devButton.getDevice() != null) {
 
-					/*
-					 * crate a intent object, then call the device activity
-					 * class
-					 */
-					Intent devKeyIntent = new Intent(DeviceActivity.this,
-							AvDeviceKeyActivity.class);
-					devKeyIntent.putExtra(AvDeviceKeyActivity.ACTIVITY_MODE,
-							AvDeviceKeyActivity.ACTIVITY_CONTROL);
+					Intent devKeyIntent;
+					
+					if(devButton.getDevice().getDeviceTypeId()==9){
+						
+						/* crate a intent object, then call the device activity class */
+						devKeyIntent = new Intent(DeviceActivity.this,
+								AcDeviceKeyActivity.class);
+						devKeyIntent.putExtra(AcDeviceKeyActivity.ACTIVITY_MODE,
+								AcDeviceKeyActivity.ACTIVITY_CONTROL);
+						RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
+						startActivity(devKeyIntent);
+					}else{
+					
+						/* crate a intent object, then call the device activity class */
+						devKeyIntent = new Intent(DeviceActivity.this,
+								AvDeviceKeyActivity.class);
+						devKeyIntent.putExtra(AvDeviceKeyActivity.ACTIVITY_MODE,
+								AvDeviceKeyActivity.ACTIVITY_CONTROL);
+						RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
+						startActivity(devKeyIntent);
+					}
+					
 					RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
 
 					startActivity(devKeyIntent);
@@ -1013,6 +1027,7 @@ public class DeviceActivity extends Activity {
 				}
 			} catch (Exception ex) {
 				Log.e(TAG, ex.getMessage());
+				DeviceActivity.this.finish();
 			}
 
 			return 0;
