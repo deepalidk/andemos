@@ -41,7 +41,7 @@ public class Key implements Serializable {
 	/*
 	 * the key button text;
 	 */
-	private String mText;
+	private String mText="";
 	
 	public String getText(){
 		return mText;

@@ -568,8 +568,6 @@ public class DeviceActivity extends Activity {
 								AcDeviceKeyActivity.class);
 						devKeyIntent.putExtra(AcDeviceKeyActivity.ACTIVITY_MODE,
 								AcDeviceKeyActivity.ACTIVITY_CONTROL);
-						RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
-						startActivity(devKeyIntent);
 					}else{
 					
 						/* crate a intent object, then call the device activity class */
@@ -577,8 +575,6 @@ public class DeviceActivity extends Activity {
 								AvDeviceKeyActivity.class);
 						devKeyIntent.putExtra(AvDeviceKeyActivity.ACTIVITY_MODE,
 								AvDeviceKeyActivity.ACTIVITY_CONTROL);
-						RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
-						startActivity(devKeyIntent);
 					}
 					
 					RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
