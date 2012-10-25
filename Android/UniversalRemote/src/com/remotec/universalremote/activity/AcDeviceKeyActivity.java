@@ -54,6 +54,7 @@ import com.remotec.universalremote.activity.component.BottomBarButton;
 import com.remotec.universalremote.activity.component.DeviceButton;
 import com.remotec.universalremote.activity.component.KeyButton;
 import com.remotec.universalremote.activity.component.ViewFlipperEx;
+import com.remotec.universalremote.data.AcDevice;
 import com.remotec.universalremote.data.Device;
 import com.remotec.universalremote.data.Extender;
 import com.remotec.universalremote.data.Key;
@@ -88,13 +89,14 @@ public class AcDeviceKeyActivity extends Activity {
 	// dialog ids
 	private static final int PROGRESS_DIALOG = 0;
 
-	private Device mDevice;
+	private AcDevice mDevice;
 
 	private ProgressDialog mProgressDialog;
 
 	private ImageView mModeImageview;
 	private TextView mTempTextview;
 	private TextView mFanTextview;
+	private Button mButtonLearn;
 
 	/*
 	 * all key buttons in key layout
@@ -131,10 +133,10 @@ public class AcDeviceKeyActivity extends Activity {
 	private static final int REQUEST_ENABLE_BT = 0;
 
 	private String[] modes = { "auto", "cool", "dry", "fan", "heat" };
-	private String[] fans = { "auto", "high", "low" };
+	private String[] fans = { "FAN AUTO", "HIGH", "LOW" };
 
 	private int temp = 25;
-	private int mode = 0;
+	private int mode = 1;
 	private int fan = 0;
 	private boolean power = false;
 	private ViewGroup mVgPanel = null;
@@ -242,9 +244,9 @@ public class AcDeviceKeyActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.ac_device_key);
 		//
-		// mActivityMode = getIntent()
-		// .getIntExtra(ACTIVITY_MODE, ACTIVITY_CONTROL);
-		//
+		 mActivityMode = getIntent()
+		 .getIntExtra(ACTIVITY_MODE, ACTIVITY_CONTROL);
+		
 		// for null pointer bug, move the find right title text before bt init.
 		mTitleRight = (TextView) findViewById(R.id.title_right_text);
 
@@ -273,6 +275,14 @@ public class AcDeviceKeyActivity extends Activity {
 
 		initData();
 
+		if(mActivityMode==ACTIVITY_CONTROL){
+			mButtonLearn.setVisibility(View.GONE);
+			mTitleRight.setVisibility(View.VISIBLE);
+		}else{
+			mButtonLearn.setVisibility(View.VISIBLE);
+			mTitleRight.setVisibility(View.GONE);
+		}
+		
 		display();
 
 	}
@@ -336,7 +346,7 @@ public class AcDeviceKeyActivity extends Activity {
 			}
 		}
 	}
-
+	
 	private void setupBluetooth() {
 		Log.d(TAG, "setupBluetooth()");
 
@@ -428,12 +438,14 @@ public class AcDeviceKeyActivity extends Activity {
 		/*
 		 * global current active device store in RemoteUi.
 		 */
-		mDevice = RemoteUi.getHandle().getActiveDevice();
+		mDevice =(AcDevice) RemoteUi.getHandle().getActiveDevice();
 
 		mModeImageview = (ImageView) findViewById(R.id.imageview_mode);
 		mFanTextview = (TextView) findViewById(R.id.textview_fanmode);
 		mTempTextview = (TextView) findViewById(R.id.textview_temp);
 		mVgPanel = (ViewGroup) findViewById(R.id.id_panel);
+		mButtonLearn=(Button)findViewById(R.id.buttonLearn);
+		mButtonLearn.setOnClickListener(mButtonLearnOnClickListener);
 
 		/*
 		 * finds all key Buttons
@@ -443,9 +455,21 @@ public class AcDeviceKeyActivity extends Activity {
 		ViewGroup vg = (ViewGroup) findViewById(R.id.id_key_layout);
 
 		findKeyButtons(vg, mKeyButtonMap);
-
+		
+	
 	}
 
+	/*
+	 * Key click listener.
+	 */
+	private OnClickListener mButtonLearnOnClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			displayPreLearnDlg();
+		}
+   };
+	
 	/*
 	 * Key click listener.
 	 */
@@ -500,24 +524,51 @@ public class AcDeviceKeyActivity extends Activity {
 
 	private Key getCurKey(KeyButton keyBtn) {
 
-		DbManager dbm = new DbManager();
+		Key result=getLearnKey();
+		
+		if(result==null){
+		
+			DbManager dbm = new DbManager();
+			String powerStatus= power ? "ON" : "OFF";
+			String modeStatus = modes[mode];
+			String tempStatus = String.format("%d", temp);
+			String swingStatus = String.format("%s", "ON");
+			String fanStatus = fans[fan];
+	
+			Uird uird = dbm.getUirdData(mDevice.getIrCode(), keyBtn.getKeyId(),
+					powerStatus, modeStatus, tempStatus, swingStatus, fanStatus);
+
+			if(uird!=null){
+				
+				result=new Key();
+				result.setMode(Mode.UIRD);
+				result.setData(uird.getUirdData());
+			}
+		}
+      
+		return result;
+	}
+	
+	private Key getLearnKey(){
+		
+	  return mDevice.getLearnKey(getLearnKeyString());
+		
+	}
+	
+	private void setLearnKey(Key data){
+		
+		mDevice.setLearnKey(getLearnKeyString(), data);
+		
+	}
+	
+	private String getLearnKeyString(){
 		String powerStatus= power ? "ON" : "OFF";
 		String modeStatus = modes[mode];
 		String tempStatus = String.format("%d", temp);
 		String swingStatus = String.format("%s", "ON");
 		String fanStatus = fans[fan];
-
-		Uird uird = dbm.getUirdData(mDevice.getIrCode(), keyBtn.getKeyId(),
-				powerStatus, modeStatus, tempStatus, swingStatus, fanStatus);
-		Key result=null;
-		if(uird!=null){
-			
-			result=new Key();
-			result.setMode(Mode.UIRD);
-			result.setData(uird.getUirdData());
-		}
-      
-		return result;
+		String result=String.format("%s_%s_%s_%s_%s", powerStatus,modeStatus,tempStatus,swingStatus,fanStatus);
+	    return result;
 	}
 
 	/*
@@ -1045,10 +1096,13 @@ public class AcDeviceKeyActivity extends Activity {
 			if (getLeaningResult()) {
 
 				// get the data at loc 0
-				Key key = (Key) mCurActiveKey.getTag();
+				Key key = new Key();
 				key.setData(mLearningResult);
 				key.setMode(Mode.Learn);
 				key.setVisible(true);
+				
+				setLearnKey(key);
+				
 
 				/*
 				 * save the data.

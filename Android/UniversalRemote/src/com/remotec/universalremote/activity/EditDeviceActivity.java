@@ -160,12 +160,21 @@ public class EditDeviceActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 
-			/* crate a intent object, then call the device activity class */
-			Intent devKeyIntent = new Intent(EditDeviceActivity.this,
-					AvDeviceKeyActivity.class);
-			devKeyIntent.putExtra(AvDeviceKeyActivity.ACTIVITY_MODE, AvDeviceKeyActivity.ACTIVITY_EDIT);
-		    RemoteUi.getHandle().setActiveDevice(mDevice);
-			startActivity(devKeyIntent);
+			if(mDevice.getDeviceTypeId()==9){//ac device
+				/* crate a intent object, then call the device activity class */
+				Intent devKeyIntent = new Intent(EditDeviceActivity.this,
+						AcDeviceKeyActivity.class);
+				devKeyIntent.putExtra(AcDeviceKeyActivity.ACTIVITY_MODE, AcDeviceKeyActivity.ACTIVITY_EDIT);
+			    RemoteUi.getHandle().setActiveDevice(mDevice);
+				startActivity(devKeyIntent);
+			}else{
+				/* crate a intent object, then call the device activity class */
+				Intent devKeyIntent = new Intent(EditDeviceActivity.this,
+						AvDeviceKeyActivity.class);
+				devKeyIntent.putExtra(AvDeviceKeyActivity.ACTIVITY_MODE, AvDeviceKeyActivity.ACTIVITY_EDIT);
+			    RemoteUi.getHandle().setActiveDevice(mDevice);
+				startActivity(devKeyIntent);
+			}
 		}
 	};
 
@@ -176,6 +185,7 @@ public class EditDeviceActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
+			
 			Intent addDeviceIntent = new Intent(EditDeviceActivity.this,
 					SelectIconDialog.class);
 			startActivityForResult(addDeviceIntent, REQUEST_SELECT_ICON);

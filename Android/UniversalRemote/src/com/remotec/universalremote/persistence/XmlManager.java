@@ -36,6 +36,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -150,7 +151,11 @@ public class XmlManager {
 				} else if (e.getNodeName().equals("Device")) {			
 					String categoryId=e.getAttribute("category_id");
 					if(categoryId!=null&&Integer.parseInt(categoryId)==9){//ac
-						Device dev = Device.createDevice(Integer.parseInt(categoryId));
+						AcDevice dev = (AcDevice)Device.createDevice(Integer.parseInt(categoryId));
+						loadData(dev, e);
+						uiData.getChildren().add(dev);
+					}else{	
+						AvDevice dev = (AvDevice)Device.createDevice(Integer.parseInt(categoryId));
 						loadData(dev, e);
 						uiData.getChildren().add(dev);
 					}
@@ -176,7 +181,7 @@ public class XmlManager {
 	/*
 	 * Loads data to device object from an xml element
 	 */
-	private void loadData(Device uiData, Element elem) {
+	private void loadData(AvDevice uiData, Element elem) {
 
 		uiData.setName(elem.getAttribute("name"));
 		uiData.setIconName(elem.getAttribute("icon_name"));
@@ -196,6 +201,40 @@ public class XmlManager {
 					Key key = new Key();
 					loadData(key, e);
 					uiData.getChildren().add(key);
+				}
+			}
+		}
+	}
+	
+	/*
+	 * Loads data to device object from an xml element
+	 */
+	private void loadData(AcDevice uiData, Element elem) {
+
+		uiData.setName(elem.getAttribute("name"));
+		uiData.setIconName(elem.getAttribute("icon_name"));
+		uiData.setDeviceType(elem.getAttribute("category"));
+		uiData.setDeviceTypeId(Integer.parseInt(elem
+				.getAttribute("category_id")));
+		uiData.setManufacturer(elem.getAttribute("manufacturer"));
+		uiData.setIrCode(Integer.parseInt(elem.getAttribute("ircode")));
+
+		NodeList items = elem.getChildNodes();
+		Node child = null;
+		for (int i = 0; i < items.getLength(); i++) {
+			child = items.item(i);
+			if (child.getNodeType() == Node.ELEMENT_NODE) {
+				Element e = (Element) items.item(i);
+				if (e.getNodeName().equals("LearnKey")) {
+					
+					String keyString=e.getAttribute("key");
+					
+					Node keyNode=e.getFirstChild();
+					
+					Key key = new Key();
+					loadData(key, (Element)keyNode);
+					uiData.setLearnKey(keyString, key);
+					
 				}
 			}
 		}
@@ -291,6 +330,17 @@ public class XmlManager {
 		serializer.attribute("", "category_id", "" + dev.getDeviceTypeId());
 		serializer.attribute("", "ircode", "" + dev.getIrCode());
 
+		Map<String,Key> learnKeyMap=dev.getLearnKeyMap();
+		
+		for(Entry<String, Key> entry: learnKeyMap.entrySet()){
+			
+            serializer.startTag("", "LearnKey");
+            serializer.attribute("", "key",entry.getKey());
+            saveData(entry.getValue(), serializer);
+            serializer.endTag("","LearnKey");
+			
+		}
+		
 
 		serializer.endTag("", "Device");
 	}
