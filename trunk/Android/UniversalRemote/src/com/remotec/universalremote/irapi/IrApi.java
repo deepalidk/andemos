@@ -526,20 +526,30 @@ public class IrApi implements IOnRead {
 	/**
 	 * TRANSMIT PREPROGRAMMED IR CODE
 	 * 
-	 * @param loc
-	 *            IR Code Storage Location(0-100)
+	 * @param type
+	 *            type: 0 av
+	 *            type: 1 ac
 	 * @return
 	 */
-	public byte[] learnIrCode() {
+	public byte[] learnIrCode(byte type) {
 		if (D)
 			Log.d(TAG, "transmitPreprogramedCode");
 
-		byte[] leanCmd = new byte[] { 0x45, 0x34, 0x24, 0x04, (byte) 0xa1 };
-
+//		byte[] leanCmd;
+//		= new byte[] { 0x45, 0x34, 0x24, 0x04, (byte) 0xa1 };
+		
+		Frame frame = new Frame(0);
+		
+		if(type==0){
+			frame.setCmdID((byte) 0x24);
+		}else{
+			frame.setCmdID((byte)0x27);
+		}
+		
 		byte[] result = null;
 
 		try {
-			boolean tResult = transmit_data(leanCmd);
+			boolean tResult = transmit_data(frame.getPacketBuffer());
 
 			if (tResult) {
 				synchronized (mmFrames) {

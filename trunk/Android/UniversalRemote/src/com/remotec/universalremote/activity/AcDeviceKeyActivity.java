@@ -144,6 +144,9 @@ public class AcDeviceKeyActivity extends Activity {
 	private void nextMode() {
 
 		mode = (mode + 1) % 5;
+		fan = 0;
+		temp = 25;
+		
 	}
 
 	private void nextFan() {
@@ -205,7 +208,10 @@ public class AcDeviceKeyActivity extends Activity {
 	private void displayFan() {
 
 		if (mFanTextview != null) {
-			mFanTextview.setText(fans[fan]);
+			
+			String strFanMode=fans[fan].replaceFirst("FAN ", "");
+			
+			mFanTextview.setText(strFanMode);
 		}
 
 	}
@@ -1091,7 +1097,7 @@ public class AcDeviceKeyActivity extends Activity {
 			IrApi irController = IrApi.getHandle();
 
 			// learn at loc 0
-			mLearningResult = irController.learnIrCode();
+			mLearningResult = irController.learnIrCode((byte)1);
 
 			if (getLeaningResult()) {
 
