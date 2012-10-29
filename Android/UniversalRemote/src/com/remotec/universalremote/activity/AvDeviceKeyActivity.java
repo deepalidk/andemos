@@ -1169,7 +1169,7 @@ public class AvDeviceKeyActivity extends Activity {
 			IrApi irController = IrApi.getHandle();
 
 			// learn at loc 0
-			mLearningResult = irController.learnIrCode();
+			mLearningResult = irController.learnIrCode((byte)0);
 
 			if (getLeaningResult()) {
 
