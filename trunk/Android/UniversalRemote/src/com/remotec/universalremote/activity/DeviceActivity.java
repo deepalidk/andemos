@@ -181,8 +181,8 @@ public class DeviceActivity extends Activity {
 			if (RemoteUi.getHandle() != null
 					&& RemoteUi.getHandle().getConnectionManager() != null) {
 
-				int connectState = RemoteUi.getHandle()
-						.getConnectionManager().getState();
+				int connectState = RemoteUi.getHandle().getConnectionManager()
+						.getState();
 
 				switch (connectState) {
 				case BtConnectionManager.STATE_CONNECTED:
@@ -386,8 +386,7 @@ public class DeviceActivity extends Activity {
 		if (!RemoteUi.getEmulatorTag()) {
 			// If BT is not on, request that it be enabled.
 			// setupChat() will then be called during onActivityResult
-			if (!RemoteUi.getHandle().getConnectionManager()
-					.isAdapterEnabled()) {
+			if (!RemoteUi.getHandle().getConnectionManager().isAdapterEnabled()) {
 				mDisconnectTag = false;
 				RemoteUi.getHandle().getConnectionManager()
 						.makeAdapterEnabled(this);
@@ -404,22 +403,24 @@ public class DeviceActivity extends Activity {
 
 				setupMenu();
 			}
- 
+
 			RemoteUi.getHandle().getConnectionManager()
 					.setHandler(this.mHandler);
 			// Only if the state is STATE_NONE, do we know that we haven't
 			// started already
-			if (RemoteUi.getHandle().getConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
-				// Start the Bluetooth chat services
-				RemoteUi.getHandle().getConnectionManager().start();
+			if (RemoteUi.getHandle().getConnectionManager().isAdapterEnabled()) {
+				if (RemoteUi.getHandle().getConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
+					// Start the Bluetooth chat services
+					RemoteUi.getHandle().getConnectionManager().start();
 
-				if (RemoteUi.getHandle().getLastActiveExtender() != null) {
-					String deviceAddr = RemoteUi.getHandle()
-							.getLastActiveExtender().getAddress();
+					if (RemoteUi.getHandle().getLastActiveExtender() != null) {
+						String deviceAddr = RemoteUi.getHandle()
+								.getLastActiveExtender().getAddress();
 
-					// Attempt to connect to the device
-					RemoteUi.getHandle().getConnectionManager()
-							.connect(deviceAddr);
+						// Attempt to connect to the device
+						RemoteUi.getHandle().getConnectionManager()
+								.connect(deviceAddr);
+					}
 				}
 			}
 		}
@@ -560,23 +561,31 @@ public class DeviceActivity extends Activity {
 				if (devButton.getDevice() != null) {
 
 					Intent devKeyIntent;
-					
-					if(devButton.getDevice().getDeviceTypeId()==9){
-						
-						/* crate a intent object, then call the device activity class */
+
+					if (devButton.getDevice().getDeviceTypeId() == 9) {
+
+						/*
+						 * crate a intent object, then call the device activity
+						 * class
+						 */
 						devKeyIntent = new Intent(DeviceActivity.this,
 								AcDeviceKeyActivity.class);
-						devKeyIntent.putExtra(AcDeviceKeyActivity.ACTIVITY_MODE,
+						devKeyIntent.putExtra(
+								AcDeviceKeyActivity.ACTIVITY_MODE,
 								AcDeviceKeyActivity.ACTIVITY_CONTROL);
-					}else{
-					
-						/* crate a intent object, then call the device activity class */
+					} else {
+
+						/*
+						 * crate a intent object, then call the device activity
+						 * class
+						 */
 						devKeyIntent = new Intent(DeviceActivity.this,
 								AvDeviceKeyActivity.class);
-						devKeyIntent.putExtra(AvDeviceKeyActivity.ACTIVITY_MODE,
+						devKeyIntent.putExtra(
+								AvDeviceKeyActivity.ACTIVITY_MODE,
 								AvDeviceKeyActivity.ACTIVITY_CONTROL);
 					}
-					
+
 					RemoteUi.getHandle().setActiveDevice(devButton.getDevice());
 
 					startActivity(devKeyIntent);
@@ -807,8 +816,8 @@ public class DeviceActivity extends Activity {
 				switch (msg.arg1) {
 				case BtConnectionManager.STATE_CONNECTED: {
 
-					String version = mIrController.init((IIo)RemoteUi.getHandle()
-							.getConnectionManager());
+					String version = mIrController.init((IIo) RemoteUi
+							.getHandle().getConnectionManager());
 
 					if (version != null) {
 						// set the version info to the extender.
@@ -1044,22 +1053,26 @@ public class DeviceActivity extends Activity {
 
 			displayDevices();
 
-			if(!RemoteUi.getEmulatorTag()){
+			if (!RemoteUi.getEmulatorTag()) {
 				// connect last active device
 				if (RemoteUi.getHandle().getConnectionManager() != null) {
-	
-					// Only if the state is STATE_NONE, do we know that we haven't
-					// started already
-					if (RemoteUi.getHandle().getConnectionManager().getState() == BtConnectionManager.STATE_NONE) {
-						// Start the Bluetooth chat services
-						RemoteUi.getHandle().getConnectionManager().start();
-	
-						if (RemoteUi.getHandle().getLastActiveExtender() != null) {
-							String deviceAddr = RemoteUi.getHandle()
-									.getLastActiveExtender().getAddress();
-							// Attempt to connect to the device
-							RemoteUi.getHandle().getConnectionManager()
-									.connect(deviceAddr);
+					if (RemoteUi.getHandle().getConnectionManager()
+							.isAdapterEnabled()) {
+						// Only if the state is STATE_NONE, do we know that we
+						// haven't
+						// started already
+						if (RemoteUi.getHandle().getConnectionManager()
+								.getState() == BtConnectionManager.STATE_NONE) {
+							// Start the Bluetooth chat services
+							RemoteUi.getHandle().getConnectionManager().start();
+
+							if (RemoteUi.getHandle().getLastActiveExtender() != null) {
+								String deviceAddr = RemoteUi.getHandle()
+										.getLastActiveExtender().getAddress();
+								// Attempt to connect to the device
+								RemoteUi.getHandle().getConnectionManager()
+										.connect(deviceAddr);
+							}
 						}
 					}
 				}
