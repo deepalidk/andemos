@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:remotec="http://schemas.android.com/apk/res/com.remotec.universalremote.activity"
+    xmlns:remotec="http://schemas.android.com/apk/res/com.remote.universalremote.activity"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
@@ -105,7 +105,7 @@
 
                     <TableRow>
 
-                        <com.remotec.universalremote.activity.component.KeyButton
+                        <com.remote.universalremote.activity.component.KeyButton
                             android:layout_width="@dimen/key_btn_width"
                             android:layout_height="@dimen/key_btn_height"
                             android:layout_marginBottom="@dimen/key_btn_margin_bottom"
@@ -119,7 +119,7 @@
                             remotec:is_icon_btn="false"
                             remotec:key_id="0x08" />
 
-                        <com.remotec.universalremote.activity.component.KeyButton
+                        <com.remote.universalremote.activity.component.KeyButton
                             android:layout_width="@dimen/key_btn_width"
                             android:layout_height="@dimen/key_btn_height"
                             android:layout_marginBottom="@dimen/key_btn_margin_bottom"
@@ -130,7 +130,7 @@
                             remotec:is_icon_btn="true"
                             remotec:key_id="0x01" />
 
-                        <com.remotec.universalremote.activity.component.KeyButton
+                        <com.remote.universalremote.activity.component.KeyButton
                             android:layout_width="@dimen/key_btn_width"
                             android:layout_height="@dimen/key_btn_height"
                             android:layout_marginBottom="@dimen/key_btn_margin_bottom"
@@ -147,7 +147,7 @@
 
                     <TableRow>
 
-                        <com.remotec.universalremote.activity.component.KeyButton
+                        <com.remote.universalremote.activity.component.KeyButton
                             android:layout_width="@dimen/key_btn_width"
                             android:layout_height="@dimen/key_btn_height"
                             android:layout_marginBottom="@dimen/key_btn_margin_bottom"
@@ -167,7 +167,7 @@
                             android:text="Temp."
                             android:textAppearance="@style/KeyButtonText" />
 
-                        <com.remotec.universalremote.activity.component.KeyButton
+                        <com.remote.universalremote.activity.component.KeyButton
                             android:layout_width="@dimen/key_btn_width"
                             android:layout_height="@dimen/key_btn_height"
                             android:layout_marginBottom="@dimen/key_btn_margin_bottom"
