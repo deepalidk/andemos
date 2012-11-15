@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>   
+    <string-array name="dev_category">      
+        <item>TV</item>      
+        <item>DVD</item>      
+        <item>VCD</item>      
+        <item>SAT TV</item>      
+        <item>CD</item>      
+    </string-array>   
+    <string-array name="auto_search_key_list">      
+        <item>1.Power</item>      
+        <item>2.CH-</item>  
+        <item>3.CH+</item>   
+        <item>4.VOL-</item>   
+        <item>5.VOL+</item>   
+    </string-array>     
+    <string-array name="dev_long_click_menu">      
+        <item>Edit device</item>      
+        <item>Remove device</item>          
+    </string-array>    
+    <string-array name="menu_label_key_visible">      
+        <item>Learn remote commands</item>     
+        <item>Delete remote commands</item>   
+        <item>Edit button labels</item>          
+    </string-array>  
+    <string-array name="menu_label_key_invisible">      
+        <item>Learn remote commands</item>       
+        <item>Edit button labels</item>          
+    </string-array>  
+    <string-array name="menu_icon_key_visible">      
+        <item>Learn remote commands</item>     
+        <item>Delete remote commands</item>           
+    </string-array>  
+</resources>

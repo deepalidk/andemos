@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="KeyButton">   
+        <attr name="key_id" format="integer" />   
+        <attr name="is_icon_btn" format="boolean" />   
+    </declare-styleable>   
+</resources>
