@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flipview="http://schemas.android.com/apk/res/com.remotec.zremote.activity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <!-- Device title Bar -->
+    <RelativeLayout
+        android:id="@id/device_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dev_title_height"
+        android:background="@drawable/title"
+        android:layout_weight="0"
+        android:gravity="center_vertical" >
+        <TextView
+            android:id="@+id/title_left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textAppearance="@style/DeviceLeftTitleText"
+            android:text="@string/app_name" />
+       <TextView android:id="@id/title_right_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textAppearance="@style/DeviceRightTitleText"
+        android:text="@string/title_not_connected"
+        />
+    </RelativeLayout>
+
+    <!-- Device table -->
+    <ScrollView
+        android:id="@id/device_ScrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="3"
+        android:background="@drawable/bg"
+        android:scrollbars="vertical" >
+
+        <TableLayout
+            android:id="@id/device_table"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,3" >
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent" />
+                <com.remotec.zremote.activity.component.DeviceButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_device_background"    
+                    android:layout_marginLeft="@dimen/dev_btn_margin_left"
+                    android:layout_marginRight="@dimen/dev_btn_margin_right"
+                    android:layout_marginTop="@dimen/dev_btn_margin_top"
+                    android:layout_marginBottom="@dimen/dev_btn_margin_bottom"  
+                    android:text="@string/add_device"
+                    android:textAppearance="@style/DeviceButtonText" />
+
+                <com.remotec.zremote.activity.component.DeviceButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_device_background"
+                    android:layout_marginLeft="@dimen/dev_btn_margin_left"
+                    android:layout_marginRight="@dimen/dev_btn_margin_right"
+                    android:layout_marginTop="@dimen/dev_btn_margin_top"
+                    android:layout_marginBottom="@dimen/dev_btn_margin_bottom"  
+                    android:text="@string/add_device"
+                    android:visibility="invisible"
+                    android:textAppearance="@style/DeviceButtonText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent" />
+                <com.remotec.zremote.activity.component.DeviceButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_device_background"
+                    android:layout_marginLeft="@dimen/dev_btn_margin_left"
+                    android:layout_marginRight="@dimen/dev_btn_margin_right"
+                    android:layout_marginTop="@dimen/dev_btn_margin_top"
+                    android:layout_marginBottom="@dimen/dev_btn_margin_bottom"
+                    android:text="@string/add_device"
+                    android:visibility="invisible"
+                    android:textAppearance="@style/DeviceButtonText" />
+
+                <com.remotec.zremote.activity.component.DeviceButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_device_background"
+                    android:layout_marginLeft="@dimen/dev_btn_margin_left"
+                    android:layout_marginRight="@dimen/dev_btn_margin_right"
+                    android:layout_marginTop="@dimen/dev_btn_margin_top"
+                    android:layout_marginBottom="@dimen/dev_btn_margin_bottom"
+                    android:text="@string/add_device"
+                    android:visibility="invisible"
+                    android:textAppearance="@style/DeviceButtonText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent" />
+                <com.remotec.zremote.activity.component.DeviceButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_device_background"
+                    android:layout_marginLeft="@dimen/dev_btn_margin_left"
+                    android:layout_marginRight="@dimen/dev_btn_margin_right"
+                    android:layout_marginTop="@dimen/dev_btn_margin_top"
+                    android:layout_marginBottom="@dimen/dev_btn_margin_bottom"
+                    android:text="@string/add_device"
+                    android:visibility="invisible"
+                    android:textAppearance="@style/DeviceButtonText" />
+                <com.remotec.zremote.activity.component.DeviceButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_device_background"
+                    
+                    android:layout_marginLeft="@dimen/dev_btn_margin_left"
+                    android:layout_marginRight="@dimen/dev_btn_margin_right"
+                    android:layout_marginTop="@dimen/dev_btn_margin_top"
+                    android:layout_marginBottom="@dimen/dev_btn_margin_bottom"
+                    android:text="@string/add_device"
+                    android:visibility="invisible"
+                    android:textAppearance="@style/DeviceButtonText" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent" />
+            </TableRow>
+            
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent" />
+                <com.remotec.zremote.activity.component.DeviceButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_device_background"
+                    
+                    android:layout_marginLeft="@dimen/dev_btn_margin_left"
+                    android:layout_marginRight="@dimen/dev_btn_margin_right"
+                    android:layout_marginTop="@dimen/dev_btn_margin_top"
+                    android:layout_marginBottom="@dimen/dev_btn_margin_bottom"
+                    android:text="@string/add_device"
+                    android:visibility="invisible"
+                    android:textAppearance="@style/DeviceButtonText" />
+                <com.remotec.zremote.activity.component.DeviceButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_device_background"
+                    android:layout_marginLeft="@dimen/dev_btn_margin_left"
+                    android:layout_marginRight="@dimen/dev_btn_margin_right"
+                    android:layout_marginTop="@dimen/dev_btn_margin_top"
+                    android:layout_marginBottom="@dimen/dev_btn_margin_bottom"
+                    android:text="@string/add_device"
+                    android:visibility="invisible"
+                    android:textAppearance="@style/DeviceButtonText" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+
+</LinearLayout>

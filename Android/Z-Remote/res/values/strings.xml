@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--     init values of new device -->
+    <string name="dev_icon">icon_device_light</string>
+    <string name="dev_name">TV</string>
+    <string name="dev_category">TV</string>
+    <string name="dev_manufacturer">Remotec</string>
+    <string name="dev_codenum">301</string>
+    
+    <!-- connection state -->
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="title_connecting">connecting...</string>
+    <string name="title_connected_to">connected: </string>
+    <string name="title_not_connected">not connected</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Remote.</string>
+    
+    <string name="hello">Hello World, zremoteActivity!</string>
+    <string name="app_name">Z-Remote</string>
+    <string name="initial_waiting">Please wait...</string>
+    <string name="add_device">Add Device</string>
+    <string name="edit_device">Edit Device</string>
+    <string name="key_num_1">1</string>
+    <string name="key_num_2">2</string>
+    <string name="key_num_3">3</string>
+    <string name="key_num_4">4</string>
+    <string name="key_num_5">5</string>
+    <string name="key_num_6">6</string>
+    <string name="key_num_7">7</string>
+    <string name="key_num_8">8</string>
+    <string name="key_num_9">9</string>
+    <string name="key_num_0">0</string>
+    <string name="key_guide">Guide</string>
+    <string name="key_tv_vcr">TV/VCR</string>
+    <string name="key_enter">Enter</string>
+    <string name="key_prev">Prev</string>
+    <string name="key_ch">CH</string>
+    <string name="key_vol">VOL</string>  
+    <string name="key_menu">Menu</string>
+    <string name="key_exit">Exit</string>
+    <string name="key_info">Info</string>
+    <string name="key_pip">PIP</string>
+    <string name="key_toggle">Toggle</string>
+    <string name="key_subtitle">Subtitle</string>
+    <string name="key_hold">Hold</string>
+    <string name="key_smt">SMT</string>  
+    <string name="key_eprd">EP RD</string>
+    <string name="key_sleep">Sleep</string> 
+    <string name="key_br">BR</string>
+    <string name="key_unknown">Unknown</string>
+    
+    <string name="add_device_comment">Select the category and manufacturer of your device.</string>
+    
+    <string name="label_category">Category:</string>
+    
+    <string name="label_manufacturer">Manufacturer:</string>
+    
+    <string name="label_model">Node Id:</string>
+    
+    <string name="name_label_text">Name:</string>
+    
+    <string name="category_label_text">TV</string>
+    
+    <string name="manufacturer_label_text">Remotec</string>
+    
+    <string name="model_label_text">Model 1</string>
+    
+    <string name="btn_test">Remote control test</string>
+    
+    <string name="btn_autosearch">Auto search</string>
+    
+    <string name="btn_autosearch_stop">Stop</string>
+    
+    <string name="btn_edit_buttons">Edit remote buttons</string>
+    
+    <string name="btn_cancel">Cancel</string>
+    
+    <string name="btn_next">Next</string>
+    
+    <string name="btn_finish">Finish</string>
+    
+    <string name="btn_done">Done</string>
+    
+    <string name="btn_back">Back</string>
+    
+    <string name="btn_start">Start</string>
+    
+    <string name="cancel_adding_msg">Are you sure you want to cancel adding device?</string>
+    
+    <string name="cancel_adding_title">Cancel adding device</string>
+    
+    <string name="connect_now">Do you want to connect a BT-IR extender now?</string>
+    
+    <string name="connect_extender">Please connect BT-IR extender</string>
+    
+    <string name="menu_connect">Connect</string>
+    <string name="menu_del">Delete</string>
+    <string name="menu_about">About</string>
+  
+    <!-- bluetooth device list activity -->
+    <string name="scanning">scanning for devices...</string>
+    <string name="updating">updateing remote...</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="select_codelib">select a code library</string>
+    <string name="config_remote">Select Code Library</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="none_codelib_file">No code library files</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="codelib_files">Code Libraries</string>
+    <string name="button_scan">Scan for devices</string>
+    <string name="button_update">Update to extender</string>
+    <string name="please_try_again_">Please try again!</string>
+    <string name="remove_device_message">Are you sure you want to remove the device?</string>
+    <string name="remove_device_title">Remove device</string>
+    <string name="edit_buttons">Edit buttons</string>
+    
+    <string name="remove_key_message">Are you sure you want to delete the remote command assigned to this key?</string>
+    <string name="remove_key_title">Delete remote command</string>
+    
+    <string name="edit_key_label">Edit key labels</string>
+    
+    <string name="learn_remote_commands">Learn remote commands</string>
+    
+    <string name="place_remote">Place the remote control close to the extender, as shown.</string>
+    
+    <string name="press_key">When ready,select Start, and press the remote button you want Remote control to learn.</string>
+    
+    <string name="learn_failed_title">Cannot receive remote signal</string>
+    
+    <string name="learn_failed_msg">Move the IR transmitter of the remote closer to the extender, and try again.</string>
+    
+    <string name="Learn_dialog_title">Press a button on the remote</string>
+    
+    <string name="learned_success_command">Learned the remote command</string>
+    
+    <string name="learning_succeed_msg">Learning procedure succeed!</string>
+    
+    <string name="choose_code">Please choose a code!</string>
+    
+    <string name="no_learning">The connected extender do not support learning!</string>
+    
+    <string name="about_title">About Z-Remote</string>
+    
+    <string name="auto_search_title">Auto-search</string>
+    
+    <string name="auto_search_comment">1.Make sure the category and manufacturer of your device is already selected.\n\n2.Press search button. The extender will try a new code every second.\n\n3.Once your device(e.g.TV) turns off, press stop button.</string>
+</resources>

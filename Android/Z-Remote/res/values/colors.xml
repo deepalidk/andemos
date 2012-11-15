@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="black_text">@android:color/black</color>
+    <color name="white_text">@android:color/white</color>
+    <color name="black">@android:color/black</color>
+    <color name="settings_footer_base">#26000000</color>
+    <color name="basic_white">#ffe5e5e5</color>
+    <color name="separator_black">#ff666666</color>
+    <color name="separator_white">#ffb2b2b2</color>
+    <color name="key_button_text">@android:color/black</color>
+    <color name="disable_key_mask">@android:color/white</color>
+</resources>

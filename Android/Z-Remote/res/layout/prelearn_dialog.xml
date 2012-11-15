@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/imageview_remote"
+        android:layout_width="@dimen/learn_imageview_width"
+        android:layout_height="@dimen/learn_imageview_height"
+        android:src="@drawable/img_learning"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/image_margin"
+        />
+
+    <TextView
+        android:id="@+id/textView_position"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/imageview_remote"
+        android:text="@string/place_remote" 
+        android:layout_marginTop="@dimen/image_margin"
+        style="@style/Learn_Dialog_TextView"
+		/>
+    
+    <TextView
+        android:id="@+id/textView_operation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imageview_remote"
+        android:layout_below="@+id/textView_position"
+        android:text="@string/press_key" 
+        android:layout_marginTop="@dimen/image_margin"
+        style="@style/Learn_Dialog_TextView"
+		/>
+
+</RelativeLayout>
