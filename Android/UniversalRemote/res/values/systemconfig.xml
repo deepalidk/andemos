@@ -2,6 +2,6 @@
 <resources>
     <!-- system info -->
     <string name="package_name">remotec.BluetoothRemote.activities</string>
-    <string name="db_version">3.0.1</string>
+    <string name="db_version">4.0.2</string>
     <item format="boolean" type="bool" name="load_uird_brand">true</item>
 </resources>

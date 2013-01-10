@@ -739,7 +739,7 @@
         
         
         <RelativeLayout
-            android:id="@+id/id_key_layout1"
+            android:id="@+id/id_key_layout3"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
 

@@ -96,6 +96,9 @@ public class AddDeviceActivity extends Activity {
 	
 	private Timer mTimer = null;
 	private TimerTask mTimeTask = null;
+	
+	private String mIconName;
+	private int mIconId;
 
 	// mark if the device is edit, then we should generate the key for it.
 	private boolean mDeviceEditTag;
@@ -140,6 +143,10 @@ public class AddDeviceActivity extends Activity {
 
 		mDevice = Device.createDevice(this,1); //TV
 
+		//save the icon name pics
+		mIconName=mDevice.getIconName();
+		mIconId=mDevice.getIconResId();
+		
 		mDeviceEditTag = true;
 
 		updateControls();
@@ -222,7 +229,7 @@ public class AddDeviceActivity extends Activity {
 		 */
 		setDeviceTypeId(dbm);
 		
-		if(mDevice.getDeviceTypeId()==9){//ac
+		if(mDevice.getDeviceTypeId()==0){//ac is not support autosearch now
 			this.mBtnAutoSearch.setVisibility(View.GONE);
 		}else{
 			this.mBtnAutoSearch.setVisibility(View.VISIBLE);
@@ -304,6 +311,11 @@ public class AddDeviceActivity extends Activity {
 			DbManager dbm = new DbManager();
 			int categoryId=dbm.getDevTypeIdByName(s);
 			mDevice = Device.createDevice(AddDeviceActivity.this,categoryId); //TV
+			
+			//restore the icon pic
+			mDevice.setIconName(mIconName);
+			mDevice.setIconResId(mIconId);
+			
 			loadManufacturer(s);
 		}
 
@@ -353,11 +365,13 @@ public class AddDeviceActivity extends Activity {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view,
 				int position, long id) {
+			/*codeNum's format is REGION-CODE*/
 			String codeNum = mSpinerModel.getSelectedItem().toString();
 
 			if ((codeNum != null) && (codeNum.length() > 0)) {
-
-				mDevice.setIrCode(Integer.parseInt(codeNum));
+                String[] splits = codeNum.split("-");
+                mDevice.setRegion(splits[0]);
+				mDevice.setIrCode(Integer.parseInt(splits[1]));
 				mDeviceEditTag = true;
 			}
 		}
@@ -396,7 +410,7 @@ public class AddDeviceActivity extends Activity {
 				if (AddDeviceActivity.this.mDeviceEditTag) {
 					boolean result = setDeviceKeys(
 							AddDeviceActivity.this.mDevice, RemoteUi
-									.getHandle().getTemplateKeyMap());
+									.getHandle().getTemplateKeyMap(mDevice.getRegion()));
 
 					if (!result) {
 						Toast.makeText(getApplicationContext(),
@@ -441,7 +455,7 @@ public class AddDeviceActivity extends Activity {
 	private boolean setDeviceKeys(Device dev, Map<Integer, Key> map) {
 
 		boolean result = false;
-		if(dev.getDeviceTypeId()==9){ //ac
+		if(dev.getDeviceTypeId()==0){ //ac
 			result=true;
 		}else{
 			// UIRD version Extender.
@@ -503,31 +517,33 @@ public class AddDeviceActivity extends Activity {
 		/* get the valid key ids. */
 		DbManager dbm = new DbManager();
 
-		List<Uird> keyList = dbm.getUirdData(dev.getDeviceTypeId(),
+		List<Uird> keyList = dbm.getUirdData(dev.getRegion(),
 				dev.getIrCode());
 
 		dev.getChildren().clear();
 
-		for (int i = 0; i < 64; i++) {
-			if (map.containsKey(i)) {
-				Key newKey = map.get(i).colonel();
-				Uird temp = null;
-				for (Uird ud : keyList) {
-					if (ud.getKeyId() == i) {
-						temp = ud;
-						break;
-					}
+		
+		for (Key templateKey : map.values()) {
+			
+			Key newKey = templateKey.colonel();
+			Uird temp = null;
+			for (Uird ud : keyList) {
+				if (ud.getKeyId() == newKey.getKeyId()) {
+					temp = ud;
+					break;
 				}
-				if (temp != null) {
-					newKey.setData(temp.getUirdData());
-					newKey.setMode(Mode.UIRD);
-					newKey.setVisible(true);
-				} else {
-					newKey.setVisible(false);
-				}
-
-				dev.getChildren().add(newKey);
 			}
+			
+			if (temp != null) {
+				newKey.setData(temp.getUirdData());
+				newKey.setMode(Mode.UIRD);
+				newKey.setVisible(true);
+			} else {
+				newKey.setVisible(false);
+			}
+
+			dev.getChildren().add(newKey);
+			
 		}
 
 		mDeviceEditTag = false;
@@ -601,6 +617,10 @@ public class AddDeviceActivity extends Activity {
 				// set res name.
 				mDevice.setIconName(this.getResources().getResourceName(
 						mDevice.getIconResId()));
+				
+				//save the icon name pics
+				mIconName=mDevice.getIconName();
+				mIconId=mDevice.getIconResId();
 
 				updateControls();
 			}
@@ -789,7 +809,7 @@ public class AddDeviceActivity extends Activity {
 		// generate the device key.
 		if (AddDeviceActivity.this.mDeviceEditTag) {
 			boolean result = setDeviceKeys(AddDeviceActivity.this.mDevice,
-					RemoteUi.getHandle().getTemplateKeyMap());
+					RemoteUi.getHandle().getTemplateKeyMap(mDevice.getRegion()));
 			if (!result) {
 				Toast.makeText(getApplicationContext(),
 						R.string.please_try_again_, Toast.LENGTH_SHORT)
@@ -799,7 +819,7 @@ public class AddDeviceActivity extends Activity {
 			}
 		}
 
-		if(mDevice.getDeviceTypeId()==9){
+		if(mDevice.getDeviceTypeId()==0){
 		
 			/* crate a intent object, then call the device activity class */
 			Intent devKeyIntent = new Intent(AddDeviceActivity.this,

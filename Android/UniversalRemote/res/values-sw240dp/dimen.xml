@@ -57,6 +57,10 @@
     <dimen name="key_btn_margin_bottom">0dp</dimen>
 
     <!-- Key Botton width -->
+    <dimen name="key_btn_width_small">52.5dp</dimen>
+    <!-- Key Botton height -->
+    <dimen name="key_btn_height_small">26dp</dimen>
+    <!-- Key Botton width -->
     <dimen name="key_btn_width">75dp</dimen>
     <!-- Key Botton height -->
     <dimen name="key_btn_height">37.5dp</dimen>

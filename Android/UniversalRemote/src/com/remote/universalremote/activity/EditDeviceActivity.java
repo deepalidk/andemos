@@ -160,7 +160,7 @@ public class EditDeviceActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 
-			if(mDevice.getDeviceTypeId()==9){//ac device
+			if(mDevice.getDeviceTypeId()==0){//ac device
 				/* crate a intent object, then call the device activity class */
 				Intent devKeyIntent = new Intent(EditDeviceActivity.this,
 						AcDeviceKeyActivity.class);
@@ -249,7 +249,7 @@ public class EditDeviceActivity extends Activity {
 		mDeviceName.setText(mDevice.getName());
 		mCategory.setText(mDevice.getDeviceType());
 		mManufacturer.setText(mDevice.getManufacturer());
-		mCodeNum.setText(mDevice.getIrCode() + "");
+		mCodeNum.setText(mDevice.getRegion()+"-"+mDevice.getIrCode());
 	}
 
 	/*

@@ -5,6 +5,7 @@
  */
 package com.remote.universalremote.activity.component;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -29,6 +30,7 @@ import com.remote.universalremote.activity.R;
 /*
  * Performs as a remote key.
  */
+@SuppressLint("ResourceAsColor")
 public class KeyButton extends Button {
 
 	/*
@@ -37,6 +39,7 @@ public class KeyButton extends Button {
 	private int mKeyId;
 
 	public int getKeyId() {
+		
 		return mKeyId;
 	}
 
@@ -77,6 +80,7 @@ public class KeyButton extends Button {
 		super(context, attrs, defStyle);
 	}
 
+	@SuppressLint("ResourceAsColor")
 	private void init() {
 
 		if(mPaint==null)
@@ -89,7 +93,7 @@ public class KeyButton extends Button {
 	
 			mPaint = new Paint();
 			mPaint.setAntiAlias(true);
-			mPaint.setColor(R.color.disable_key_mask);
+			mPaint.setColor(Color.WHITE);
 			mPaint.setAlpha(malph);
 		}
 	}

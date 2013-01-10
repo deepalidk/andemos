@@ -22,6 +22,24 @@ public class Device implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/*
+	 * Region (US\EU)
+	 * */
+	private String mRegion="US";
+	
+	public String getRegion(){
+		
+		return mRegion;
+		
+	}
+	
+	public void setRegion(String region){
+		
+		mRegion=region;
+		
+	}
+	
+	
+	/*
 	 * dev name
 	 */
 	private String mName;
@@ -129,7 +147,7 @@ public class Device implements Serializable {
 
 		Device newDev;
 		
-		if(categoryId==9){
+		if(categoryId==0){
 			newDev=new AcDevice();
 			newDev.mIconName = context.getResources().getString(R.string.acdev_icon);
 			newDev.mIconResId = context.getResources().getIdentifier(
@@ -158,7 +176,7 @@ public class Device implements Serializable {
 
 		Device newDev;
 		
-		if (categoryId == 9) {
+		if (categoryId == 0) {
 			newDev = new AcDevice();
 			newDev.setDeviceTypeId(categoryId);
 		} else {
