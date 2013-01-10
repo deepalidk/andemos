@@ -151,7 +151,7 @@ public class XmlManager {
 					uiData.getExtenderMap().put(ext.getAddress(), ext);
 				} else if (e.getNodeName().equals("Device")) {			
 					String categoryId=e.getAttribute("category_id");
-					if(categoryId!=null&&Integer.parseInt(categoryId)==9){//ac
+					if(categoryId!=null&&Integer.parseInt(categoryId)==0){//ac
 						AcDevice dev = (AcDevice)Device.createDevice(Integer.parseInt(categoryId));
 						loadData(dev, e);
 						uiData.getChildren().add(dev);
@@ -184,6 +184,10 @@ public class XmlManager {
 	 */
 	private void loadData(AvDevice uiData, Element elem) {
 
+		if(elem.hasAttribute("region")){
+			String region=elem.getAttribute("region");
+			uiData.setRegion(region);
+		}
 		uiData.setName(elem.getAttribute("name"));
 		uiData.setIconName(elem.getAttribute("icon_name"));
 		uiData.setDeviceType(elem.getAttribute("category"));
@@ -212,6 +216,10 @@ public class XmlManager {
 	 */
 	private void loadData(AcDevice uiData, Element elem) {
 
+		if(elem.hasAttribute("region")){
+			String region=elem.getAttribute("region");
+			uiData.setRegion(region);
+		}
 		uiData.setName(elem.getAttribute("name"));
 		uiData.setIconName(elem.getAttribute("icon_name"));
 		uiData.setDeviceType(elem.getAttribute("category"));
@@ -302,6 +310,7 @@ public class XmlManager {
 	private void saveData(AvDevice dev, XmlSerializer serializer)
 			throws IllegalArgumentException, IllegalStateException, IOException {
 		serializer.startTag("", "Device");
+		serializer.attribute("", "region", dev.getRegion());
 		serializer.attribute("", "name", dev.getName());
 		serializer.attribute("", "icon_name", dev.getIconName());
 		serializer.attribute("", "manufacturer", dev.getManufacturer());
@@ -324,6 +333,7 @@ public class XmlManager {
 	private void saveData(AcDevice dev, XmlSerializer serializer)
 			throws IllegalArgumentException, IllegalStateException, IOException {
 		serializer.startTag("", "Device");
+		serializer.attribute("", "region", dev.getRegion());
 		serializer.attribute("", "name", dev.getName());
 		serializer.attribute("", "icon_name", dev.getIconName());
 		serializer.attribute("", "manufacturer", dev.getManufacturer());

@@ -60,6 +60,12 @@
     <dimen name="key_btn_width">170px</dimen>
     <!-- Key Botton height -->
     <dimen name="key_btn_height">90px</dimen>
+   
+    
+        <!-- Key Botton width -->
+    <dimen name="key_btn_width_small">120px</dimen>
+    <!-- Key Botton height -->
+    <dimen name="key_btn_height_small">67px</dimen>
     
     <!-- Key Botton height -->
     <dimen name="key_3_height">128px</dimen>

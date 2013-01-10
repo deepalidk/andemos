@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.util.Log;
@@ -119,6 +120,12 @@ public class AvDeviceKeyActivity extends Activity {
 
 	// Textview for br key
 	private TextView mBrLabel = null;
+	
+	// Textview for color key.
+	private TextView mColLabel = null;
+	
+	// Textview for con key.
+	private TextView mConLabel = null;
 
 	private int mActivityMode = ACTIVITY_CONTROL;
 
@@ -156,12 +163,22 @@ public class AvDeviceKeyActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		mActivityMode = getIntent()
+		.getIntExtra(ACTIVITY_MODE, ACTIVITY_CONTROL);
+		
+		mDevice=RemoteUi.getHandle().getActiveDevice();
+		
 		// remove the tile.
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.av_device_key);
+		
+		if(mDevice.getRegion().equals("EU")){
+		   setContentView(R.layout.eu_av_device_key);
+		}else{
+			
+		   setContentView(R.layout.us_av_device_key);
+		}
 
-		mActivityMode = getIntent()
-				.getIntExtra(ACTIVITY_MODE, ACTIVITY_CONTROL);
+	
 
 		// for null pointer bug, move the find right title text before bt init.
 		mTitleRight = (TextView) findViewById(R.id.title_right_text);
@@ -331,11 +348,12 @@ public class AvDeviceKeyActivity extends Activity {
 
 		mTitleLeft = (TextView) this
 				.findViewById(R.id.devicekey_title_left_text);
-		mTitleLeft.setText(mDevice.getName());
 
 		mChLabel = (TextView) findViewById(R.id.key_id_ch);
 		mVolLabel = (TextView) findViewById(R.id.key_id_vol);
 		mBrLabel = (TextView) findViewById(R.id.key_id_br);
+		mColLabel = (TextView) findViewById(R.id.key_id_col);
+		mConLabel = (TextView) findViewById(R.id.key_id_con);
 
 		mVgControl = (ViewGroup) this.findViewById(R.id.id_key_control_layout);
 		mVgMenu = (ViewGroup) this.findViewById(R.id.id_key_menu_layout);
@@ -560,38 +578,63 @@ public class AvDeviceKeyActivity extends Activity {
 		List<Key> keyList = mDevice.getChildren();
 
 		for (KeyButton keyBtn : this.mKeyButtonMap.values()) {
+			
 			keyBtn.setVisibility(View.VISIBLE);
 			keyBtn.setDuplicateParentStateEnabled(false);
-		}
+			
+				for (Key key : keyList) {
+                    if(key.getKeyId()==keyBtn.getKeyId()){
+						// set button text, notice that icon button will not be set
+						// text.
+						if (!keyBtn.getIsIconButton()) {
+							keyBtn.setText(key.getText());
+						}
 
-		for (Key key : keyList) {
+						if (mActivityMode == ACTIVITY_CONTROL) {
+							if (key.getVisible()) {
+								keyBtn.setVisibility(View.VISIBLE);
+							} else {
+								keyBtn.setVisibility(View.INVISIBLE);
+							}
+						} else if (mActivityMode == ACTIVITY_EDIT) {// all key will be
+							// display in Edit
+							// mode.
+							keyBtn.setVisibility(View.VISIBLE);
+						}
 
-			if (mKeyButtonMap.containsKey(key.getKeyId())) {
-
-				KeyButton keyBtn = mKeyButtonMap.get(key.getKeyId());
-
-				// set button text, notice that icon button will not be set
-				// text.
-				if (!keyBtn.getIsIconButton()) {
-					keyBtn.setText(key.getText());
-				}
-
-				if (mActivityMode == ACTIVITY_CONTROL) {
-					if (key.getVisible()) {
-						keyBtn.setVisibility(View.VISIBLE);
-					} else {
-						keyBtn.setVisibility(View.INVISIBLE);
+						keyBtn.setTag(key);
 					}
-				} else if (mActivityMode == ACTIVITY_EDIT) {// all key will be
-					// display in Edit
-					// mode.
-					keyBtn.setVisibility(View.VISIBLE);
 				}
-
-				keyBtn.setTag(key);
-			}
-
 		}
+
+//		for (Key key : keyList) {
+//
+//			if (mKeyButtonMap.containsKey(key.getKeyId())) {
+//
+//				KeyButton keyBtn = mKeyButtonMap.get(key.getKeyId());
+//
+//				// set button text, notice that icon button will not be set
+//				// text.
+//				if (!keyBtn.getIsIconButton()) {
+//					keyBtn.setText(key.getText());
+//				}
+//
+//				if (mActivityMode == ACTIVITY_CONTROL) {
+//					if (key.getVisible()) {
+//						keyBtn.setVisibility(View.VISIBLE);
+//					} else {
+//						keyBtn.setVisibility(View.INVISIBLE);
+//					}
+//				} else if (mActivityMode == ACTIVITY_EDIT) {// all key will be
+//					// display in Edit
+//					// mode.
+//					keyBtn.setVisibility(View.VISIBLE);
+//				}
+//
+//				keyBtn.setTag(key);
+//			}
+//
+//		}
 
 		displayLabel();
 	}
@@ -604,6 +647,8 @@ public class AvDeviceKeyActivity extends Activity {
 		KeyButton tempMinusBtn;
 		Key tempKey;
 
+		mTitleLeft.setText(mDevice.getName());
+		
 		/* set void label */
 		tempAddBtn = mKeyButtonMap.get(getResources().getInteger(
 				R.integer.key_id_vol_up));
@@ -635,7 +680,7 @@ public class AvDeviceKeyActivity extends Activity {
 			mChLabel.setVisibility(View.INVISIBLE);
 		}
 
-		/* set void label */
+		/* set br label */
 		tempAddBtn = mKeyButtonMap.get(getResources().getInteger(
 				R.integer.key_id_br_up));
 		tempMinusBtn = mKeyButtonMap.get(getResources().getInteger(
@@ -649,6 +694,35 @@ public class AvDeviceKeyActivity extends Activity {
 		} else {
 			mBrLabel.setVisibility(View.INVISIBLE);
 		}
+		
+		if(mDevice.getRegion().equals("EU")){ 
+			/* set color label */
+			tempAddBtn = mKeyButtonMap.get(41);
+			tempMinusBtn = mKeyButtonMap.get(42);
+
+			// any one is visible then label is visible
+			if (tempAddBtn.getVisibility() == View.VISIBLE
+					|| tempMinusBtn.getVisibility() == View.VISIBLE) {
+				tempKey = (Key) tempAddBtn.getTag();
+				mColLabel.setText(tempKey.getText());
+			} else {
+				mColLabel.setVisibility(View.INVISIBLE);
+			}
+			
+			/* set con label */
+			tempAddBtn = mKeyButtonMap.get(43);
+			tempMinusBtn = mKeyButtonMap.get(44);
+
+			// any one is visible then label is visible
+			if (tempAddBtn.getVisibility() == View.VISIBLE
+					|| tempMinusBtn.getVisibility() == View.VISIBLE) {
+				tempKey = (Key) tempAddBtn.getTag();
+				mConLabel.setText(tempKey.getText());
+			} else {
+				mConLabel.setVisibility(View.INVISIBLE);
+			}
+		}
+
 
 	}
 

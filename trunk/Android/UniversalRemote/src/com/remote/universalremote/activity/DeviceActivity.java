@@ -562,7 +562,7 @@ public class DeviceActivity extends Activity {
 
 					Intent devKeyIntent;
 
-					if (devButton.getDevice().getDeviceTypeId() == 9) {
+					if (devButton.getDevice().getDeviceTypeId() == 0) {
 
 						/*
 						 * crate a intent object, then call the device activity
@@ -909,9 +909,11 @@ public class DeviceActivity extends Activity {
 
 			if (v instanceof KeyButton) {
 				KeyButton btn = (KeyButton) v;
+				
 				if (btn.getKeyId() != -1) {
 					bMap.put(btn.getKeyId(), btn);
 				}
+				
 			} else if (v instanceof ViewGroup) {
 				findKeyButtons((ViewGroup) v, bMap);
 			}
@@ -994,48 +996,83 @@ public class DeviceActivity extends Activity {
 
 				initData();
 
-				/*
-				 * finds all key Buttons and create a keyLayout template.
-				 */
-				LayoutInflater inflater = (LayoutInflater) DeviceActivity.this
-						.getSystemService(LAYOUT_INFLATER_SERVICE);
-
 				Looper.prepare();
-
-				View vgKey = inflater.inflate(R.layout.av_device_key, null);
-
-				/*
-				 * finds all key Buttons
-				 */
-				Map<Integer, KeyButton> keyBtnMap = new Hashtable<Integer, KeyButton>();
-
-				ViewGroup vgKeyLayout = (ViewGroup) vgKey
-						.findViewById(R.id.id_key_layout);
-
-				findKeyButtons(vgKeyLayout, keyBtnMap);
-
-				/*
-				 * save key button informations to the template map.
-				 */
-				Map<Integer, Key> map = RemoteUi.getHandle()
-						.getTemplateKeyMap();
-
-				Integer invalidKeyId = DeviceActivity.this.getResources()
-						.getInteger(R.integer.key_id_invalid);
-
-				for (KeyButton keyBtn : keyBtnMap.values()) {
-					Key temp = new Key();
-					temp.setKeyId(keyBtn.getKeyId());
-					temp.setText(keyBtn.getText().toString());
-					temp.setVisible(keyBtn.getVisibility() == View.VISIBLE);
-					map.put(temp.getKeyId(), temp);
-				}
+				loadKeyTemplate();
 			} catch (Exception ex) {
 				Log.e(TAG, ex.getMessage());
 				DeviceActivity.this.finish();
 			}
 
 			return 0;
+		}
+
+		private void loadKeyTemplate() {
+			
+			/*************load us key template****************/
+			/*
+			 * finds all key Buttons and create a keyLayout template.
+			 */
+			LayoutInflater inflater = (LayoutInflater) DeviceActivity.this
+					.getSystemService(LAYOUT_INFLATER_SERVICE);
+
+
+
+			View vgKey = inflater.inflate(R.layout.us_av_device_key, null);
+
+			/*
+			 * finds all key Buttons
+			 */
+			Map<Integer, KeyButton> keyBtnMap = new Hashtable<Integer, KeyButton>();
+
+			ViewGroup vgKeyLayout = (ViewGroup) vgKey
+					.findViewById(R.id.id_key_layout);
+
+			findKeyButtons(vgKeyLayout, keyBtnMap);
+
+			/*
+			 * save key button informations to the template map.
+			 */
+			Map<Integer, Key> map = RemoteUi.getHandle()
+					.getTemplateKeyMap("US");
+
+			Integer invalidKeyId = DeviceActivity.this.getResources()
+					.getInteger(R.integer.key_id_invalid);
+
+			for (KeyButton keyBtn : keyBtnMap.values()) {
+				Key temp = new Key();
+				temp.setKeyId(keyBtn.getKeyId());
+				temp.setText(keyBtn.getText().toString());
+				temp.setVisible(keyBtn.getVisibility() == View.VISIBLE);
+				map.put(temp.getKeyId(), temp);
+			}
+			
+			
+			/*************load eu key template****************/
+			 vgKey = inflater.inflate(R.layout.eu_av_device_key, null);
+
+			/*
+			 * finds all key Buttons
+			 */
+			keyBtnMap = new Hashtable<Integer, KeyButton>();
+
+			vgKeyLayout = (ViewGroup) vgKey
+					.findViewById(R.id.id_key_layout);
+
+			findKeyButtons(vgKeyLayout, keyBtnMap);
+
+			/*
+			 * save key button informations to the template map.
+			 */
+			map = RemoteUi.getHandle()
+					.getTemplateKeyMap("EU");
+
+			for (KeyButton keyBtn : keyBtnMap.values()) {
+				Key temp = new Key();
+				temp.setKeyId(keyBtn.getKeyId());
+				temp.setText(keyBtn.getText().toString());
+				temp.setVisible(keyBtn.getVisibility() == View.VISIBLE);
+				map.put(temp.getKeyId(), temp);
+			}
 		}
 
 		@Override

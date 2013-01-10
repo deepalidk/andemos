@@ -232,10 +232,18 @@ public class RemoteUi {
        /*
         * Holds the template key maps
         */
-       private Map<Integer, Key> mTemplateKeyMap;
+       private Map<Integer, Key> mUsTemplateKeyMap;
        
-       public Map<Integer, Key> getTemplateKeyMap(){
-    	   return mTemplateKeyMap;
+       private Map<Integer, Key> mEuTemplateKeyMap;
+       
+       public Map<Integer, Key> getTemplateKeyMap(String region){
+    	   if(region.equals("EU")){
+    		   return mEuTemplateKeyMap;  
+    	   }else{
+    		   
+    		   return mUsTemplateKeyMap;  
+    	   }
+
        }
           
 	   // Member object for the BT services
@@ -251,7 +259,8 @@ public class RemoteUi {
     	   mExtenderMap=new Hashtable<String,Extender>();
     	   mCategoryList=new ArrayList<String>();
     	   mIrBrandMap=new Hashtable<String,List<String>>();
-    	   mTemplateKeyMap=new Hashtable<Integer,Key>();
+    	   mUsTemplateKeyMap=new Hashtable<Integer,Key>();
+    	   mEuTemplateKeyMap=new Hashtable<Integer,Key>();
     	   
     	   switch(communicationMode()){
     	   case BT_MODE:

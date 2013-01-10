@@ -66,6 +66,7 @@
     
     <!-- Key Id -->
     <item name="key_id_invalid" type="integer" format="integer">-1</item>
+    <item name="key_id_off" type="integer" format="integer">-2</item>
     <item name="key_id_00_reserved" type="integer" format="integer">0x00</item>
     <item name="key_id_power" type="integer" format="integer">0x01</item>
     <item name="key_id_ch_down" type="integer" format="integer">0x02</item>
